@@ -66,8 +66,6 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | :------: | :------: | :------: |
     | accountId | String | 会议用户账号ID |
     | accountToken | String | 会议用户账号令牌 |
-    | imAccid | String | IM通信ID |
-    | imToken | String | IM通信ID密码 |
     | personalMeetingId | Long | 个人会议的会议码 |
     
 ### 会议账号更新令牌

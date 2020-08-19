@@ -16,8 +16,8 @@
 | :------ | :------ |
 | iOS版本 | 9.0以上 |
 | CPU架构支持 | ARM64、ARMV7 |
-| IDE | Android Studio |
-| 其他 | CocoaPods 1.9.1+ |
+| IDE | XCode |
+| 其他 | CocoaPods |
 
 #### SDK快速接入
 
@@ -40,7 +40,7 @@
     打开Podfile文件添加如下代码，保存。
 
     ```
-    pod 'NEMeetingLibs'
+    pod 'NEMeetingSDK'
     ```
 
     执行pod命令，安装SDK
@@ -60,13 +60,19 @@
     ```objective-c
     //相机权限申请
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo 
-    												 completionHandler:^(BOOL granted) {}];
+     								         completionHandler:^(BOOL granted) {}];
     //麦克风权限申请
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio 
-    												 completionHandler:^(BOOL granted) {}];
+                             completionHandler:^(BOOL granted) {}];
     ```
 
-4. SDK初始化
+4. 渲染view注册。在info.plist文件中注册平台渲染视图，保证正常渲染。
+
+    `io.flutter.embedded_views_preview     String       YES`
+    
+    ![viewconfig](/Users/zhanggenning/Documents/meeting-sdk-docs/ios-sdk/images/viewconfig.png)
+    
+5. SDK初始化
 
     在使用SDK其他功能之前首先需要完成SDK初始化，初始化操作建议在**AppDelegate.m**的**application:didFinishLaunchingWithOptions:**方法执行。代码示例如下：
     ```objective-c
@@ -84,7 +90,7 @@
 
     **注意：其他操作一定更要等到初始化接口的回调返回之后再执行，否则会失败。**
 
-5. 调用相关接口完成特定功能，详情请参考API文档。
+6. 调用相关接口完成特定功能，详情请参考API文档。
 
 - 登录鉴权
     ```objective-c

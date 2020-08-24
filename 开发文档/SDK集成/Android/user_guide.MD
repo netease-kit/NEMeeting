@@ -5,8 +5,9 @@
 ## 变更记录
 
 | 日期 | 版本 | 变更内容 |
-| :------: | :------: | :------: | 
+| :------: | :------: | :------ | 
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
+| 2020-08-31  | 1.1.0 |新增如下接口：<ul><li>`NEMeetingSDK#isInitialized()`查询SDK初始化状态</li><li>`NEMeetingService#getMeetingStatus()`查询当前会议状态</li><li>`NEMeetingService#returnToMeeting()`重新显示会议UI</li><li>会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项</li></ul>|
 
 ## 快速接入
 
@@ -410,4 +411,41 @@ NEMeetingSDK.getInstance().logout(new NECallback<Void>() {
 #### 注意事项
 
 - 账号注销后，登录状态被清空，不再允许创建会议
+
+
+--------------------
+
+### 使用会议设置服务
+
+#### 描述
+
+通过会议设置服务，可设置和查询用户的当前会议设置，如入会时的音视频开关、会议持续时间的显示等。
+
+#### 业务流程
+
+1. 获取会议设置服务
+
+```java
+NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsService();
+```
+
+2. 调用不同接口保存设置项或查询设置项
+
+```java
+// 设置并保存会议设置
+settingsService.enableShowMyMeetingElapseTime(true);
+settingsService.setTurnOnMyAudioWhenJoinMeeting(true);
+settingsService.setTurnOnMyVideoWhenJoinMeeting(true);
+
+//查询会议设置
+boolean showMeetingElapseTimeEnabled = settingsService.isShowMyMeetingElapseTimeEnabled();
+boolean audioEnabled = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
+boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
+```
+
+#### 注意事项
+
+- 针对已登录用户而言，每个用户有自己独立的一份会议设置；其他所有未登录用户、匿名用户共享一份会议设置。
+- 会议设置项仅在当前设备上保存，不会漫游。
+- 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
 

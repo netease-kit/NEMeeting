@@ -6,6 +6,7 @@
 package com.netease.meetinglib.demo.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -22,14 +23,27 @@ public abstract class MeetingBaseFragment extends BaseFragment {
         super(R.layout.fragment_meeting_base);
     }
 
+    protected CheckBox usePersonalMeetingId;
     private CheckBox[] checkBoxes = new CheckBox[2];
+    private CheckBox useDefaultMeetingOptions;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        View view = getView();
+        checkBoxes[0] = view.findViewById(R.id.videoOption);
+        checkBoxes[1] = view.findViewById(R.id.audioOption);
+        usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
+        useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
+        useDefaultMeetingOptions.setChecked(false);
+        useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox, checked) -> {
+            checkBoxes[0].setEnabled(!checked);
+            checkBoxes[1].setEnabled(!checked);
+        });
+    }
 
-        checkBoxes[0] = getView().findViewById(R.id.videoOption);
-        checkBoxes[1] = getView().findViewById(R.id.audioOption);
+    protected final boolean isNotUseDefaultMeetingOptions() {
+        return !useDefaultMeetingOptions.isChecked();
     }
 
     protected final boolean isChecked(int index) {

@@ -7,7 +7,7 @@
 | 日期 | 版本 | 变更内容 |
 | :------: | :------: | :------- |
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
-| 2020-08-31 | 1.1.0 | 新增如下接口：<br />     `NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NEAccountService用于保存和查询用户的相关会议选项 |
+| 2020-08-31 | 1.1.0 | 新增如下接口：<br />     `NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
 
 ## 快速接入
 

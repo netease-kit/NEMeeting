@@ -19,6 +19,7 @@
 		410B435C24AC914900017FA6 /* StartMeetingVC.m */ = {isa = PBXBuildFile; fileRef = 410B432F24AB5C2A00017FA6 /* StartMeetingVC.m */; };
 		410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m */ = {isa = PBXBuildFile; fileRef = 410B431C24AB295B00017FA6 /* EnterMeetingVC.m */; };
 		4111C2D424D2B20500550390 /* Config.m */ = {isa = PBXBuildFile; fileRef = 4111C2D324D2B20500550390 /* Config.m */; };
+		41228FAB24E69D7D00C7B717 /* MeetingSettingVC.m */ = {isa = PBXBuildFile; fileRef = 41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */; };
 		41937CAB24B4611C00A06BF2 /* SVRadialGradientLayer.m */ = {isa = PBXBuildFile; fileRef = 41937CA224B4611C00A06BF2 /* SVRadialGradientLayer.m */; };
 		41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m */ = {isa = PBXBuildFile; fileRef = 41937CA524B4611C00A06BF2 /* SVProgressAnimatedView.m */; };
 		41937CAD24B4611C00A06BF2 /* SVProgressHUD.m */ = {isa = PBXBuildFile; fileRef = 41937CA724B4611C00A06BF2 /* SVProgressHUD.m */; };
@@ -31,6 +32,8 @@
 		41A1C99124A302F9003369D3 /* Assets.xcassets */ = {isa = PBXBuildFile; fileRef = 41A1C99024A302F9003369D3 /* Assets.xcassets */; };
 		41A1C99424A302F9003369D3 /* LaunchScreen.storyboard */ = {isa = PBXBuildFile; fileRef = 41A1C99224A302F9003369D3 /* LaunchScreen.storyboard */; };
 		41A1C99724A302F9003369D3 /* main.m */ = {isa = PBXBuildFile; fileRef = 41A1C99624A302F9003369D3 /* main.m */; };
+		41B3B51D24EA99F6001FCFFA /* IMLoginVC.m */ = {isa = PBXBuildFile; fileRef = 41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */; };
+		41B3B51E24EA99F6001FCFFA /* IMLoginVC.xib */ = {isa = PBXBuildFile; fileRef = 41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */; };
 		41F8C3A624B5971E0039301B /* strip_archs.sh */ = {isa = PBXBuildFile; fileRef = 41F8C3A524B5971E0039301B /* strip_archs.sh */; };
 		41FE2B9224AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXBuildFile; fileRef = 41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */; };
 /* End PBXBuildFile section */
@@ -71,6 +74,8 @@
 		410B435424AC81F500017FA6 /* NSData+Demo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Demo.m"; sourceTree = "<group>"; };
 		4111C2D224D2B20500550390 /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		4111C2D324D2B20500550390 /* Config.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingSettingVC.h; sourceTree = "<group>"; };
+		41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingSettingVC.m; sourceTree = "<group>"; };
 		41937CA224B4611C00A06BF2 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		41937CA324B4611C00A06BF2 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		41937CA424B4611C00A06BF2 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -93,6 +98,9 @@
 		41A1C99524A302F9003369D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41A1C99624A302F9003369D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		41A1CA7524A33994003369D3 /* NEMeetingDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEMeetingDemo.pch; sourceTree = "<group>"; };
+		41B3B51A24EA99F6001FCFFA /* IMLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMLoginVC.h; sourceTree = "<group>"; };
+		41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMLoginVC.m; sourceTree = "<group>"; };
+		41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLoginVC.xib; sourceTree = "<group>"; };
 		41F8C3A524B5971E0039301B /* strip_archs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = strip_archs.sh; sourceTree = "<group>"; };
 		41FE2B9024AD8F5800624342 /* SystemAuthHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemAuthHelper.h; sourceTree = "<group>"; };
 		41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAuthHelper.m; sourceTree = "<group>"; };
@@ -137,6 +145,9 @@
 				410B432224AB2FF800017FA6 /* MeetingControlVC.h */,
 				410B432324AB2FF800017FA6 /* MeetingControlVC.m */,
 				410B432424AB2FF800017FA6 /* MeetingControlVC.xib */,
+				41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */,
+				41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */,
+				41B3B51F24EB6B51001FCFFA /* IM */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -246,6 +257,16 @@
 			path = NEMeetingDemo;
 			sourceTree = "<group>";
 		};
+		41B3B51F24EB6B51001FCFFA /* IM */ = {
+			isa = PBXGroup;
+			children = (
+				41B3B51A24EA99F6001FCFFA /* IMLoginVC.h */,
+				41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */,
+				41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */,
+			);
+			path = IM;
+			sourceTree = "<group>";
+		};
 		41FE2B9324ADB3D700624342 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +343,7 @@
 				410B432624AB2FF800017FA6 /* MeetingControlVC.xib */,
 				41A1C99424A302F9003369D3 /* LaunchScreen.storyboard */,
 				41A1C99124A302F9003369D3 /* Assets.xcassets */,
+				41B3B51E24EA99F6001FCFFA /* IMLoginVC.xib */,
 				41A1C98F24A302F9003369D3 /* Main.storyboard */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41937CAB24B4611C00A06BF2 /* SVRadialGradientLayer.m */,
+				41228FAB24E69D7D00C7B717 /* MeetingSettingVC.m */,
 				410B432524AB2FF800017FA6 /* MeetingControlVC.m */,
 				410B433F24AC5F1100017FA6 /* BaseViewController.m */,
 				410B435524AC81F500017FA6 /* NSData+Demo.m */,
@@ -403,6 +426,7 @@
 				41FE2B9224AD8F5800624342 /* SystemAuthHelper.m */,
 				410B435224AC819500017FA6 /* NSString+Demo.m */,
 				41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m */,
+				41B3B51D24EA99F6001FCFFA /* IMLoginVC.m */,
 				410B435C24AC914900017FA6 /* StartMeetingVC.m */,
 				410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m */,
 				410B431A24AB294100017FA6 /* LoginViewController.m */,
@@ -514,6 +538,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "ONLINE=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -543,7 +568,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/NEMeetingDemo/NEMeetingDemo.pch";
 				INFOPLIST_FILE = NEMeetingDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,7 +593,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/NEMeetingDemo/NEMeetingDemo.pch";
 				INFOPLIST_FILE = NEMeetingDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -581,6 +606,84 @@
 			};
 			name = Release;
 		};
+		41FF7ED724E121AC00D1921A /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Profile;
+		};
+		41FF7ED824E121AC00D1921A /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDF7E30CF13DE4267DB81C3A;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 569GNZ5392;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/NEMeetingDemo/NEMeetingDemo.pch";
+				INFOPLIST_FILE = NEMeetingDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -589,6 +692,7 @@
 			buildConfigurations = (
 				41A1C99824A302F9003369D3 /* Debug */,
 				41A1C99924A302F9003369D3 /* Release */,
+				41FF7ED724E121AC00D1921A /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -598,6 +702,7 @@
 			buildConfigurations = (
 				41A1C99B24A302F9003369D3 /* Debug */,
 				41A1C99C24A302F9003369D3 /* Release */,
+				41FF7ED824E121AC00D1921A /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

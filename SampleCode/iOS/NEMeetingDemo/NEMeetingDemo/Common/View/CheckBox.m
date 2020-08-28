@@ -99,6 +99,7 @@
 
         [button setTitle:[NSString stringWithFormat:@"  %@", string] forState:UIControlStateNormal];
         [button setTitle:[NSString stringWithFormat:@"  %@", string] forState:UIControlStateSelected];
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         if (_normalImage) {
             [button setImage:_normalImage forState:UIControlStateNormal];
@@ -151,6 +152,13 @@
     }
 
     return array;
+}
+
+- (void)setDisableAllItems:(BOOL)disableAllItems {
+    _disableAllItems = disableAllItems;
+    for (UIButton *button in _buttonArray) {
+        button.enabled = !disableAllItems;
+    }
 }
 
 #pragma mark - buttonclick

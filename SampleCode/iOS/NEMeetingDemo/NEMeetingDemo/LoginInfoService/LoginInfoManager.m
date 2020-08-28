@@ -10,6 +10,7 @@
 NSString *const kNEMeetingLoginAccount = @"kNEMeetingLoginAccount";
 NSString *const kNEMeetingLoginPassword = @"kNEMeetingLoginPassword";
 NSString *const kNEMeetingLoginInfoCleanNotication = @"kNEMeetingLoginInfoCleanNotication";
+NSString *const kNEMeetingEnablereuseNIM = @"kNEMeetingEnablereuseNIM";
 
 @interface LoginInfoManager ()
 
@@ -19,6 +20,8 @@ NSString *const kNEMeetingLoginInfoCleanNotication = @"kNEMeetingLoginInfoCleanN
 @end
 
 @implementation LoginInfoManager
+
+@synthesize reuseNIM = _reuseNIM;
 
 + (instancetype)shareInstance {
     static id instance = nil;
@@ -77,5 +80,13 @@ NSString *const kNEMeetingLoginInfoCleanNotication = @"kNEMeetingLoginInfoCleanN
     return (_account.length != 0 && _password.length != 0);
 }
 
+- (void)setReuseNIM:(BOOL)reuseNIM {
+    [[NSUserDefaults standardUserDefaults] setObject:@(reuseNIM) forKey:kNEMeetingEnablereuseNIM];
+}
+
+- (BOOL)reuseNIM {
+    id value = [[NSUserDefaults standardUserDefaults] objectForKey:kNEMeetingEnablereuseNIM];
+    return [value boolValue];
+}
 
 @end

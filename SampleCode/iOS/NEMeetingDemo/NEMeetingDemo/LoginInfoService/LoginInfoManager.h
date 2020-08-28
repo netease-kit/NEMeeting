@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) NSString *password;
 
+//是否复用IM
+@property (nonatomic, assign) BOOL reuseNIM;
+
 - (void)saveLoginInfo:(NSString *)account
              password:(NSString *)password ;
 

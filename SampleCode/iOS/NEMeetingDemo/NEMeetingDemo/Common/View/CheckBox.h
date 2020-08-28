@@ -27,6 +27,7 @@
 @property(nonatomic, strong) UIFont     *textFont;      // 字体 默认 16号系统
 @property(nonatomic, assign) UIControlContentHorizontalAlignment alignment;  //选项内容默认居中
 
+@property(nonatomic, assign) BOOL disableAllItems;
 
 @property(nonatomic, weak) id<CheckBoxDelegate> delegate;
 

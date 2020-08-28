@@ -5,6 +5,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="preferenceFragmentCompatStyle">@style/PreferenceFragment.Material.MeetingSettings</item>
+    </style>
+
+    <style name="PreferenceFragment.Material.MeetingSettings">
+        <item name="allowDividerAfterLastItem">true</item>
+    </style>
+
+    <style name="MySwitchPreference" parent="@style/Preference.SwitchPreferenceCompat.Material">
+        <item name="allowDividerAbove">true</item>
+        <item name="allowDividerBelow">true</item>
+        <item name="iconSpaceReserved">false</item>
     </style>
 
 </resources>

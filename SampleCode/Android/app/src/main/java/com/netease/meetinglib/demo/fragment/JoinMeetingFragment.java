@@ -5,6 +5,10 @@
 
 package com.netease.meetinglib.demo.fragment;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+
 import com.netease.meetinglib.demo.Constants;
 import com.netease.meetinglib.sdk.NEJoinMeetingOptions;
 import com.netease.meetinglib.sdk.NEJoinMeetingParams;
@@ -13,6 +17,12 @@ import com.netease.meetinglib.sdk.NEMeetingService;
 
 
 public class JoinMeetingFragment extends MeetingBaseFragment {
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        usePersonalMeetingId.setEnabled(false);
+    }
 
     @Override
     protected String[] getEditorLabel() {
@@ -29,9 +39,13 @@ public class JoinMeetingFragment extends MeetingBaseFragment {
         NEJoinMeetingParams params = new NEJoinMeetingParams();
         params.meetingId = first;
         params.displayName = second;
-        NEJoinMeetingOptions options = new NEJoinMeetingOptions();
-        options.noVideo = !isChecked(0);
-        options.noAudio = !isChecked(1);
+        NEJoinMeetingOptions options = null;
+        if (isNotUseDefaultMeetingOptions()) {
+            options = new NEJoinMeetingOptions();
+            options.noVideo = !isChecked(0);
+            options.noAudio = !isChecked(1);
+            options.showMeetingTime = true;
+        }
         NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
         if (meetingService != null) {
             meetingService.joinMeeting(getActivity(), params, options, new MeetingCallback());

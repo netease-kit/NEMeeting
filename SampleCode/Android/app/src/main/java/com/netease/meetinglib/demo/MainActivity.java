@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -173,5 +175,20 @@ public class MainActivity extends AppCompatActivity implements ContentSwitcher{
         super.onDestroy();
         Log.i(TAG, "onDestroy");
         SdkAuthenticator.getInstance().setAuthStateChangeListener(null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.meeting_settings) {
+            MeetingSettingsActivity.start(this);
+        }
+        return true;
     }
 }

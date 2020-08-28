@@ -7,13 +7,10 @@ package com.netease.meetinglib.demo.fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.sdk.NEAccountService;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
@@ -23,14 +20,12 @@ import com.netease.meetinglib.sdk.NEStartMeetingParams;
 
 public class StartMeetingFragment extends MeetingBaseFragment {
 
-    private CheckBox usePersonalMeetingId;
     private String personalMeetingId;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        usePersonalMeetingId = getView().findViewById(R.id.usePersonalMeetingId);
-        usePersonalMeetingId.setVisibility(View.VISIBLE);
+        usePersonalMeetingId.setEnabled(true);
         usePersonalMeetingId.setOnCheckedChangeListener((buttonView, isChecked) -> {
             determineMeetingId();
         });
@@ -51,9 +46,13 @@ public class StartMeetingFragment extends MeetingBaseFragment {
         NEStartMeetingParams params = new NEStartMeetingParams();
         params.meetingId = first;
         params.displayName = second;
-        NEStartMeetingOptions options = new NEStartMeetingOptions();
-        options.noVideo = !isChecked(0);
-        options.noAudio = !isChecked(1);
+        NEStartMeetingOptions options = null;
+        if (isNotUseDefaultMeetingOptions()) {
+            options = new NEStartMeetingOptions();
+            options.noVideo = !isChecked(0);
+            options.noAudio = !isChecked(1);
+            options.showMeetingTime = true;
+        }
         NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
         if (meetingService != null) {
             meetingService.startMeeting(getActivity(), params, options, new MeetingCallback());

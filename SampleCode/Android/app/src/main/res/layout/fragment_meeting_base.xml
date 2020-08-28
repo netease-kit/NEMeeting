@@ -73,7 +73,17 @@
         app:layout_constraintLeft_toLeftOf="@id/videoOption"
         app:layout_constraintTop_toBottomOf="@id/videoOption"
         android:text="使用个人会议号"
-        android:visibility="gone"
+        android:enabled="false"
+        android:layout_marginTop="8dp"
+        />
+
+    <CheckBox
+        android:id="@+id/useDefaultOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/audioOption"
+        app:layout_constraintTop_toBottomOf="@id/videoOption"
+        android:text="使用默认会议设置"
         android:layout_marginTop="8dp"
         />
 

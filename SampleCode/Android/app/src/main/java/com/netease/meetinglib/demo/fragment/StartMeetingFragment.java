@@ -14,9 +14,9 @@ import androidx.annotation.Nullable;
 import com.netease.meetinglib.sdk.NEAccountService;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
-import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEStartMeetingParams;
+
 
 public class StartMeetingFragment extends MeetingBaseFragment {
 
@@ -29,11 +29,12 @@ public class StartMeetingFragment extends MeetingBaseFragment {
         usePersonalMeetingId.setOnCheckedChangeListener((buttonView, isChecked) -> {
             determineMeetingId();
         });
+
     }
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号(留空或使用个人会议号)","昵称"};
+        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "100", "tittle"};
     }
 
     @Override
@@ -48,17 +49,13 @@ public class StartMeetingFragment extends MeetingBaseFragment {
         params.displayName = second;
         NEStartMeetingOptions options = null;
         if (isNotUseDefaultMeetingOptions()) {
-            options = new NEStartMeetingOptions();
-            options.noVideo = !isChecked(0);
-            options.noAudio = !isChecked(1);
-            options.showMeetingTime = true;
+            options = (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
         }
-        NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
-        if (meetingService != null) {
-            meetingService.startMeeting(getActivity(), params, options, new MeetingCallback());
-            showLoading("正在创建会议...");
-        }
+
+        showLoading("正在创建会议...");
+        getMeetingService().startMeeting(getActivity(), params, options, new MeetingCallback());
     }
+
 
     private void determineMeetingId() {
         if (usePersonalMeetingId.isChecked()) {
@@ -89,5 +86,11 @@ public class StartMeetingFragment extends MeetingBaseFragment {
         personalMeetingId = null;
         usePersonalMeetingId.setChecked(false);
         Toast.makeText(getActivity(), "获取个人会议号失败", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

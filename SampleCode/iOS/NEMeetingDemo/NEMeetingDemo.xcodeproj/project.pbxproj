@@ -34,6 +34,7 @@
 		41A1C99724A302F9003369D3 /* main.m */ = {isa = PBXBuildFile; fileRef = 41A1C99624A302F9003369D3 /* main.m */; };
 		41B3B51D24EA99F6001FCFFA /* IMLoginVC.m */ = {isa = PBXBuildFile; fileRef = 41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */; };
 		41B3B51E24EA99F6001FCFFA /* IMLoginVC.xib */ = {isa = PBXBuildFile; fileRef = 41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */; };
+		41E9117A25010E6900E63D80 /* CustomViewController.m */ = {isa = PBXBuildFile; fileRef = 41E9117925010E6900E63D80 /* CustomViewController.m */; };
 		41F8C3A624B5971E0039301B /* strip_archs.sh */ = {isa = PBXBuildFile; fileRef = 41F8C3A524B5971E0039301B /* strip_archs.sh */; };
 		41FE2B9224AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXBuildFile; fileRef = 41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */; };
 /* End PBXBuildFile section */
@@ -101,6 +102,8 @@
 		41B3B51A24EA99F6001FCFFA /* IMLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMLoginVC.h; sourceTree = "<group>"; };
 		41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMLoginVC.m; sourceTree = "<group>"; };
 		41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLoginVC.xib; sourceTree = "<group>"; };
+		41E9117825010E6900E63D80 /* CustomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
+		41E9117925010E6900E63D80 /* CustomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
 		41F8C3A524B5971E0039301B /* strip_archs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = strip_archs.sh; sourceTree = "<group>"; };
 		41FE2B9024AD8F5800624342 /* SystemAuthHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemAuthHelper.h; sourceTree = "<group>"; };
 		41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAuthHelper.m; sourceTree = "<group>"; };
@@ -147,6 +150,8 @@
 				410B432424AB2FF800017FA6 /* MeetingControlVC.xib */,
 				41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */,
 				41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */,
+				41E9117825010E6900E63D80 /* CustomViewController.h */,
+				41E9117925010E6900E63D80 /* CustomViewController.m */,
 				41B3B51F24EB6B51001FCFFA /* IM */,
 			);
 			path = Section;
@@ -425,6 +430,7 @@
 				41A1C98C24A302F9003369D3 /* MainViewController.m */,
 				41FE2B9224AD8F5800624342 /* SystemAuthHelper.m */,
 				410B435224AC819500017FA6 /* NSString+Demo.m */,
+				41E9117A25010E6900E63D80 /* CustomViewController.m */,
 				41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m */,
 				41B3B51D24EA99F6001FCFFA /* IMLoginVC.m */,
 				410B435C24AC914900017FA6 /* StartMeetingVC.m */,
@@ -573,7 +579,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";
@@ -598,7 +604,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";
@@ -676,7 +682,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";

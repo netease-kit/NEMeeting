@@ -8,6 +8,7 @@
 | :------: | :------: | :------- |
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
 | 2020-08-31 | 1.1.0 | 新增如下接口：<br />     `NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
+| 2020-09-04 | 1.2.0 | 新增如下接口：<br />    `NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
 
 ## 快速接入
 
@@ -285,6 +286,65 @@ NEMeetingService *meetingServce = [NEMeetingSDK getInstance].getMeetingService;
 
 --------------------
 
+### 监听会议状态
+
+#### 描述
+
+通过注册会议状态回调接口，可获取到会议状态变更的通知。
+
+#### 业务流程
+
+1. 注册delegate，在回调中接收会议状态。
+
+```objective-c
+//会议添加监听
+[[NEMeetingSDK getInstance].getMeetingService addListener:self];
+
+//MeetingServiceListener协议实现
+- (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
+     //根据event处理相关业务
+}
+```
+
+2. 停止接收会议状态
+
+```objective-c
+[[NEMeetingSDK getInstance].getMeetingService removeListener:self];
+```
+
+#### 注意事项
+
+- 在SDK初始化成功后可以调用
+
+--------------------
+
+### 监听会议状态
+
+#### 描述
+
+在完成登录授权状态下，获取当前账号关联的个人会议ID
+
+#### 业务流程
+
+1. 确认已经通过入会方式（加入会议/创建会议/匿名入会）在会议内
+2. 调用接口并进行回调处理。该接口的回调数据类型为NEMeetingInfo对象类型；如果当前无正在进行中的会议，则回调数据对象为空，错误原因请参考错误码类型。
+
+```objective-c
+ [[NEMeetingSDK getInstance].getMeetingService getCurrentMeetingInfo:^(NSInteger resultCode, NSString * _Nonnull resultMsg, NEMeetingInfo * _Nonnull info) {
+    if (resultCode != ERROR_CODE_SUCCESS) {
+        //查询失败
+    } else {
+       //查询成功
+    }
+}];
+```
+
+#### 注意事项
+
+- 在SDK进入会议状态，才能获取当前会议信息
+
+--------------------
+
 ### 获取个人会议号
 
 #### 描述
@@ -313,6 +373,57 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 #### 注意事项
 
 - 仅在已登录状态下才会成功返回数据
+
+--------------------
+
+### 自定义会中【更多】菜单内容
+
+#### 描述
+
+在更多菜单中注入自定义选项，方便用户业务扩展。
+
+#### 业务流程
+
+	1. 配置匿名入会/创建会议/加入会议的Options相关参数，增加自定义列表
+
+  ```objective-c
+NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
+options.noChat = NO;
+options.noInvite = NO;
+
+//配置自定义菜单
+NSMutableArray *menuItems = [NSMutableArray array];
+for (int i = 0; i < 3; i++) { //最多不能超过3个，超过之后只取前3个
+    NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
+    item.itemId = 100 + i; //必须大于100，且要保证不重复
+    item.title = [@"测试Title" stringByAppendingString:@(i).stringValue];
+}
+options.injectedMoreMenuItems = menuItems;
+  ```
+
+2. 设置回调接口开始监听，并在回调方法中处理自定义按钮事件
+
+```objective-c
+//添加回调监听
+[[NEMeetingSDK getInstance].getMeetingService addListener:self];
+
+//实现MeetingServiceListener协议方法
+- (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem
+                    meetingInfo:(NEMeetingInfo *)meetingInfo {
+      //menuItem 是点击的item，需要用户根据itemId进行匹配
+      //meetingInfo 是当前的会议状态
+}
+
+```
+
+#### 注意事项
+
+- 自定义会中【更多】菜单内容，需要在入会前完成设置，在会议中设置不会生效
+- 默认【更多】菜单内容中的邀请和聊天，支持隐藏/显示配置
+- 合法的自定义菜单项需满足以下条件：
+  - itemId >= 100，且为整数Int类型
+  - title不为空和空格（对空格做trim处理），且长度不大于10字符
+- 会议自定义菜单项，更多菜单中最多支持添加三个自定义菜单项，如果超过三个仅显示前三个合法自定义按钮
 
 --------------------
 

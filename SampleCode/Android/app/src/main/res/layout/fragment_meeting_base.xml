@@ -1,103 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="10dp"
-        android:textSize="40sp"
-        tools:text="加入会议"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        />
-
-    <EditText
-        android:id="@+id/firstEditor"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        tools:hint="会议号"
-        android:layout_margin="10dp"
-        />
-
-    <EditText
-        android:id="@+id/secondEditor"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/firstEditor"
-        tools:text="1234567"
-        android:layout_margin="10dp"
-        />
-
-    <CheckBox
-        android:id="@+id/videoOption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/secondEditor"
-        app:layout_constraintRight_toLeftOf="@+id/audioOption"
-        android:text="入会时打开摄像头"
-        android:layout_marginTop="8dp"
-        />
-
-    <CheckBox
-        android:id="@+id/audioOption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/videoOption"
-        app:layout_constraintTop_toBottomOf="@id/secondEditor"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/videoOption"
-        android:text="入会时打开麦克风"
-        tools:checked="true"
-        />
-
-    <CheckBox
-        android:id="@+id/usePersonalMeetingId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/videoOption"
-        app:layout_constraintTop_toBottomOf="@id/videoOption"
-        android:text="使用个人会议号"
-        android:enabled="false"
-        android:layout_marginTop="8dp"
-        />
-
-    <CheckBox
-        android:id="@+id/useDefaultOptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/audioOption"
-        app:layout_constraintTop_toBottomOf="@id/videoOption"
-        android:text="使用默认会议设置"
-        android:layout_marginTop="8dp"
-        />
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/actionBtn"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="30dp"
-        tools:text="加入会议"
+        android:layout_marginTop="60dp"
         android:textSize="20sp"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId"
+        tools:text="加入会议" />
 
+    <Button
+        android:id="@+id/addMenuItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="增加菜单" />
+
+    <CheckBox
+        android:id="@+id/videoOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="入会时打开摄像头"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/audioOption"
+        app:layout_constraintTop_toBottomOf="@id/secondEditor" />
+
+    <CheckBox
+        android:id="@+id/audioOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="入会时打开麦克风"
+        app:layout_constraintLeft_toRightOf="@id/videoOption"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/secondEditor"
+        app:layout_constraintTop_toTopOf="@id/videoOption"
+        tools:checked="true" />
+
+    <CheckBox
+        android:id="@+id/usePersonalMeetingId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:enabled="false"
+        android:text="使用个人会议号"
+        app:layout_constraintLeft_toLeftOf="@id/videoOption"
+        app:layout_constraintTop_toBottomOf="@id/videoOption" />
+
+    <CheckBox
+        android:id="@+id/useDefaultOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="使用默认会议设置"
+        app:layout_constraintLeft_toLeftOf="@id/audioOption"
+        app:layout_constraintTop_toBottomOf="@id/videoOption"
+        tools:checked="false" />
+
+    <CheckBox
+        android:id="@+id/noChatOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="入会时关闭聊天菜单"
+        app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+        app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId"
+        tools:checked="true" />
+
+    <CheckBox
+        android:id="@+id/noInviteOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="入会时关闭邀请菜单"
+        app:layout_constraintLeft_toLeftOf="@id/audioOption"
+        app:layout_constraintTop_toBottomOf="@id/useDefaultOptions"
+        tools:checked="true" />
+
+    <EditText
+        android:id="@+id/firstEditor"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:hint="会议号" />
+
+    <EditText
+        android:id="@+id/secondEditor"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstEditor"
+        tools:text="1234567" />
+
+    <EditText
+        android:id="@+id/addItemIdEditor"
+        android:layout_width="60dp"
+        android:layout_height="56dp"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/menuItemId"
+        app:layout_constraintLeft_toRightOf="@+id/menuItemId"
+        tools:hint="1" />
+
+    <EditText
+        android:id="@+id/addTittleEditor"
+        android:layout_width="60dp"
+        android:layout_height="56dp"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/menuItemId"
+        app:layout_constraintLeft_toRightOf="@+id/menuTitle"
+        tools:text="1234567" />
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="加入会议" />
+
+    <TextView
+        android:id="@+id/menuItemId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="id" />
+
+    <TextView
+        android:id="@+id/menuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/menuItemId"
+        app:layout_constraintLeft_toRightOf="@+id/addItemIdEditor"
+        tools:text="文本" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

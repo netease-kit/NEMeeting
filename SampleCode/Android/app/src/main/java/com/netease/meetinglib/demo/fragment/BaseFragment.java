@@ -27,13 +27,14 @@ public abstract class BaseFragment extends Fragment {
 
     private LoadingFragment loadingFragment;
 
-    private EditText[] editorArray = new EditText[2];
+    private EditText[] editorArray = new EditText[4];
 
     protected abstract String[] getEditorLabel();
 
     protected abstract String getActionLabel();
 
     protected abstract void performAction(String first, String second);
+
 
     protected final EditText getEditor(int index) {
         return editorArray[index];
@@ -53,25 +54,23 @@ public abstract class BaseFragment extends Fragment {
 
         String[] labels = getEditorLabel();
 
-        editorArray[0] = getView().findViewById(R.id.firstEditor);
-        editorArray[0].setSingleLine(true);
-        if (labels.length > 0) {
-            editorArray[0].setHint(labels[0]);
-        } else {
-            editorArray[0].setVisibility(View.GONE);
-        }
-
-        editorArray[1] = getView().findViewById(R.id.secondEditor);
-        editorArray[1].setSingleLine(true);
-        if (labels.length > 1) {
-            editorArray[1].setHint(labels[1]);
-        } else {
-            editorArray[1].setVisibility(View.GONE);
-        }
+        addEditorArray(0,R.id.firstEditor,labels);
+        addEditorArray(1,R.id.secondEditor,labels);
 
         Button action = getView().findViewById(R.id.actionBtn);
         action.setText(getActionLabel());
         action.setOnClickListener(v -> performAction(getEditorText(0), getEditorText(1)));
+
+    }
+
+    protected void addEditorArray(int i, int editor, String[] labels) {
+        editorArray[i] = getView().findViewById(editor);
+        editorArray[i].setSingleLine(true);
+        if (labels.length > i) {
+            editorArray[i].setHint(labels[i]);
+        } else {
+            editorArray[i].setVisibility(View.GONE);
+        }
     }
 
     protected ContentSwitcher getContentSwitcher() {

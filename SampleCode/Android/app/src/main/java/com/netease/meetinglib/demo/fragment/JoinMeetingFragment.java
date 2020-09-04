@@ -26,7 +26,7 @@ public class JoinMeetingFragment extends MeetingBaseFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号","昵称"};
+        return new String[]{"会议号", "昵称", "100", "tittle"};
     }
 
     @Override
@@ -41,16 +41,11 @@ public class JoinMeetingFragment extends MeetingBaseFragment {
         params.displayName = second;
         NEJoinMeetingOptions options = null;
         if (isNotUseDefaultMeetingOptions()) {
-            options = new NEJoinMeetingOptions();
-            options.noVideo = !isChecked(0);
-            options.noAudio = !isChecked(1);
-            options.showMeetingTime = true;
+            options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
         }
-        NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
-        if (meetingService != null) {
-            meetingService.joinMeeting(getActivity(), params, options, new MeetingCallback());
-            showLoading("正在加入会议...");
-        }
+
+        showLoading("正在加入会议...");
+        getMeetingService().joinMeeting(getActivity(), params, options, new MeetingCallback());
     }
 
     private boolean isAnonymous() {

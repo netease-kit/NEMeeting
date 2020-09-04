@@ -45,7 +45,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //meeting sdk
-    implementation 'com.netease.yunxin:meetinglib:1.1.0'
+    implementation 'com.netease.yunxin:meetinglib:1.2.0'
 
     //app demo dependencies
     implementation 'androidx.appcompat:appcompat:1.1.0'

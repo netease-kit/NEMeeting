@@ -469,12 +469,7 @@ NEMeetingSDK.getInstance().getMeetingService().setOnInjectedMenuItemClickListene
         public void onInjectedMenuItemClick(NEMeetingMenuItem menuItem, NEMeetingInfo meetingInfo) {
             switch (menuItem.itemId) {
                 case 101:
-                    NEMeetingSDK.getInstance().getMeetingService().getCurrentMeetingInfo(new NECallback<NEMeetingInfo>() {
-                        @Override
-                        public void onResult(int resultCode, String resultMsg, NEMeetingInfo resultData) {
-                                //TODO 
-                        }
-                    });
+                        //TODO 
                     break;
             }
         }

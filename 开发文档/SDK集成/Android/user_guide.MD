@@ -8,7 +8,7 @@
 | :------: | :------: | :------ |
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
 | 2020-08-31  | 1.1.0 |新增如下接口：<ul><li>`NEMeetingSDK#isInitialized()`查询SDK初始化状态</li><li>`NEMeetingService#getMeetingStatus()`查询当前会议状态</li><li>`NEMeetingService#returnToMeeting()`重新显示会议UI</li><li>会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项</li></ul>|
-| 2020-08-31  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li> `NEMeetingOptions#noChat`配置会议中是否显示"邀请"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
+| 2020-09-04  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li> `NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
 
 ## 快速接入
 

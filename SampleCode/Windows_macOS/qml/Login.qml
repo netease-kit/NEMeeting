@@ -38,6 +38,7 @@ Rectangle {
             highlighted: true
             text: 'Login'
             Layout.fillWidth: true
+            enabled: textAppKey.text.length > 0 & textAccountId.text.length > 0 && textPassword.text.length > 0
             onClicked: {
                 meetingManager.login(textAppKey.text,
                                      textAccountId.text,
@@ -50,7 +51,7 @@ Rectangle {
     Connections {
         target: meetingManager
         onLoginSignal: {
-            btnSubmit.enabled = true
+            btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 & textAccountId.text.length > 0 && textPassword.text.length > 0 })
             if (errorCode === MeetingStatus.ERROR_CODE_SUCCESS)
                 pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Front.qml'))
             else

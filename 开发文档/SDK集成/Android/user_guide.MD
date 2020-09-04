@@ -472,8 +472,7 @@ NEMeetingSDK.getInstance().getMeetingService().setOnInjectedMenuItemClickListene
                     NEMeetingSDK.getInstance().getMeetingService().getCurrentMeetingInfo(new NECallback<NEMeetingInfo>() {
                         @Override
                         public void onResult(int resultCode, String resultMsg, NEMeetingInfo resultData) {
-                            Toast.makeText(getActivity(), "获取房间信息NEMeetingInfo:" + resultData.toString(), Toast.LENGTH_SHORT).show();
-                            Log.d("OnCustomMenuListener", "getCurrentMeetingInfo:resultCode " + resultCode + "#resultData " + resultData.toString());
+                                //TODO 
                         }
                     });
                     break;

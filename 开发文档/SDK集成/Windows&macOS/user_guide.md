@@ -13,9 +13,8 @@
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1598620236/NEMeeting_SDK_Windows_v1.1.0.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1598620333/NEMeeting_SDK_macOS_v1.1.0.zip)
-
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1599211417/NEMeeting_SDK_Windows_v1.2.0.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1599215029/NEMeeting_SDK_macOS_v1.2.0.zip)
 
 **1）Windows 开发环境配置**
 
@@ -141,11 +140,22 @@ if (meetingService)
     params.meetingId = byteMeetingId.data();
     // 指定您加入会议后使用的昵称
     params.displayName = byteNickname.data();
-
-    // 设置是否在加入会议后启用视频和音频设备
+    // 设置是否在加入会议后启用视频和音频设备，是否显示邀请和聊天室按钮
     NEStartMeetingOptions options;
     options.noAudio = !audio;
     options.noVideo = !video;
+    options.noChat = !enableChatroom;
+    options.noInvite = !enableInvitation;
+    // 通过 options 设置自定义菜单
+    auto applicationPath = qApp->applicationDirPath();
+    for (auto i = 0; i < 3; i++)
+    {
+        NEMeetingMenuItem item;
+        item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
+        item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
+        item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
+        options.injected_more_menu_items_.push_back(item);
+    }
     meetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // ... 创建会议后的回调函数
     });
@@ -166,12 +176,36 @@ if (meetingService)
     // 指定您加入到会议后使用的昵称
     params.displayName = byteNickname.data();
 
-    // 设置是否在加入会议后启用视频和音频
+    // 设置是否在加入会议后启用视频和音频，是否显示邀请和聊天室按钮
     NEJoinMeetingOptions options;
     options.noAudio = !audio;
     options.noVideo = !video;
+    options.noChat = !enableChatroom;
+    options.noInvite = !enableInvitation;
+    // 通过 options 设置自定义菜单
+    auto applicationPath = qApp->applicationDirPath();
+    for (auto i = 0; i < 3; i++)
+    {
+        NEMeetingMenuItem item;
+        item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
+        item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
+        item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
+        options.injected_more_menu_items_.push_back(item);
+    }
     meetingService->joinMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // 加入会议的回调，可通过返回值判断是否成功
+    });
+}
+```
+
+创建或加入会议完成后，您可以获取会议的一些基本信息，示例如下：
+
+```C++
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    meetingService->getCurrentMeetingInfo([this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingInfo& meetingInfo) {
+        // 获取会议信息后的回调函数，您可以通过 meetingInfo 获取所需信息
     });
 }
 ```

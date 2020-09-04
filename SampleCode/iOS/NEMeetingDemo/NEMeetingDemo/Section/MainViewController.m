@@ -9,8 +9,9 @@
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
 #import "IMLoginVC.h"
+#import "CustomViewController.h"
 
-@interface MainViewController ()
+@interface MainViewController ()<MeetingServiceListener>
 
 @property (nonatomic, strong) UIButton *mulIMBtn;
 
@@ -28,6 +29,7 @@
 }
 
 - (void)onMeetingInitAction:(NSNotification *)note {
+    [[NEMeetingSDK getInstance].getMeetingService addListener:self];
     [self autoLogin];
 }
 
@@ -77,4 +79,32 @@
     return _mulIMBtn;
 }
 
+#pragma mark - MeetingServiceListener
+- (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem
+                    meetingInfo:(NEMeetingInfo *)meetingInfo {
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    if (menuItem.itemId == 101) { //会议号
+        [[NEMeetingSDK getInstance].getMeetingService getCurrentMeetingInfo:^(NSInteger resultCode, NSString * _Nonnull resultMsg, NEMeetingInfo * _Nonnull info) {
+            if (resultCode != ERROR_CODE_SUCCESS) {
+                NSString *msg = [NSString stringWithFormat:@"查询会议失败.code:%@, msg:%@", @(resultCode), resultMsg];
+                [keyWindow makeToast:msg
+                            duration:2
+                            position:CSToastPositionCenter];
+            } else {
+                [keyWindow makeToast:[NSString stringWithFormat:@"会议状态:%@", info]
+                            duration:2
+                            position:CSToastPositionCenter];
+            }
+        }];
+    } else {
+        CustomViewController *vc = (CustomViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CustomViewController"];
+        UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+        if (!preVC) {
+            preVC = keyWindow.rootViewController;
+        }
+        vc.msg = [NSString stringWithFormat:@"Item:%@\n会议状态:%@", menuItem, meetingInfo];
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [preVC presentViewController:vc animated:YES completion:nil];
+    }
+}
 @end

@@ -8,6 +8,7 @@
 #import "EnterMeetingVC.h"
 #import "CheckBox.h"
 #import "MeetingSettingVC.h"
+#import <IQKeyboardManager/IQKeyboardManager.h>
 
 @interface EnterMeetingVC ()<CheckBoxDelegate>
 
@@ -18,13 +19,18 @@
 @property (weak, nonatomic) IBOutlet UITextField *nickInput;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UIButton *enterBtn;
+@property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
+@property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (nonatomic ,strong) UIButton *settingBtn;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoin;
 @property (nonatomic, readonly) BOOL openMicWhenJoin;
 @property (nonatomic, readonly) BOOL showMeetingTime;
 @property (nonatomic, readonly) BOOL useDefaultConfig;
+@property (nonatomic, readonly) BOOL disableChat;
+@property (nonatomic, readonly) BOOL disableInvite;
 
+@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 @end
 
 @implementation EnterMeetingVC
@@ -34,9 +40,24 @@
     [self setupUI];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [IQKeyboardManager sharedManager].enable = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [IQKeyboardManager sharedManager].enable = NO;
+    _menuItems = nil;
+}
+
 - (void)setupUI {
     self.type = _type;
-    [_configCheckBox setItemTitleWithArray:@[@"入会时打开摄像头", @"入会时打开麦克风", @"显示会议持续时间"]];
+    [_configCheckBox setItemTitleWithArray:@[@"入会时打开摄像头",
+                                             @"入会时打开麦克风",
+                                             @"显示会议持续时间",
+                                             @"入会时关闭聊天菜单",
+                                             @"入会时关闭邀请菜单"]];
     [_settingCheckBox setItemTitleWithArray:@[@"使用默认会议设置"]];
     _settingCheckBox.delegate = self;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.settingBtn];
@@ -55,6 +76,9 @@
         options.noAudio = ![self openMicWhenJoin];
         options.noVideo = ![self openVideoWhenJoin];
         options.showMeetingTime = [self showMeetingTime];
+        options.noChat = [self disableChat];
+        options.noInvite = [self disableInvite];
+        options.injectedMoreMenuItems = _menuItems;
     }
 
     WEAK_SELF(weakSelf);
@@ -86,6 +110,25 @@
     }
 }
 
+- (IBAction)addMenuAction:(UIButton *)sender {
+    [self.view endEditing:YES];
+    if (!_menuItems) {
+        _menuItems = [NSMutableArray array];
+    }
+    NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
+    item.itemId = [_menuIdInput.text  integerValue];
+    if (item.itemId == 101) {
+        item.title = @"显示会议信息";
+    } else {
+        item.title = _menuTitleInput.text;
+    }
+    [_menuItems addObject:item];
+
+    NSString *msg = [NSString stringWithFormat:@"添加MenuItemId:%@ title:%@",
+                     @(item.itemId), item.title];
+    [self.view makeToast:msg];
+}
+
 #pragma mark - Setter && Getter
 - (void)setType:(EnterMeetingType)type {
     _type = type;
@@ -112,6 +155,14 @@
 
 - (BOOL)showMeetingTime {
     return [_configCheckBox getItemSelectedAtIndex:2];
+}
+
+- (BOOL)disableChat {
+    return [_configCheckBox getItemSelectedAtIndex:3];
+}
+
+- (BOOL)disableInvite {
+    return [_configCheckBox getItemSelectedAtIndex:4];
 }
 
 - (BOOL)useDefaultConfig {

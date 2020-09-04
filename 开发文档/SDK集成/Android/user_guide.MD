@@ -222,14 +222,15 @@ options.noAudio = true;                                      //入会时关闭�
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
 options.injectedMoreMenuItems = addMeetingInfoItem();    //自定义【更多】按钮菜单。（参考自定义会中【更多】菜单内容#注意事项）
-  private List<NEMeetingMenuItem> addMeetingInfoItem() {
+
+private List<NEMeetingMenuItem> addMeetingInfoItem() {
         List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
         NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
         meetingMenuItem.itemId = 101;
         meetingMenuItem.title = "获取房间信息";
         injectedMoreMenuItems.add(meetingMenuItem);
         return injectedMoreMenuItems;
-    }
+}
 ```
 
 2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
@@ -277,14 +278,15 @@ options.noAudio = true;                                      //入会时关闭�
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
 options.injectedMoreMenuItems = addMeetingInfoItem();    //自定义【更多】按钮菜单。（参考自定义会中【更多】菜单内容#注意事项）
-  private List<NEMeetingMenuItem> addMeetingInfoItem() {
+ 
+private List<NEMeetingMenuItem> addMeetingInfoItem() {
         List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
         NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
         meetingMenuItem.itemId = 101;
         meetingMenuItem.title = "获取房间信息";
         injectedMoreMenuItems.add(meetingMenuItem);
         return injectedMoreMenuItems;
-    }
+}
 ```
 
 2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
@@ -441,7 +443,16 @@ NEMeetingSDK.getInstance().removeAuthListener(authListener); //移除监听
 ```java
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
-options.injectedMoreMenuItems = [{"itemId":101,"title":"获取当前用户信息"}];    //入会隐藏"聊天"按钮，默认为false。（参考注意事项）
+options.injectedMoreMenuItems = addMeetingInfoItem();    //入会隐藏"聊天"按钮，默认为false。（参考注意事项）
+
+private List<NEMeetingMenuItem> addMeetingInfoItem() {
+        List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
+        NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
+        meetingMenuItem.itemId = 101;
+        meetingMenuItem.title = "获取房间信息";
+        injectedMoreMenuItems.add(meetingMenuItem);
+        return injectedMoreMenuItems;
+}
 ```
 2. 设置回调接口开始监听，并在回调方法中处理自定义按钮的事件
   

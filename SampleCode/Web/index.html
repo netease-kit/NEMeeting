@@ -1,0 +1,69 @@
+<meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>neWebMeeting demo</title>
+  <script src="./NeWebMeeting_V1.1.0.js"></script>
+</head>
+<body>
+  <button onclick="init()">初始化</button>
+  <button onclick="destory()">销毁</button>
+  <button onclick="login()">登陆</button>
+  <button onclick="create()">创建</button>
+  <input type="text" placeholder="">
+  <button onclick="join()">加入</button>
+  <div id="ne-web-meeting"></div>
+  
+  <script>
+  // neWebMeeting.actions.width = 800;
+  // neWebMeeting.actions.height = 800;
+  
+  function init() {
+    // console.log(neWebMeeting.actions);
+    neWebMeeting.actions.init(800, 600);
+  }
+  function destory() {
+    neWebMeeting.actions.destory();
+  }
+  
+  function login() {
+    neWebMeeting.actions.login({
+      accountId: 0,
+      accountToken: 0,
+      appKey: '',
+    }, function(e) {
+      console.log(e)
+    })
+  }
+  
+  function create() {
+    neWebMeeting.actions.create({
+      meetingId: 0, // 1随机0固定
+      nickName: '',
+      video: 1,
+      audio: 1,
+    }, function(e) {
+      console.log(e)
+    })
+  }
+  
+  function join(params) {
+    neWebMeeting.actions.join({
+      meetingId: '',
+      nickName: '',
+      appKey: '',
+      video: 1,
+      audio: 1,
+    }, function(e) {
+      console.log(e)
+    })
+  }
+  
+  </script>
+</body>
+</html>
+
+
+

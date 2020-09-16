@@ -9,6 +9,7 @@
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
 | 2020-08-31  | 1.1.0 |新增如下接口：<ul><li>`NEMeetingSDK#isInitialized()`查询SDK初始化状态</li><li>`NEMeetingService#getMeetingStatus()`查询当前会议状态</li><li>`NEMeetingService#returnToMeeting()`重新显示会议UI</li><li>会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项</li></ul>|
 | 2020-09-04  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li> `NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
+| 2020-09-16  | 1.2.2 |新增如下接口：<ul><li>`NEJoinMeetingParams#password`新增密码入会字段</li><li> `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态 </li><li> `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 </li> `NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段 <li> `NEMeetingSDK#NEPreMeetingService`"新增预约会议服务 </li><li> `NEPreMeetingService#scheduleMeeting` 新增预定会议 </li> <li> `NEPreMeetingService#cancelMeeting`新增取消已预定的会议 </li> <li> `NEPreMeetingService#getMeetingItemById`新增查询预定会议信息 </li> <li> `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表 </li> <li> `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器 </li> <li> `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 </li></ul>|
 
 ## 快速接入
 
@@ -271,6 +272,7 @@ NEMeetingSDK.getInstance().getMeetingService().startMeeting(getActivity(), param
 NEJoinMeetingParams params = new NEJoinMeetingParams();     //会议参数
 params.meetingId = "123456789";                             //会议号
 params.displayName = "我的会议昵称";                          //会议昵称
+params.password = "123456";                                 //会议密码
 
 NEJoinMeetingOptions options = new NEJoinMeetingOptions();   //会议选项
 options.noVideo = true;                                      //入会时关闭视频，默认为true
@@ -313,6 +315,188 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 
 --------------------
 
+### 创建预约会议
+
+#### 描述
+
+在已登录状态下，预约一个会议
+
+#### 业务流程
+
+1. 创建预约会议
+
+```java
+    public NEMeetingItem createScheduleMeetingItem() {
+        return NEMeetingSDK.getInstance().getPreMeetingService()
+          .createScheduleMeetingItem();
+    }
+    public void scheduleMeeting(NEMeetingItem item, NECallback<NEMeetingItem> callback) {
+        NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(item,callback);
+    }
+```
+
+2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+
+```java
+NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem, new ToastCallback<NEMeetingItem>() {
+                        @Override
+                        public void onResult(int resultCode, String resultMsg, NEMeetingItem resultData) {
+                            if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
+                                //TODO do something
+                            }
+                        }
+                    });
+```
+
+#### 注意事项
+
+- 预约会议条目可以自定义创建，也可以createScheduleMeetingItem返回
+
+--------------------
+
+### 取消预约会议
+
+#### 描述
+
+在已登录状态下，取消一个预约会议
+
+#### 业务流程
+
+1. 取消预约会议
+
+```java
+      public void cancelMeeting(long meetingUniqueId, NECallback<Void> callback) {
+      NEMeetingSDK.getInstance().getPreMeetingService()
+        .cancelMeeting(meetingUniqueId,callback);
+    }
+   
+```
+
+2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+
+```java
+  NEMeetingSDK.getInstance().getPreMeetingService().cancelMeeting(meetingUniqueId, new ToastCallback<Void>() {
+                @Override
+                public void onResult(int resultCode, String resultMsg, Void resultData) {
+                    //TODO  do something
+                }
+            });
+```
+
+#### 注意事项
+
+- 取消预约会议的参数meetingUniqueId是服务端返回的唯一码，从getMeetingList处获取。
+- 会议状态在进行中、已回收状态或者已超过结束时间，是无法取消。
+
+--------------------
+
+### 查询预定会议信息
+
+#### 描述
+
+在已登录状态下，取消一个预约会议
+
+#### 业务流程
+
+1. 查询预定会议信息
+
+```java
+  public void getMeetingItemById(int meetingUniqueId, NECallback<NEMeetingItem> callback) {
+        NEMeetingSDK.getInstance().getPreMeetingService().getMeetingItemById(meetingUniqueId,callback);
+    }
+   
+```
+
+2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+
+```java
+  NEMeetingSDK.getInstance().getPreMeetingService().getMeetingItemById(meetingUniqueId, new ToastCallback<NEMeetingItem>() {
+                @Override
+                public void onResult(int resultCode, String resultMsg, NEMeetingItem resultData) {
+                    //TODO  do something
+                }
+            });
+```
+
+#### 注意事项
+
+- 查询预约会议的参数meetingUniqueId是服务端返回的唯一码，从getMeetingList处获取。
+
+--------------------
+
+### 查询特定状态下的预约会议列表
+
+#### 描述
+
+在已登录状态下，查询特定状态下的预约会议列表
+
+#### 业务流程
+
+1. 查询预约会议列表
+
+```java
+  List<NEMeetingItemStatus> status = new ArrayList<>();
+        status.add(NEMeetingItemStatus.init);
+        status.add(NEMeetingItemStatus.started);
+        status.add(NEMeetingItemStatus.ended);
+
+  public void getMeetingList(List<NEMeetingItemStatus> status, NECallback<List<NEMeetingItem>> callback) {
+        NEMeetingSDK.getInstance().getPreMeetingService().getMeetingList(status,callback);
+    }
+   
+```
+
+2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+
+```java
+  NEMeetingSDK.getInstance().getPreMeetingService().getMeetingList(status, new ToastCallback< List<NEMeetingItem> >() {
+                @Override
+                public void onResult(int resultCode, String resultMsg, List<NEMeetingItem> resultData) {
+                    //TODO  do something
+                }
+            });
+```
+
+#### 注意事项
+
+- 查询特定状态下的预约会议列表在时间范围上，是默认返回最近一周的。
+
+--------------------
+
+### 监听预约会议状态
+
+#### 描述
+
+通过注册会议状态回调接口，可获取到预约会议状态变更的通知。
+
+#### 业务流程
+
+1. 注册回调接口开始监听，并在回调方法中处理感兴趣的事件
+
+```java
+    NEScheduleMeetingStatusListener listener = new NEScheduleMeetingStatusListener() {
+
+    @Override
+    public void onScheduleMeetingStatusChange(List<NEMeetingItem> changedMeetingItemList) {
+      //TODO do something        
+    }
+};
+NEMeetingSDK.getInstance().getPreMeetingService().registerScheduleMeetingStatusListener(listener);
+```
+
+2. 反注册回调接口停止监听
+
+```java
+NEMeetingSDK.getInstance().getPreMeetingService().unRegisterScheduleMeetingStatusListener(listener);
+```
+
+#### 注意事项
+
+- 在SDK初始化成功后可以调用
+- 会议状态变更回调，一次回调可能包含多个会议信息的变更
+
+--------------------
+
 ### 监听会议状态
 
 #### 描述
@@ -342,6 +526,7 @@ NEMeetingSDK.getInstance().getMeetingService().removeMeetingStatusListener(liste
 #### 注意事项
 
 - 在SDK初始化成功后可以调用
+- 1.2.2版本之后增加了MEETING_STATUS_WAITING状态
 
 --------------------
 ### 获取当前会议信息

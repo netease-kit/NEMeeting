@@ -385,7 +385,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 注意事项
 
-- 取消预约会议的参数meetingUniqueId是服务端返回的唯一码，从getMeetingList处获取。
+- 取消预约会议的参数meetingUniqueId是服务端返回的唯一码，从NEMeetingItem#getMeetingUniqueId处获取。
 - 会议状态在进行中、已回收状态或者已超过结束时间，是无法取消。
 
 --------------------
@@ -394,7 +394,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 描述
 
-在已登录状态下，取消一个预约会议
+在已登录状态下，查询一个预约会议
 
 #### 业务流程
 
@@ -420,7 +420,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 注意事项
 
-- 查询预约会议的参数meetingUniqueId是服务端返回的唯一码，从预约会议列表处获取。
+- 查询预约会议的参数meetingUniqueId是服务端返回的唯一码，从NEMeetingItem#getMeetingUniqueId处获取。
 
 --------------------
 

@@ -9,7 +9,7 @@
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
 | 2020-08-31  | 1.1.0 |新增如下接口：<ul><li>`NEMeetingSDK#isInitialized()`查询SDK初始化状态</li><li>`NEMeetingService#getMeetingStatus()`查询当前会议状态</li><li>`NEMeetingService#returnToMeeting()`重新显示会议UI</li><li>会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项</li></ul>|
 | 2020-09-04  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li> `NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
-| 2020-09-16  | 1.2.2 |新增如下接口：<ul><li>`NEJoinMeetingParams#password`新增密码入会字段</li><li> `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态 </li><li> `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 </li> `NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段 <li> `NEMeetingSDK#NEPreMeetingService`"新增预约会议服务 </li><li> `NEPreMeetingService#scheduleMeeting` 新增预定会议 </li> <li> `NEPreMeetingService#cancelMeeting`新增取消已预定的会议 </li> <li> `NEPreMeetingService#getMeetingItemById`新增查询预定会议信息 </li> <li> `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表 </li> <li> `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器 </li> <li> `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 </li></ul>|
+| 2020-09-16  | 1.2.2 |新增如下接口：<ul><li>`NEJoinMeetingParams#password`新增密码入会字段</li><li> `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态 </li><li> `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 </li> `NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段 <li> `NEMeetingSDK#NEPreMeetingService`新增预约会议服务 </li><li> `NEPreMeetingService#scheduleMeeting` 新增预定会议 </li> <li> `NEPreMeetingService#cancelMeeting`新增取消已预定的会议 </li> <li> `NEPreMeetingService#getMeetingItemById`新增查询预定会议信息 </li> <li> `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表 </li> <li> `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器 </li> <li> `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 </li></ul>|
 
 ## 快速接入
 
@@ -335,7 +335,7 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
     }
 ```
 
-2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
 NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem, new ToastCallback<NEMeetingItem>() {
@@ -350,7 +350,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 注意事项
 
-- 预约会议条目可以自定义创建，也可以createScheduleMeetingItem返回
+- 预约会议条目需要使用createScheduleMeetingItem返回对象。
 
 --------------------
 
@@ -372,7 +372,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
    
 ```
 
-2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
   NEMeetingSDK.getInstance().getPreMeetingService().cancelMeeting(meetingUniqueId, new ToastCallback<Void>() {
@@ -496,6 +496,8 @@ NEMeetingSDK.getInstance().getPreMeetingService().unRegisterScheduleMeetingStatu
 - 会议状态变更回调，一次回调可能包含多个会议信息的变更
 
 --------------------
+
+
 
 ### 监听会议状态
 

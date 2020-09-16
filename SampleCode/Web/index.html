@@ -12,24 +12,26 @@
   <button onclick="destory()">销毁</button>
   <button onclick="login()">登陆</button>
   <button onclick="create()">创建</button>
-  <input type="text" placeholder="">
+  <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
   
   <script>
-  // neWebMeeting.actions.width = 800;
-  // neWebMeeting.actions.height = 800;
+  /**
+   * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
+   * 然后执行登陆，获取登陆人员信息
+   * 此时，根据需要，可以进行会议的创建或加入
+   */  
   
   function init() {
-    // console.log(neWebMeeting.actions);
-    neWebMeeting.actions.init(800, 600);
+    neWebMeeting.actions.init(800, 600);  // （width，height）单位px 建议比例4:3
   }
   function destory() {
-    neWebMeeting.actions.destory();
+    neWebMeeting.actions.destory(); // 销毁
   }
   
   function login() {
-    neWebMeeting.actions.login({
+    neWebMeeting.actions.login({ // 登陆
       accountId: 0,
       accountToken: 0,
       appKey: '',
@@ -50,8 +52,9 @@
   }
   
   function join(params) {
+    var meetingId = document.querySelector('.meeting-id').value;
     neWebMeeting.actions.join({
-      meetingId: '',
+      meetingId,
       nickName: '',
       appKey: '',
       video: 1,

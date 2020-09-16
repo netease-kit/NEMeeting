@@ -350,7 +350,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 注意事项
 
-- 预约会议条目需要使用createScheduleMeetingItem返回对象。
+- 预约会议时，scheduleMeeting接口中的参数NEMeetingItem，必须是createScheduleMeetingItem返回的对象。
 
 --------------------
 
@@ -407,7 +407,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
    
 ```
 
-2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
   NEMeetingSDK.getInstance().getPreMeetingService().getMeetingItemById(meetingUniqueId, new ToastCallback<NEMeetingItem>() {
@@ -420,7 +420,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 注意事项
 
-- 查询预约会议的参数meetingUniqueId是服务端返回的唯一码，从getMeetingList处获取。
+- 查询预约会议的参数meetingUniqueId是服务端返回的唯一码，从预约会议列表处获取。
 
 --------------------
 
@@ -446,7 +446,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
    
 ```
 
-2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
+2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
   NEMeetingSDK.getInstance().getPreMeetingService().getMeetingList(status, new ToastCallback< List<NEMeetingItem> >() {

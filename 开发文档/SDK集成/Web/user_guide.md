@@ -91,7 +91,6 @@
       meetingServerDomain: '' //会议服务器地址，支持自定义部署, 为空则默认为云信线上服务器（匿名加入房间需要）
     }
     neWebMeeting.actions.join(obj, callback)
-    neWebMeeting.actions.create(obj, callback)
     ```
 
 7. 当前页面成员信息
@@ -108,7 +107,6 @@
 7. 与会成员信息
     ```js
     neWebMeeting.actions.joinMemberInfo // 参会成员map，key是avRoomUid
-  
     {
         avRoomUid: {
             accountId:"1158148553127790", //accoundId
@@ -133,6 +131,8 @@
 - 销毁时节点不会销毁，仍保留一部分样式，但不会影响页面结构
 - 初始化后用户需要执行登陆才可以进行创建和加入
 - 会议的全部功能在创建或加入之后即可使用，无需其他额外配置
+- 创建会议后会直接加入会议，无需执行join
+- 登陆的用户在其他页面登陆、创建或加入会议，会影响目前已经加入会议的页面，造成互踢
 - API方法在执行失败后，如需进行错误排查，可以通过callback输出，例：
   ```js
     const obj = {

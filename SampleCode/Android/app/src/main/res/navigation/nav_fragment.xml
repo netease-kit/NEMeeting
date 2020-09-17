@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_fragment"
+    app:startDestination="@id/entranceFragment">
+
+    <fragment
+        android:id="@+id/entranceFragment"
+        android:name="com.netease.meetinglib.demo.view.EntranceFragment"
+        android:label="EntranceFragment"
+        tools:layout="@layout/fragment_entrance">
+        <action
+            android:id="@+id/action_entranceFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_entranceFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_entranceFragment_to_joinMeetingFragment"
+            app:destination="@id/joinMeetingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.netease.meetinglib.demo.view.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.netease.meetinglib.demo.view.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_joinMeetingFragment"
+            app:destination="@id/joinMeetingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_startMeetingFragment"
+            app:destination="@id/startMeetingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_scheduleMeetingFragment"
+            app:destination="@id/scheduleMeetingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_scheduleMeetingDetailFragment"
+            app:destination="@id/scheduleMeetingDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_entranceFragment"
+            app:destination="@id/entranceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinMeetingFragment"
+        android:name="com.netease.meetinglib.demo.view.JoinMeetingFragment"
+        android:label="JoinMeetingFragment"
+        tools:layout="@layout/fragment_meeting_base" />
+    <fragment
+        android:id="@+id/startMeetingFragment"
+        android:name="com.netease.meetinglib.demo.view.StartMeetingFragment"
+        android:label="StartMeetingFragment" />
+    <fragment
+        android:id="@+id/scheduleMeetingFragment"
+        android:name="com.netease.meetinglib.demo.view.ScheduleMeetingFragment"
+        android:label="ScheduleMeetingFragment"
+        tools:layout="@layout/fragment_schedule" />
+    <fragment
+        android:id="@+id/scheduleMeetingDetailFragment"
+        android:name="com.netease.meetinglib.demo.view.ScheduleMeetingDetailFragment"
+        android:label="ScheduleMeetingDetailFragment"
+        tools:layout="@layout/fragment_schedule_datail" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.netease.meetinglib.demo.view.SettingsFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>

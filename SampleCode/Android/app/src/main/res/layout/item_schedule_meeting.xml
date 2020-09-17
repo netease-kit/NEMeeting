@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/edt_meeting_theme"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="22dp"
+        android:gravity="center|right"
+        android:hint="请输入会议主题"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_meeting_tittle"
+        app:layout_constraintLeft_toRightOf="@+id/tv_meeting_tittle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_meeting_tittle" />
+
+    <EditText
+        android:id="@+id/edt_meeting_pwd"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="22dp"
+        android:gravity="center|left"
+        android:hint="请输入密码"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_meeting_tittle" />
+
+    <TextView
+        android:id="@+id/tv_meeting_tittle"
+        android:layout_width="120dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center|left"
+        android:text="会议主题"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_meeting_sub_tittle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_meeting_sub_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center|left|top"
+        android:textColor="@color/grep"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:paddingBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_meeting_tittle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_meeting_tittle" />
+
+    <TextView
+        android:id="@+id/tv_meeting_time"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="22dp"
+        android:gravity="center|right"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_meeting_tittle"
+        app:layout_constraintLeft_toRightOf="@+id/tv_meeting_tittle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_meeting_tittle" />
+
+
+    <com.kyleduo.switchbutton.SwitchButton
+        android:id="@+id/sb_meeting_switch"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="22dp"
+        android:visibility="gone"
+        app:kswBackColor="@color/blue"
+        app:kswTintColor="@color/white"
+        app:kswTextOff="OFF"
+        app:kswTextOn="ON"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_meeting_tittle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

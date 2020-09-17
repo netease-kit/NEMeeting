@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">网易会议Demo</string>
+    <string name="loading_progress">玩命加载中</string>
+    <string name="login">玩命登录中...</string>
 </resources>

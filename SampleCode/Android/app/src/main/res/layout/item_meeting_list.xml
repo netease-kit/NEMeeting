@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/img_meeting_list_note"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center|left"
+        android:src="@drawable/image_calendar_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_meeting_list_day" />
+
+    <TextView
+        android:id="@+id/img_meeting_status"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center|right"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_meeting_time_hh"
+        app:layout_constraintLeft_toRightOf="@+id/tv_meeting_id"
+        app:layout_constraintTop_toTopOf="@+id/tv_meeting_time_hh" />
+
+    <TextView
+        android:id="@+id/tv_meeting_time_month"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="left"
+        android:text="9月 今天"
+        android:textColor="#FF222222"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_meeting_list_day"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_meeting_list_day"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_meeting_list_tittle"
+        app:layout_constraintTop_toTopOf="@+id/tv_meeting_list_day" />
+
+    <TextView
+        android:id="@+id/tv_meeting_list_day"
+        android:layout_width="44dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="center|left"
+        android:text="02"
+        android:textColor="#FF222222"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/img_meeting_list_note"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_meeting_time_hh"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:gravity="center|right"
+        android:paddingRight="8dp"
+        android:text="16 : 00"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_meeting_list_tittle"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_meeting_list_tittle"
+        app:layout_constraintRight_toLeftOf="@+id/tv_meeting_id"
+        app:layout_constraintTop_toBottomOf="@id/tv_meeting_time_month" />
+
+    <TextView
+        android:id="@+id/tv_meeting_id"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginRight="22dp"
+        android:gravity="center|right"
+        android:textColor="@color/grep"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_meeting_time_hh"
+        app:layout_constraintLeft_toRightOf="@+id/tv_meeting_time_hh"
+        app:layout_constraintTop_toTopOf="@+id/tv_meeting_time_hh" />
+
+    <TextView
+        android:id="@+id/tv_meeting_list_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:gravity="center|right"
+        android:text="流川枫预约的会议A"
+        android:textColor="#FF222222"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/img_meeting_list_note"
+        app:layout_constraintTop_toBottomOf="@+id/tv_meeting_time_hh" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="#F2F3F5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_meeting_list_tittle" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/gp_meeting_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_meeting_list_day,tv_meeting_time_month" />
+</androidx.constraintlayout.widget.ConstraintLayout>

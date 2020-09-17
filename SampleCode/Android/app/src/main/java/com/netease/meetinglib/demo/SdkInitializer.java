@@ -6,6 +6,7 @@
 package com.netease.meetinglib.demo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -19,7 +20,6 @@ import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SdkInitializer {
@@ -36,17 +36,21 @@ public class SdkInitializer {
 
     private SdkInitializer() {}
 
+    public static final String CONFIG_KEY_SHARE_IM_INSTANCE = "";
+
     private Context context;
     private boolean started = false;
     private boolean initialized = false;
     private int initializeTimes = 0;
     private ConnectivityManager.NetworkCallback networkCallback;
     private Set<InitializeListener> listenerSet;
+    private SharedPreferences preferences;
 
     public void startInitialize(Context context) {
         if (!started) {
             started = true;
             this.context = context;
+            preferences = context.getSharedPreferences("meeting-sdk-init-config", Context.MODE_PRIVATE);
             initializeSdk();
         }
     }
@@ -66,6 +70,7 @@ public class SdkInitializer {
         Log.i(TAG, "initializeSdk");
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
+        config.reuseNIM = getBooleanConfig(CONFIG_KEY_SHARE_IM_INSTANCE, false);
         NEMeetingSDK.getInstance().initialize(context, config, new ToastCallback<Void>(context,"初始化"){
             @Override
             public void onResult(int resultCode, String resultMsg, Void resultData) {
@@ -114,6 +119,14 @@ public class SdkInitializer {
                     (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             connectivityManager.unregisterNetworkCallback(networkCallback);
         }
+    }
+
+    public void setBooleanConfig(String key, boolean value) {
+        preferences.edit().putBoolean(key, value).apply();
+    }
+
+    public boolean getBooleanConfig(String key, boolean def) {
+        return preferences.getBoolean(key, def);
     }
 
     public interface InitializeListener {

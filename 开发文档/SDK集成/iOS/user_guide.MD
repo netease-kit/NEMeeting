@@ -444,8 +444,13 @@ NSArray *meetingStatus = @[@(NEMeetingItemStatusInit),
 [[NEMeetingSDK getInstance].getPreMeetingService addListener:self];
 
 //实现回调方法
-- (void)onScheduleMeetingStatusChange:(NSArray<NEMeetingItem *> *)changedMeetingItemList {
-  //状态发生变化的Item
+- (void)onScheduleMeetingStatusChange:(NSArray<NEMeetingItem *> *)changedMeetingItemList
+                          incremental:(BOOL)incremental {
+   if (incremental) {
+     //进行全量更新
+   } else {
+     //进行增量更新
+   }
 }
 
 //反注册事件回调（在不需要的时候移除，例如在dealloc方法中）

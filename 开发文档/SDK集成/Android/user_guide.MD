@@ -478,7 +478,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
     NEScheduleMeetingStatusListener listener = new NEScheduleMeetingStatusListener() {
 
     @Override
-    public void onScheduleMeetingStatusChange(List<NEMeetingItem> changedMeetingItemList, bool incremental) {
+    public void onScheduleMeetingStatusChange(List<NEMeetingItem> changedMeetingItemList, boolean incremental) {
       //TODO do something        
     }
 };

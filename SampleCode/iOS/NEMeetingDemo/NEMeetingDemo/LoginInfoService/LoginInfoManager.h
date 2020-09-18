@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) NSString *password;
 
+@property (nonatomic, copy) NSString *nickName;
+
 //是否复用IM
 @property (nonatomic, assign) BOOL reuseNIM;
 

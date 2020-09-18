@@ -122,7 +122,7 @@
         _menuItems = [NSMutableArray array];
     }
     NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
-    item.itemId = [_menuIdInput.text  integerValue];
+    item.itemId = [_menuIdInput.text  intValue];
     if (item.itemId == 101) {
         item.title = @"显示会议信息";
     } else {

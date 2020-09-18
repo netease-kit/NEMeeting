@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * _Nonnull const kAppKey;
-extern NSString * _Nonnull const kIMAppKey;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -1,15 +1,15 @@
 //
-//  IMLoginVC.h
+//  SubscribeMeetingListVC.h
 //  NEMeetingDemo
 //
 //  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IMLoginVC : BaseViewController
+@interface SubscribeMeetingListVC : UIViewController
 
 @end
 

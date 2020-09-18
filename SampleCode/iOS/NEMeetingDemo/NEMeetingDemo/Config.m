@@ -9,7 +9,6 @@
 #import "Config.h"
 
 NSString *const kAppKey = <#请填入您的AppKey#>;
-NSString *const kIMAppKey = @"";
 
 @implementation Config
 

@@ -10,7 +10,7 @@
 #import "MeetingSettingVC.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
-@interface EnterMeetingVC ()<CheckBoxDelegate>
+@interface EnterMeetingVC ()<CheckBoxDelegate, MeetingServiceListener>
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
 @property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *enterBtn;
 @property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
+@property (weak, nonatomic) IBOutlet UITextField *passworkInput;
 @property (nonatomic ,strong) UIButton *settingBtn;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoin;
@@ -38,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
+    [[NEMeetingSDK getInstance].getMeetingService addListener:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,6 +71,7 @@
     NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
     params.meetingId = _meetingIdInput.text;
     params.displayName = _nickInput.text;
+    params.password = _passworkInput.text;
     
     NEJoinMeetingOptions *options = nil;
     if (![self useDefaultConfig]) {
@@ -116,7 +119,7 @@
         _menuItems = [NSMutableArray array];
     }
     NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
-    item.itemId = [_menuIdInput.text  integerValue];
+    item.itemId = [_menuIdInput.text  intValue];
     if (item.itemId == 101) {
         item.title = @"显示会议信息";
     } else {
@@ -128,6 +131,14 @@
                      @(item.itemId), item.title];
     [self.view makeToast:msg];
 }
+
+#pragma mark - MeetingServiceListener
+- (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
+    if (event.arg == MEETING_WAITING_VERIFY_PASSWORD) {
+        [SVProgressHUD dismiss];
+    }
+}
+
 
 #pragma mark - Setter && Getter
 - (void)setType:(EnterMeetingType)type {

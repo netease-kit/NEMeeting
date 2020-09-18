@@ -9,6 +9,7 @@
 #define NEMeetingDemo_pch
 
 #import <NEMeetingSDK/NEMeetingSDK.h>
+#import "UIView+NTES.h"
 #import "SVProgressHUD.h"
 
 #define UIColorFromRGBA(rgbValue, alphaValue) [UIColor \

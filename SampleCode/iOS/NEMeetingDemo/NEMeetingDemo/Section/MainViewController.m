@@ -8,12 +8,9 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
-#import "IMLoginVC.h"
 #import "CustomViewController.h"
 
 @interface MainViewController ()<MeetingServiceListener>
-
-@property (nonatomic, strong) UIButton *mulIMBtn;
 
 @end
 
@@ -43,11 +40,6 @@
     }
 }
 
-- (void)onEnterMulAction:(UIButton *)sender {
-    IMLoginVC *vc = [[IMLoginVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 - (void)setupUI {
 #ifndef ONLINE
     UILabel *env_lab = [[UILabel alloc] init];
@@ -62,21 +54,6 @@
                                env_lab.frame.size.height);
     [[UIApplication sharedApplication].keyWindow addSubview:env_lab];
 #endif
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.mulIMBtn];
-    self.navigationItem.rightBarButtonItem = item;
-}
-
-- (UIButton *)mulIMBtn {
-    if (!_mulIMBtn) {
-        _mulIMBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_mulIMBtn setTitle:@"IM复用" forState:UIControlStateNormal];
-        _mulIMBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        _mulIMBtn.frame = CGRectMake(0, 0, 60, 40);
-        [_mulIMBtn addTarget:self
-                      action:@selector(onEnterMulAction:)
-            forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _mulIMBtn;
 }
 
 #pragma mark - MeetingServiceListener

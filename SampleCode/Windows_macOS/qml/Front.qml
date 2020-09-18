@@ -18,94 +18,217 @@ Rectangle {
         onClicked: meetingManager.showSettings()
     }
 
-    ColumnLayout {
+    RowLayout {
         anchors.centerIn: parent
-
-        TextField {
-            id: textMeetingId
-            enabled: !checkBox.checked
-            text: checkBox.checked ? meetingManager.personalMeetingId : ''
-            placeholderText: qsTr('Meeting ID')
-            selectByMouse: true
-            Layout.fillWidth: true
-        }
-
-        TextField {
-            id: textNickname
-            text: qsTr('nickname')
-            placeholderText: qsTr('Your nickname')
-            selectByMouse: true
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            CheckBox {
-                id: checkAudio
-                checked: true
-                text: qsTr('Enable audio')
+        spacing: 30
+        ColumnLayout {
+            Layout.preferredWidth: 330
+            Layout.preferredHeight: 500
+            Label {
+                text: qsTr('Schedule Meeting')
+                font.pixelSize: 24
+                Layout.alignment: Qt.AlignHCenter
             }
-
-            CheckBox {
-                id: checkVideo
-                checked: true
-                text: qsTr('Enable video')
-            }
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            CheckBox {
-                id: checkChatroom
-                checked: true
-                text: qsTr('Enable chatroom')
-            }
-
-            CheckBox {
-                id: checkInvitation
-                checked: true
-                text: qsTr('Enable invitation')
-            }
-        }
-
-        CheckBox {
-            id: checkBox
-            text: qsTr('Personal meeting ID: %1').arg(meetingManager.personalMeetingId)
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        RowLayout {
-            Layout.topMargin: 20
-            Layout.alignment: Qt.AlignHCenter
-            Button {
-                id: btnCreate
-                highlighted: true
-                text: qsTr('Create')
+            TextField {
+                id: meetingTopic
                 Layout.fillWidth: true
-                onClicked: {
-                    meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
-                                               checkAudio.checked, checkVideo.checked,
-                                               checkChatroom.checked, checkInvitation.checked)
+                placeholderText: qsTr('Meeting Topic')
+            }
+            TextField {
+                id: meetingPassword
+                Layout.fillWidth: true
+                placeholderText: qsTr('Password')
+            }
+            RowLayout {
+                TextField {
+                    id: startTimestamp
+                    Layout.fillWidth: true
+                    placeholderText: qsTr('Start Timestamp')
+                }
+                Label {
+                    text: qsTr('~')
+                }
+                TextField {
+                    id: endTimestamp
+                    Layout.fillWidth: true
+                    placeholderText: qsTr('End Timestamp')
                 }
             }
-            Button {
-                id: btnJoin
-                highlighted: true
-                text: qsTr('Join')
-                Layout.fillWidth: true
-                onClicked: {
-                    meetingManager.invokeJoin(textMeetingId.text, textNickname.text,
-                                              checkAudio.checked, checkVideo.checked,
-                                              checkChatroom.checked, checkInvitation.checked)
-                }
+            CheckBox {
+                id: muteCheckbox
+                text: qsTr('Automatically mute after members join')
             }
             Button {
-                id: btnGet
+                id: btnSchedule
                 highlighted: true
-                enabled: false
                 Layout.fillWidth: true
-                text: qsTr('Get Info')
-                onClicked: meetingManager.getMeetingInfo()
+                text: qsTr('Schedule')
+                onClicked: {
+                    meetingManager.scheduleMeeting(meetingTopic.text,
+                                                   startTimestamp.text,
+                                                   endTimestamp.text,
+                                                   meetingPassword.text,
+                                                   muteCheckbox.checked)
+                }
+            }
+            ListView {
+                Component.onCompleted: {
+                    meetingManager.getMeetingList()
+                }
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                spacing: 10
+                clip: true
+                model: ListModel {
+                    id: listModel
+                }
+                delegate: ItemDelegate {
+                    height: 72
+                    width: parent.width
+                    ColumnLayout {
+                        width: parent.width
+                        Label {
+                            text: {
+                                const startTime = new Date(model.startTime)
+                                const endTime = new Date(model.endTime)
+                                return qsTr('%1 ~ %2').arg(startTime.toLocaleString()).arg(endTime.toLocaleString())
+                            }
+                        }
+                        RowLayout {
+                            Label {
+                                text: prettyConferenceId(model.meetingId)
+                            }
+                            Label {
+                                text: model.topic
+                            }
+                            Label {
+                                text: {
+                                    switch (model.status) {
+                                    case 1:
+                                        return qsTr('Prepare')
+                                    case 2:
+                                        return qsTr('Started')
+                                    case 3:
+                                        return qsTr('Finished')
+                                    }
+                                }
+
+                                font.pixelSize: 12
+                                color: model.status === 2 ? '#337EFF' : '#999999'
+                            }
+                        }
+                        RowLayout {
+                            Layout.preferredWidth: 40
+                            Button {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 30
+                                text: qsTr('Join')
+                                onClicked: {
+                                    meetingManager.invokeJoin(model.meetingId, textNickname.text,
+                                                              checkAudio.checked, checkVideo.checked,
+                                                              checkChatroom.checked, checkInvitation.checked)
+                                }
+                            }
+                            Button {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 30
+                                text: qsTr('Cancel')
+                                onClicked: {
+                                    meetingManager.cancelMeeting(model.uniqueMeetingId)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ColumnLayout {
+            TextField {
+                id: textMeetingId
+                enabled: !checkBox.checked
+                text: checkBox.checked ? meetingManager.personalMeetingId : ''
+                placeholderText: qsTr('Meeting ID')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+
+            TextField {
+                id: textNickname
+                text: qsTr('nickname')
+                placeholderText: qsTr('Your nickname')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                CheckBox {
+                    id: checkAudio
+                    checked: true
+                    text: qsTr('Enable audio')
+                }
+
+                CheckBox {
+                    id: checkVideo
+                    checked: true
+                    text: qsTr('Enable video')
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                CheckBox {
+                    id: checkChatroom
+                    checked: true
+                    text: qsTr('Enable chatroom')
+                }
+
+                CheckBox {
+                    id: checkInvitation
+                    checked: true
+                    text: qsTr('Enable invitation')
+                }
+            }
+
+            CheckBox {
+                id: checkBox
+                text: qsTr('Personal meeting ID: %1').arg(meetingManager.personalMeetingId)
+                Layout.alignment: Qt.AlignHCenter
+            }
+
+            RowLayout {
+                Layout.topMargin: 20
+                Layout.alignment: Qt.AlignHCenter
+                Button {
+                    id: btnCreate
+                    highlighted: true
+                    text: qsTr('Create')
+                    Layout.fillWidth: true
+                    onClicked: {
+                        meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
+                                                   checkAudio.checked, checkVideo.checked,
+                                                   checkChatroom.checked, checkInvitation.checked)
+                    }
+                }
+                Button {
+                    id: btnJoin
+                    highlighted: true
+                    text: qsTr('Join')
+                    Layout.fillWidth: true
+                    onClicked: {
+                        meetingManager.invokeJoin(textMeetingId.text, textNickname.text,
+                                                  checkAudio.checked, checkVideo.checked,
+                                                  checkChatroom.checked, checkInvitation.checked)
+                    }
+                }
+                Button {
+                    id: btnGet
+                    highlighted: true
+                    enabled: false
+                    Layout.fillWidth: true
+                    text: qsTr('Get Info')
+                    onClicked: meetingManager.getMeetingInfo()
+                }
             }
         }
     }
@@ -187,5 +310,19 @@ Rectangle {
         onGetCurrentMeetingInfo: {
             toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked)
         }
+        onGetScheduledMeetingList: {
+            listModel.clear()
+            let datetimeFlag = 0;
+            for (let i = 0; i < meetingList.length; i++) {
+                const meeting = meetingList[i]
+                listModel.append(meeting)
+            }
+        }
+    }
+
+    function prettyConferenceId(conferenceId) {
+        return conferenceId.substring(0, 3) + "-" +
+                conferenceId.substring(3, 6) + "-" +
+                conferenceId.substring(6)
     }
 }

@@ -198,6 +198,26 @@ if (meetingService)
 }
 ```
 
+在加入或者创建会议前后，您可能需要关注议的创建/加入进度以及会议中状态的变更通知，如需关注这些信息，您需要先继承 `NEMeetingStatusListener`，然后实现 `onMeetingStatusChanged` 通知，并将该子类注册到监听队列中。示例代码如下：
+
+```
+// 继承子类并覆写 
+
+class NEMeetingSDKManager : public NEMeetingStatusListener
+{
+public:
+    virtual void onMeetingStatusChanged(int status, int code) override
+    {
+        // ...
+    }
+}
+
+// 将该类对象注册到监听队列中
+auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (ipcMeetingService)
+    ipcMeetingService->addMeetingStatusListener(listener);
+```
+
 创建或加入会议完成后，您可以获取会议的一些基本信息，示例如下：
 
 ```C++
@@ -208,6 +228,64 @@ if (meetingService)
         // 获取会议信息后的回调函数，您可以通过 meetingInfo 获取所需信息
     });
 }
+```
+
+**5) 会议预约**
+
+登录账户后您可以进行会议预约相关操作，以下代码演示了如何预约及获取已经预约的会议，并监控预约的会议状态变更。
+
+```C++
+// 预约一个会议
+auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
+if (ipcPreMeetingService)
+{
+    NEMeetingItem item;
+    item.subject = meetingSubject.toUtf8().data();
+    item.startTime = startTime;
+    item.endTime = endTime;
+    item.password = password.toUtf8().data();
+    item.setting.attendeeAudioOff = attendeeAudioOff;
+
+    ipcPreMeetingService->scheduleMeeting(item, [this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingItem& item) {
+        // ...
+    });
+}
+```
+
+```C++
+// 取消预约会议
+auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
+if (ipcPreMeetingService)
+{
+    ipcPreMeetingService->cancelMeeting(meetingUniqueId, [this](NEErrorCode errorCode, const std::string& errorMessage) {
+        // ...
+    });
+}
+```
+
+```C++
+// 获取会议列表
+auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
+if (ipcPreMeetingService)
+{
+    std::list<NEMeetingItemStatus> status;
+    status.push_back(MEETING_INIT);
+    status.push_back(MEETING_STARTED);
+    status.push_back(MEETING_ENDED);
+    ipcPreMeetingService->getMeetingList(status, [this](NEErrorCode errorCode, const std::string& errorMessage, std::list<NEMeetingItem>& meetingItems) {
+        // ...
+    });
+}
+```
+
+当您已经预约了几个会议后，会议可能随时有人加入、离开，此时您可以监听会议状态的变更通知实时更新 UI 上显示的会议当前状态：
+
+```C++
+// 实现一个 NEScheduleMeetingStatusListener 子类并覆写 `onScheduleMeetingStatusChanged` 方法
+// 将该子类通过会议预约的服务注册到监听队列中即可关注预约会议的状态变更。
+auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
+if (ipcPreMeetingService)
+    ipcPreMeetingService->registerScheduleMeetingStatusListener(this);
 ```
 
 **4）注销登录**

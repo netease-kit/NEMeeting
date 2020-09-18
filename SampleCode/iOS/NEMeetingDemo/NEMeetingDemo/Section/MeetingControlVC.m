@@ -10,8 +10,13 @@
 #import "EnterMeetingVC.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
+#import "SubscribeMeetingListVC.h"
+#import "NESubscribeMeetingConfigVC.h"
 
 @interface MeetingControlVC ()<NEAuthListener>
+
+@property (weak, nonatomic) IBOutlet UIView *subscribeListContainer;
+@property (strong, nonatomic) SubscribeMeetingListVC *subscribeListVC;
 
 @end
 
@@ -24,11 +29,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self hiddenBackButton];
+    [self setupUI];
     [[NEMeetingSDK getInstance] addAuthListener:self];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.subscribeListVC.view.frame = self.subscribeListContainer.bounds;
+}
+
 #pragma mark - Function
+- (void)setupUI {
+    [self hiddenBackButton];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [btn setTitle:@"注销" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(doLogout) forControlEvents:UIControlEventTouchUpInside];
+    btn.size = CGSizeMake(60, 44);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    [self addChildViewController:self.subscribeListVC];
+    [self.subscribeListContainer addSubview:self.subscribeListVC.view];
+}
+
 - (void)popToLoginVC {
     __block UIViewController *targetVC = nil;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -71,13 +93,22 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)onLogoutAction:(id)sender {
-    [self doLogout];
+- (IBAction)onSubscribeMeeting:(UIButton *)sender {
+    NESubscribeMeetingConfigVC *vc = [[NESubscribeMeetingConfigVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - <MeetingServiceListener>
 - (void)onKickOut {
     [self doBeKicked];
+}
+
+#pragma mark - Getter
+- (SubscribeMeetingListVC *)subscribeListVC {
+    if (!_subscribeListVC) {
+        _subscribeListVC = [[SubscribeMeetingListVC alloc] init];
+    }
+    return _subscribeListVC;
 }
 
 @end

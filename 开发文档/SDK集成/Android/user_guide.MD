@@ -459,7 +459,8 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
 
 #### 注意事项
 
-- 查询特定状态下的预约会议列表在时间范围上，是默认返回最近一周的。
+- 查询特定
+下的预约会议列表在时间范围上，是默认返回最近一周的。
 
 --------------------
 
@@ -477,7 +478,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem,
     NEScheduleMeetingStatusListener listener = new NEScheduleMeetingStatusListener() {
 
     @Override
-    public void onScheduleMeetingStatusChange(List<NEMeetingItem> changedMeetingItemList) {
+    public void onScheduleMeetingStatusChange(List<NEMeetingItem> changedMeetingItemList, bool incremental) {
       //TODO do something        
     }
 };

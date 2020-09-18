@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.netease.meetinglib.demo.fragment.MeetingSettingsFragment;
+import com.netease.meetinglib.demo.view.MeetingSettingsFragment;
 
 public class MeetingSettingsActivity extends AppCompatActivity {
 

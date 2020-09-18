@@ -495,6 +495,7 @@ NEMeetingSDK.getInstance().getPreMeetingService().unRegisterScheduleMeetingStatu
 
 - 在SDK初始化成功后可以调用
 - 会议状态变更回调，一次回调可能包含多个会议信息的变更
+- 当状态回调参数是incremental = false，为全量变更；true为增量变更。
 
 --------------------
 

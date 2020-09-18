@@ -83,7 +83,7 @@ public class HomeViewModel extends ViewModel {
         listMutableLiveData.observe(owner, observer);
     }
 
-    private NEScheduleMeetingStatusListener listener = changedMeetingItemList -> {
+    private NEScheduleMeetingStatusListener listener = (changedMeetingItemList ,incremental)-> {
         if (changedMeetingItemList == null || changedMeetingItemList.size() <= 0) {
             return;
         }

@@ -25,6 +25,9 @@
   
   function init() {
     neWebMeeting.actions.init(800, 600);  // （width，height）单位px 建议比例4:3
+    neWebMeeting.actions.afterLeave(() => {
+      console.log('离开会议回调')
+    })
   }
   function destory() {
     neWebMeeting.actions.destory(); // 销毁

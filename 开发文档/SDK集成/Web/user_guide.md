@@ -92,6 +92,11 @@
     }
     neWebMeeting.actions.join(obj, callback)
     ```
+6. 结束、离开会议回调
+
+    ```js
+    neWebMeeting.actions.afterLeave(callback) // 可在初始化后执行该方法进行注册
+    ```
 
 7. 当前页面成员信息
     ```js
@@ -104,7 +109,7 @@
     //avRoomUid: uid
     ```
 
-7. 与会成员信息
+8. 与会成员信息
     ```js
     neWebMeeting.actions.joinMemberInfo // 参会成员map，key是avRoomUid
     {

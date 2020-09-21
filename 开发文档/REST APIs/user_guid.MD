@@ -159,6 +159,93 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     
+### 修改会议
+
+1. 接口描述  
+
+修改预约会议。
+
+2. 接口请求地址
+
+```
+POST https:/${domain}/v2/meeting/edit HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+3. 输入参数
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| meetingUniqueId | Long | 会议唯一Id | 是 |
+| subject | String | 预约会议主题 | 否 |
+| startTime | Long | 预约开始时间，毫秒 | 否 |
+| endTime | Long | 预约结束时间，毫秒，-1无限期 | 否 |
+| password | String | 会议密码，密码置空传空串 | 否 |
+| settings | JsonObject | 会议设置，设置有修改要传json里全部参数 | 否 |
+| attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 | 否 |
+
+4. 输出参数
+无
+ 
+```    
+//成功结果示例
+"Content-Type": "application/json; charset=utf-8"
+{
+  "code": 200
+}
+
+//失败结果示例
+{
+    "code":501,
+    "msg":"服务器内部错误"
+}
+```
+
+### 取消会议
+
+1. 接口描述  
+
+取消预约会议。
+
+2. 接口请求地址
+
+```
+POST https:/${domain}/v2/meeting/cancel HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+4. 输出参数
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| meetingUniqueId | Long | 会议唯一Id | 是 |
+
+3. 输入参数
+```json
+{
+  "meetingUniqueId": 110119120
+}
+```
+
+4. 输出参数
+无
+
+```    
+//成功结果示例
+"Content-Type": "application/json; charset=utf-8"
+{
+  "code": 200
+}
+
+//失败结果示例
+{
+    "code":501,
+    "msg":"服务器内部错误"
+}
+```
+    
+
+
 ## 错误码
 | 错误码 | 说明 |
 | :------: | :------: |
@@ -178,6 +265,9 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
 | 2023 | 非法会议类型|
 | 2010 | 会议被锁定 |
 | 2011 | 会议id已被占用 |
+| 2017 | 会议主题格式错误 |
+| 2021 | 会议已结束|
+| 2025 | 会议信息不能被修改 |
 | 2100 | 没有主持人权限 |
 | 2101 | 该成员未在会议中 |
 | 2102 | 会控码错误 |
@@ -186,6 +276,8 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
 | 5000 | 该租户不存在 |
 | 5001 | 租户类型错误 |
 | 6000 | 应用组已存在 |
+| 3003 | 功能不支持  | 
+| 2002 | 该会议已在进行中 | 
 
 ## 签名代码Demo
 

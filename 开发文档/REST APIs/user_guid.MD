@@ -107,7 +107,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | password | String| 否 | 会议密码，无密码为空串|
     | settings | JsonObject| 否 | 会议设置|
     | settings.attendeeAudioOff | Boolean| 否 | 加入会议后静音，默认不静音|
-    | subject | String |  type=3: 是; type=1: 否| 预约会议主题|
+    | subject | String | 是 | 会议主题 30字符以内|
     | startTime | Long| type=3: 是; type=1: 否| 预约开始时间，毫秒|
     | endTime | Long| type=3: 是; type=1: 否| 预约结束时间，毫秒|
 
@@ -177,7 +177,7 @@ Content-Type: application/json;charset=utf-8
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | meetingUniqueId | Long | 会议唯一Id | 是 |
-| subject | String | 预约会议主题 30字符以内 | 是 |
+| subject | String | 会议主题 30字符以内 | 是 |
 | startTime | Long | 预约开始时间，毫秒 | 否 |
 | endTime | Long | 预约结束时间，毫秒，-1无限期 | 否 |
 | password | String | 会议密码，密码置空传空串 | 否 |

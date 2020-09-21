@@ -177,7 +177,7 @@ Content-Type: application/json;charset=utf-8
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | meetingUniqueId | Long | 会议唯一Id | 是 |
-| subject | String | 预约会议主题 | 否 |
+| subject | String | 预约会议主题 30字符以内 | 是 |
 | startTime | Long | 预约开始时间，毫秒 | 否 |
 | endTime | Long | 预约结束时间，毫秒，-1无限期 | 否 |
 | password | String | 会议密码，密码置空传空串 | 否 |

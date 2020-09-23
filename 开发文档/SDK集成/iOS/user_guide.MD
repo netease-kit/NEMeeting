@@ -10,6 +10,7 @@
 | 2020-08-31 | 1.1.0 | 新增如下接口：<br />     `NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
 | 2020-09-04 | 1.2.0 | 新增如下接口：<br />    `NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
 | 2020-09-18 | 1.2.3 | 新增如下接口：<br /><br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#createScheduleMeetingItem`创建一个会议条目<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#addListener:`注册会议事件回调<br />`NEPreMeetingService#removeListener`反注册会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChange`会议状态回调 |
+| 2020-09-22 | 1.2.4 | 新增遥控器服务：<br /> `NEMeetingOptions#minimizeEnable` 配置会议中是否允许最小化会议页面<br /> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`会议最小化状态<br />`NEMeetingSDK#getControlService` 遥控器服务<br />`NEControlService#openControlUI`打开遥控器<br /> `NEControlService#getCurrentMeetingInfo ` 获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空<br /> `NEControlService#addListener`注册遥控器事件回调<br />`NEControlService#removeListener`反注册遥控器事件回调<br />`NEMeetingService#returnToMeeting`返回已最小化的会议页面 |
 
 ## 快速接入
 
@@ -493,6 +494,8 @@ NSArray *meetingStatus = @[@(NEMeetingItemStatusInit),
 #### 注意事项
 
 - 在SDK初始化成功后可以调用
+- 1.2.2版本及以后增加了MEETING_STATUS_WAITING状态
+- 1.2.4版本及以后当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。若需要返回会议界面，调用接口 `[[NEMeetingSDK getInstance].getMeetingService returnToMeeting]`
 
 --------------------
 
@@ -664,3 +667,83 @@ BOOL videoEnabled = [settingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
 - 针对已登录用户而言，每个用户有自己独立的一份会议设置；其他所有未登录用户、匿名用户共享一份会议设置。
 - 会议设置项仅在当前设备上保存，不会漫游。
 - 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
+
+--------------------
+
+### 使用遥控器服务
+
+#### 描述
+
+通过遥控器服务，可打开遥控器页面，和电视进行配对，也可以自定义遥控器的设置、邀请按钮。
+
+#### 业务流程
+
+1. 获取遥控器服务
+
+   ```objective-c
+   NEControlService *controlService = [[NEMeetingSDK getInstance] getControlService];
+   ```
+
+2. 打开遥控器
+
+   ```objc
+   //params
+   NEControlParams *params = [[NEControlParams alloc] init];
+   params.displayName = @"测试DisplayName";
+   
+   //options
+   NEControlOptions *options = [[NEControlOptions alloc] init];
+   
+   //options - settingMenu
+   NEControlMenuItem *settingItem = [[NEControlMenuItem alloc] init];
+   settingItem.title = @"测试设置Item";
+   options.settingMenu = settingItem;
+   
+   //options - shareMenu
+   NEControlMenuItem *shareItem = [[NEControlMenuItem alloc] init];
+   shareItem.title = @"测试分享Item";
+   options.shareMenu = shareItem;
+   
+   //打开遥控器
+   NEControlService *controlService = [[NEMeetingSDK getInstance] getControlService];
+   [controlService openControlUI:params opts:options callback:^(NSInteger resultCode, NSString *resultMsg) {
+       if (resultCode != ERROR_CODE_SUCCESS) {
+           //打开失败
+       } else {
+           //打开成功
+       }
+   }];
+   ```
+
+3. 自定义遥控器的设置、邀请按钮
+
+```objc
+//移除遥控器事件监听
+- (void)dealloc {
+    [[[NEMeetingSDK getInstance] getControlService] removeListener:self];
+}
+
+//添加遥控器事件监听
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[[NEMeetingSDK getInstance] getControlService] addListener:self];
+}
+
+//<NEControlListener>
+- (void)onInjectedSettingMenuItemClick:(NEControlMenuItem *)item
+                                  info:(NEMeetingInfo *)info {
+       //遥控器首页右上角设置自定义按钮菜单点击事件
+}
+
+- (void)onInjectedShareMenuItemClick:(NEControlMenuItem *)item
+                                info:(NEMeetingInfo *)info {
+        //遥控器会控页面邀请设置自定义按钮菜单点击事件                          
+}
+```
+
+
+
+#### 注意事项
+
+- 登陆状态下才能够使用遥控器服务
+- 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者位互斥逻辑。

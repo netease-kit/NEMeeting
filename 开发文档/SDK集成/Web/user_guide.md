@@ -100,8 +100,7 @@
 
 7. 当前页面成员信息
     ```js
-    neWebMeeting.actions.memberInfo
-    //内部属性：
+    neWebMeeting.actions.memberInfo //内部属性：
     //nickName: 入会名称
     //audio: 音频状态
     //video: 视频状态
@@ -126,6 +125,13 @@
             video:2, // 视频状态
         }
     }
+    ```
+
+9. 设置组件的宽高
+
+    ```js
+    neWebMeeting.actions.width = 100; // 设置宽度，单位px
+    neWebMeeting.actions.height = 100; // 设置高度，单位px
     ```
 
 #### 注意事项

@@ -54,10 +54,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
         NEStartMeetingParams params = new NEStartMeetingParams();
         params.meetingId = first;
         params.displayName = second;
-        NEStartMeetingOptions options = null;
-        if (isNotUseDefaultMeetingOptions()) {
-            options = (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
-        }
+        NEStartMeetingOptions options = (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
 
         showDialogProgress("正在创建会议...");
         mViewModel.startMeeting(params, options, new MeetingCallback());

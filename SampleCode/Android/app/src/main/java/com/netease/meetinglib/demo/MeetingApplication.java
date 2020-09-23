@@ -7,6 +7,7 @@ package com.netease.meetinglib.demo;
 
 import android.app.Application;
 
+
 public class MeetingApplication extends Application {
     private static MeetingApplication instance;
 

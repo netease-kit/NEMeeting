@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
+import com.netease.meetinglib.sdk.NEJoinMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
@@ -33,7 +34,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     protected CheckBox usePersonalMeetingId;
-    private CheckBox[] checkBoxes = new CheckBox[4];
+    private CheckBox[] checkBoxes = new CheckBox[6];
     private CheckBox useDefaultMeetingOptions;
     protected List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
 
@@ -48,6 +49,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         checkBoxes[1] = view.findViewById(R.id.audioOption);
         checkBoxes[2] = view.findViewById(R.id.noChatOptions);
         checkBoxes[3] = view.findViewById(R.id.noInviteOptions);
+        checkBoxes[4] = view.findViewById(R.id.minimize_enable);
+        checkBoxes[5] = view.findViewById(R.id.show_meeting_time);
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
         useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
@@ -65,7 +68,11 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         useDefaultMeetingOptions.setChecked(false);
         useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox, checked) -> {
             checkBoxes[0].setEnabled(!checked);
+            checkBoxes[0].setChecked(false);
             checkBoxes[1].setEnabled(!checked);
+            checkBoxes[1].setChecked(false);
+            checkBoxes[5].setEnabled(!checked);
+            checkBoxes[5].setChecked(false);
         });
         injectedMoreMenuItems.clear();
         NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
@@ -89,10 +96,14 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     public NEMeetingOptions getMeetingOptions(NEMeetingOptions options) {
-        options.noVideo = !isChecked(0);
-        options.noAudio = !isChecked(1);
+        if (isNotUseDefaultMeetingOptions()) {
+            options.noVideo = !isChecked(0);
+            options.noAudio = !isChecked(1);
+            options.showMeetingTime = isChecked(5);
+        }
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
+        options.minimizeEnable = isChecked(4);
 //        addMeetingInfoItem();
         if (injectedMoreMenuItems != null && injectedMoreMenuItems.size() > 0) {
             options.injectedMoreMenuItems = injectedMoreMenuItems;
@@ -114,7 +125,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         return checkBoxes[index].isChecked();
     }
 
-    protected  class MeetingCallback extends ToastCallback<Void> {
+    protected class MeetingCallback extends ToastCallback<Void> {
 
         public MeetingCallback() {
             super(getActivity(), getActionLabel());

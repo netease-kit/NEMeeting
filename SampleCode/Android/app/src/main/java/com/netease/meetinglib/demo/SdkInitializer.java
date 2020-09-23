@@ -36,21 +36,17 @@ public class SdkInitializer {
 
     private SdkInitializer() {}
 
-    public static final String CONFIG_KEY_SHARE_IM_INSTANCE = "";
-
     private Context context;
     private boolean started = false;
     private boolean initialized = false;
     private int initializeTimes = 0;
     private ConnectivityManager.NetworkCallback networkCallback;
     private Set<InitializeListener> listenerSet;
-    private SharedPreferences preferences;
 
     public void startInitialize(Context context) {
         if (!started) {
             started = true;
             this.context = context;
-            preferences = context.getSharedPreferences("meeting-sdk-init-config", Context.MODE_PRIVATE);
             initializeSdk();
         }
     }
@@ -66,11 +62,17 @@ public class SdkInitializer {
         listenerSet.add(listener);
     }
 
+    public void removeListener(InitializeListener listener) {
+        if (listenerSet != null && listener != null) {
+            listenerSet.remove(listener);
+        }
+    }
+
     private void initializeSdk() {
         Log.i(TAG, "initializeSdk");
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
-        config.reuseNIM = getBooleanConfig(CONFIG_KEY_SHARE_IM_INSTANCE, false);
+        config.appName = context.getString(R.string.app_name);
         NEMeetingSDK.getInstance().initialize(context, config, new ToastCallback<Void>(context,"初始化"){
             @Override
             public void onResult(int resultCode, String resultMsg, Void resultData) {
@@ -121,13 +123,6 @@ public class SdkInitializer {
         }
     }
 
-    public void setBooleanConfig(String key, boolean value) {
-        preferences.edit().putBoolean(key, value).apply();
-    }
-
-    public boolean getBooleanConfig(String key, boolean def) {
-        return preferences.getBoolean(key, def);
-    }
 
     public interface InitializeListener {
 

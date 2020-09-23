@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_homeFragment_to_entranceFragment"
             app:destination="@id/entranceFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/joinMeetingFragment"
@@ -58,7 +61,8 @@
     <fragment
         android:id="@+id/startMeetingFragment"
         android:name="com.netease.meetinglib.demo.view.StartMeetingFragment"
-        android:label="StartMeetingFragment" />
+        android:label="StartMeetingFragment"
+        tools:layout="@layout/fragment_meeting_base"/>
     <fragment
         android:id="@+id/scheduleMeetingFragment"
         android:name="com.netease.meetinglib.demo.view.ScheduleMeetingFragment"

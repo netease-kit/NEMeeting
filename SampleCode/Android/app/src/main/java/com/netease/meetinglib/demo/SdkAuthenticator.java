@@ -40,9 +40,9 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
         return INSTANCE;
     }
 
-
     private static final String KEY_ACCOUNT = "ACCOUNT";
     private static final String KEY_PWD = "PWD";
+    public static final String KEY_NICK_NAME = "NICK_NAME";
 
     private Context context;
 
@@ -130,9 +130,12 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                 public void onResult(int resultCode, String resultMsg, Void resultData) {
                     //手动退出登录才进行toast提示
                     if (manual) super.onResult(resultCode, resultMsg, resultData);
-                    if (state.compareAndSet(AUTHORIZED, UN_AUTHORIZE) && resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
-                        SPUtils.getInstance().remove(KEY_ACCOUNT);
-                        notifyStateChanged();
+                    if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
+                        if (state.compareAndSet(AUTHORIZED, UN_AUTHORIZE)) {
+                            SPUtils.getInstance().remove(KEY_ACCOUNT);
+                            SPUtils.getInstance().remove(KEY_NICK_NAME);
+                            notifyStateChanged();
+                        }
                     }
                 }
             });
@@ -173,16 +176,16 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     }
 
     public static String getAccount() {
-        Log.i(TAG, "getAccount");
-       String account =  SPUtils.getInstance()
-                .getString(KEY_ACCOUNT, "xxxx");
-        return account.substring(account.length() -4);
+        String nickName;
+        nickName = SPUtils.getInstance()
+                .getString(KEY_NICK_NAME);
+        if (TextUtils.isEmpty(nickName)) {
+            nickName = SPUtils.getInstance()
+                    .getString(KEY_ACCOUNT, "xxxx");
+            nickName = nickName.substring(nickName.length() - 4);
+        }
+        return nickName;
     }
-
-    public interface CallBack {
-        void onResult(boolean b);
-    }
-
 
     public interface AuthStateChangeListener {
 

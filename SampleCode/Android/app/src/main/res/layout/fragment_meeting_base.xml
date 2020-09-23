@@ -13,19 +13,21 @@
 
         <Button
             android:id="@+id/actionBtn"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="60dp"
-            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:textSize="16sp"
+            android:background="@drawable/button_circle_shape"
+            android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId"
+            app:layout_constraintTop_toBottomOf="@id/action_to_meeting_settings"
             tools:text="加入会议" />
 
         <Button
             android:id="@+id/addMenuItemButton"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="增加菜单"
             android:textSize="14sp"
@@ -50,8 +52,7 @@
             app:layout_constraintLeft_toRightOf="@id/videoOption"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/thirdEditor"
-            app:layout_constraintTop_toTopOf="@id/videoOption"
-            tools:checked="true" />
+            app:layout_constraintTop_toTopOf="@id/videoOption" />
 
         <CheckBox
             android:id="@+id/usePersonalMeetingId"
@@ -80,8 +81,27 @@
             android:layout_marginTop="8dp"
             android:text="入会时关闭聊天菜单"
             app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-            app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId"
-            tools:checked="true" />
+            app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId" />
+
+        <CheckBox
+            android:id="@+id/minimize_enable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="入会时支持最小化"
+            app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+            app:layout_constraintTop_toBottomOf="@id/noChatOptions" />
+        <Button
+            android:id="@+id/action_to_meeting_settings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:textSize="12sp"
+            android:text="自定义会议设置"
+            app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+            app:layout_constraintTop_toBottomOf="@id/minimize_enable" />
 
         <CheckBox
             android:id="@+id/noInviteOptions"
@@ -90,8 +110,15 @@
             android:layout_marginTop="8dp"
             android:text="入会时关闭邀请菜单"
             app:layout_constraintLeft_toLeftOf="@id/audioOption"
-            app:layout_constraintTop_toBottomOf="@id/useDefaultOptions"
-            tools:checked="true" />
+            app:layout_constraintTop_toBottomOf="@id/useDefaultOptions" />
+        <CheckBox
+            android:id="@+id/show_meeting_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="显示会议持续时间"
+            app:layout_constraintLeft_toLeftOf="@id/audioOption"
+            app:layout_constraintTop_toBottomOf="@id/noInviteOptions" />
 
         <EditText
             android:id="@+id/firstEditor"

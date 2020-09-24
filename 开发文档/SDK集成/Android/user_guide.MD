@@ -261,7 +261,7 @@ NEMeetingSDK.getInstance().getMeetingService().startMeeting(getActivity(), param
 - 创建会议时，会议号可以配置为个人会议号(登录后可通过**AccountService**获取)，或者置空(此时由服务器随机分配会议号)。
 - 该接口仅支持**在登录鉴权成功后调用**，其他状态下调用不会成功
 - 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
-- android 进入会议后，某些机型如果点击了最小化，请使用最小化Icon的方式，回到会议界面。实例参考Sample
+- android 进入会议后，某些机型如果点击了Home按键，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 
 --------------------
 
@@ -321,7 +321,7 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 - 会议号不能为空，需要配置为真实进行中的会议ID
 - 该接口支持登录和未登录状态调用
 - 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
-- android 进入会议后，某些机型如果点击了最小化，请使用最小化Icon的方式，回到会议界面。实例参考Sample
+- android 进入会议后，某些机型如果点击了Home，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 --------------------
 
 ### 创建预约会议
@@ -541,7 +541,7 @@ NEMeetingSDK.getInstance().getMeetingService().removeMeetingStatusListener(liste
 - 在SDK初始化成功后可以调用
 - 1.2.2版本及以后增加了MEETING_STATUS_WAITING状态
 - 1.2.4版本及以后当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。若需要返回会议界面，调用接口***NEMeetingSDK.getInstance().getMeetingService().returnToMeeting(this)***
-- android 进入会议后，某些机型如果点击了最小化，请使用最小化Icon的方式，回到会议界面。实例参考Sample
+- android 进入会议后，某些机型如果点击了home按键，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 
 --------------------
 ### 获取当前会议信息

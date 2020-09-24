@@ -10,7 +10,7 @@
 | 2020-08-31  | 1.1.0 |新增如下接口：<ul><li>`NEMeetingSDK#isInitialized()`查询SDK初始化状态</li><li>`NEMeetingService#getMeetingStatus()`查询当前会议状态</li><li>`NEMeetingService#returnToMeeting()`重新显示会议UI</li><li>会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项</li></ul>|
 | 2020-09-04  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li>  <li>`NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
 | 2020-09-18  | 1.2.3 |新增如下接口：<ul><li>`NEJoinMeetingParams#password`新增密码入会字段</li><li> `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态 </li><li> `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 </li>  <li>`NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段 <li> `NEMeetingSDK#NEPreMeetingService`新增预约会议服务 </li><li> `NEPreMeetingService#scheduleMeeting` 新增预定会议 </li> <li> `NEPreMeetingService#cancelMeeting`新增取消已预定的会议 </li> <li> `NEPreMeetingService#getMeetingItemById`新增查询预定会议信息 </li> <li> `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表 </li> <li> `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器 </li> <li> `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 </li></ul>|
-| 2020-09-22  | 1.2.4 |新增遥控器服务：`NEMeetingSDK#getControlService()` <ul><li>`NEControlService#openControlUI`打开遥控器</li><li> `NEControlService#setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 </li><li> `NEControlService#getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空 </li>  </ul>|
+| 2020-09-24  | 1.2.5 |新增如下接口：<ul><li>`NEMeetingSDKConfig#appName`增加配置入会应用名称 </li> <li>`NEMeetingOptions#noMinimize`配置会议中是否允许最小化会议页面 </li> <li> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`新增会议最小化状态 </li> <li>`NEMeetingSDK#getControlService()`新增遥控器服务 </li><li>`NEControlService#openControlUI`打开遥控器</li><li> `NEControlService#setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 </li><li> `NEControlService#registerControlListener`注册监听遥控器回调 </li><li> `NEControlService#unRegisterControlListener`反注册监听遥控器回调 </li><li> `NEControlService#getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空 </li>  </ul>|
 
 ## 快速接入
 
@@ -42,7 +42,7 @@
     ```groovy
     dependencies {
       //声明SDK依赖，版本可根据实际需要修改
-      implementation 'com.netease.yunxin:meetinglib:1.2.0'
+      implementation 'com.netease.yunxin:meetinglib:1.2.5'
     }
     ```
     之后通过顶部菜单'Build -> Make Project'构建工程，触发依赖下载，完成后即可在代码中引入SDK中的类和方法。
@@ -83,6 +83,7 @@
             super.onCreate();
             NEMeetingSDKConfig config = new NEMeetingSDKConfig();
             config.appKey = Constants.APPKEY;
+            config.appName = context.getString(R.string.app_name);
             NEMeetingSDK.getInstance().initialize(this, config, new NECallback<Void>() {
                 @Override
                 public void onResult(int resultCode, String resultMsg, Void resultData) {
@@ -144,6 +145,7 @@
 ```java
 NEMeetingSDKConfig config = new NEMeetingSDKConfig();
 config.appKey = Constants.APPKEY; //应用AppKey
+config.appKey = context.getString(R.string.app_name); //应用AppName
 ```
 
 2. 调用接口并进行回调处理，该接口无额外回调结果数据
@@ -164,6 +166,7 @@ NEMeetingSDK.getInstance().initialize(getApplication(), config, new NECallback<V
 #### 注意事项
 
 - 初始化操作需要保证在**Application**类的**onCreate**方法中执行
+- 应用名称，该名称会显示在会议页面的顶部标题栏中，如果不设置，默认显示为<b>会议</b>
 
 --------------------
 
@@ -223,6 +226,7 @@ options.noVideo = true;                                      //入会时关闭�
 options.noAudio = true;                                      //入会时关闭音频，默认为true
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
+options.noMinimize = true;                              //入会是否允许最小化会议页面，默认为true
 options.injectedMoreMenuItems = addMeetingInfoItem();    //自定义【更多】按钮菜单。（参考自定义会中【更多】菜单内容#注意事项）
 
 private List<NEMeetingMenuItem> addMeetingInfoItem() {
@@ -256,6 +260,8 @@ NEMeetingSDK.getInstance().getMeetingService().startMeeting(getActivity(), param
 
 - 创建会议时，会议号可以配置为个人会议号(登录后可通过**AccountService**获取)，或者置空(此时由服务器随机分配会议号)。
 - 该接口仅支持**在登录鉴权成功后调用**，其他状态下调用不会成功
+- 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
+- android 进入会议后，某些机型如果点击了Home按键，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 
 --------------------
 
@@ -280,6 +286,7 @@ options.noVideo = true;                                      //入会时关闭�
 options.noAudio = true;                                      //入会时关闭音频，默认为true
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
+options.noMinimize = true;                              //入会是否允许最小化会议页面，默认为true
 options.injectedMoreMenuItems = addMeetingInfoItem();    //自定义【更多】按钮菜单。（参考自定义会中【更多】菜单内容#注意事项）
  
 private List<NEMeetingMenuItem> addMeetingInfoItem() {
@@ -313,7 +320,8 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 
 - 会议号不能为空，需要配置为真实进行中的会议ID
 - 该接口支持登录和未登录状态调用
-
+- 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
+- android 进入会议后，某些机型如果点击了Home，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 --------------------
 
 ### 创建预约会议
@@ -531,7 +539,9 @@ NEMeetingSDK.getInstance().getMeetingService().removeMeetingStatusListener(liste
 #### 注意事项
 
 - 在SDK初始化成功后可以调用
-- 1.2.2版本之后增加了MEETING_STATUS_WAITING状态
+- 1.2.2版本及以后增加了MEETING_STATUS_WAITING状态
+- 1.2.4版本及以后当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。若需要返回会议界面，调用接口***NEMeetingSDK.getInstance().getMeetingService().returnToMeeting(this)***
+- android 进入会议后，某些机型如果点击了home按键，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 
 --------------------
 ### 获取当前会议信息
@@ -797,9 +807,28 @@ NEMeetingSDK.getInstance().getControlService().setOnCustomMenuItemClickListener(
     });
 
 ```
+4. 遥控器内部状态监听注册和反注册
+
+```java
+
+    NEControlListener controlListener = new NEControlListener() {
+        @Override
+        public void onStartMeetingResult(NEControlResult status) {
+            Toast.makeText(MainActivity.this, "遥控器开始会议事件回调:" + status.code + "#" + status.message, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onJoinMeetingResult(NEControlResult status) {
+            Toast.makeText(MainActivity.this, "遥控器加入会议事件回调:" + status.code + "#" + status.message, Toast.LENGTH_SHORT).show();
+        }
+    };
+  NEMeetingSDK.getInstance().getControlService().registerControlListener(listener);
+  
+  NEMeetingSDK.getInstance().getControlService().unRegisterControlListener(listener);
+```
 
 #### 注意事项
 
 - 登陆状态下才能够使用遥控器服务
-- 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者位互斥逻辑。
+- 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者为互斥逻辑。
 

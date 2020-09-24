@@ -15,7 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import com.netease.meetinglib.demo.MeetingSettingsActivity;
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.widget.LoadingDialog;
 
@@ -56,6 +58,8 @@ public abstract class CommonFragment extends Fragment {
         action.setText(getActionLabel());
         action.setOnClickListener(v -> performAction(getEditorText(0), getEditorText(1),getEditorText(4)));
 
+        Button actionToMeetingSettings = getView().findViewById(R.id.action_to_meeting_settings);
+        actionToMeetingSettings.setOnClickListener(v ->  MeetingSettingsActivity.start(getActivity()));
     }
 
     protected void addEditorArray(int i, int editor, String[] labels) {

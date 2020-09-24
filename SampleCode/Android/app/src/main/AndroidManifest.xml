@@ -24,6 +24,9 @@
         <activity
             android:name=".MeetingSettingsActivity"
             android:label="会议设置" />
+        <activity
+            android:name=".nim.NIMLoginActivity"
+            android:label="IM登录" />
     </application>
     <!--日历-->
     <uses-permission android:name="android.permission.READ_CALENDAR" />

@@ -7,11 +7,11 @@ package com.netease.meetinglib.demo.view;
 
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.netease.meetinglib.demo.R;
@@ -20,8 +20,17 @@ import com.netease.meetinglib.demo.adapter.MeetingListAdapter;
 import com.netease.meetinglib.demo.base.BaseFragment;
 import com.netease.meetinglib.demo.data.MeetingItem;
 import com.netease.meetinglib.demo.databinding.FragmentHomeBinding;
+import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.demo.viewmodel.HomeViewModel;
+import com.netease.meetinglib.sdk.NECallback;
+import com.netease.meetinglib.sdk.NEMeetingCode;
+import com.netease.meetinglib.sdk.NEMeetingError;
+import com.netease.meetinglib.sdk.NEMeetingItemStatus;
+import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
+import com.netease.meetinglib.sdk.control.NEControlMenuItem;
+import com.netease.meetinglib.sdk.control.NEControlOptions;
+import com.netease.meetinglib.sdk.control.NEControlParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +40,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     private static final String TAG = HomeFragment.class.getSimpleName();
     private HomeViewModel mViewModel;
     private MeetingListAdapter mAdapter;
-    private List<MeetingItem> dataList = new ArrayList<>();
 
     @Override
     protected void initView() {
@@ -59,6 +67,43 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         mViewModel.observeMeetingItems(this, neMeetingItems -> {
             if (neMeetingItems != null) {
                 mAdapter.resetData(neMeetingItems);
+            } else {
+                mAdapter.clear();
+            }
+        });
+        mViewModel.observeChangeMeetingItems(this, neMeetingItems -> {
+            if (mAdapter.getData().size() <= 0) {
+                mAdapter.resetData(neMeetingItems);
+                return;
+            }
+            int len = mAdapter.getData().size();
+            for (int i = 0; i < neMeetingItems.size(); i++) {
+                for (int j = 0; j < len; j++) {
+                    MeetingItem changeItem = neMeetingItems.get(i);
+                    MeetingItem originalItem = mAdapter.getData().get(j);
+                    if (changeItem.getMeetingUniqueId() == originalItem.getMeetingUniqueId()) {
+                        switch (changeItem.getStatus()) {
+                            case init:
+                            case started:
+                            case ended:
+                                mAdapter.updateData(j, changeItem);
+                                break;
+                            default:
+                                mAdapter.deleteItem(j);
+                                break;
+                        }
+                    } else {
+                        switch (changeItem.getStatus()) {
+                            case init:
+                            case started:
+                            case ended:
+                                mAdapter.addNewData(j, changeItem);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
         });
 
@@ -67,8 +112,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
     @Override
     protected void initData() {
-        if (dataList != null) {
-            dataList.clear();
+        if (mAdapter != null) {
+            mAdapter.clear();
         }
         mViewModel.getMeetingList();
     }
@@ -82,9 +127,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         binding.btnStartMeeting.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_startMeetingFragment));
         binding.btnJoinMeeting.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_joinMeetingFragment));
         binding.btnScheduleMeeting.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_scheduleMeetingFragment));
-        binding.btnLogout.setOnClickListener(v -> {
-            SdkAuthenticator.getInstance().logout(true);
-        });
+        binding.btnSetting.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_settingsFragment));
+  }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mAdapter != null) {
+            mAdapter.clear();
+        }
     }
 }

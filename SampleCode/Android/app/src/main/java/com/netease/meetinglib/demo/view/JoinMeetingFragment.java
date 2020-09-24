@@ -43,10 +43,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
         params.meetingId = first;
         params.displayName = second;
         params.password = third;
-        NEJoinMeetingOptions options = null;
-        if (isNotUseDefaultMeetingOptions()) {
-            options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
-        }
+        NEJoinMeetingOptions options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
         showDialogProgress("正在加入会议...");
         mViewModel.joinMeeting(params, options, new MeetingCallback());
     }

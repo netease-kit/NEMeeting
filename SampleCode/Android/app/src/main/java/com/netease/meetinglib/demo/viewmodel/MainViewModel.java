@@ -108,7 +108,7 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
 
     @Override
     public void onMeetingStatusChanged(Event event) {
-        Boolean value = event.status == NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED;
+        Boolean value = event.status == NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED || event.status == NEMeetingStatus.MEETING_STATUS_INMEETING;
         if (minimizedLiveData.getValue() != value) {
             minimizedLiveData.setValue(value);
         }

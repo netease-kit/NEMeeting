@@ -96,6 +96,7 @@
 
     ```js
     neWebMeeting.actions.afterLeave(callback) // 可在初始化后执行该方法进行注册
+    // 成功离开会议，成功结束会议，主持人结束会议，其他端收到通知，均会触发
     ```
 
 7. 当前页面成员信息

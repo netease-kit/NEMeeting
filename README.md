@@ -6,7 +6,8 @@
 1. [iOS SDK API使用手册](开发文档/SDK集成/iOS/user_guide.MD)
 2. [Android SDK API使用手册](开发文档/SDK集成/Android/user_guide.MD)
 3. [Windows&macOS SDK API使用手册](开发文档/SDK集成/Windows&macOS/user_guide.md)
-4. [web SDK API使用手册](开发文档/SDK集成/Web/user_guide.md)
+4. [Web SDK API使用手册](开发文档/SDK集成/Web/user_guide.md)
+4. [Android TV SDK API使用手册](开发文档/SDK集成/TV/user_guide.md)
 
 ## 服务端 APIS
 1. [REST APIs](开发文档/REST%20APIs/user_guid.MD)

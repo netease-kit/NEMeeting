@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (weak, nonatomic) IBOutlet UITextField *passworkInput;
-@property (nonatomic ,strong) UIButton *settingBtn;
+@property (weak, nonatomic) IBOutlet UIButton *settingBtn;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoin;
 @property (nonatomic, readonly) BOOL openMicWhenJoin;
@@ -30,6 +30,7 @@
 @property (nonatomic, readonly) BOOL useDefaultConfig;
 @property (nonatomic, readonly) BOOL disableChat;
 @property (nonatomic, readonly) BOOL disableInvite;
+@property (nonatomic, readonly) BOOL disableMinimize;
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 @end
@@ -57,13 +58,13 @@
     self.type = _type;
     [_configCheckBox setItemTitleWithArray:@[@"入会时打开摄像头",
                                              @"入会时打开麦克风",
-                                             @"显示会议持续时间",
-                                             @"入会时关闭聊天菜单",
-                                             @"入会时关闭邀请菜单"]];
-    [_settingCheckBox setItemTitleWithArray:@[@"使用默认会议设置"]];
+                                             @"显示会议持续时间"]];
+    [_settingCheckBox setItemTitleWithArray:@[@"入会时关闭聊天菜单",
+                                              @"入会时关闭邀请菜单",
+                                              @"入会时隐藏最小化",
+                                              @"使用默认会议设置"]];
+    [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.settingBtn];
-    self.navigationItem.rightBarButtonItem = item;
 }
 
 #pragma mark - Action
@@ -81,6 +82,7 @@
         options.showMeetingTime = [self showMeetingTime];
         options.noChat = [self disableChat];
         options.noInvite = [self disableInvite];
+        options.noMinimize = [self disableMinimize];
         options.injectedMoreMenuItems = _menuItems;
     }
 
@@ -96,7 +98,7 @@
     }];
 }
 
-- (void)onEnterSettingAction:(id)sender {
+- (IBAction)onEnterSettingAction:(id)sender {
     MeetingSettingVC *vc = [[MeetingSettingVC alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -107,7 +109,7 @@
     if (checkbox != _settingCheckBox) {
         return;
     }
-    if (index == 0) {
+    if (index == 3) {
         _configCheckBox.disableAllItems = [self useDefaultConfig];
         _settingBtn.hidden = ![self useDefaultConfig];
     }
@@ -169,29 +171,19 @@
 }
 
 - (BOOL)disableChat {
-    return [_configCheckBox getItemSelectedAtIndex:3];
-}
-
-- (BOOL)disableInvite {
-    return [_configCheckBox getItemSelectedAtIndex:4];
-}
-
-- (BOOL)useDefaultConfig {
     return [_settingCheckBox getItemSelectedAtIndex:0];
 }
 
-- (UIButton *)settingBtn {
-    if (!_settingBtn) {
-        _settingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _settingBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        _settingBtn.frame = CGRectMake(0, 0, 60, 40);
-        [_settingBtn setTitle:@"会议设置" forState:UIControlStateNormal];
-        _settingBtn.hidden = YES;
-        [_settingBtn addTarget:self
-                        action:@selector(onEnterSettingAction:)
-              forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _settingBtn;
+- (BOOL)disableInvite {
+    return [_settingCheckBox getItemSelectedAtIndex:1];
+}
+
+- (BOOL)disableMinimize {
+    return [_settingCheckBox getItemSelectedAtIndex:2];
+}
+
+- (BOOL)useDefaultConfig {
+    return [_settingCheckBox getItemSelectedAtIndex:3];
 }
 
 @end

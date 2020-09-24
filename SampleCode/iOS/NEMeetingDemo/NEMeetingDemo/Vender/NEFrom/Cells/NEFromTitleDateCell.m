@@ -47,8 +47,8 @@
 
 - (void)doInit {
     [super doInit];
-    [self addSubview:self.titleLabel];
-    [self addSubview:self.dateBtn];
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.dateBtn];
 }
 
 - (void)refreshCellWithRow:(NEFromRow *)row {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +25,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <inset key="titleEdgeInsets" minX="-86" minY="94" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="即刻会议" image="createMeeting">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="titleColor" systemColor="darkTextColor"/>
                     </state>
                     <connections>
                         <action selector="onCreateMeetingAction:" destination="-1" eventType="touchUpInside" id="w1h-fm-HZ6"/>
@@ -35,7 +36,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <inset key="titleEdgeInsets" minX="-84" minY="94" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="加入会议" image="joinMeeting">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="titleColor" systemColor="darkTextColor"/>
                     </state>
                     <connections>
                         <action selector="onJoinMeetingAction:" destination="-1" eventType="touchUpInside" id="LKE-vu-Nrm"/>
@@ -56,19 +57,39 @@
                         <action selector="onSubscribeMeeting:" destination="-1" eventType="touchUpInside" id="Chx-EH-b1F"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xNN-eb-ixU">
+                    <rect key="frame" x="0.0" y="185" width="414" height="677"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4d0-sL-vt9">
                     <rect key="frame" x="0.0" y="184" width="414" height="1"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="08h-Yb-6jK"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xNN-eb-ixU">
-                    <rect key="frame" x="0.0" y="185" width="414" height="677"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oka-Kf-ASm">
+                    <rect key="frame" x="338" y="770" width="60" height="60"/>
+                    <color key="backgroundColor" red="0.15686274509803921" green="0.39215686274509803" blue="0.99215686274509807" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="gHZ-uC-AzT"/>
+                        <constraint firstAttribute="height" constant="60" id="iTS-j2-l9a"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="设置"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="30"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="onEnterActionVC:" destination="-1" eventType="touchUpInside" id="dPt-u8-eq7"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="5mi-9O-URq" firstAttribute="centerY" secondItem="2Cq-gG-56c" secondAttribute="centerY" id="1Nq-vn-hEE"/>
                 <constraint firstItem="xNN-eb-ixU" firstAttribute="top" secondItem="4d0-sL-vt9" secondAttribute="bottom" id="2If-Br-4eU"/>
@@ -77,7 +98,9 @@
                 <constraint firstItem="xNN-eb-ixU" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="Cx8-eG-CVX"/>
                 <constraint firstItem="5mi-9O-URq" firstAttribute="width" secondItem="SYQ-ni-pjq" secondAttribute="width" id="Hex-Pp-7Q6"/>
                 <constraint firstItem="2Cq-gG-56c" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="OBs-NI-oWb"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="oka-Kf-ASm" secondAttribute="bottom" constant="32" id="OPd-3y-nrn"/>
                 <constraint firstItem="2Cq-gG-56c" firstAttribute="centerY" secondItem="SYQ-ni-pjq" secondAttribute="centerY" id="OsZ-aD-gEB"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="oka-Kf-ASm" secondAttribute="trailing" constant="16" id="PO2-Bg-hMU"/>
                 <constraint firstItem="5mi-9O-URq" firstAttribute="height" secondItem="SYQ-ni-pjq" secondAttribute="height" id="R9N-Ff-S1q"/>
                 <constraint firstItem="2Cq-gG-56c" firstAttribute="width" secondItem="SYQ-ni-pjq" secondAttribute="width" id="ZpA-Sh-IDx"/>
                 <constraint firstItem="SYQ-ni-pjq" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="d3B-kq-SiJ"/>
@@ -90,7 +113,6 @@
                 <constraint firstItem="2Cq-gG-56c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SYQ-ni-pjq" secondAttribute="trailing" constant="20" id="wTV-PT-gkk"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="5mi-9O-URq" secondAttribute="trailing" priority="500" constant="32" id="xtg-e3-9Cf"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="-13.043478260869566" y="64.955357142857139"/>
         </view>
     </objects>
@@ -98,5 +120,17 @@
         <image name="createMeeting" width="84" height="84"/>
         <image name="joinMeeting" width="84" height="84"/>
         <image name="subscribeMeeting" width="84" height="84"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

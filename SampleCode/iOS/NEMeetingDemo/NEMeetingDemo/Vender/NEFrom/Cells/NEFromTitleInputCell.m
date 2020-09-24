@@ -29,9 +29,9 @@
 
 - (void)doInit {
     [super doInit];
-    [self addSubview:self.titleLabel];
-    [self addSubview:self.inputTextView];
-    [self addSubview:self.funButton];
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.inputTextView];
+    [self.contentView addSubview:self.funButton];
 }
 
 - (void)layoutSubviews {

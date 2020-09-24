@@ -32,7 +32,7 @@
 
 - (void)doInit {
     [super doInit];
-    [self addSubview:self.inputTextView];
+    [self.contentView addSubview:self.inputTextView];
 }
 
 - (void)refreshCellWithRow:(NEFromRow *)row {

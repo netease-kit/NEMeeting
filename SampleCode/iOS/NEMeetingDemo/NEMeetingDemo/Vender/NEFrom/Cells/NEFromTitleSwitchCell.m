@@ -29,9 +29,9 @@
 
 - (void)doInit {
     [super doInit];
-    [self addSubview:self.titleLabel];
-    [self addSubview:self.subTitleLabel];
-    [self addSubview:self.switchView];
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.subTitleLabel];
+    [self.contentView addSubview:self.switchView];
 }
 
 - (void)refreshCellWithRow:(NEFromRow *)row {

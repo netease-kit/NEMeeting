@@ -49,6 +49,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private MainViewModel mViewModel;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        NEMeetingService meetingService = mViewModel.getMeetingService();
+        if (meetingService != null && meetingService.getMeetingStatus()
+                == NEMeetingStatus.MEETING_STATUS_INMEETING) {
+            meetingService.returnToMeeting(this);
+        }
+    }
+
+    @Override
     protected void initView() {
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         //return to meeting if it is in-meeting

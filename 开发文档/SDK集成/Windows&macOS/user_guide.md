@@ -100,6 +100,12 @@ NEMeetingSDK::getInstance()->initialize(config, [this](NEErrorCode errorCode, co
 });
 ```
 
+当 SDK 初始化后，您可以通过接口查询初始化状态，接口返回 true 为已经初始化，返回 false 为未初始化
+
+```C++
+auto flag = NEMeetingSDK::getInstance()->isInitialized();
+```
+
 **2）登录鉴权**
 
 初始化完成后，您可以调用登录接口来登录到 SDK 中。
@@ -236,6 +242,16 @@ if (meetingService)
     meetingService->getCurrentMeetingInfo([this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingInfo& meetingInfo) {
         // 获取会议信息后的回调函数，您可以通过 meetingInfo 获取所需信息
     });
+}
+```
+
+同时您可以通过接口获取当前会议的状态，会议状态请见 `meeting.h` 头文件中的 NEMeetingStatus 枚举：
+
+```
+auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (ipcMeetingService)
+{
+    auto status = ipcMeetingService->getMeetingStatus();
 }
 ```
 

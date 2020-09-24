@@ -10,7 +10,7 @@
 | 2020-08-31  | 1.1.0 |新增如下接口：<ul><li>`NEMeetingSDK#isInitialized()`查询SDK初始化状态</li><li>`NEMeetingService#getMeetingStatus()`查询当前会议状态</li><li>`NEMeetingService#returnToMeeting()`重新显示会议UI</li><li>会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项</li></ul>|
 | 2020-09-04  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li>  <li>`NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
 | 2020-09-18  | 1.2.3 |新增如下接口：<ul><li>`NEJoinMeetingParams#password`新增密码入会字段</li><li> `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态 </li><li> `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 </li>  <li>`NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段 <li> `NEMeetingSDK#NEPreMeetingService`新增预约会议服务 </li><li> `NEPreMeetingService#scheduleMeeting` 新增预定会议 </li> <li> `NEPreMeetingService#cancelMeeting`新增取消已预定的会议 </li> <li> `NEPreMeetingService#getMeetingItemById`新增查询预定会议信息 </li> <li> `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表 </li> <li> `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器 </li> <li> `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 </li></ul>|
-| 2020-09-22  | 1.2.4 |新增遥控器服务：<ul><li>`NEMeetingOptions#noMinimize`配置会议中是否允许最小化会议页面 </li> <li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`新增会议最小化状态 </li> <li>`NEMeetingSDK#getControlService()` </li><li>`NEControlService#openControlUI`打开遥控器</li><li> `NEControlService#setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 </li><li> `NEControlService#getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空 </li>  </ul>|
+| 2020-09-22  | 1.2.4 |新增遥控器服务：<ul><li>`NEMeetingSDKConfig#appName`增加配置入会应用名称 </li> <li>`NEMeetingOptions#noMinimize`配置会议中是否允许最小化会议页面 </li> <li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`新增会议最小化状态 </li> <li>`NEMeetingSDK#getControlService()` </li><li>`NEControlService#openControlUI`打开遥控器</li><li> `NEControlService#setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 </li><li> `NEControlService#getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空 </li>  </ul>|
 
 ## 快速接入
 
@@ -83,6 +83,7 @@
             super.onCreate();
             NEMeetingSDKConfig config = new NEMeetingSDKConfig();
             config.appKey = Constants.APPKEY;
+            config.appName = context.getString(R.string.app_name);
             NEMeetingSDK.getInstance().initialize(this, config, new NECallback<Void>() {
                 @Override
                 public void onResult(int resultCode, String resultMsg, Void resultData) {
@@ -144,6 +145,7 @@
 ```java
 NEMeetingSDKConfig config = new NEMeetingSDKConfig();
 config.appKey = Constants.APPKEY; //应用AppKey
+config.appKey = context.getString(R.string.app_name); //应用AppName
 ```
 
 2. 调用接口并进行回调处理，该接口无额外回调结果数据
@@ -164,6 +166,7 @@ NEMeetingSDK.getInstance().initialize(getApplication(), config, new NECallback<V
 #### 注意事项
 
 - 初始化操作需要保证在**Application**类的**onCreate**方法中执行
+- 应用名称，该名称会显示在会议页面的顶部标题栏中，如果不设置，默认显示为<b>会议</b>
 
 --------------------
 

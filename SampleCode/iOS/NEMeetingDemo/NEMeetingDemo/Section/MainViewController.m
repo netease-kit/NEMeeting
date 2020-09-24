@@ -8,13 +8,11 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
-#import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
-@property (nonatomic, strong) UIButton *mulIMBtn;
 @property (nonatomic, strong) TimerButton *restoreMeetingBtn;
 
 @end
@@ -55,11 +53,6 @@
     }
 }
 
-- (void)onEnterMulAction:(UIButton *)sender {
-    IMLoginVC *vc = [[IMLoginVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 - (void)onRestoreMeetingAction:(UIButton *)sender {
     BOOL ret = [[NEMeetingSDK getInstance].getMeetingService returnToMeeting];
     if (ret) {
@@ -81,22 +74,7 @@
                                env_lab.frame.size.height);
     [[UIApplication sharedApplication].keyWindow addSubview:env_lab];
 #endif
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.mulIMBtn];
-    self.navigationItem.rightBarButtonItem = item;
     [[UIApplication sharedApplication].keyWindow addSubview:self.restoreMeetingBtn];
-}
-
-- (UIButton *)mulIMBtn {
-    if (!_mulIMBtn) {
-        _mulIMBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_mulIMBtn setTitle:@"IM复用" forState:UIControlStateNormal];
-        _mulIMBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        _mulIMBtn.frame = CGRectMake(0, 0, 60, 40);
-        [_mulIMBtn addTarget:self
-                      action:@selector(onEnterMulAction:)
-            forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _mulIMBtn;
 }
 
 #pragma mark - MeetingServiceListener

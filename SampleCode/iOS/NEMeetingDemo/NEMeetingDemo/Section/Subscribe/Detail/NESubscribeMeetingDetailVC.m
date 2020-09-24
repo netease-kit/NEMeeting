@@ -18,6 +18,8 @@
 @property (nonatomic, readonly) NEPreMeetingService *preMeetingService;
 @property (nonatomic, readonly) NEMeetingService *meetingService;
 
+@property (nonatomic, weak) UIAlertController *alertVC;
+
 @end
 
 @implementation NESubscribeMeetingDetailVC
@@ -36,6 +38,13 @@
     [self.view addSubview:self.joinMeetingBtn];
     [self setupForm];
     [self updateWithMeetingStatus];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (_alertVC) {
+        [_alertVC dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -148,6 +157,7 @@
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
     [alertVC addAction:cancel];
+    _alertVC = alertVC;
     [self presentViewController:alertVC animated:YES completion:nil];
 }
 

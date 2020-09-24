@@ -20,6 +20,10 @@
 		410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B431C24AB295B00017FA6 /* EnterMeetingVC.m */; };
 		4111C2D424D2B20500550390 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4111C2D324D2B20500550390 /* Config.m */; };
 		41228FAB24E69D7D00C7B717 /* MeetingSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */; };
+		414EF1EC251AE73F00F9D91A /* MeetingActionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 414EF1EA251AE73F00F9D91A /* MeetingActionVC.m */; };
+		414EF1ED251AE73F00F9D91A /* MeetingActionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 414EF1EB251AE73F00F9D91A /* MeetingActionVC.xib */; };
+		414EF22B251C8F4B00F9D91A /* TimerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 414EF22A251C8F4A00F9D91A /* TimerButton.m */; };
+		414EF236251C9D1700F9D91A /* NENavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414EF235251C9D1700F9D91A /* NENavigationController.m */; };
 		41937CAB24B4611C00A06BF2 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41937CA224B4611C00A06BF2 /* SVRadialGradientLayer.m */; };
 		41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41937CA524B4611C00A06BF2 /* SVProgressAnimatedView.m */; };
 		41937CAD24B4611C00A06BF2 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41937CA724B4611C00A06BF2 /* SVProgressHUD.m */; };
@@ -94,6 +98,13 @@
 		4111C2D324D2B20500550390 /* Config.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingSettingVC.h; sourceTree = "<group>"; };
 		41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingSettingVC.m; sourceTree = "<group>"; };
+		414EF1E9251AE73F00F9D91A /* MeetingActionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingActionVC.h; sourceTree = "<group>"; };
+		414EF1EA251AE73F00F9D91A /* MeetingActionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingActionVC.m; sourceTree = "<group>"; };
+		414EF1EB251AE73F00F9D91A /* MeetingActionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingActionVC.xib; sourceTree = "<group>"; };
+		414EF229251C8F4A00F9D91A /* TimerButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimerButton.h; sourceTree = "<group>"; };
+		414EF22A251C8F4A00F9D91A /* TimerButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimerButton.m; sourceTree = "<group>"; };
+		414EF234251C9D1700F9D91A /* NENavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NENavigationController.h; sourceTree = "<group>"; };
+		414EF235251C9D1700F9D91A /* NENavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NENavigationController.m; sourceTree = "<group>"; };
 		41937CA224B4611C00A06BF2 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		41937CA324B4611C00A06BF2 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		41937CA424B4611C00A06BF2 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -197,6 +208,9 @@
 				410B432224AB2FF800017FA6 /* MeetingControlVC.h */,
 				410B432324AB2FF800017FA6 /* MeetingControlVC.m */,
 				410B432424AB2FF800017FA6 /* MeetingControlVC.xib */,
+				414EF1E9251AE73F00F9D91A /* MeetingActionVC.h */,
+				414EF1EA251AE73F00F9D91A /* MeetingActionVC.m */,
+				414EF1EB251AE73F00F9D91A /* MeetingActionVC.xib */,
 				41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */,
 				41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
@@ -226,6 +240,8 @@
 			children = (
 				410B430F24AB289600017FA6 /* CheckBox.h */,
 				410B431024AB289600017FA6 /* CheckBox.m */,
+				414EF229251C8F4A00F9D91A /* TimerButton.h */,
+				414EF22A251C8F4A00F9D91A /* TimerButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -235,6 +251,8 @@
 			children = (
 				410B433D24AC5F1100017FA6 /* BaseViewController.h */,
 				410B433E24AC5F1100017FA6 /* BaseViewController.m */,
+				414EF234251C9D1700F9D91A /* NENavigationController.h */,
+				414EF235251C9D1700F9D91A /* NENavigationController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -474,6 +492,7 @@
 				419EE4DD2508BE36004F8984 /* SubDateCell.xib in Resources */,
 				410B433224AB5C2A00017FA6 /* StartMeetingVC.xib in Resources */,
 				41937CAF24B4611C00A06BF2 /* SVProgressHUD.bundle in Resources */,
+				414EF1ED251AE73F00F9D91A /* MeetingActionVC.xib in Resources */,
 				419EE4D52508BA23004F8984 /* SubscribeMeetingListVC.xib in Resources */,
 				410B432624AB2FF800017FA6 /* MeetingControlVC.xib in Resources */,
 				41A1C99424A302F9003369D3 /* LaunchScreen.storyboard in Resources */,
@@ -571,13 +590,16 @@
 				419EE5112509BB25004F8984 /* NEFromBaseCell.m in Sources */,
 				419EE4F82508D3EE004F8984 /* NEFromTextFieldCell.m in Sources */,
 				41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m in Sources */,
+				414EF236251C9D1700F9D91A /* NENavigationController.m in Sources */,
 				419EE5182509D5C6004F8984 /* NESubscribeMeetingConfigVC.m in Sources */,
+				414EF22B251C8F4B00F9D91A /* TimerButton.m in Sources */,
 				410B435C24AC914900017FA6 /* StartMeetingVC.m in Sources */,
 				410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m in Sources */,
 				419EE5122509C202004F8984 /* NEFromRow.m in Sources */,
 				419EE52C250A4B96004F8984 /* NEDateItem.m in Sources */,
 				419EE51B250A0501004F8984 /* NEFromTitleSwitchCell.m in Sources */,
 				419EE51A250A018D004F8984 /* NEFromDatePicker.m in Sources */,
+				414EF1EC251AE73F00F9D91A /* MeetingActionVC.m in Sources */,
 				410B431A24AB294100017FA6 /* LoginViewController.m in Sources */,
 				410B432124AB2DB000017FA6 /* UIView+Toast.m in Sources */,
 				41937CAD24B4611C00A06BF2 /* SVProgressHUD.m in Sources */,
@@ -743,7 +765,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";
@@ -767,7 +789,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";
@@ -844,7 +866,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Dev";

@@ -122,6 +122,9 @@
         [_picker setDate:[NSDate date] animated:YES];
         _picker.timeZone = [NSTimeZone systemTimeZone];;
         _picker.minuteInterval = 30;
+        if (@available(iOS 13.4, *)) {
+            _picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+        }
     }
     return _picker;
 }

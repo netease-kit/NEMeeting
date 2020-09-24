@@ -24,11 +24,16 @@
     return YES;
 }
 
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
 - (void)doSetupMeetingSdk {
     NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
     config.appKey = kAppKey;
     config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
     config.enableDebugLog = YES;
+    config.appName = @"测试APP Name";
     [SVProgressHUD showWithStatus:@"初始化..."];
     [[NEMeetingSDK getInstance] initialize:config
                                   callback:^(NSInteger resultCode, NSString *resultMsg, id result) {

@@ -12,8 +12,9 @@
 #import "LoginViewController.h"
 #import "SubscribeMeetingListVC.h"
 #import "NESubscribeMeetingConfigVC.h"
+#import "MeetingActionVC.h"
 
-@interface MeetingControlVC ()<NEAuthListener>
+@interface MeetingControlVC ()<NEAuthListener, NEControlListener>
 
 @property (weak, nonatomic) IBOutlet UIView *subscribeListContainer;
 @property (strong, nonatomic) SubscribeMeetingListVC *subscribeListVC;
@@ -25,12 +26,14 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NEMeetingSDK getInstance] removeAuthListener:self];
+    [[[NEMeetingSDK getInstance] getControlService] removeListener:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
     [[NEMeetingSDK getInstance] addAuthListener:self];
+    [[[NEMeetingSDK getInstance] getControlService] addListener:self];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -41,12 +44,6 @@
 #pragma mark - Function
 - (void)setupUI {
     [self hiddenBackButton];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [btn setTitle:@"注销" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(doLogout) forControlEvents:UIControlEventTouchUpInside];
-    btn.size = CGSizeMake(60, 44);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [self addChildViewController:self.subscribeListVC];
     [self.subscribeListContainer addSubview:self.subscribeListVC.view];
 }
@@ -98,9 +95,47 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (IBAction)onEnterActionVC:(id)sender {
+    MeetingActionVC *vc = [[MeetingActionVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - <MeetingServiceListener>
 - (void)onKickOut {
     [self doBeKicked];
+}
+
+#pragma mark - <>
+- (void)onStartMeetingResult:(NEControlResult *)result {
+    if (result.code == ERROR_CODE_SUCCESS) {
+        return;
+    }
+    NSString *msg = [NSString stringWithFormat:@"start: code:%d msg:%@", (int)result.code, result.message];
+    if (self.presentedViewController) {
+        [self.presentedViewController.view makeToast:msg
+                                            duration:2
+                                            position:CSToastPositionCenter];
+    } else {
+        [[UIApplication sharedApplication].keyWindow makeToast:msg
+                                                      duration:2
+                                                      position:CSToastPositionCenter];
+    }
+}
+
+- (void)onJoinMeetingResult:(NEControlResult *)result {
+    if (result.code == ERROR_CODE_SUCCESS) {
+        return;
+    }
+    NSString *msg = [NSString stringWithFormat:@"join:code:%d msg:%@", (int)result.code, result.message];
+    if (self.presentedViewController) {
+        [self.presentedViewController.view makeToast:msg
+                                            duration:2
+                                            position:CSToastPositionCenter];
+    } else {
+        [[UIApplication sharedApplication].keyWindow makeToast:msg
+                                                      duration:2
+                                                      position:CSToastPositionCenter];
+    }
 }
 
 #pragma mark - Getter

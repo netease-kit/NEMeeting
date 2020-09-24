@@ -27,7 +27,7 @@
 
 - (void)doInit {
     [super doInit];
-    [self addSubview:self.titleLabel];
+    [self.contentView addSubview:self.titleLabel];
 }
 
 - (void)refreshCellWithRow:(NEFromRow *)row {

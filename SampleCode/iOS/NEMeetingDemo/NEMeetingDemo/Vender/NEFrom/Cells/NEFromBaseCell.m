@@ -35,7 +35,9 @@
     self.accessoryType = row.accessoryType;
 }
 
-- (void)doInit {};
+- (void)doInit {
+    self.backgroundColor = [UIColor whiteColor];
+};
 
 #pragma mark - Getter
 - (UILabel *)titleLabel {

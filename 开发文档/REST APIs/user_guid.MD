@@ -108,7 +108,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
 
     | 参数 | 类型 | 必选 | 描述 |
     | :------: | :------: | :------: | :------: |
-    | accountId | String | 是 | 应用内唯一的用户账号id |
+    | accountId | String | 是 | 应用内唯一的用户账号id 会议创建人 默认主持人|
     | type | String | 是 | 会议类型 1 随机号即时会议; 2 个人号即时会议; 3 随机号预约会议 |
     | password | String| 否 | 会议密码，无密码为空串|
     | settings | JsonObject| 否 | 会议设置|

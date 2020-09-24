@@ -828,5 +828,5 @@ NEMeetingSDK.getInstance().getControlService().setOnCustomMenuItemClickListener(
 #### 注意事项
 
 - 登陆状态下才能够使用遥控器服务
-- 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者位互斥逻辑。
+- 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者为互斥逻辑。
 

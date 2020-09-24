@@ -19,6 +19,7 @@ import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
 import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
+import com.netease.meetinglib.sdk.control.NEControlListener;
 import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
 
 public class MainViewModel extends ViewModel implements NEMeetingStatusListener, SdkInitializer.InitializeListener, SdkAuthenticator.AuthStateChangeListener {
@@ -79,7 +80,12 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     public void setOnControlCustomMenuItemClickListener(NEControlMenuItemClickListener listener) {
         mRepository.setOnControlCustomMenuItemClickListener(listener);
     }
-
+    public void registerControlListener(NEControlListener listener) {
+        mRepository.registerControlListener(listener);
+    }
+    public void unRegisterControlListener(NEControlListener listener) {
+        mRepository.unRegisterControlListener(listener);
+    }
     public NEMeetingService getMeetingService() {
         return mRepository.getMeetingService();
     }

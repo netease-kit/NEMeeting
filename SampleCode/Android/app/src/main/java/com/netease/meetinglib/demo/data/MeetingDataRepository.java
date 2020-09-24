@@ -17,10 +17,10 @@ import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
-import com.netease.meetinglib.sdk.NEPreMeetingService;
 import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
 import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEStartMeetingParams;
+import com.netease.meetinglib.sdk.control.NEControlListener;
 import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
 import com.netease.meetinglib.sdk.control.NEControlOptions;
 import com.netease.meetinglib.sdk.control.NEControlParams;
@@ -133,6 +133,14 @@ public class MeetingDataRepository {
 
     public void setOnControlCustomMenuItemClickListener(NEControlMenuItemClickListener listener) {
         NEMeetingSDK.getInstance().getControlService().setOnCustomMenuItemClickListener(listener);
+    }
+
+    public void registerControlListener(NEControlListener listener) {
+        NEMeetingSDK.getInstance().getControlService().registerControlListener(listener);
+    }
+
+    public void unRegisterControlListener(NEControlListener listener) {
+        NEMeetingSDK.getInstance().getControlService().unRegisterControlListener(listener);
     }
 
     /////////////////////////////////////////////////

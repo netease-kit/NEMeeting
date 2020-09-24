@@ -16,13 +16,13 @@ import androidx.annotation.Nullable;
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
-import com.netease.meetinglib.sdk.NEJoinMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
+import com.netease.meetinglib.sdk.NESettingsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         checkBoxes[1] = view.findViewById(R.id.audioOption);
         checkBoxes[2] = view.findViewById(R.id.noChatOptions);
         checkBoxes[3] = view.findViewById(R.id.noInviteOptions);
-        checkBoxes[4] = view.findViewById(R.id.minimize_enable);
+        checkBoxes[4] = view.findViewById(R.id.no_minimize);
         checkBoxes[5] = view.findViewById(R.id.show_meeting_time);
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
@@ -100,10 +100,15 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             options.noVideo = !isChecked(0);
             options.noAudio = !isChecked(1);
             options.showMeetingTime = isChecked(5);
+        }else {
+            NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsService();
+            options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
+            options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
+            options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
         }
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
-        options.minimizeEnable = isChecked(4);
+        options.noMinimize = isChecked(4);
 //        addMeetingInfoItem();
         if (injectedMoreMenuItems != null && injectedMoreMenuItems.size() > 0) {
             options.injectedMoreMenuItems = injectedMoreMenuItems;

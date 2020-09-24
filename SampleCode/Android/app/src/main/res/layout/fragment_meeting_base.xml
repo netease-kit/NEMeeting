@@ -84,11 +84,12 @@
             app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId" />
 
         <CheckBox
-            android:id="@+id/minimize_enable"
+            android:id="@+id/no_minimize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="入会时支持最小化"
+            android:text="入会时隐藏最小化"
+            android:checked="true"
             app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
             app:layout_constraintTop_toBottomOf="@id/noChatOptions" />
         <Button
@@ -101,7 +102,7 @@
             android:textSize="12sp"
             android:text="自定义会议设置"
             app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-            app:layout_constraintTop_toBottomOf="@id/minimize_enable" />
+            app:layout_constraintTop_toBottomOf="@id/no_minimize" />
 
         <CheckBox
             android:id="@+id/noInviteOptions"

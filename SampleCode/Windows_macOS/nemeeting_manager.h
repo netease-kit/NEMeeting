@@ -78,6 +78,7 @@ public:
 
     Q_INVOKABLE void initialize();
     Q_INVOKABLE void unInitialize();
+    Q_INVOKABLE bool isInitializd();
     Q_INVOKABLE void login(const QString& appKey, const QString& accountId, const QString& accountToken);
     Q_INVOKABLE void logout();
     Q_INVOKABLE void showSettings();
@@ -90,7 +91,9 @@ public:
                                  bool enableChatroom = true, bool enableInvitation = true);
     Q_INVOKABLE void invokeJoin(const QString& meetingId, const QString& nickname, bool audio, bool video,
                                 bool enableChatroom = true, bool enableInvitation = true);
+    Q_INVOKABLE void leaveMeeting(bool finish);
     Q_INVOKABLE void getPersonalMeetingId();
+    Q_INVOKABLE int getMeetingStatus();
     Q_INVOKABLE void getMeetingInfo();
 
     // override virtual functions
@@ -114,6 +117,7 @@ signals:
     void showSettingsSignal(int errorCode, const QString& errorMessage);
     void startSignal(int errorCode, const QString& errorMessage);
     void joinSignal(int errorCode, const QString& errorMessage);
+    void leaveSignal(int errorCode, const QString& errorMessage);
     void getCurrentMeetingInfo(const QString& meetingId, bool isHost, bool isLocked);
     void meetingStatusChanged(int meetingStatus, int extCode);
     void meetingInjectedMenuItemClicked(int itemIndex, const QString& itemGuid, const QString& itemTitle, const QString& itemImagePath);

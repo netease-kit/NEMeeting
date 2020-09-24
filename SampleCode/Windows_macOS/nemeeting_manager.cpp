@@ -63,6 +63,13 @@ void NEMeetingManager::unInitialize()
     });
 }
 
+bool NEMeetingManager::isInitializd()
+{
+    auto flag = NEMeetingSDK::getInstance()->isInitialized();
+    qInfo() << "---------------------- SDK init flag: " << flag;
+    return flag;
+}
+
 void NEMeetingManager::login(const QString& appKey, const QString &accountId, const QString &accountToken)
 {
     qInfo() << "Login to apaas server, appkey: " << appKey << ", account ID: " << accountId << ", token: " << accountToken;
@@ -251,6 +258,18 @@ void NEMeetingManager::invokeJoin(const QString &meetingId, const QString &nickn
     }
 }
 
+void NEMeetingManager::leaveMeeting(bool finish)
+{
+    auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+    if (ipcMeetingService)
+    {
+        ipcMeetingService->leaveMeeting(finish, [=](NEErrorCode errorCode, const std::string& errorMessage) {
+            qInfo() << "Leave meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
+            emit leaveSignal(errorCode, QString::fromStdString(errorMessage));
+        });
+    }
+}
+
 void NEMeetingManager::getPersonalMeetingId()
 {
     qInfo() << "Post get personal meeting ID request";
@@ -271,6 +290,17 @@ void NEMeetingManager::getPersonalMeetingId()
             }
         });
     }
+}
+
+int NEMeetingManager::getMeetingStatus()
+{
+    auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+    if (ipcMeetingService)
+    {
+        return ipcMeetingService->getMeetingStatus();
+    }
+
+    return MEETING_STATUS_IDLE;
 }
 
 void NEMeetingManager::getMeetingInfo()

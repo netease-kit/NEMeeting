@@ -13,6 +13,7 @@ Window {
     Component.onCompleted: {
         pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Login.qml'))
         meetingManager.initialize()
+        meetingManager.isInitializd()
     }
 
     ToastManager {

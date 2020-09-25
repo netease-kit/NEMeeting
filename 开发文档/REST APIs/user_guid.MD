@@ -312,7 +312,7 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | msgType | int | 消息类型，3会议结束回调 | 是 |
-| msgBody | JsonObject | 回调内容，json object，下面是body里的字段 | 否 |
+| msgBody | JsonObject | 回调内容，json object，下面是body里的字段 | 是 |
 
 ##### 消息体说明
 ###### 会议结束

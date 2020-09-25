@@ -333,6 +333,7 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
 {
   "msgType": 3,
   "msgBody": {
+    "type": 1,
     "meetingId": "4130603726",
     "meetingUniqueId": 26775,
     "subject": "DEMO",

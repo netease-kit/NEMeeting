@@ -285,44 +285,122 @@ Content-Type: application/json;charset=utf-8
 | 3003 | 功能不支持  | 
 | 2002 | 该会议已在进行中 | 
 
+## 消息抄送
+
+#### 请求说明
+
+```
+POST ${callbackUrl} HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+|请求头|说明|必须|
+|:--- | :-------| :--- |
+| AppKey| 开发者平台分配的appkey| 是 |
+| Nonce| 随机串 | 是 |
+| CheckSum| 校验和 | 是 |
+| CurTime| 生成校验和时的当前系统时间，单位毫秒| 是 |
+
+CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTime + md5_hex_lowercase(msgStr))
+
+#### 响应处理
+##### 重发条件：httpStatusCode != 200
+##### 重发频率：2秒，4秒，6秒，1小时，1小时
+
+#### 参数说明
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| msgType | int | 消息类型，3会议结束回调 | 是 |
+| msgBody | JsonObject | 回调内容，json object，下面是body里的字段 | 是 |
+
+##### 消息体说明
+###### 会议结束
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
+| meetingUniqueId | Long | 会议记录唯一id | 是 |
+| meetingId | String | 个人会议码,10位数字，若为空，则随机分配会议Id | 是 |
+| type | int | 会议类型，1.快速会议，2.个人会议，3.预约会议 | 是 |
+| subject | String | 会议主题 | 是 |
+| reserveStartTime | Long | 预约开始时间，毫秒 | 否 |
+| reserveEndTime | Long | 预约结束时间，毫秒 | 否 |
+| startTime | Long | 会议实际开始时间，毫秒 | 是 |
+| endTime | Long | 会议实际结束时间，毫秒 | 是 |
+| totalMemberCount | Long | 会议总人数 | 是 |
+
+###### 示例
+```json
+{
+  "msgType": 3,
+  "msgBody": {
+    "type": 1,
+    "meetingId": "4130603726",
+    "meetingUniqueId": 26775,
+    "subject": "DEMO",
+    "reserveAccountId": "12345",
+    "reserveStartTime": 1600782488572,
+    "reserveEndTime": 1600782488572,
+    "startTime": 1600782489000,
+    "endTime": 1600782498147,
+    "totalMemberCount": 1
+  }
+}
+```
+
 ## 签名代码Demo
 
 <span id="sign_code" />
 
 ```java
 
-package com.netease.vcloud.meeting.utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.commons.lang3.StringUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class CheckSumBuilder {
-    
-    private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5',
-            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    private static final Logger logger = LoggerFactory.getLogger(CheckSumBuilder.class);
+
+    private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     public static String getCheckSum(String nonce, String curTime, String appSecret) {
         String plaintext = appSecret + nonce + curTime;
         return encode(plaintext, "SHA1");
     }
 
+    public static String getCheckSum(String nonce, String curTime, String appSecret, String data) {
+        String plaintext = appSecret + nonce + curTime + data;
+        return encode(plaintext, "SHA1");
+    }
+
+    // 计算并获取md5值
+    public static String getMD5(String requestBody) {
+        return encode(requestBody, "md5");
+    }
+
     private static String encode(String plaintext, String method) {
-        if (StringUtils.isBlank(plaintext)) {
-            return "";
-        }
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(method);
             messageDigest.update(plaintext.getBytes(StandardCharsets.UTF_8));
             return getFormattedText(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {
-            System.err.println(e);
+            logger.error("Encode error {} msg {}", plaintext, e.getMessage());
         }
+
         return "";
     }
 
-    private static String getFormattedText(byte[] bytes) {
+    /**
+     * Takes the raw bytes from the digest and formats them correct.
+     *
+     * @param bytes
+     *            the raw bytes from the digest.
+     * @return the formatted bytes.
+     */
+    protected static String getFormattedText(byte[] bytes) {
         int len = bytes.length;
         StringBuilder buf = new StringBuilder(len * 2);
         // 把密文转换成十六进制的字符串形式

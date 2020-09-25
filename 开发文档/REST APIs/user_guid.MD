@@ -303,6 +303,10 @@ Content-Type: application/json;charset=utf-8
 
 CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTime + md5_hex_lowercase(msgStr))
 
+#### 响应处理
+##### 重发条件：httpStatusCode != 200
+##### 重发频率：2秒，4秒，6秒，1小时，1小时
+
 #### 参数说明
 
 |请求体参数|类型|说明|必须|
@@ -341,10 +345,6 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
   }
 }
 ```
-
-#### 响应处理
-##### 重发条件：httpStatusCode != 200
-##### 重发频率：2秒，4秒，6秒，1小时，1小时
 
 ## 签名代码Demo
 

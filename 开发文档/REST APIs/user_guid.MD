@@ -353,7 +353,6 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
 
 ```java
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -383,9 +382,6 @@ public class CheckSumBuilder {
     }
 
     private static String encode(String plaintext, String method) {
-        if (StringUtils.isBlank(plaintext)) {
-            return "";
-        }
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(method);
             messageDigest.update(plaintext.getBytes(StandardCharsets.UTF_8));

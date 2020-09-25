@@ -327,8 +327,8 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
 ###### 示例
 ```json
 {
-  "type": 3,
-  "body": {
+  "msgType": 3,
+  "msgBody": {
     "meetingId": "4130603726",
     "meetingUniqueId": 26775,
     "subject": "DEMO",

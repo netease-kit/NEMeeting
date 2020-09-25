@@ -313,6 +313,7 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
 ##### 消息体说明
 ###### 会议结束
 | meetingId | String | 个人会议码,10位数字，若为空，则随机分配会议Id | 否 |
+|:--- | :-------| :--- | :--- |
 | type | int | 会议类型，1.快速会议，2.个人会议，3.预约会议 | 是 |
 | subject | String | 会议主题 | 是 |
 | reserveStartTime | Long | 预约开始时间，毫秒 | 否 |

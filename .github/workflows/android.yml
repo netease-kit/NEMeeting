@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_android:
-    name: Build Android（Mobile）APK
+    name: Build Android（Mobile）
     runs-on: macos-latest
     defaults:
       run:

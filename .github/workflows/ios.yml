@@ -1,0 +1,24 @@
+
+name: ios
+
+on:
+  push:
+    branches: 
+      - master
+      - develop
+      - release/*
+  pull_request:
+    branches: 
+      - master
+      - develop
+      - release/*
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign

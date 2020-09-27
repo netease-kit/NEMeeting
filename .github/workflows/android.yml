@@ -1,5 +1,5 @@
 
-name: CI
+name: android_ci
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_android:
-    name: Build Android(Java) APK
+    name: Build Android（Mobile）APK
     runs-on: macos-latest
     defaults:
       run:
@@ -26,3 +26,4 @@ jobs:
 
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
+  

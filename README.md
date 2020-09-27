@@ -1,5 +1,5 @@
 # 网易会议（NEMeeting）文档说明
-[![android Status](https://github.com/netease-im/NEMeeting/workflows/android_ci/badge.svg)](https://github.com/netease-im/NEMeeting/actions)
+[![android Status](https://github.com/netease-im/NEMeeting/workflows/android/badge.svg)](https://github.com/netease-im/NEMeeting/actions)
 
 本仓库用以说明 网易会议（NEMeeting）的产品使用、SDK集成、服务端API及示例项目（Sample code）
 

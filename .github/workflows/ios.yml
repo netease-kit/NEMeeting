@@ -24,6 +24,3 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Build iOS
-        run: flutter build ios --release --no-codesign

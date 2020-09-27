@@ -1,5 +1,5 @@
 
-name: android_ci
+name: android
 
 on:
   push:

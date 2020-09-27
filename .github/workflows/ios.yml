@@ -15,7 +15,12 @@ on:
 
 jobs:
   build:
+    name: Build iOS
     runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./SampleCode/iOS
 
     steps:
       - uses: actions/checkout@v2

@@ -7,6 +7,7 @@
 
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
+#import "NEFromDatePicker.h"
 
 @interface NESubscribeMeetingConfigVC ()
 
@@ -35,6 +36,11 @@
     _sureBtn.top = self.view.height - 42.0 - _sureBtn.height;
     _sureBtn.centerX = self.view.width/2;
     _sureBtn.layer.cornerRadius = _sureBtn.height/2;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [NEFromDatePickerBar dismiss];
 }
 
 - (void)setupUI {

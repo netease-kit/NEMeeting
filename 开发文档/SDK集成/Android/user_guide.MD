@@ -353,7 +353,7 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
-									 neMeetingItem.setSubject("会议主题")
+	       neMeetingItem.setSubject("会议主题")	     //预约会议主题
                             .setStartTime(startTime)   //预约会议开始时间
                             .setEndTime(endTime)	     //预约会议结束时间								
                         		.setPassword("passWord");  //预约会议配置密码

@@ -71,8 +71,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             } else if (state == SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE) {
                 dissMissDialogProgress();
                 Navigation.findNavController(MainActivity.this, R.id.fragment).navigate(R.id.entranceFragment);
-            } else {
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHORIZING) {
                 showDialogProgress(getString(R.string.login));
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHOR_FAIL) {
+                dissMissDialogProgress();
             }
         });
 

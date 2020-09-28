@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHORIZED;
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHORIZING;
+import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHOR_FAIL;
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE;
 
 /**
@@ -111,6 +112,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
         if (state.get() == AUTHORIZED) {
             Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
         }else{
+            state.set(AUTHORIZING);
+            notifyStateChanged();
             new AsyncTask<Void, Void, Response<SDKAuthInfo>>() {
 
                 @Override
@@ -159,12 +162,14 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                                         .put(KEY_ACCOUNT, account)
                                         .put(KEY_PWD, pwd);
                             } else {
-                                state.set(UN_AUTHORIZE);
+                                state.set(AUTHOR_FAIL);
                             }
                             notifyStateChanged();
                         }
                     });
         } else {
+            state.set(AUTHOR_FAIL);
+            notifyStateChanged();
             Toast.makeText(context,
                     result != null && !TextUtils.isEmpty(result.msg) ? result.msg : "登录失败，请检查网络连接后重试！",
                     Toast.LENGTH_SHORT).show();
@@ -196,6 +201,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     }
 
     public interface AuthStateChangeListener {
+
+        /**
+         * 授权失败
+         */
+        int AUTHOR_FAIL = -2;
 
         /**
          * 未授权

@@ -11,7 +11,7 @@
 | 2020-09-04  | 1.2.0 |新增如下接口：<ul><li>`NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听</li><li> `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息 </li><li> `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 </li>  <li>`NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮 <li> `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项 </li></ul>|
 | 2020-09-18  | 1.2.3 |新增如下接口：<ul><li>`NEJoinMeetingParams#password`新增密码入会字段</li><li> `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态 </li><li> `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 </li>  <li>`NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段 <li> `NEMeetingSDK#NEPreMeetingService`新增预约会议服务 </li><li> `NEPreMeetingService#scheduleMeeting` 新增预定会议 </li> <li> `NEPreMeetingService#cancelMeeting`新增取消已预定的会议 </li> <li> `NEPreMeetingService#getMeetingItemById`新增查询预定会议信息 </li> <li> `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表 </li> <li> `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器 </li> <li> `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 </li></ul>|
 | 2020-09-24  | 1.2.5 |新增如下接口：<ul><li>`NEMeetingSDKConfig#appName`增加配置入会应用名称 </li> <li>`NEMeetingOptions#noMinimize`配置会议中是否允许最小化会议页面 </li> <li> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`新增会议最小化状态 </li> <li>`NEMeetingSDK#getControlService()`新增遥控器服务 </li><li>`NEControlService#openControlUI`打开遥控器</li><li> `NEControlService#setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 </li><li> `NEControlService#registerControlListener`注册监听遥控器回调 </li><li> `NEControlService#unRegisterControlListener`反注册监听遥控器回调 </li><li> `NEControlService#getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空 </li>  </ul>|
-
+| 2020-09-29  | 1.2.6 |新增如下接口：<ul><li>`NEMeetingSDKConfig#NEForegroundServiceConfig`新增配置会议时显示前台服务</li>  <li>`NEAuthListener#onAuthInfoExpired`新增账号信息过期通知 </li>  <li>`NEMeetingCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED`新增当前正在从会议中断开，原因为账号信息已过期</li> </ul>|
 ## 快速接入
 
 #### 开发环境准备
@@ -42,7 +42,7 @@
     ```groovy
     dependencies {
       //声明SDK依赖，版本可根据实际需要修改
-      implementation 'com.netease.yunxin:meetinglib:1.2.5'
+      implementation 'com.netease.yunxin:meetinglib:1.2.6'
     }
     ```
     之后通过顶部菜单'Build -> Make Project'构建工程，触发依赖下载，完成后即可在代码中引入SDK中的类和方法。
@@ -75,7 +75,7 @@
     在使用SDK其他功能之前首先需要完成SDK初始化，初始化操作需要保证在**Application**的**onCreate**方法中执行。代码示例如下：
     ```java
     public class MyApplication extends Application {
-
+    
         private static final String TAG = "MyApplication";
     
         @Override
@@ -146,6 +146,10 @@
 NEMeetingSDKConfig config = new NEMeetingSDKConfig();
 config.appKey = Constants.APPKEY; //应用AppKey
 config.appKey = context.getString(R.string.app_name); //应用AppName
+//配置会议时显示前台服务
+NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
+foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
+config.foregroundServiceConfig = foregroundServiceConfig;
 ```
 
 2. 调用接口并进行回调处理，该接口无额外回调结果数据
@@ -167,6 +171,7 @@ NEMeetingSDK.getInstance().initialize(getApplication(), config, new NECallback<V
 
 - 初始化操作需要保证在**Application**类的**onCreate**方法中执行
 - 应用名称，该名称会显示在会议页面的顶部标题栏中，如果不设置，默认显示为<b>会议</b>
+- 视频会议在会议过程中，如果退到后台，会被系统杀死，因此需要开启前台服务。当前在会议开始之前开启前台，在回去结束后关闭前台服务。详细配置参考**NEForegroundServiceConfig**
 
 --------------------
 
@@ -262,6 +267,7 @@ NEMeetingSDK.getInstance().getMeetingService().startMeeting(getActivity(), param
 - 该接口仅支持**在登录鉴权成功后调用**，其他状态下调用不会成功
 - 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
 - android 进入会议后，某些机型如果点击了Home按键，请使用最小化Icon的方式，回到会议界面。实例参考Sample
+- 当会中修改密码，增加NEMeetingCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED通知
 
 --------------------
 
@@ -347,6 +353,14 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
+NEMeetingItem   neMeetingItem.setSubject("会议主题")
+                            .setStartTime(startTime)  //预约会议开始时间
+                            .setEndTime(endTime)	    //预约会议结束时间								
+                        		.setPassword("passWord"); //预约会议配置密码
+                    }
+                    NEMeetingItemSetting setting = new NEMeetingItemSetting();
+                    setting.isAttendeeAudioOff = false; //是否使用入会时音频开关
+                    neMeetingItem.setSetting(setting);
 NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem, new ToastCallback<NEMeetingItem>() {
                         @Override
                         public void onResult(int resultCode, String resultMsg, NEMeetingItem resultData) {
@@ -619,6 +633,11 @@ NEAuthListener authListener = new NEAuthListener() {
     @Override
     public void onKickOut() {
         //当前账号已在其他设备上登录
+    }
+  
+    @Override
+    public void onAuthInfoExpired() {
+        //账号信息过期通知，原因为用户修改了密码，应用层随后应该重新登录
     }
 };
 NEMeetingSDK.getInstance().addAuthListener(authListener);    //添加监听

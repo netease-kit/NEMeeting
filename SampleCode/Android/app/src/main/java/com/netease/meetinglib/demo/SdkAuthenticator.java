@@ -68,6 +68,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
             public void onKickOut() {
                 onKickedOut();
             }
+
+            @Override
+            public void onAuthInfoExpired() {
+                SdkAuthenticator.this.onAuthInfoExpired();
+            }
         });
     }
 
@@ -103,8 +108,9 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
 
     @SuppressLint("StaticFieldLeak")
     public void login(final String account, final String pwd) {
-        if (state.compareAndSet(UN_AUTHORIZE, AUTHORIZING)) {
-            notifyStateChanged();
+        if (state.get() == AUTHORIZED) {
+            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
+        }else{
             new AsyncTask<Void, Void, Response<SDKAuthInfo>>() {
 
                 @Override
@@ -118,8 +124,6 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                 }
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else if (state.get() == AUTHORIZED) {
-            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -161,8 +165,6 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                         }
                     });
         } else {
-            state.set(UN_AUTHORIZE);
-            notifyStateChanged();
             Toast.makeText(context,
                     result != null && !TextUtils.isEmpty(result.msg) ? result.msg : "登录失败，请检查网络连接后重试！",
                     Toast.LENGTH_SHORT).show();
@@ -172,6 +174,12 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     private void onKickedOut() {
         Log.i(TAG, "onKickOut");
         Toast.makeText(context, "当前账号已在其他设备上登录", Toast.LENGTH_SHORT).show();
+        SdkAuthenticator.getInstance().logout(false);
+    }
+
+    private void onAuthInfoExpired() {
+        Log.i(TAG, "onAuthInfoExpired");
+        Toast.makeText(context, "登录状态已过期，请重新登录", Toast.LENGTH_SHORT).show();
         SdkAuthenticator.getInstance().logout(false);
     }
 

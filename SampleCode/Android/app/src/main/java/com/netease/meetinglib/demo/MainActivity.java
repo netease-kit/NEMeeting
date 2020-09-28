@@ -6,24 +6,18 @@
 package com.netease.meetinglib.demo;
 
 import android.Manifest;
-import android.animation.TimeInterpolator;
-import android.os.Bundle;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.viewbinding.ViewBinding;
 
 import com.netease.meetinglib.demo.base.BaseActivity;
 import com.netease.meetinglib.demo.databinding.ActivityMainBinding;
@@ -39,8 +33,6 @@ import com.netease.meetinglib.sdk.control.NEControlMenuItem;
 import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
 import com.netease.meetinglib.sdk.control.NEControlResult;
 import com.permissionx.guolindev.PermissionX;
-
-import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
@@ -129,18 +121,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     };
 
-    public class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
+    public static class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
         @Override
-        public void onInjectedMenuItemClick(NEMeetingMenuItem menuItem, NEMeetingInfo meetingInfo) {
+        public void onInjectedMenuItemClick(Context context, NEMeetingMenuItem menuItem, NEMeetingInfo meetingInfo) {
             switch (menuItem.itemId) {
                 case 101:
                     NEMeetingSDK.getInstance().getMeetingService().getCurrentMeetingInfo((resultCode, resultMsg, resultData) -> {
-                        Toast.makeText(MainActivity.this, "获取房间信息NEMeetingInfo:" + resultData.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "获取房间信息NEMeetingInfo:" + resultData.toString(), Toast.LENGTH_SHORT).show();
                         Log.d("OnCustomMenuListener", "getCurrentMeetingInfo:resultCode " + resultCode + "#resultData " + resultData.toString());
                     });
                     break;
                 default:
-                    Toast.makeText(MainActivity.this, "点击事件Id:" + menuItem.itemId + "#点击事件tittle:" + menuItem.itemId, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "点击事件Id:" + menuItem.itemId + "#点击事件tittle:" + menuItem.itemId, Toast.LENGTH_SHORT).show();
                     break;
 
             }
@@ -163,6 +155,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     }
 
+
     @Override
     public boolean onSupportNavigateUp() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
@@ -175,6 +168,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
     private void toggleMeetingMinimizedView(boolean show) {
+        Log.i(TAG, "toggleMeetingMinimizedView: " + show + "==" + binding.meetingMinimizedLayout.getX());
         int dx = getResources().getDimensionPixelSize(R.dimen.meeting_minimized_layout_size);
         if (show) {
             mViewModel.getMeetingTimeLiveData().observe(this, this::updateMeetingTime);

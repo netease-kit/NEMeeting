@@ -61,9 +61,9 @@
     }
 }
 
-- (void)doBeKicked {
+- (void)doBeKickedWithInfo:(NSString *)info {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [window makeToast:@"您已在其他设备登录" duration:2 position:CSToastPositionCenter];
+    [window makeToast:info duration:2 position:CSToastPositionCenter];
     [self doLogout];
 }
 
@@ -102,7 +102,11 @@
 
 #pragma mark - <MeetingServiceListener>
 - (void)onKickOut {
-    [self doBeKicked];
+    [self doBeKickedWithInfo:@"您已在其他设备登录"];
+}
+
+- (void)onAuthInfoExpired {
+    [self doBeKickedWithInfo:@"登录状态已过期，请重新登录"];
 }
 
 #pragma mark - <>

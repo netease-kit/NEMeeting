@@ -145,7 +145,7 @@
 ```java
 NEMeetingSDKConfig config = new NEMeetingSDKConfig();
 config.appKey = Constants.APPKEY; //应用AppKey
-config.appKey = context.getString(R.string.app_name); //应用AppName
+config.appName = context.getString(R.string.app_name); //应用AppName
 //配置会议时显示前台服务
 NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
 foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
@@ -353,10 +353,10 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 2. 调用接口并进行回调处理，可根据错误码判断是否成功
 
 ```java
-NEMeetingItem   neMeetingItem.setSubject("会议主题")
-                            .setStartTime(startTime)  //预约会议开始时间
-                            .setEndTime(endTime)	    //预约会议结束时间								
-                        		.setPassword("passWord"); //预约会议配置密码
+									 neMeetingItem.setSubject("会议主题")
+                            .setStartTime(startTime)   //预约会议开始时间
+                            .setEndTime(endTime)	     //预约会议结束时间								
+                        		.setPassword("passWord");  //预约会议配置密码
                     }
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
                     setting.isAttendeeAudioOff = false; //是否使用入会时音频开关

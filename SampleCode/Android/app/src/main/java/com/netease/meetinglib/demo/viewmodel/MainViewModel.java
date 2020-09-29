@@ -4,6 +4,7 @@ package com.netease.meetinglib.demo.viewmodel;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -16,6 +17,7 @@ import com.netease.meetinglib.demo.SdkInitializer;
 import com.netease.meetinglib.demo.data.MeetingDataRepository;
 import com.netease.meetinglib.sdk.NEMeetingInfo;
 import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
+import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
@@ -23,6 +25,8 @@ import com.netease.meetinglib.sdk.control.NEControlListener;
 import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
 
 public class MainViewModel extends ViewModel implements NEMeetingStatusListener, SdkInitializer.InitializeListener, SdkAuthenticator.AuthStateChangeListener {
+
+    private static final String TAG = "MainViewModel";
 
     private static final int MSG_ACTIVE = 1;
 
@@ -109,6 +113,7 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     @Override
     public void onMeetingStatusChanged(Event event) {
         Boolean value = event.status == NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED || event.status == NEMeetingStatus.MEETING_STATUS_INMEETING;
+        Log.i(TAG, "onMeetingStatusChanged: " + value + "==" + minimizedLiveData.getValue());
         if (minimizedLiveData.getValue() != value) {
             minimizedLiveData.setValue(value);
         }
@@ -116,6 +121,7 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
             meetingInfoLiveData.setValue(null);
         } else if (event.status == NEMeetingStatus.MEETING_STATUS_INMEETING){
             getMeetingService().getCurrentMeetingInfo((code, msg, info) -> {
+                Log.i(TAG, "current meeting info: " + info);
                 meetingInfoLiveData.setValue(info);
             });
         }

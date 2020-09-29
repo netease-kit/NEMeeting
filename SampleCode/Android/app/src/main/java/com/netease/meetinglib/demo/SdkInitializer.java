@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
+import com.netease.meetinglib.sdk.config.NEForegroundServiceConfig;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -73,6 +74,10 @@ public class SdkInitializer {
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
         config.appName = context.getString(R.string.app_name);
+        //配置会议时显示前台服务
+        NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
+        foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
+        config.foregroundServiceConfig = foregroundServiceConfig;
         NEMeetingSDK.getInstance().initialize(context, config, new ToastCallback<Void>(context,"初始化"){
             @Override
             public void onResult(int resultCode, String resultMsg, Void resultData) {

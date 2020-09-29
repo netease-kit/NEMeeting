@@ -165,4 +165,10 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
 
         mAdapter.resetData(dataList);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        CalendarUtil.closeOptionsMenu();
+    }
 }

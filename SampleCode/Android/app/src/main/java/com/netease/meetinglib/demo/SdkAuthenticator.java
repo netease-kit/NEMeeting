@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHORIZED;
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHORIZING;
+import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHOR_FAIL;
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE;
 
 /**
@@ -68,6 +69,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
             public void onKickOut() {
                 onKickedOut();
             }
+
+            @Override
+            public void onAuthInfoExpired() {
+                SdkAuthenticator.this.onAuthInfoExpired();
+            }
         });
     }
 
@@ -103,7 +109,10 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
 
     @SuppressLint("StaticFieldLeak")
     public void login(final String account, final String pwd) {
-        if (state.compareAndSet(UN_AUTHORIZE, AUTHORIZING)) {
+        if (state.get() == AUTHORIZED) {
+            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
+        }else{
+            state.set(AUTHORIZING);
             notifyStateChanged();
             new AsyncTask<Void, Void, Response<SDKAuthInfo>>() {
 
@@ -118,8 +127,6 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                 }
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else if (state.get() == AUTHORIZED) {
-            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -155,13 +162,13 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                                         .put(KEY_ACCOUNT, account)
                                         .put(KEY_PWD, pwd);
                             } else {
-                                state.set(UN_AUTHORIZE);
+                                state.set(AUTHOR_FAIL);
                             }
                             notifyStateChanged();
                         }
                     });
         } else {
-            state.set(UN_AUTHORIZE);
+            state.set(AUTHOR_FAIL);
             notifyStateChanged();
             Toast.makeText(context,
                     result != null && !TextUtils.isEmpty(result.msg) ? result.msg : "登录失败，请检查网络连接后重试！",
@@ -172,6 +179,12 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     private void onKickedOut() {
         Log.i(TAG, "onKickOut");
         Toast.makeText(context, "当前账号已在其他设备上登录", Toast.LENGTH_SHORT).show();
+        SdkAuthenticator.getInstance().logout(false);
+    }
+
+    private void onAuthInfoExpired() {
+        Log.i(TAG, "onAuthInfoExpired");
+        Toast.makeText(context, "登录状态已过期，请重新登录", Toast.LENGTH_SHORT).show();
         SdkAuthenticator.getInstance().logout(false);
     }
 
@@ -188,6 +201,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     }
 
     public interface AuthStateChangeListener {
+
+        /**
+         * 授权失败
+         */
+        int AUTHOR_FAIL = -2;
 
         /**
          * 未授权

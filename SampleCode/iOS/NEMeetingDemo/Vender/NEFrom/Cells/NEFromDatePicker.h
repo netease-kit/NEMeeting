@@ -17,6 +17,8 @@ typedef void(^NDFromDateDidSelected)(NSDate *date);
              maxDate:(NSDate *)maxDate
             selected:(NDFromDateDidSelected)selectedBlock;
 
++ (void)dismiss;
+
 @end
 
 @interface NEFromDatePicker : UIView

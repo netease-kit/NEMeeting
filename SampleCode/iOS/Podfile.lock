@@ -1,0 +1,40 @@
+PODS:
+  - IQKeyboardManager (6.5.6)
+  - NEMeetingSDK (1.2.6):
+    - NERtcSDK (= 3.6.2)
+    - NIMSDK_LITE (>= 7.4.0)
+    - Reachability
+    - YYModel
+  - NERtcSDK (3.6.2)
+  - NIMSDK_LITE (8.0.0)
+  - Reachability (3.2)
+  - XLForm (4.1.0)
+  - YYModel (1.0.4)
+
+DEPENDENCIES:
+  - IQKeyboardManager (~> 6.5.6)
+  - NEMeetingSDK (~> 1.2.6)
+  - XLForm (~> 4.1.0)
+
+SPEC REPOS:
+  trunk:
+    - IQKeyboardManager
+    - NEMeetingSDK
+    - NERtcSDK
+    - NIMSDK_LITE
+    - Reachability
+    - XLForm
+    - YYModel
+
+SPEC CHECKSUMS:
+  IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
+  NEMeetingSDK: ddbc073248f26d6bbebaf8d6f142a03c171504ab
+  NERtcSDK: 01855b97554cf0c856d009db7b296de4f71300c2
+  NIMSDK_LITE: 2b921d2c25f348028bbd1ae1256321d728205bbc
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  XLForm: 7ee02761be8a369d1ad1bbffe738b97083d94f3e
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+
+PODFILE CHECKSUM: 29e30c70a30be1fda8b6e03d04114a7aae37f1eb
+
+COCOAPODS: 1.9.3

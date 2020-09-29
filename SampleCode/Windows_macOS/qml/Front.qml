@@ -269,7 +269,7 @@ Rectangle {
                 toast.show(qsTr('Failed to start meeting'))
                 break
             default:
-                toast.show(errorMessage)
+                toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
         }
@@ -295,7 +295,7 @@ Rectangle {
                 toast.show(qsTr('Failed to join meeting'))
                 break
             default:
-                toast.show(errorMessage)
+                toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
         }

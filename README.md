@@ -17,7 +17,7 @@
 1. [Error Code](开发文档/错误码/error_code.md)
 
 ## Sample code
-1. [运行iOS SampleCode](SampleCode/iOS/NEMeetingDemo/README.md)
+1. [运行iOS SampleCode](SampleCode/iOS/README.md)
 2. [运行Android SampleCode](SampleCode/Android/README.md)
 3. [运行Windows&macOS SampleCode](SampleCode/Windows_macOS/README.md)
 4. [运行Web SampleCode](SampleCode/Web/README.md)

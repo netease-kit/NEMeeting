@@ -313,6 +313,10 @@ Content-Type: application/json;charset=utf-8
 |4000 | 企业会议服务已到期 |
 |4001 | 该应用已达并发上限 |
 
+## 会议状态机
+
+![会议状态机](images/image.png)
+
 ## 消息抄送
 
 #### 请求说明

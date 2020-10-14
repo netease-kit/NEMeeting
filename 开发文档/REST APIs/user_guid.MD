@@ -317,6 +317,22 @@ Content-Type: application/json;charset=utf-8
 
 ![会议状态机](images/image.png)
 
+### MeetingStatus
+```java
+public enum MeetingStatus {
+
+    NOT_START(1, "未开始"),
+
+    IN_MEETING(2, "进行中"),
+
+    ENDED(3, "已终止"),
+
+    CANCELED(4, "已取消"),
+
+    RECYCLED(5, "已回收"),
+}
+```
+
 ## 消息抄送
 
 #### 请求说明
@@ -349,9 +365,9 @@ CheckSum生成规则： checkSum = sha1_hex_lowercase(appSecret + nonce + curTim
 ######
 ```java
 public enum MsgTypeEnum {
-    MEETING_START(1, "会议房间开始"),
+    MEETING_ROOM_START(1, "会议房间开始"),
     MEETING_CANCEL(2, "会议取消且会议号回收"),
-    MEETING_END(3, "会议房间结束"),
+    MEETING_ROOM_END(3, "会议房间结束"),
     MEETING_RECYCLE(4, "会议回收且会议号回收"),
 }
 ```

@@ -389,7 +389,6 @@ public enum MsgTypeEnum {
 | meetingId | String | 个人会议码,10位数字，若为空，则随机分配会议Id | 是 |
 | type | int | 会议类型，1.快速会议，2.个人会议，3.预约会议 | 是 |
 | subject | String | 会议主题 | 是 |
-| producerAccountId| 事件触发账号，如果事件是由人直接触发的，则有此属性 | 否 |
 | time | Long | 事件触发的时间，毫秒 | 是 |
 | reserveStartTime | Long | 预约开始时间，毫秒 | 否 |
 | reserveEndTime | Long | 预约结束时间，毫秒 | 否 |
@@ -407,7 +406,6 @@ public enum MsgTypeEnum {
     "reserveAccountId": "12345",
     "reserveStartTime": 1600782488572,
     "reserveEndTime": 1600782488572,
-    "producerAccountId": "12345",
     "time": 1600782498147
   }
 }

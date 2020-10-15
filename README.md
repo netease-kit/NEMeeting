@@ -24,4 +24,4 @@
 
 ## SDK进阶
 
-1. [NIM复用](开发文档/SDK进阶/reuse_nim.md)
+1. [NIM复用](开发文档/SDK进阶/NIM复用.md)

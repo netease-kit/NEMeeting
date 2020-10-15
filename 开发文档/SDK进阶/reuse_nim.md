@@ -24,8 +24,8 @@ Meeting-Account  -------- 唯一绑定 -------->  IM-Account
 
 |功能|初始化|登录|匿名入会|
 |----|----|----|----|
-|复用关闭|Meeting-SDK会自动初始化IM-SDK|会获取会议账号对应的IM账号自动登录IM-SDK|支持匿名入会|
-|复用开启|Meeting-SDK不会自动初始化IM-SDK，<br>由外部应用负责初始化|不自动登录IM-SDK，<br>会判断会议账号与当前IM账号的对应关系来决定Meeting-SDK登录是否成功|不支持匿名入会|
+|复用关闭|Meeting-SDK会自动初始化IM-SDK|会获取Meeting账号对应的IM账号自动登录IM-SDK|支持匿名入会|
+|复用开启|Meeting-SDK不会自动初始化IM-SDK，由外部应用负责初始化|不自动登录IM-SDK，会判断Meeting账号与当前IM账号的对应关系来决定Meeting-SDK登录是否成功|不支持匿名入会|
 
 ## 复用步骤
 

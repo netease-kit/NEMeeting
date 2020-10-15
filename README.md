@@ -21,3 +21,7 @@
 2. [运行Android SampleCode](SampleCode/Android/README.md)
 3. [运行Windows&macOS SampleCode](SampleCode/Windows_macOS/README.md)
 4. [运行Web SampleCode](SampleCode/Web/README.md)
+
+## SDK进阶
+
+1. [NIM复用](开发文档/SDK进阶/reuse_nim.md)

@@ -49,7 +49,12 @@
 1. 始化化会议组件，设置宽高
 
     ```js
-    neWebMeeting.actions.init(800, 800)//单位是px，建议比例4：3
+    const config = { // 选填，仅限于私有化配置时使用
+        NIMconf: {
+            // IM私有化配置项
+        }
+    }
+    neWebMeeting.actions.init(800, 800, config)//宽，高，配置项 宽高单位是px，建议比例4：3
     ```
 
 2. 销毁WEB组件
@@ -65,10 +70,16 @@
       accountId: '', //账号ID
       accountToken: '', //账号Token
       appkey: '', //云信服务appkey
-      meetingServerDomain: '' //会议服务器地址，支持自定义部署, 为空则默认为云信线上服务器
+      meetingServerDomain: '' //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器
     }
     neWebMeeting.actions.login(obj, callback)
     ```
+
+    meetingServerDomain 如果地址不带协议传，默认使用https，如果地址带协议，则根据地址协议来
+
+    比如：传 xxx.xxx.com 则作为 https://xxx.xxx.com
+
+    传 http://xxx.xxx.com 则使用http协议
 
 4. 创建房间
     ```js
@@ -89,7 +100,7 @@
       video: 1, // 1开启2关闭（匿名加入房间需要）
       audio: 1,  // 1开启2关闭（匿名加入房间需要）
       appkey: '', //云信服务appkey（匿名加入房间需要）
-      meetingServerDomain: '' //会议服务器地址，支持自定义部署, 为空则默认为云信线上服务器（匿名加入房间需要）
+      meetingServerDomain: '' //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器（匿名加入房间需要）
     }
     neWebMeeting.actions.join(obj, callback)
     ```

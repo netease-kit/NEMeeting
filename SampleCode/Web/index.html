@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>neWebMeeting demo</title>
-  <script src="./NeWebMeeting_V1.2.6.js"></script>
+  <script src="./NeWebMeeting_V1.2.8.js"></script>
 </head>
 <body>
   <button onclick="init()">初始化</button>
@@ -24,6 +24,11 @@
    */  
   
   function init() {
+    const config = {
+      NIMConf: {
+        // IM私有化配置
+      }
+    }
     neWebMeeting.actions.init(800, 600);  // （width，height）单位px 建议比例4:3
     neWebMeeting.actions.afterLeave(() => {
       console.log('离开会议回调')

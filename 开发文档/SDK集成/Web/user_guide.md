@@ -9,6 +9,7 @@
 | :------: | :------: | :------- |
 | 2020-09-15  | 1.0.0 | 首次正式发布，支持基础会议功能 |
 | 2020-09-29  | 1.2.6 | 支持预约会议加入，修复已知bug |
+| 2020-10-22 | 1.2.8 | 支持多端互踢，增加*NEMeetingInfo*字段
 
 
 ## 快速接入
@@ -82,6 +83,7 @@
     传 http://xxx.xxx.com 则使用http协议
 
 4. 创建房间
+
     ```js
     const obj = {
       nickName: '', //人员昵称
@@ -93,6 +95,7 @@
     ```
 
 5. 加入房间
+
     ```js
     const obj = {
       nickName: '', //人员昵称
@@ -104,6 +107,7 @@
     }
     neWebMeeting.actions.join(obj, callback)
     ```
+
 6. 结束、离开会议回调
 
     ```js
@@ -112,6 +116,7 @@
     ```
 
 7. 当前页面成员信息
+
     ```js
     neWebMeeting.actions.memberInfo //内部属性：
     //nickName: 入会名称
@@ -122,6 +127,7 @@
     ```
 
 8. 与会成员信息
+
     ```js
     neWebMeeting.actions.joinMemberInfo // 参会成员map，key是avRoomUid
     {
@@ -140,7 +146,16 @@
     }
     ```
 
-9. 设置组件的宽高
+9. 当前会议信息
+
+    ```js
+    neWebMeeting.actions.NEMeetingInfo // 当前会议信息
+    // meetingId 会议ID
+    // isHost 是否主持人
+    // isLocked 会议是否锁定
+    ```
+
+10. 设置组件的宽高
 
     ```js
     neWebMeeting.actions.width = 100; // 设置宽度，单位px
@@ -158,6 +173,7 @@
 - 创建会议后会直接加入会议，无需执行join
 - 登陆的用户在其他页面登陆、创建或加入会议，会影响目前已经加入会议的页面，造成互踢
 - API方法在执行失败后，如需进行错误排查，可以通过callback输出，例：
+
   ```js
     const obj = {
       nickName: '', //人员昵称

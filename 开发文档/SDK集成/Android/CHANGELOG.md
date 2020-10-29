@@ -71,11 +71,11 @@
 # 2020-09-04   @ v1.2.0
 
 ## Added
-* `NEMeetingService.setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听
+* `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`添加自定义菜单按钮监听
 * `NEMeetingService.getCurrentMeetingInfo`获取当前会议信息
 * `NEMeetingOptions.noInvite`配置会议中是否显示"邀请"按钮 
 * `NEMeetingOptions.noChat`配置会议中是否显示"聊天"按钮
-* `NEMeetingOptions.List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项
+* `NEMeetingOptions#injectedMoreMenuItems"更多"菜单中的自定义注入菜单项
 
 -------
 # 2020-08-31  @ v1.1.0
@@ -83,7 +83,6 @@
 ## Added
 * `NEMeetingSDK.isInitialized()`查询SDK初始化状态
 * `NEMeetingService.getMeetingStatus()`查询当前会议状态
-* `NEMeetingService.returnToMeeting()`重新显示会议UI
 * 会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项
 
 -------
@@ -91,5 +90,6 @@
 
 ## Added
 * 首次正式发布
+
 
 

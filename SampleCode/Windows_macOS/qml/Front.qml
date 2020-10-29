@@ -6,8 +6,10 @@ import NetEase.Meeting.MeetingStatus 1.0
 
 Rectangle {
     Component.onCompleted: {
-        meetingManager.getPersonalMeetingId()
+        meetingManager.getAccountInfo()
         meetingManager.isInitializd()
+        checkAudio.checked = meetingManager.checkAudio()
+        checkVideo.checked = meetingManager.checkVideo()
     }
 
     ToolButton {
@@ -167,12 +169,14 @@ Rectangle {
                     id: checkAudio
                     checked: true
                     text: qsTr('Enable audio')
+                    onClicked: meetingManager.setCheckAudio(checkAudio.checked)
                 }
 
                 CheckBox {
                     id: checkVideo
                     checked: true
                     text: qsTr('Enable video')
+                    onClicked: meetingManager.setCheckVideo(checkVideo.checked)
                 }
             }
 
@@ -332,7 +336,7 @@ Rectangle {
             toast.show('Meeting item clicked, item title: ' + itemTitle)
         }
         onGetCurrentMeetingInfo: {
-            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked)
+            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked + ', duration: ' + duration)
         }
         onGetScheduledMeetingList: {
             listModel.clear()
@@ -340,6 +344,18 @@ Rectangle {
             for (let i = 0; i < meetingList.length; i++) {
                 const meeting = meetingList[i]
                 listModel.append(meeting)
+            }
+        }
+
+        onDeviceStatusChanged :{
+            if(type === 1){
+                checkAudio.checked = status
+                toast.show('audio device status is '+ status);
+            }
+            else if(type === 2){
+                checkVideo.checked = status;
+                toast.show('video device status is '+ status);
+
             }
         }
     }

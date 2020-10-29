@@ -3,7 +3,7 @@
 网易会议Android SDK提供了一套简单易用的接口，允许开发者通过调用NEMeeting SDK(以下简称SDK)提供的API，快速地集成音视频会议功能至现有Android应用中。
 
 ## 变更记录
-[Android SDK CHANGELOG.md](CHANGELOG.md)
+[CHANGELOG.md](CHANGELOG.md)
 
 ## 快速接入
 

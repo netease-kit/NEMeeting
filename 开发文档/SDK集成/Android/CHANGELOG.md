@@ -4,30 +4,30 @@
 # 2020-10-29 @ v1.3.0
 
 ## Added
-
-* 支持画廊模式
-* 结束会议添加断网提示
-* 支持会议私有化部署，通过`NEMeetingSDKConfig#useAssetServerConfig`开启
-* `NEMeetingInfo#shortMeetingId`新增会议短号字段
-* 会议账号服务新增获取账号信息`NEAccountService#getAccountInfo()`方法
-* 邀请里面包含了shortId(短号)信息
+* 新增画廊模式
+* 新增结束会议添加断网提示
+* 新增会议私有化部署
+    - 开启私有化配置：`NEMeetingSDKConfig.useAssetServerConfig` 
+* 新增获取会议账号信息方法
+    - `NEAccountService.getAccountInfo()`
+* 支持企业客户自定义个人会议短号
+    - 会议短号获取：`NEAccountInfo.shortMeetingId`
+    - 邀请里面包含了短号字段 `shortId`
 
 ## Changed
-
+* 个人会议号获取方式变更
+    - `NEAccountInfo.meetingId`
 * 屏幕共享文案调整
 * 删除会议转场页面取消按钮
-* 升级G2 SDK到3.7.0
-* 升级Flutter 引擎到1.22.1
 * 状态栏适配优化
 * 会中视觉优化调整
 
 ## Fixed
-
 * 修复会议显示时长偏差
 * 优化屏幕共享过程中正在讲话逻辑
 
 ## Removed
-* 删除`NEMeetingInfo#getPersonalMeetingId`方法，meetingId从`NEAccountService#getAccountInfo()`获取
+* `NEMeetingInfo#getPersonalMeetingId`
 
 --------
 # 2020-09-29 @ v1.2.6

@@ -6,7 +6,6 @@
 package com.netease.meetinglib.demo;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -15,6 +14,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
@@ -40,7 +40,7 @@ public class SdkInitializer {
     private Context context;
     private boolean started = false;
     private boolean initialized = false;
-    private int initializeTimes = 0;
+    private int initializeIndex = 0;
     private ConnectivityManager.NetworkCallback networkCallback;
     private Set<InitializeListener> listenerSet;
 
@@ -60,7 +60,11 @@ public class SdkInitializer {
         if (listenerSet == null) {
             listenerSet = new HashSet<>();
         }
-        listenerSet.add(listener);
+        if (isInitialized()) {
+            listener.onInitialized(initializeIndex);
+        } else {
+            listenerSet.add(listener);
+        }
     }
 
     public void removeListener(InitializeListener listener) {
@@ -74,6 +78,7 @@ public class SdkInitializer {
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
         config.appName = context.getString(R.string.app_name);
+        config.useAssetServerConfig = SPUtils.getInstance().getBoolean("use-asset-server-config");
         //配置会议时显示前台服务
         NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
         foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
@@ -90,12 +95,12 @@ public class SdkInitializer {
                 }
             }
         });
-        initializeTimes++;
+        initializeIndex++;
     }
 
     private void notifyInitialized() {
         initialized = true;
-        int times = initializeTimes;
+        int times = initializeIndex;
         for (InitializeListener listener : listenerSet) {
             listener.onInitialized(times);
         }
@@ -131,7 +136,7 @@ public class SdkInitializer {
 
     public interface InitializeListener {
 
-        void onInitialized(int total);
+        void onInitialized(int initializeIndex);
 
     }
 }

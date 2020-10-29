@@ -60,8 +60,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     }
 
     @Override
-    public void onInitialized(int total) {
-        if (total == 1) {
+    public void onInitialized(int initializeIndex) {
+        if (initializeIndex == 1) {
             loginWithCachedAccount();
         }
         NEMeetingSDK.getInstance().addAuthListener(new NEAuthListener() {

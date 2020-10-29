@@ -57,7 +57,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     //meeting
-    implementation 'com.netease.yunxin:meetinglib:1.2.6'
+    implementation 'com.netease.yunxin:meetinglib:1.3.0'
     //nim
     implementation 'com.netease.nimlib:basesdk:7.6.0'
 

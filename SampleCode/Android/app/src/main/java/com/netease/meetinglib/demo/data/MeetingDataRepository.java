@@ -17,6 +17,7 @@ import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
+import com.netease.meetinglib.sdk.NEPreMeetingService;
 import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
 import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEStartMeetingParams;

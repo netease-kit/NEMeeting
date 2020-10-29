@@ -3,15 +3,7 @@
 网易会议iOS SDK提供了一套简单易用的接口，允许开发者通过调用NEMeeting SDK(以下简称SDK)提供的API，快速地集成音视频会议功能至现有iOS应用中。
 
 ## 变更记录
-
-| 日期 | 版本 | 变更内容 |
-| :------: | :------: | :------- |
-| 2020-07-10  | 1.0.0 | 首次正式发布 |
-| 2020-08-31 | 1.1.0 | 新增如下接口：<br />     `NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
-| 2020-09-04 | 1.2.0 | 新增如下接口：<br />    `NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
-| 2020-09-18 | 1.2.3 | 新增如下接口：<br /><br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#createScheduleMeetingItem`创建一个会议条目<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#addListener:`注册会议事件回调<br />`NEPreMeetingService#removeListener`反注册会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChange`会议状态回调 |
-| 2020-09-24 | 1.2.5 | 新增如下接口：<br />`NEMeetingSDKConfig#appName`增加配置入会应用名称<br /> `NEMeetingOptions#noMinimize `配置会议中是否允许最小化会议页面<br /> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`会议最小化状态<br />`NEMeetingSDK#getControlService` 遥控器服务<br />`NEControlService#openControlUI`打开遥控器<br /> `NEControlService#getCurrentMeetingInfo ` 获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空<br /> `NEControlService#addListener`注册遥控器事件回调<br />`NEControlService#removeListener`反注册遥控器事件回调<br />`NEMeetingService#returnToMeeting`返回已最小化的会议页面<br /> |
-| 2020-09-29 | 1.2.6 | 新增如下接口：<br />  `NEAuthListener#onAuthInfoExpired` 新增账号信息过期通知 <br /> `NEMeetingCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED` 新增当前正在从会议中断开，原因为账号信息已过期 <br /> |
+[CHANGELOG.md](CHANGELOG.md)
 
 ## 快速接入
 

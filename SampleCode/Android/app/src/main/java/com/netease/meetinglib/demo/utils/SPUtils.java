@@ -19,7 +19,7 @@ public final class SPUtils {
     private static final Map<String, SPUtils> SP_UTILS_MAP = new HashMap<>();
 
     private SharedPreferences sp;
-    private static final String SP_FILE = "sp-file-cache";
+    public static final String SP_FILE = "sp-file-cache";
 
     /**
      * Return the single {@link SPUtils} instance

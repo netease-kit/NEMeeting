@@ -6,7 +6,6 @@
 package com.netease.meetinglib.demo;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -15,9 +14,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
+import com.netease.meetinglib.sdk.config.NEForegroundServiceConfig;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,21 +37,17 @@ public class SdkInitializer {
 
     private SdkInitializer() {}
 
-    public static final String CONFIG_KEY_SHARE_IM_INSTANCE = "";
-
     private Context context;
     private boolean started = false;
     private boolean initialized = false;
-    private int initializeTimes = 0;
+    private int initializeIndex = 0;
     private ConnectivityManager.NetworkCallback networkCallback;
     private Set<InitializeListener> listenerSet;
-    private SharedPreferences preferences;
 
     public void startInitialize(Context context) {
         if (!started) {
             started = true;
             this.context = context;
-            preferences = context.getSharedPreferences("meeting-sdk-init-config", Context.MODE_PRIVATE);
             initializeSdk();
         }
     }
@@ -63,14 +60,29 @@ public class SdkInitializer {
         if (listenerSet == null) {
             listenerSet = new HashSet<>();
         }
-        listenerSet.add(listener);
+        if (isInitialized()) {
+            listener.onInitialized(initializeIndex);
+        } else {
+            listenerSet.add(listener);
+        }
+    }
+
+    public void removeListener(InitializeListener listener) {
+        if (listenerSet != null && listener != null) {
+            listenerSet.remove(listener);
+        }
     }
 
     private void initializeSdk() {
         Log.i(TAG, "initializeSdk");
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
-        config.reuseNIM = getBooleanConfig(CONFIG_KEY_SHARE_IM_INSTANCE, false);
+        config.appName = context.getString(R.string.app_name);
+        config.useAssetServerConfig = SPUtils.getInstance().getBoolean("use-asset-server-config");
+        //配置会议时显示前台服务
+        NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
+        foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
+        config.foregroundServiceConfig = foregroundServiceConfig;
         NEMeetingSDK.getInstance().initialize(context, config, new ToastCallback<Void>(context,"初始化"){
             @Override
             public void onResult(int resultCode, String resultMsg, Void resultData) {
@@ -83,12 +95,12 @@ public class SdkInitializer {
                 }
             }
         });
-        initializeTimes++;
+        initializeIndex++;
     }
 
     private void notifyInitialized() {
         initialized = true;
-        int times = initializeTimes;
+        int times = initializeIndex;
         for (InitializeListener listener : listenerSet) {
             listener.onInitialized(times);
         }
@@ -121,17 +133,10 @@ public class SdkInitializer {
         }
     }
 
-    public void setBooleanConfig(String key, boolean value) {
-        preferences.edit().putBoolean(key, value).apply();
-    }
-
-    public boolean getBooleanConfig(String key, boolean def) {
-        return preferences.getBoolean(key, def);
-    }
 
     public interface InitializeListener {
 
-        void onInitialized(int total);
+        void onInitialized(int initializeIndex);
 
     }
 }

@@ -1,6 +1,8 @@
 package com.netease.meetinglib.demo.viewmodel;
 
 
+import android.content.Context;
+
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -9,9 +11,12 @@ import androidx.lifecycle.ViewModel;
 import com.netease.meetinglib.demo.data.MeetingDataRepository;
 import com.netease.meetinglib.demo.data.MeetingItem;
 import com.netease.meetinglib.demo.utils.DateUtil;
+import com.netease.meetinglib.sdk.NECallback;
 import com.netease.meetinglib.sdk.NEMeetingItem;
 import com.netease.meetinglib.sdk.NEMeetingItemStatus;
 import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
+import com.netease.meetinglib.sdk.control.NEControlOptions;
+import com.netease.meetinglib.sdk.control.NEControlParams;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +26,7 @@ public class HomeViewModel extends ViewModel {
 
     private MeetingDataRepository mRepository = MeetingDataRepository.getInstance();
     private MutableLiveData<List<MeetingItem>> listMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<MeetingItem>> changelistMutableLiveData = new MutableLiveData<>();
 
     public HomeViewModel() {
         registerScheduleMeetingStatusListener(listener);
@@ -40,7 +46,6 @@ public class HomeViewModel extends ViewModel {
             listMutableLiveData.setValue(sort(resultData));
         });
     }
-
     private List<MeetingItem> sort(List<NEMeetingItem> resultData) {
         if (resultData == null) {
             return null;
@@ -68,12 +73,15 @@ public class HomeViewModel extends ViewModel {
                 items.add(item);
             }
             Collections.sort(items);
+            int len = items.size();
+            boolean isGroupFirst;
             items.get(0).setGroupFirst(true);
-            for (int i = 1; i < items.size(); i++) {
-                boolean isGroupFirst = !items.get(0).getDay().equals(items.get(i).getDay()) && items.get(0).getMonth().equals(items.get(i).getMonth());
-                items.get(i).setGroupFirst(isGroupFirst);
+            if (len > 1) {
+                for (int i = 1; i < len; i++) {
+                    isGroupFirst = !items.get(i - 1).getDay().equals(items.get(i).getDay()) && items.get(i).getMonth().equals(items.get(i).getMonth());
+                    items.get(i).setGroupFirst(isGroupFirst);
+                }
             }
-
             return items;
         }
         return null;
@@ -83,11 +91,16 @@ public class HomeViewModel extends ViewModel {
         listMutableLiveData.observe(owner, observer);
     }
 
-    private NEScheduleMeetingStatusListener listener = (changedMeetingItemList ,incremental)-> {
+    public void observeChangeMeetingItems(LifecycleOwner owner, Observer<List<MeetingItem>> observer) {
+        changelistMutableLiveData.observe(owner, observer);
+    }
+
+    private NEScheduleMeetingStatusListener listener = (changedMeetingItemList, incremental) -> {
         if (changedMeetingItemList == null || changedMeetingItemList.size() <= 0) {
             return;
         }
         getMeetingList();
+//        changelistMutableLiveData.setValue(sort(changedMeetingItemList));
     };
 
     @Override

@@ -157,12 +157,18 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         if (dataList != null) {
             dataList.clear();
         }
-        dataList.add(new ScheduleMeetingItem("会议主题", ScheduleMeetingItem.EDIT_TEXT_TITTLE_ACTION));
+        dataList.add(new ScheduleMeetingItem("会议主题", ScheduleMeetingItem.EDIT_TEXT_TITLE_ACTION));
         dataList.add(new ScheduleMeetingItem("开始时间", "请选择开始入会时间", ScheduleMeetingItem.SET_START_TIME_ACTION));
         dataList.add(new ScheduleMeetingItem("结束时间", "请选择会议结束时间", ScheduleMeetingItem.SET_END_TIME_ACTION));
         dataList.add(new ScheduleMeetingItem("会议密码", false, ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION));
         dataList.add(new ScheduleMeetingItem("自动静音", "参会者加入会议时自动静音", false, ScheduleMeetingItem.ENABLE_MEETING_MUTE_ACTION));
 
         mAdapter.resetData(dataList);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        CalendarUtil.closeOptionsMenu();
     }
 }

@@ -29,7 +29,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号", "昵称", "100", "tittle","请输入密码"};
+        return new String[]{"会议号", "昵称", "100", "title","请输入密码"};
     }
 
     @Override
@@ -43,10 +43,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
         params.meetingId = first;
         params.displayName = second;
         params.password = third;
-        NEJoinMeetingOptions options = null;
-        if (isNotUseDefaultMeetingOptions()) {
-            options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
-        }
+        NEJoinMeetingOptions options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
         showDialogProgress("正在加入会议...");
         mViewModel.joinMeeting(params, options, new MeetingCallback());
     }

@@ -8,4 +8,6 @@
     <dimen name="default_icon_width">24dp</dimen>
     <dimen name="default_icon_height">24dp</dimen>
     <dimen name="default_padding">10dp</dimen>
+
+    <dimen name="meeting_minimized_layout_size">100dp</dimen>
 </resources>

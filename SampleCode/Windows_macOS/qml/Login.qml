@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import NetEase.Meeting.MeetingStatus 1.0
@@ -55,7 +55,7 @@ Rectangle {
             if (errorCode === MeetingStatus.ERROR_CODE_SUCCESS)
                 pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Front.qml'))
             else
-                toast.show(qsTr('Failed to login'))
+                toast.show(errorCode + '(' + errorMessage + ')')
         }
     }
 }

@@ -4,6 +4,9 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    viewBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.netease.meetinglib.demo"
         minSdkVersion 21
@@ -43,16 +46,24 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    //meeting sdk
-    implementation 'com.netease.yunxin:meetinglib:1.2.0'
-
     //app demo dependencies
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation 'com.permissionx.guolindev:permissionx:1.2.2'
     implementation 'androidx.preference:preference:1.1.1'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+    //meeting
+    implementation 'com.netease.yunxin:meetinglib:1.2.6'
+    //nim
+    implementation 'com.netease.nimlib:basesdk:7.6.0'
+
+    //third party
+    implementation 'com.manu:MDatePicker:1.0.1'
+    implementation 'com.kyleduo.switchbutton:library:2.0.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

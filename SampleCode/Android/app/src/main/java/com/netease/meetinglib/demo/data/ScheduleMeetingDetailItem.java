@@ -1,0 +1,53 @@
+
+package com.netease.meetinglib.demo.data;
+
+public class ScheduleMeetingDetailItem {
+
+    private String start;
+    private String description;
+    private String end;
+
+    private int clickAction;
+
+    public static final int COPY_MEETING_ID_ACTION = 1;
+    public static final int COPY_PASSWORD_ACTION = 4;
+
+    public ScheduleMeetingDetailItem(String start, String description, String end, int clickAction) {
+        this.start = start;
+        this.description = description;
+        this.end = end;
+        this.clickAction = clickAction;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public int getClickAction() {
+        return clickAction;
+    }
+
+    public void setClickAction(int clickAction) {
+        this.clickAction = clickAction;
+    }
+}

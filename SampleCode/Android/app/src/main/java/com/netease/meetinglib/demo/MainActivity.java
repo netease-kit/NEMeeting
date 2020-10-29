@@ -6,77 +6,92 @@
 package com.netease.meetinglib.demo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
-import com.netease.meetinglib.demo.fragment.InitFragment;
-import com.netease.meetinglib.demo.fragment.JoinMeetingFragment;
-import com.netease.meetinglib.demo.fragment.LoadingFragment;
-import com.netease.meetinglib.demo.fragment.LoginFragment;
-import com.netease.meetinglib.demo.fragment.LoginedFragment;
-import com.netease.meetinglib.demo.fragment.StartMeetingFragment;
+import com.netease.meetinglib.demo.base.BaseActivity;
+import com.netease.meetinglib.demo.databinding.ActivityMainBinding;
+import com.netease.meetinglib.demo.viewmodel.MainViewModel;
+import com.netease.meetinglib.sdk.NEMeetingInfo;
+import com.netease.meetinglib.sdk.NEMeetingMenuItem;
+import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
+import com.netease.meetinglib.sdk.NEMeetingSDK;
+import com.netease.meetinglib.sdk.NEMeetingService;
+import com.netease.meetinglib.sdk.NEMeetingStatus;
+import com.netease.meetinglib.sdk.control.NEControlListener;
+import com.netease.meetinglib.sdk.control.NEControlMenuItem;
+import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
+import com.netease.meetinglib.sdk.control.NEControlResult;
 import com.permissionx.guolindev.PermissionX;
 
-public class MainActivity extends AppCompatActivity implements ContentSwitcher{
+public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private boolean stateLoss = false;
-    LoadingFragment loadingFragment;
-
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            if (msg.what == 1) {
-                switchContent((String)msg.obj);
-            }
-            super.handleMessage(msg);
-        }
-    };
+    private MainViewModel mViewModel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate");
+    protected void onRestart() {
+        super.onRestart();
+        NEMeetingService meetingService = mViewModel.getMeetingService();
+        if (meetingService != null && meetingService.getMeetingStatus()
+                == NEMeetingStatus.MEETING_STATUS_INMEETING) {
+            meetingService.returnToMeeting(this);
+        }
+    }
 
-        /*
-        if (isInMeeting()) {
-            //Todo: return to meeting here
+    @Override
+    protected void initView() {
+        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        //return to meeting if it is in-meeting
+        NEMeetingService meetingService = mViewModel.getMeetingService();
+        if (meetingService != null && meetingService.getMeetingStatus()
+                == NEMeetingStatus.MEETING_STATUS_INMEETING) {
+            meetingService.returnToMeeting(this);
             finish();
             return;
-        }*/
+        }
 
-        setContentView(R.layout.activity_main);
+        requestPermissions();
 
-        SdkAuthenticator.getInstance().setAuthStateChangeListener(state -> {
-            dismissLoading();
-            if (state == SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE) {
-                switchContent(Constants.CONTENT_ID_INIT);
-            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHORIZED){
-                switchContent(Constants.CONTENT_ID_LOGINED);
-            } else {
-                showLoading("玩命登录中...");
+        mViewModel.observeStateLiveData(this, state -> {
+            if (state == SdkAuthenticator.AuthStateChangeListener.AUTHORIZED) {
+                dissMissDialogProgress();
+                Navigation.findNavController(MainActivity.this, R.id.fragment).navigate(R.id.homeFragment);
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE) {
+                dissMissDialogProgress();
+                Navigation.findNavController(MainActivity.this, R.id.fragment).navigate(R.id.entranceFragment);
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHORIZING) {
+                showDialogProgress(getString(R.string.login));
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHOR_FAIL) {
+                dissMissDialogProgress();
             }
         });
-        if (savedInstanceState == null) {
-            switchContent(SdkAuthenticator.getInstance().isAuthorized() ? Constants.CONTENT_ID_LOGINED : Constants.CONTENT_ID_INIT);
-        }
-        requestPermissions();
+
+        SdkInitializer.getInstance().addListener(this::onInitialized);
+        setupMeetingMinimizedLayout();
     }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected ActivityMainBinding getViewBinding() {
+        return ActivityMainBinding.inflate(getLayoutInflater());
+    }
+
 
     private void requestPermissions() {
         PermissionX.init(this)
@@ -90,105 +105,94 @@ public class MainActivity extends AppCompatActivity implements ContentSwitcher{
                 });
     }
 
-    @Override
-    public void switchContent(String contentId) {
-        handler.removeMessages(1);
-        if (stateLoss) {
-            handler.sendMessageDelayed(handler.obtainMessage(1, contentId), 100);
-            return;
+    private void onInitialized(int total) {
+        mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener());
+        mViewModel.setOnControlCustomMenuItemClickListener(new OnControlCustomMenuListener());
+        mViewModel.registerControlListener(controlListener);
+    }
+
+    NEControlListener controlListener = new NEControlListener() {
+        @Override
+        public void onStartMeetingResult(NEControlResult status) {
+            Toast.makeText(MainActivity.this, "遥控器开始会议事件回调:" + status.code + "#" + status.message, Toast.LENGTH_SHORT).show();
         }
 
-        Log.i(TAG, "switch content: " + contentId);
-        if (!TextUtils.isEmpty(contentId)) {
-            Fragment target = getSupportFragmentManager().findFragmentByTag(contentId);
-            if (target != null) return;
+        @Override
+        public void onJoinMeetingResult(NEControlResult status) {
+            Toast.makeText(MainActivity.this, "遥控器加入会议事件回调:" + status.code + "#" + status.message, Toast.LENGTH_SHORT).show();
+        }
+    };
 
-            boolean addToBackStack = false;
+    public static class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
+        @Override
+        public void onInjectedMenuItemClick(Context context, NEMeetingMenuItem menuItem, NEMeetingInfo meetingInfo) {
+            switch (menuItem.itemId) {
+                case 101:
+                    NEMeetingSDK.getInstance().getMeetingService().getCurrentMeetingInfo((resultCode, resultMsg, resultData) -> {
+                        Toast.makeText(context, "获取房间信息NEMeetingInfo:" + resultData.toString(), Toast.LENGTH_SHORT).show();
+                        Log.d("OnCustomMenuListener", "getCurrentMeetingInfo:resultCode " + resultCode + "#resultData " + resultData.toString());
+                    });
+                    break;
+                default:
+                    Toast.makeText(context, "点击事件Id:" + menuItem.itemId + "#点击事件tittle:" + menuItem.itemId, Toast.LENGTH_SHORT).show();
+                    break;
 
-            switch (contentId) {
-                case Constants.CONTENT_ID_INIT:
-                    getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    target = new InitFragment();
-                    break;
-                case Constants.CONTENT_ID_LOGIN:
-                    target = new LoginFragment();
-                    addToBackStack = true;
-                    break;
-                case Constants.CONTENT_ID_LOGINED:
-                    getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    target = new LoginedFragment();
-                    break;
-                case Constants.CONTENT_ID_START_MEETING:
-                    target = new StartMeetingFragment();
-                    addToBackStack = true;
-                    break;
-                case Constants.CONTENT_ID_JOIN_MEETING:
-                case Constants.CONTENT_ID_JOIN_MEETING_ANONYMOUS:
-                    target = new JoinMeetingFragment();
-                    addToBackStack = true;
-                    break;
             }
-
-            if (target != null) {
-                FragmentTransaction transaction = getSupportFragmentManager()
-                        .beginTransaction();
-                transaction.replace(R.id.content, target, contentId);
-                if (addToBackStack) {
-                    transaction.addToBackStack(contentId);
-                }
-                transaction.commit();
-            }
+            Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + menuItem.toString() + "#" + meetingInfo.toString());
         }
     }
 
-    private void showLoading(String msg) {
-        if (loadingFragment != null) {
-            loadingFragment.setMessage(msg);
+    public class OnControlCustomMenuListener implements NEControlMenuItemClickListener {
+
+
+        @Override
+        public void onSettingMenuItemClick(NEControlMenuItem menuItem) {
+            Toast.makeText(MainActivity.this, "点击了" + menuItem.title, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onShareMenuItemClick(NEControlMenuItem menuItem, NEMeetingInfo meetingInfo) {
+            Toast.makeText(MainActivity.this, "点击了" + menuItem.title, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+        return NavHostFragment.findNavController(fragment).navigateUp();
+    }
+
+    void setupMeetingMinimizedLayout() {
+        binding.meetingMinimizedLayout.setOnClickListener(v -> NEMeetingSDK.getInstance().getMeetingService().returnToMeeting(this));
+        mViewModel.getMeetingMinimizedLiveData().observe(this, this::toggleMeetingMinimizedView);
+    }
+
+    private void toggleMeetingMinimizedView(boolean show) {
+        Log.i(TAG, "toggleMeetingMinimizedView: " + show + "==" + binding.meetingMinimizedLayout.getX());
+        int dx = getResources().getDimensionPixelSize(R.dimen.meeting_minimized_layout_size);
+        if (show) {
+            mViewModel.getMeetingTimeLiveData().observe(this, this::updateMeetingTime);
         } else {
-            loadingFragment = LoadingFragment.newInstance(msg);
-            loadingFragment.setCancelable(false);
-            loadingFragment.showNow(getSupportFragmentManager(), "dialog");
+            mViewModel.getMeetingTimeLiveData().removeObserver(this::updateMeetingTime);
         }
+        binding.meetingMinimizedLayout.animate()
+                .x(show ? 0 : -dx)
+                .setDuration(1000)
+                .setInterpolator(new OvershootInterpolator())
+                .start();
     }
 
-    private void dismissLoading() {
-        if (loadingFragment != null) {
-            loadingFragment.dismiss();
-            loadingFragment = null;
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stateLoss = true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        stateLoss = false;
+    private void updateMeetingTime(String timeText) {
+        binding.meetingTime.setText(timeText);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy");
-        SdkAuthenticator.getInstance().setAuthStateChangeListener(null);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.meeting_settings) {
-            MeetingSettingsActivity.start(this);
+        if (mViewModel != null) {
+            mViewModel.unRegisterControlListener(controlListener);
         }
-        return true;
     }
 }

@@ -1,0 +1,75 @@
+<meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>neWebMeeting demo</title>
+  <script src="./NeWebMeeting_V1.2.6.js"></script>
+</head>
+<body>
+  <button onclick="init()">初始化</button>
+  <button onclick="destory()">销毁</button>
+  <button onclick="login()">登陆</button>
+  <button onclick="create()">创建</button>
+  <input class="meeting-id" type="text" placeholder="meetingId">
+  <button onclick="join()">加入</button>
+  <div id="ne-web-meeting"></div>
+  
+  <script>
+  /**
+   * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
+   * 然后执行登陆，获取登陆人员信息
+   * 此时，根据需要，可以进行会议的创建或加入
+   */  
+  
+  function init() {
+    neWebMeeting.actions.init(800, 600);  // （width，height）单位px 建议比例4:3
+    neWebMeeting.actions.afterLeave(() => {
+      console.log('离开会议回调')
+    })
+  }
+  function destory() {
+    neWebMeeting.actions.destory(); // 销毁
+  }
+  
+  function login() {
+    neWebMeeting.actions.login({ // 登陆
+      accountId: 0,
+      accountToken: 0,
+      appKey: '',
+    }, function(e) {
+      console.log(e)
+    })
+  }
+  
+  function create() { // 创建
+    neWebMeeting.actions.create({
+      meetingId: 0, // 1随机0固定
+      nickName: '',
+      video: 1,
+      audio: 1,
+    }, function(e) {
+      console.log(e)
+    })
+  }
+  
+  function join(params) {
+    var meetingId = document.querySelector('.meeting-id').value;
+    neWebMeeting.actions.join({
+      meetingId,
+      nickName: '',
+      appKey: '',
+      video: 1,
+      audio: 1,
+    }, function(e) {
+      console.log(e)
+    })
+  }
+  
+  </script>
+</body>
+</html>
+
+
+

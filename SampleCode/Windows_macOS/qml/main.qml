@@ -6,13 +6,14 @@ import QtQuick.Controls 2.12
 Window {
     id: mainWindow
     visible: true
-    width: 640
-    height: 480
+    width: 800
+    height: 600
     title: qsTr("NetEase Meeting SDK Sample")
 
     Component.onCompleted: {
         pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Login.qml'))
         meetingManager.initialize()
+        meetingManager.isInitializd()
     }
 
     ToastManager {

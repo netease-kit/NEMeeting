@@ -3,4 +3,17 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="blue">#FF337EFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF222222</color>
+    <color name="grep">#FF999999</color>
+    <color name="transparent">#00000000</color>
+
+
+    <!--    imageText start-->
+    <color name="default_bg">#ff3f83c4</color>
+    <color name="default_bg_pressed">#9c000000</color>
+    <color name="default_bg_disabled">#ff999999</color>
+    <color name="default_text_color">#ffffff</color>
+    <!--    imageText end-->
 </resources>

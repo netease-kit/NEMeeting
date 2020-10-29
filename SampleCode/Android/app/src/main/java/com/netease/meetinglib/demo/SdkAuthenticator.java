@@ -7,7 +7,6 @@ package com.netease.meetinglib.demo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +16,7 @@ import com.netease.meetinglib.demo.data.DataRepository;
 import com.netease.meetinglib.demo.data.DefaultDataRepository;
 import com.netease.meetinglib.demo.data.Response;
 import com.netease.meetinglib.demo.data.SDKAuthInfo;
+import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.sdk.NEAuthListener;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
@@ -25,12 +25,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHORIZED;
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHORIZING;
+import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.AUTHOR_FAIL;
 import static com.netease.meetinglib.demo.SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE;
 
 /**
  * 负责管理会议SDK的登录、登出
  */
-public class SdkAuthenticator implements SdkInitializer.InitializeListener{
+public class SdkAuthenticator implements SdkInitializer.InitializeListener {
 
     private static final String TAG = "SdkAuthenticator";
 
@@ -40,21 +41,21 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
         return INSTANCE;
     }
 
-    private static final String SP_FILE = "sdk-auth-cache";
     private static final String KEY_ACCOUNT = "ACCOUNT";
     private static final String KEY_PWD = "PWD";
+    public static final String KEY_NICK_NAME = "NICK_NAME";
 
     private Context context;
-    private SharedPreferences cache;
+
     private AtomicInteger state = new AtomicInteger(UN_AUTHORIZE);
     private AuthStateChangeListener authStateChangeListener;
     private DataRepository dataRepository = new DefaultDataRepository();
 
-    private SdkAuthenticator() {}
+    private SdkAuthenticator() {
+    }
 
     public void initialize(Context context) {
         this.context = context;
-        cache = context.getSharedPreferences(SP_FILE, Context.MODE_PRIVATE);
         SdkInitializer.getInstance().addListener(this);
     }
 
@@ -67,6 +68,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
             @Override
             public void onKickOut() {
                 onKickedOut();
+            }
+
+            @Override
+            public void onAuthInfoExpired() {
+                SdkAuthenticator.this.onAuthInfoExpired();
             }
         });
     }
@@ -94,8 +100,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
     }
 
     private void loginWithCachedAccount() {
-        final String account = cache.getString(KEY_ACCOUNT, "");
-        final String pwd = cache.getString(KEY_PWD, "");
+        final String account = SPUtils.getInstance().getString(KEY_ACCOUNT, "");
+        final String pwd = SPUtils.getInstance().getString(KEY_PWD, "");
         if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(pwd)) {
             login(account, pwd);
         }
@@ -103,9 +109,12 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
 
     @SuppressLint("StaticFieldLeak")
     public void login(final String account, final String pwd) {
-        if (state.compareAndSet(UN_AUTHORIZE, AUTHORIZING)) {
+        if (state.get() == AUTHORIZED) {
+            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
+        }else{
+            state.set(AUTHORIZING);
             notifyStateChanged();
-            new AsyncTask<Void,Void, Response<SDKAuthInfo>>() {
+            new AsyncTask<Void, Void, Response<SDKAuthInfo>>() {
 
                 @Override
                 protected Response<SDKAuthInfo> doInBackground(Void... voids) {
@@ -118,21 +127,22 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
                 }
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else if (state.get() == AUTHORIZED){
-            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void logout(boolean manual) {
         if (state.get() == AUTHORIZED) {
-            NEMeetingSDK.getInstance().logout(new ToastCallback<Void>(context, "注销"){
+            NEMeetingSDK.getInstance().logout(new ToastCallback<Void>(context, "注销") {
                 @Override
                 public void onResult(int resultCode, String resultMsg, Void resultData) {
                     //手动退出登录才进行toast提示
                     if (manual) super.onResult(resultCode, resultMsg, resultData);
-                    if (state.compareAndSet(AUTHORIZED, UN_AUTHORIZE) && resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
-                        cache.edit().putString(KEY_ACCOUNT, "").putString(KEY_PWD, "").apply();
-                        notifyStateChanged();
+                    if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
+                        if (state.compareAndSet(AUTHORIZED, UN_AUTHORIZE)) {
+                            SPUtils.getInstance().remove(KEY_ACCOUNT);
+                            SPUtils.getInstance().remove(KEY_NICK_NAME);
+                            notifyStateChanged();
+                        }
                     }
                 }
             });
@@ -140,7 +150,7 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
     }
 
     private void handleResponse(String account, String pwd, Response<SDKAuthInfo> result) {
-        if (result != null && result.code == 200 && result.data != null ) {
+        if (result != null && result.code == 200 && result.data != null) {
             NEMeetingSDK.getInstance().login(result.data.account, result.data.token,
                     new ToastCallback<Void>(context, "登录") {
                         @Override
@@ -148,15 +158,17 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
                             super.onResult(resultCode, resultMsg, resultData);
                             if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
                                 state.set(AUTHORIZED);
-                                cache.edit().putString(KEY_ACCOUNT, account).putString(KEY_PWD, pwd).apply();
+                                SPUtils.getInstance()
+                                        .put(KEY_ACCOUNT, account)
+                                        .put(KEY_PWD, pwd);
                             } else {
-                                state.set(UN_AUTHORIZE);
+                                state.set(AUTHOR_FAIL);
                             }
                             notifyStateChanged();
                         }
                     });
         } else {
-            state.set(UN_AUTHORIZE);
+            state.set(AUTHOR_FAIL);
             notifyStateChanged();
             Toast.makeText(context,
                     result != null && !TextUtils.isEmpty(result.msg) ? result.msg : "登录失败，请检查网络连接后重试！",
@@ -170,7 +182,30 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener{
         SdkAuthenticator.getInstance().logout(false);
     }
 
+    private void onAuthInfoExpired() {
+        Log.i(TAG, "onAuthInfoExpired");
+        Toast.makeText(context, "登录状态已过期，请重新登录", Toast.LENGTH_SHORT).show();
+        SdkAuthenticator.getInstance().logout(false);
+    }
+
+    public static String getAccount() {
+        String nickName;
+        nickName = SPUtils.getInstance()
+                .getString(KEY_NICK_NAME);
+        if (TextUtils.isEmpty(nickName)) {
+            nickName = SPUtils.getInstance()
+                    .getString(KEY_ACCOUNT, "xxxx");
+            nickName = nickName.substring(nickName.length() - 4);
+        }
+        return nickName;
+    }
+
     public interface AuthStateChangeListener {
+
+        /**
+         * 授权失败
+         */
+        int AUTHOR_FAIL = -2;
 
         /**
          * 未授权

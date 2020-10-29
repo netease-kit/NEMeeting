@@ -6,6 +6,7 @@
 package com.netease.meetinglib.demo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -17,9 +18,9 @@ import androidx.annotation.NonNull;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
+import com.netease.meetinglib.sdk.config.NEForegroundServiceConfig;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SdkInitializer {
@@ -62,10 +63,21 @@ public class SdkInitializer {
         listenerSet.add(listener);
     }
 
+    public void removeListener(InitializeListener listener) {
+        if (listenerSet != null && listener != null) {
+            listenerSet.remove(listener);
+        }
+    }
+
     private void initializeSdk() {
         Log.i(TAG, "initializeSdk");
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
+        config.appName = context.getString(R.string.app_name);
+        //配置会议时显示前台服务
+        NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
+        foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
+        config.foregroundServiceConfig = foregroundServiceConfig;
         NEMeetingSDK.getInstance().initialize(context, config, new ToastCallback<Void>(context,"初始化"){
             @Override
             public void onResult(int resultCode, String resultMsg, Void resultData) {
@@ -115,6 +127,7 @@ public class SdkInitializer {
             connectivityManager.unregisterNetworkCallback(networkCallback);
         }
     }
+
 
     public interface InitializeListener {
 

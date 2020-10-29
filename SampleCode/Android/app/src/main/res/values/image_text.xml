@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageTextButton">
+        <attr name="itb_icon" format="reference" />
+        <attr name="itb_icon_size" format="dimension" />
+        <attr name="itb_text" format="string" />
+        <attr name="itb_text_color" format="color" />
+        <attr name="itb_text_size" format="dimension" />
+        <attr name="itb_icon_text_marggin" format="dimension" />
+        <attr name="itb_icon_position" format="enum" >
+            <enum name="left" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="bottom" value="3"/>
+        </attr>
+        <attr name="itb_bg" format="color" />
+        <attr name="itb_bg_pressed" format="color" />
+        <attr name="itb_bg_disabled" format="color" />
+        <attr name="itb_radius" format="dimension" />
+        <attr name="itb_padding" format="dimension" />
+    </declare-styleable>
+</resources>

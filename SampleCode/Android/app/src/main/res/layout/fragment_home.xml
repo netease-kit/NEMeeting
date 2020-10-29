@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.netease.meetinglib.demo.view.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingBottom="8dp"
+        tools:context=".MainActivity">
+
+        <com.netease.meetinglib.demo.widget.EmptyRecyclerView
+            android:id="@+id/rv_meeting_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_start_meeting"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.netease.meetinglib.demo.widget.ImageTextButton
+            android:id="@+id/img_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:itb_bg="@color/white"
+            app:itb_icon="@drawable/image_meeting_empty"
+            app:itb_icon_position="bottom"
+            app:itb_icon_size="200dp"
+            app:itb_text="当前暂无即将召开的会议"
+            app:itb_text_color="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_start_meeting" />
+
+        <com.netease.meetinglib.demo.widget.ImageTextButton
+            android:id="@+id/btn_join_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:itb_bg="@color/white"
+            app:itb_icon="@drawable/image_join_meeting"
+            app:itb_icon_position="bottom"
+            app:itb_icon_size="74dp"
+            app:itb_radius="3dp"
+            app:itb_text="加入会议"
+            app:itb_text_color="@color/black"
+            app:itb_text_size="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_start_meeting"
+            app:layout_constraintLeft_toRightOf="@+id/btn_start_meeting"
+            app:layout_constraintRight_toLeftOf="@+id/btn_schedule_meeting"
+            app:layout_constraintTop_toTopOf="@+id/btn_start_meeting" />
+
+
+        <com.netease.meetinglib.demo.widget.ImageTextButton
+            android:id="@+id/btn_schedule_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:itb_bg="@color/white"
+            app:itb_icon="@drawable/image_schedule_meeting"
+            app:itb_icon_position="bottom"
+            app:itb_icon_size="74dp"
+            app:itb_radius="3dp"
+            app:itb_text="预约会议"
+            app:itb_text_color="@color/black"
+            app:itb_text_size="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_start_meeting"
+            app:layout_constraintLeft_toRightOf="@+id/btn_join_meeting"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_start_meeting" />
+
+
+        <com.netease.meetinglib.demo.widget.ImageTextButton
+            android:id="@+id/btn_start_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="146dp"
+            app:itb_bg="@color/white"
+            app:itb_icon="@drawable/image_start_meeting"
+            app:itb_icon_position="bottom"
+            app:itb_icon_size="74dp"
+            app:itb_radius="3dp"
+            app:itb_text="即刻会议"
+            app:itb_text_color="@color/black"
+            app:itb_text_size="14sp"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_join_meeting"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.netease.meetinglib.demo.widget.ImageTextButton
+            android:id="@+id/btn_setting"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            app:itb_bg="@color/blue"
+            app:itb_icon_position="bottom"
+            app:itb_padding="8dp"
+            app:itb_radius="50dp"
+            app:itb_text="设置"
+            app:itb_text_color="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

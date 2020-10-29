@@ -27,63 +27,63 @@
 * 优化屏幕共享过程中正在讲话逻辑
 
 ## Removed
-* `NEMeetingInfo#getPersonalMeetingId`
+* `NEMeetingInfo.getPersonalMeetingId`
 
 --------
 # 2020-09-29 @ v1.2.6
 
 ## Added
-* `NEMeetingSDKConfig#NEForegroundServiceConfig`新增配置会议时显示前台服务
-* `NEAuthListener#onAuthInfoExpired`新增账号信息过期通知
-* `NEMeetingCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED`新增账号信息过期对应的会议退出码
+* `NEMeetingSDKConfig.NEForegroundServiceConfig`新增配置会议时显示前台服务
+* `NEAuthListener.onAuthInfoExpired`新增账号信息过期通知
+* `NEMeetingCode.MEETING_DISCONNECTING_AUTH_INFO_EXPIRED`新增账号信息过期对应的会议退出码
 
 ---------
 # 2020-09-24 @ v1.2.5
 
 ## Added
-* `NEMeetingSDKConfig#appName`增加配置入会应用名称
-* `NEMeetingOptions#noMinimize`配置会议中是否允许最小化会议页面
-* `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`新增会议最小化状态 
-* `NEMeetingSDK#getControlService()`新增遥控器服务
-* `NEControlService#openControlUI`打开遥控器
-* `NEControlService#setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 
-* `NEControlService#registerControlListener`注册监听遥控器回调
-* `NEControlService#unRegisterControlListener`反注册监听遥控器回调
-* `NEControlService#getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空
+* `NEMeetingSDKConfig.appName`增加配置入会应用名称
+* `NEMeetingOptions.noMinimize`配置会议中是否允许最小化会议页面
+* `NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED`新增会议最小化状态 
+* `NEMeetingSDK.getControlService()`新增遥控器服务
+* `NEControlService.openControlUI`打开遥控器
+* `NEControlService.setOnCustomMenuItemClickListener`设置遥控器自定义点击事件 
+* `NEControlService.registerControlListener`注册监听遥控器回调
+* `NEControlService.unRegisterControlListener`反注册监听遥控器回调
+* `NEControlService.getCurrentMeetingInfo`获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空
 
 -------
 # 2020-09-18 @ v1.2.3
 
 ## Added
-* `NEJoinMeetingParams#password`新增密码入会字段
-* `NEMeetingStatus#MEETING_STATUS_WAITING`新增会议等待状态
-* `NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 
-* `NEMeetingInfo#password、subject、startTime、endTime`新增会议信息字段
-* `NEMeetingSDK#NEPreMeetingService`新增预约会议服务
-* `NEPreMeetingService#scheduleMeeting` 新增预定会议
-* `NEPreMeetingService#cancelMeeting`新增取消已预定的会议
-* `NEPreMeetingService#getMeetingItemById`新增查询预定会议信
-* `NEPreMeetingService#getMeetingList`新增查询特定状态下的会议列表
-* `NEPreMeetingService#registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器
-* `NEPreMeetingService#unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 
+* `NEJoinMeetingParams.password`新增密码入会字段
+* `NEMeetingStatus.MEETING_STATUS_WAITING`新增会议等待状态
+* `NEMeetingCode.MEETING_WAITING_VERIFY_PASSWORD`新增会议等待状态类型 
+* `NEMeetingInfo.password、subject、startTime、endTime`新增会议信息字段
+* `NEMeetingSDK.NEPreMeetingService`新增预约会议服务
+* `NEPreMeetingService.scheduleMeeting` 新增预定会议
+* `NEPreMeetingService.cancelMeeting`新增取消已预定的会议
+* `NEPreMeetingService.getMeetingItemById`新增查询预定会议信
+* `NEPreMeetingService.getMeetingList`新增查询特定状态下的会议列表
+* `NEPreMeetingService.registerScheduleMeetingStatusListener`新增注册预定会议状态变更监听器
+* `NEPreMeetingService.unRegisterScheduleMeetingStatusListener`新增反注册预定会议状态变更监听器 
 
 -------
 # 2020-09-04   @ v1.2.0
 
 ## Added
-* `NEMeetingService#setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听
-* `NEMeetingService#getCurrentMeetingInfo`获取当前会议信息
-* `NEMeetingOptions#noInvite`配置会议中是否显示"邀请"按钮 
-* `NEMeetingOptions#noChat`配置会议中是否显示"聊天"按钮
-* `NEMeetingOptions#List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项
+* `NEMeetingService.setOnInjectedMenuItemClickListener`添加自定义菜单按钮监听
+* `NEMeetingService.getCurrentMeetingInfo`获取当前会议信息
+* `NEMeetingOptions.noInvite`配置会议中是否显示"邀请"按钮 
+* `NEMeetingOptions.noChat`配置会议中是否显示"聊天"按钮
+* `NEMeetingOptions.List<NEMeetingMenuItem>`"更多"菜单中的自定义注入菜单项
 
 -------
 # 2020-08-31  @ v1.1.0
 
 ## Added
-* `NEMeetingSDK#isInitialized()`查询SDK初始化状态
-* `NEMeetingService#getMeetingStatus()`查询当前会议状态
-* `NEMeetingService#returnToMeeting()`重新显示会议UI
+* `NEMeetingSDK.isInitialized()`查询SDK初始化状态
+* `NEMeetingService.getMeetingStatus()`查询当前会议状态
+* `NEMeetingService.returnToMeeting()`重新显示会议UI
 * 会议设置服务`NEAccountService`用于保存和查询用户的相关会议选项
 
 -------

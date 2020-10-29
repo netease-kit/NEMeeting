@@ -73,12 +73,15 @@ public class HomeViewModel extends ViewModel {
                 items.add(item);
             }
             Collections.sort(items);
+            int len = items.size();
+            boolean isGroupFirst;
             items.get(0).setGroupFirst(true);
-            for (int i = 1; i < items.size(); i++) {
-                boolean isGroupFirst = !items.get(0).getDay().equals(items.get(i).getDay()) && items.get(0).getMonth().equals(items.get(i).getMonth());
-                items.get(i).setGroupFirst(isGroupFirst);
+            if (len > 1) {
+                for (int i = 1; i < len; i++) {
+                    isGroupFirst = !items.get(i - 1).getDay().equals(items.get(i).getDay()) && items.get(i).getMonth().equals(items.get(i).getMonth());
+                    items.get(i).setGroupFirst(isGroupFirst);
+                }
             }
-
             return items;
         }
         return null;

@@ -7,8 +7,6 @@ package com.netease.meetinglib.demo.view;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,7 +22,9 @@ import com.netease.meetinglib.sdk.NEStartMeetingParams;
 
 public class StartMeetingFragment extends MeetingCommonFragment {
     private static final String TAG = StartMeetingFragment.class.getSimpleName();
-    private String personalMeetingId;
+    private String meetingId;
+    private String currentMeetingId;
+    private String content;
     private StartMeetingViewModel mViewModel;
 
     @Override
@@ -41,7 +41,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "100", "tittle", "请输入密码"};
+        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "100", "title", "请输入密码"};
     }
 
     @Override
@@ -63,31 +63,36 @@ public class StartMeetingFragment extends MeetingCommonFragment {
 
     private void determineMeetingId() {
         if (usePersonalMeetingId.isChecked()) {
-            if (!TextUtils.isEmpty(personalMeetingId)) {
-                getEditor(0).setText(personalMeetingId);
+            currentMeetingId = meetingId;
+            if (!TextUtils.isEmpty(content)) {
+                getEditor(0).setText(content);
                 return;
             }
             NEAccountService accountService = NEMeetingSDK.getInstance().getAccountService();
             if (accountService == null) {
                 onGetPersonalMeetingIdError();
             } else {
-                accountService.getPersonalMeetingId((resultCode, resultMsg, resultData) -> {
+                accountService.getAccountInfo((resultCode, resultMsg, resultData) -> {
                     if (!isAdded()) return;
-                    if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS && !TextUtils.isEmpty(resultData)) {
-                        personalMeetingId = resultData;
-                        getEditor(0).setText(resultData);
+                    if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS && resultData != null) {
+                        meetingId = resultData.meetingId;
+                        currentMeetingId = meetingId;
+                        content = resultData.meetingId + (!TextUtils.isEmpty(resultData.shortMeetingId) ? "(短号：" + resultData.shortMeetingId + ")" : "");
+                        getEditor(0).setText(content);
                     } else {
                         onGetPersonalMeetingIdError();
                     }
                 });
             }
         } else {
+            currentMeetingId = null;
             getEditor(0).setText("");
         }
     }
 
     private void onGetPersonalMeetingIdError() {
-        personalMeetingId = null;
+        content = null;
+        currentMeetingId = null;
         usePersonalMeetingId.setChecked(false);
         Toast.makeText(getActivity(), "获取个人会议号失败", Toast.LENGTH_SHORT).show();
     }

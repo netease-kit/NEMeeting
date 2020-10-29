@@ -25,6 +25,9 @@
             android:name=".MeetingSettingsActivity"
             android:label="会议设置" />
         <activity
+            android:name=".AppSettingsActivity"
+            android:label="应用设置" />
+        <activity
             android:name=".nim.NIMLoginActivity"
             android:label="IM登录" />
     </application>

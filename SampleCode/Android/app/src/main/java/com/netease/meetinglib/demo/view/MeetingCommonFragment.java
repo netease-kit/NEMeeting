@@ -61,7 +61,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(1, R.id.secondEditor, labels);
 
         addEditorArray(2, R.id.addItemIdEditor, labels);
-        addEditorArray(3, R.id.addTittleEditor, labels);
+        addEditorArray(3, R.id.addTitleEditor, labels);
         addEditorArray(4, R.id.thirdEditor, labels);
         Button addMenuItemButton = getView().findViewById(R.id.addMenuItemButton);
         addMenuItemButton.setOnClickListener(v -> addMenuItem());
@@ -75,7 +75,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             checkBoxes[5].setChecked(false);
         });
         injectedMoreMenuItems.clear();
-        NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
+        if ( NEMeetingSDK.getInstance().getMeetingService() != null) {
+            NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
+        }
     }
 
 

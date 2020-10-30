@@ -59,6 +59,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | accountId  | String | 否 | 会议账号，如果不传则系统自动生成|
     | imAccid  | String | 否 | 复用的imAccid |
     | imToken  | String | 否 | 复用的imAccid的Token |
+    | shortId | String| 否 | 个人会议短号，4-8位 |
     
 ##### 备注
 accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只能包含"-"、"_"、小写字母和数字，去除限制的优化方案正在开发中
@@ -73,6 +74,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | accountId | String | 会议用户账号ID |
     | accountToken | String | 会议用户账号令牌 |
     | personalMeetingId | Long | 个人会议的会议码 |
+    | shortId | String | 个人会议短号 |
     
 ### 会议账号更新令牌
 
@@ -94,6 +96,26 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
 4. 输出参数
     公共响应
 
+### 更新个人会议短号
+
+1. 接口描述  
+    更新个人会议短号
+    
+2. 接口请求地址
+    ```
+    POST https://{host}/v1/account/updateShortId HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+    | 参数 | 类型 | 必选 | 描述 |
+    | :------: | :------: | :------: | :------: |
+    | accountId  | String | 是 | 会议用户账号 |
+    | shortId | String | 否 | 个人会议短号，4-8位，不传表示清除短号 |
+
+4. 输出参数
+    公共响应
+    
 ### 创建会议
 
 1. 接口描述  
@@ -133,6 +155,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | settings | JsonObject | 会议设置 |
     | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
+    | shortId | String | 会议短号   |
 
 ### 查询会议（meetingUniqueId）
 
@@ -165,6 +188,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | settings | JsonObject | 会议设置 |
     | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
+    | shortId | String | 会议短号   |
     
 ### 修改会议
 
@@ -261,8 +285,10 @@ Content-Type: application/json;charset=utf-8
 |302 | 非法header |
 |303 | 非法字符集参数 |
 |401 | 请求未通过验证 |
+|402 | 服务未开通 |
 |501 | 服务器内部异常 |
 |510 | 请求过于频繁 |
+|512 | 服务繁忙 |
 |652 | 直播设置错误 |
 |701 | 匿名账号分配失败，稍后重试 |
 |1000 | 分配帐号失败 |

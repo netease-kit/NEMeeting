@@ -35,7 +35,7 @@
 - (void)setupIMSDKPrivateAppKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[NIMSDK sharedSDK] registerWithAppID:<#请填入您的IMAppKey#> cerName:nil];
+        [[NIMSDK sharedSDK] registerWithAppID:@"请填入您的IMAppKey" cerName:nil];
     });
 }
 - (void)doSetupMeetingSdk {

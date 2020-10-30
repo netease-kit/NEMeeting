@@ -9,6 +9,7 @@
 #import "MeetingSettingVC.h"
 #import "CheckBox.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import <NEMeetingSDK/NEMeetingSDK.h>
 
 @interface StartMeetingVC ()<CheckBoxDelegate>
 
@@ -97,18 +98,17 @@
 - (void)doGetUserMeetingId {
     WEAK_SELF(weakSelf);
     [SVProgressHUD show];
-    [[NEMeetingSDK getInstance].getAccountService getPersonalMeetingId:^(NSInteger resultCode, NSString *resultMsg, id result) {
+    
+    [[NEMeetingSDK getInstance].getAccountService getAccontInfo:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         } else {
-            NSString *userId = result;
-            if (![result isKindOfClass:[NSString class]]
-                || result == nil) {
-                userId = @"";
-            }
-            weakSelf.meetingIdInput.text = userId;
-        }
+            if (![result isKindOfClass:[NEAccountInfo class]] || result == nil) return;
+            NEAccountInfo *accountInfo = result;
+            NSString *showText = [NSString stringWithFormat:@"%@(短号:%@)",accountInfo.meetingId,accountInfo.shortMeetingId];
+            weakSelf.meetingIdInput.text = showText;
+        };
     }];
 }
 
@@ -150,6 +150,8 @@
     if (index == 3) { //使用个人会议号
         if ([self useUserMeetingId]) {
             [self doGetUserMeetingId];
+        }else {
+            self.meetingIdInput.text = @"";
         }
     } else if (index == 4) {
         _configCheckBox.disableAllItems = [self useDefaultConfig];

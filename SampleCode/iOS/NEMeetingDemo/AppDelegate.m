@@ -10,6 +10,7 @@
 #import "SystemAuthHelper.h"
 #import "LoginInfoManager.h"
 #import "BaseViewController.h"
+#import <NIMSDK/NIMSDK.h>
 
 @interface AppDelegate ()
 
@@ -19,6 +20,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self doSetupMeetingSdk];
+#if PRIVATE
+/// IM私有化AppKey
+    [self setupIMSDKPrivateAppKey];
+#endif
     [SystemAuthHelper requestAuthority];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     return YES;
@@ -27,13 +32,25 @@
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
-
+- (void)setupIMSDKPrivateAppKey {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NIMSDK sharedSDK] registerWithAppID:@"请填入您的IMAppKey" cerName:nil];
+    });
+}
 - (void)doSetupMeetingSdk {
     NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
     config.appKey = kAppKey;
     config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
     config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
+    #if PRIVATE
+    /// 私有化AppKey
+        config.useAssetServerConfig = YES;
+    #else
+        config.useAssetServerConfig = NO;
+    #endif
+    
     [SVProgressHUD showWithStatus:@"初始化..."];
     [[NEMeetingSDK getInstance] initialize:config
                                   callback:^(NSInteger resultCode, NSString *resultMsg, id result) {

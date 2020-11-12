@@ -8,7 +8,6 @@ import android.content.Context;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.kyleduo.switchbutton.SwitchButton;
-import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.base.BaseAdapter;
 import com.netease.meetinglib.demo.data.ScheduleMeetingItem;
@@ -95,7 +93,7 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
             }
         });
         switch (data.getClickAction()) {
-            case ScheduleMeetingItem.EDIT_TEXT_TITTLE_ACTION:
+            case ScheduleMeetingItem.EDIT_TEXT_TITLE_ACTION:
                 edtMeetingTheme.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(edtMeetingTheme.getText())) {
                     edtMeetingTheme.setText(SdkAuthenticator.getAccount() + "的预约会议");

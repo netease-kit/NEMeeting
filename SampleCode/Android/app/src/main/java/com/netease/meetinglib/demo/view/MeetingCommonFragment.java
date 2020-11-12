@@ -22,6 +22,7 @@ import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
+import com.netease.meetinglib.sdk.NESettingsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     protected CheckBox usePersonalMeetingId;
-    private CheckBox[] checkBoxes = new CheckBox[4];
+    private CheckBox[] checkBoxes = new CheckBox[6];
     private CheckBox useDefaultMeetingOptions;
     protected List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
 
@@ -48,6 +49,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         checkBoxes[1] = view.findViewById(R.id.audioOption);
         checkBoxes[2] = view.findViewById(R.id.noChatOptions);
         checkBoxes[3] = view.findViewById(R.id.noInviteOptions);
+        checkBoxes[4] = view.findViewById(R.id.no_minimize);
+        checkBoxes[5] = view.findViewById(R.id.show_meeting_time);
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
         useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
@@ -58,17 +61,23 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(1, R.id.secondEditor, labels);
 
         addEditorArray(2, R.id.addItemIdEditor, labels);
-        addEditorArray(3, R.id.addTittleEditor, labels);
+        addEditorArray(3, R.id.addTitleEditor, labels);
         addEditorArray(4, R.id.thirdEditor, labels);
         Button addMenuItemButton = getView().findViewById(R.id.addMenuItemButton);
         addMenuItemButton.setOnClickListener(v -> addMenuItem());
         useDefaultMeetingOptions.setChecked(false);
         useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox, checked) -> {
             checkBoxes[0].setEnabled(!checked);
+            checkBoxes[0].setChecked(false);
             checkBoxes[1].setEnabled(!checked);
+            checkBoxes[1].setChecked(false);
+            checkBoxes[5].setEnabled(!checked);
+            checkBoxes[5].setChecked(false);
         });
         injectedMoreMenuItems.clear();
-        NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
+        if ( NEMeetingSDK.getInstance().getMeetingService() != null) {
+            NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
+        }
     }
 
 
@@ -89,10 +98,19 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     public NEMeetingOptions getMeetingOptions(NEMeetingOptions options) {
-        options.noVideo = !isChecked(0);
-        options.noAudio = !isChecked(1);
+        if (isNotUseDefaultMeetingOptions()) {
+            options.noVideo = !isChecked(0);
+            options.noAudio = !isChecked(1);
+            options.showMeetingTime = isChecked(5);
+        }else {
+            NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsService();
+            options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
+            options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
+            options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
+        }
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
+        options.noMinimize = isChecked(4);
 //        addMeetingInfoItem();
         if (injectedMoreMenuItems != null && injectedMoreMenuItems.size() > 0) {
             options.injectedMoreMenuItems = injectedMoreMenuItems;
@@ -114,7 +132,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         return checkBoxes[index].isChecked();
     }
 
-    protected  class MeetingCallback extends ToastCallback<Void> {
+    protected class MeetingCallback extends ToastCallback<Void> {
 
         public MeetingCallback() {
             super(getActivity(), getActionLabel());

@@ -8,7 +8,8 @@
 | 日期 | 版本 | 变更内容 |
 | :------: | :------: | :------- |
 | 2020-09-15  | 1.0.0 | 首次正式发布，支持基础会议功能 |
-
+| 2020-09-29  | 1.2.6 | 支持预约会议加入，修复已知bug |
+| 2020-10-29  | 1.3.0 | 支持预约会议密码加入，修复已知bug |
 
 ## 快速接入
 
@@ -96,12 +97,12 @@
 
     ```js
     neWebMeeting.actions.afterLeave(callback) // 可在初始化后执行该方法进行注册
+    // 成功离开会议，成功结束会议，主持人结束会议，其他端收到通知，均会触发
     ```
 
 7. 当前页面成员信息
     ```js
-    neWebMeeting.actions.memberInfo
-    //内部属性：
+    neWebMeeting.actions.memberInfo //内部属性：
     //nickName: 入会名称
     //audio: 音频状态
     //video: 视频状态
@@ -126,6 +127,13 @@
             video:2, // 视频状态
         }
     }
+    ```
+
+9. 设置组件的宽高
+
+    ```js
+    neWebMeeting.actions.width = 100; // 设置宽度，单位px
+    neWebMeeting.actions.height = 100; // 设置高度，单位px
     ```
 
 #### 注意事项

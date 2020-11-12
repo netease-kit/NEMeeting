@@ -33,7 +33,5 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    qInfo() << "Application exit";
-
     return app.exec();
 }

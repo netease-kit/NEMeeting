@@ -6,7 +6,10 @@ import NetEase.Meeting.MeetingStatus 1.0
 
 Rectangle {
     Component.onCompleted: {
-        meetingManager.getPersonalMeetingId()
+        meetingManager.getAccountInfo()
+        meetingManager.isInitializd()
+        checkAudio.checked = meetingManager.checkAudio()
+        checkVideo.checked = meetingManager.checkVideo()
     }
 
     ToolButton {
@@ -166,12 +169,14 @@ Rectangle {
                     id: checkAudio
                     checked: true
                     text: qsTr('Enable audio')
+                    onClicked: meetingManager.setCheckAudio(checkAudio.checked)
                 }
 
                 CheckBox {
                     id: checkVideo
                     checked: true
                     text: qsTr('Enable video')
+                    onClicked: meetingManager.setCheckVideo(checkVideo.checked)
                 }
             }
 
@@ -222,12 +227,29 @@ Rectangle {
                     }
                 }
                 Button {
+                    id: btnLeave
+                    highlighted: true
+                    text: qsTr('Leave')
+                    Layout.fillWidth: true
+                    enabled: false
+                    onClicked: meetingManager.leaveMeeting(true)
+                }
+                Button {
                     id: btnGet
                     highlighted: true
                     enabled: false
                     Layout.fillWidth: true
                     text: qsTr('Get Info')
                     onClicked: meetingManager.getMeetingInfo()
+                }
+                Button {
+                    id: getStatus
+                    highlighted: true
+                    Layout.fillWidth: true
+                    text: qsTr('Get Status')
+                    onClicked: {
+                        toast.show('Current meeting status: ' + meetingManager.getMeetingStatus())
+                    }
                 }
             }
         }
@@ -239,6 +261,7 @@ Rectangle {
             switch (errorCode) {
             case MeetingStatus.ERROR_CODE_SUCCESS:
                 toast.show(qsTr('Create successfull'))
+                btnLeave.enabled = true
                 btnGet.enabled = true
                 btnCreate.enabled = false
                 btnJoin.enabled = false
@@ -250,7 +273,7 @@ Rectangle {
                 toast.show(qsTr('Failed to start meeting'))
                 break
             default:
-                toast.show(errorMessage)
+                toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
         }
@@ -258,6 +281,7 @@ Rectangle {
             switch (errorCode) {
             case MeetingStatus.ERROR_CODE_SUCCESS:
                 toast.show(qsTr("Join successfull"))
+                btnLeave.enabled = true
                 btnGet.enabled = true
                 btnCreate.enabled = false
                 btnJoin.enabled = false
@@ -275,9 +299,12 @@ Rectangle {
                 toast.show(qsTr('Failed to join meeting'))
                 break
             default:
-                toast.show(errorMessage)
+                toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
+        }
+        onLeaveSignal: {
+            toast.show('Leave meeting signal: ' + errorCode + ", " + errorMessage)
         }
         onMeetingStatusChanged: {
             switch (meetingStatus) {
@@ -301,6 +328,7 @@ Rectangle {
                 btnGet.enabled = false
                 btnCreate.enabled = true
                 btnJoin.enabled = true
+                btnLeave.enabled = false
                 break
             }
         }
@@ -308,7 +336,7 @@ Rectangle {
             toast.show('Meeting item clicked, item title: ' + itemTitle)
         }
         onGetCurrentMeetingInfo: {
-            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked)
+            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked + ', duration: ' + duration)
         }
         onGetScheduledMeetingList: {
             listModel.clear()
@@ -316,6 +344,18 @@ Rectangle {
             for (let i = 0; i < meetingList.length; i++) {
                 const meeting = meetingList[i]
                 listModel.append(meeting)
+            }
+        }
+
+        onDeviceStatusChanged :{
+            if(type === 1){
+                checkAudio.checked = status
+                toast.show('audio device status is '+ status);
+            }
+            else if(type === 2){
+                checkVideo.checked = status;
+                toast.show('video device status is '+ status);
+
             }
         }
     }

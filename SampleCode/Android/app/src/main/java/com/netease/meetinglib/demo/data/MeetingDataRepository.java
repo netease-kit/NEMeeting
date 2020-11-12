@@ -21,6 +21,10 @@ import com.netease.meetinglib.sdk.NEPreMeetingService;
 import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
 import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEStartMeetingParams;
+import com.netease.meetinglib.sdk.control.NEControlListener;
+import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
+import com.netease.meetinglib.sdk.control.NEControlOptions;
+import com.netease.meetinglib.sdk.control.NEControlParams;
 
 import java.util.List;
 
@@ -117,5 +121,30 @@ public class MeetingDataRepository {
 
     /////////////////////////////////////////////////
     /***          ScheduleMeeting end           **/
+    /////////////////////////////////////////////////
+
+
+    /////////////////////////////////////////////////
+    /***          ControlService start           **/
+    /////////////////////////////////////////////////
+
+    public void openController(Context context, NEControlParams params, NEControlOptions opts, NECallback<Void> callback) {
+        NEMeetingSDK.getInstance().getControlService().openControlUI(context, params, opts, callback);
+    }
+
+    public void setOnControlCustomMenuItemClickListener(NEControlMenuItemClickListener listener) {
+        NEMeetingSDK.getInstance().getControlService().setOnCustomMenuItemClickListener(listener);
+    }
+
+    public void registerControlListener(NEControlListener listener) {
+        NEMeetingSDK.getInstance().getControlService().registerControlListener(listener);
+    }
+
+    public void unRegisterControlListener(NEControlListener listener) {
+        NEMeetingSDK.getInstance().getControlService().unRegisterControlListener(listener);
+    }
+
+    /////////////////////////////////////////////////
+    /***          ControlService end           **/
     /////////////////////////////////////////////////
 }

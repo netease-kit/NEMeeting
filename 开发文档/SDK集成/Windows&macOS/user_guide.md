@@ -9,7 +9,9 @@
 | 2020-07-10  | 1.0.0 | 首次正式发布 |
 | 2020-08-31 | 1.1.0 | 新增如下接口：<br />`NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
 | 2020-09-04 | 1.2.0 | 新增如下接口：<br />`NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
-| 2020-09-18 | 1.2.3 | 新增如下接口：<br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#registerScheduleMeetingStatusListener:`注册预约会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChanged`会议状态回调 |
+| 2020-09-18 | 1.2.3 | 新增如下接口：<br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`MeetingDisconnectCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#registerScheduleMeetingStatusListener:`注册预约会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChanged`会议状态回调 |
+| 2020-09-29 | 1.2.6 | 新增如下接口：<br /><li>`NEAuthListener#onAuthInfoExpired`新增账号信息过期通知 </li>  <li>`MeetingDisconnectCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED`新增账号信息过期对应的会议退出码</li><li>`NEMeetingService#leaveMeeting`新增从会议中离开会议接口</li> |
+| 2020-10-29 | 1.3.0 | 新增如下接口：<br /><li>`NESettingsService#NEVideoController#setTurnOnMyVideoWhenJoinMeeting`新增入会前视频开关状态设置 </li><li>`NESettingsService#NEVideoController#isTurnOnMyVideoWhenJoinMeetingEnabled`新增入会前视频开关状态获取 </li><li>`NESettingsService#NEAudioController#setTurnOnMyAudioWhenJoinMeeting`新增入会前音频开关状态设置 </li><li>`NESettingsService#NEAudioController#isTurnOnMyAudioWhenJoinMeetingEnabled`新增入会前音频开关状态获取 </li> <li>`NEAuthService#getAccountInfo`新增获取用户信息接口 </li><li>`NEAccountService#getAccountInfo`废弃此接口，推荐使用`NEAuthService#getAccountInfo` </li>
 
 ## 环境要求
 
@@ -22,8 +24,8 @@
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1600509352/NEMeeting_SDK_Windows_v1.2.3.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1600509598/NEMeeting_SDK_macOS_v1.2.3.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1603978824/NEMeeting_SDK_Windows_v1.3.0.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1603978737/NEMeeting_SDK_macOS_v1.3.0.zip)
 
 **1）Windows 开发环境配置**
 
@@ -100,6 +102,12 @@ NEMeetingSDK::getInstance()->initialize(config, [this](NEErrorCode errorCode, co
 });
 ```
 
+当 SDK 初始化后，您可以通过接口查询初始化状态，接口返回 true 为已经初始化，返回 false 为未初始化
+
+```C++
+auto flag = NEMeetingSDK::getInstance()->isInitialized();
+```
+
 **2）登录鉴权**
 
 初始化完成后，您可以调用登录接口来登录到 SDK 中。
@@ -126,13 +134,74 @@ if (authService)
 登录成功后，您可以获取个人所拥有的个人会议 ID、创建或者加入一个会议
 
 ```C++
-// 获取个人会议 ID
-auto accountService = NEMeetingSDK::getInstance()->getAccountService();
-if (accountService)
+// 获取用户信息
+auto ipcAuthService = NEMeetingSDK::getInstance()->getAuthService();
+if (ipcAuthService)
 {
-    accountService->getPersonalMeetingId([this](NEErrorCode errorCode, const std::string& errorMessage, const std::string& personalMeetingId) {
-        // personalMeetingId 为登录后为您账户分配的固定会议 ID
+    ipcAuthService->getAccountInfo([=](NEErrorCode errorCode, const std::string& errorMessage, const AccountInfo& authInfo) {
+        // errorCode 错误码，errorMessage authInfo 用户信息
     });
+}
+```
+
+```C++
+// 入会前获取视频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto videoController = ipcSettingService->GetVideoController();
+    if (videoController)
+    {
+        videoController->isTurnOnMyVideoWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+            // errorCode 错误码，errorMessage 错误信息，bOn 视频开关状态 
+        });
+    }
+}
+```
+
+```C++
+// 入会前设置视频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto videoController = ipcSettingService->GetVideoController();
+    if (videoController)
+    {
+        videoController->setTurnOnMyVideoWhenJoinMeeting(checkVideo, [this, checkVideo](NEErrorCode errorCode, const std::string& errorMessage){
+            // errorCode 错误码，errorMessage 错误信息，checkVideo 视频开关状态
+        });
+    }
+}
+```
+
+```C++
+// 入会前获取音频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto AudioController = ipcSettingService->GetAudioController();
+    if (AudioController)
+    {
+        //std::promise<bool> promise;
+        AudioController->isTurnOnMyAudioWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+            // errorCode 错误码，errorMessage 错误信息，bOn 音频开关状态 
+        });
+    }
+}
+```
+
+```C++
+// 入会前设置音频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto audioController = ipcSettingService->GetAudioController();
+    if (audioController)
+    {
+        audioController->setTurnOnMyAudioWhenJoinMeeting(checkAudio, [this, checkAudio](NEErrorCode errorCode, const std::string& errorMessage){
+            // errorCode 错误码，errorMessage checkAudio 音频开关状态
+        });
+    }
 }
 ```
 
@@ -209,7 +278,7 @@ if (meetingService)
 
 在加入或者创建会议前后，您可能需要关注议的创建/加入进度以及会议中状态的变更通知，如需关注这些信息，您需要先继承 `NEMeetingStatusListener`，然后实现 `onMeetingStatusChanged` 通知，并将该子类注册到监听队列中。示例代码如下：
 
-```
+```C++
 // 继承子类并覆写 
 
 class NEMeetingSDKManager : public NEMeetingStatusListener
@@ -235,6 +304,28 @@ if (meetingService)
 {
     meetingService->getCurrentMeetingInfo([this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingInfo& meetingInfo) {
         // 获取会议信息后的回调函数，您可以通过 meetingInfo 获取所需信息
+    });
+}
+```
+
+同时您可以通过接口获取当前会议的状态，会议状态请见 `meeting.h` 头文件中的 NEMeetingStatus 枚举：
+
+```C++
+auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (ipcMeetingService)
+{
+    auto status = ipcMeetingService->getMeetingStatus();
+}
+```
+
+通过 leaveMeeting 接口您可以从会议中离开当前会议
+
+```C++
+auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (ipcMeetingService)
+{
+    ipcMeetingService->leaveMeeting(finish, [=](NEErrorCode errorCode, const std::string& errorMessage) {
+        // 离开会议后的回调，如果您需要反初始化 SDK，需要在该回调中抛出一个离开任务到 UI 线程来执行反初始化操作
     });
 }
 ```

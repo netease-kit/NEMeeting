@@ -82,7 +82,7 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
             mDatas = new ArrayList<>();
         }
         mDatas.set(position, data);
-        notifyItemChanged(position);
+        notifyItemChanged(position,data);
     }
     public void itemMove(int fromPosition, int toPosition) {
         try {

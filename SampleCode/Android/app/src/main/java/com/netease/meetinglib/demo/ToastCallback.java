@@ -6,9 +6,9 @@
 package com.netease.meetinglib.demo;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.netease.meetinglib.demo.log.LogUtil;
 import com.netease.meetinglib.sdk.NECallback;
 import com.netease.meetinglib.sdk.NEMeetingError;
 
@@ -26,7 +26,7 @@ public class ToastCallback<T> implements NECallback<T> {
 
     @Override
     public void onResult(int resultCode, String resultMsg, T resultData) {
-        Log.i(TAG, prefix + " onResult: " + resultCode + '|' + resultMsg + '|' + resultData);
+        LogUtil.log(TAG, prefix + " onResult: " + resultCode + '|' + resultMsg + '|' + resultData);
         Toast.makeText(context, prefix + (resultCode == NEMeetingError.ERROR_CODE_SUCCESS ? "成功" : "失败" + (resultMsg != null ? ": " + resultMsg : "")),
                 Toast.LENGTH_SHORT).show();
     }

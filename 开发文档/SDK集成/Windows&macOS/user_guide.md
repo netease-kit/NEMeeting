@@ -4,14 +4,7 @@
 
 ## 变更记录
 
-| 日期 | 版本 | 变更内容 |
-| :------: | :------: | :------- |
-| 2020-07-10  | 1.0.0 | 首次正式发布 |
-| 2020-08-31 | 1.1.0 | 新增如下接口：<br />`NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
-| 2020-09-04 | 1.2.0 | 新增如下接口：<br />`NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
-| 2020-09-18 | 1.2.3 | 新增如下接口：<br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`MeetingDisconnectCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#registerScheduleMeetingStatusListener:`注册预约会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChanged`会议状态回调 |
-| 2020-09-29 | 1.2.6 | 新增如下接口：<br /><li>`NEAuthListener#onAuthInfoExpired`新增账号信息过期通知 </li>  <li>`MeetingDisconnectCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED`新增账号信息过期对应的会议退出码</li><li>`NEMeetingService#leaveMeeting`新增从会议中离开会议接口</li> |
-| 2020-10-29 | 1.3.0 | 新增如下接口：<br /><li>`NESettingsService#NEVideoController#setTurnOnMyVideoWhenJoinMeeting`新增入会前视频开关状态设置 </li><li>`NESettingsService#NEVideoController#isTurnOnMyVideoWhenJoinMeetingEnabled`新增入会前视频开关状态获取 </li><li>`NESettingsService#NEAudioController#setTurnOnMyAudioWhenJoinMeeting`新增入会前音频开关状态设置 </li><li>`NESettingsService#NEAudioController#isTurnOnMyAudioWhenJoinMeetingEnabled`新增入会前音频开关状态获取 </li> <li>`NEAuthService#getAccountInfo`新增获取用户信息接口 </li><li>`NEAccountService#getAccountInfo`废弃此接口，推荐使用`NEAuthService#getAccountInfo` </li>
+[点击查看变更记录](CHANGELOG.md)
 
 ## 环境要求
 

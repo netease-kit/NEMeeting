@@ -87,11 +87,12 @@ public:
 
     Q_INVOKABLE void scheduleMeeting(const QString& meetingSubject, qint64 startTime, qint64 endTime, const QString& password, bool attendeeAudioOff);
     Q_INVOKABLE void cancelMeeting(const qint64& meetingUniqueId);
+    Q_INVOKABLE void editMeeting(const qint64& meetingUniqueId, const QString& meetingId, const QString& meetingSubject, qint64 startTime, qint64 endTime, const QString& password, bool attendeeAudioOff);
     Q_INVOKABLE void getMeetingList();
     Q_INVOKABLE void invokeStart(const QString& meetingId, const QString& nickname, bool audio, bool video,
-                                 bool enableChatroom = true, bool enableInvitation = true);
+                                 bool enableChatroom = true, bool enableInvitation = true, int displayOption = 0);
     Q_INVOKABLE void invokeJoin(const QString& meetingId, const QString& nickname, bool audio, bool video,
-                                bool enableChatroom = true, bool enableInvitation = true);
+                                bool enableChatroom = true, bool enableInvitation = true, const QString& password = QString(), int displayOption = 0);
     Q_INVOKABLE void leaveMeeting(bool finish);
     Q_INVOKABLE int getMeetingStatus();
     Q_INVOKABLE void getMeetingInfo();
@@ -128,6 +129,7 @@ signals:
     void personalMeetingIdChanged();
     void scheduleSignal(int errorCode, const QString& errorMessage);
     void cancelSignal(int errorCode, const QString& errorMessage);
+    void editSignal(int errorCode, const QString& errorMessage);
     void getScheduledMeetingList(int errorCode, const QJsonArray& meetingList);
     void deviceStatusChanged(int type, bool status);
 
@@ -139,6 +141,9 @@ public slots:
 
     bool checkVideo();
     void setCheckVideo(bool checkVideo);
+
+    //bool checkDuration();
+    //void setCheckDuration(bool checkDuration);
 
 private:
     std::atomic_bool    m_initialized;

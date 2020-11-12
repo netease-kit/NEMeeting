@@ -4,6 +4,10 @@ import QtQuick.Layouts 1.12
 import NetEase.Meeting.MeetingStatus 1.0
 
 Rectangle {
+    Component.onCompleted: {
+        toast.show('Init successfully.')
+    }
+
     ColumnLayout {
         anchors.centerIn: parent
         Image {

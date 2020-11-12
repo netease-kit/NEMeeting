@@ -10,6 +10,7 @@
 | 2020-09-15  | 1.0.0 | 首次正式发布，支持基础会议功能 |
 | 2020-09-29  | 1.2.6 | 支持预约会议加入，修复已知bug |
 | 2020-10-22 | 1.2.8 | 支持多端互踢，增加*NEMeetingInfo*字段
+| 2020-11-12 | 1.3.1 | 增加*shortId*字段  <br>  增加两种登陆方式 *loginWithNEMeeting* *loginWithSSOToken* <br> 增加初始化配置，兼容已有方案
 
 
 ## 快速接入
@@ -28,7 +29,7 @@
 1. 将代码加入到页面head中（将文件路径替换为真是存在路径）
 
     ```js
-    <script src="./NeWebMeeting_V1.0.0.js"></script>
+    <script src="./NeWebMeeting_V1.3.1.js"></script>
     ```
 
 2. 页面添加dom
@@ -51,6 +52,8 @@
 
     ```js
     const config = { // 选填，仅限于私有化配置时使用
+        appkey: '', //云信服务appkey
+        meetingServerDomain: '' //会议服务器地址，支持私有化部署
         NIMconf: {
             // IM私有化配置项
         }
@@ -82,7 +85,22 @@
 
     传 http://xxx.xxx.com 则使用http协议
 
-4. 创建房间
+4. 账号密码登录
+
+    ```js
+    neWebMeeting.actions.loginWithNEMeeting(account, password, callback)
+    // account 账号username
+    // password 密码 无需加密，内部已封装
+    ```
+
+5. SSOToken登录
+
+    ```js
+    neWebMeeting.actions.loginWithSSOToken(ssoToken, callback)
+    // ssoToken 获取到的sso登陆token
+    ```
+
+6. 创建房间
 
     ```js
     const obj = {
@@ -94,7 +112,7 @@
     neWebMeeting.actions.create(obj, callback)
     ```
 
-5. 加入房间
+7. 加入房间
 
     ```js
     const obj = {
@@ -108,14 +126,14 @@
     neWebMeeting.actions.join(obj, callback)
     ```
 
-6. 结束、离开会议回调
+8. 结束、离开会议回调
 
     ```js
     neWebMeeting.actions.afterLeave(callback) // 可在初始化后执行该方法进行注册
     // 成功离开会议，成功结束会议，主持人结束会议，其他端收到通知，均会触发
     ```
 
-7. 当前页面成员信息
+9. 当前页面成员信息
 
     ```js
     neWebMeeting.actions.memberInfo //内部属性：
@@ -126,7 +144,7 @@
     //avRoomUid: uid
     ```
 
-8. 与会成员信息
+10. 与会成员信息
 
     ```js
     neWebMeeting.actions.joinMemberInfo // 参会成员map，key是avRoomUid
@@ -146,16 +164,17 @@
     }
     ```
 
-9. 当前会议信息
+11. 当前会议信息
 
     ```js
     neWebMeeting.actions.NEMeetingInfo // 当前会议信息
     // meetingId 会议ID
     // isHost 是否主持人
     // isLocked 会议是否锁定
+    // shortMeetingId 短号
     ```
 
-10. 设置组件的宽高
+12. 设置组件的宽高
 
     ```js
     neWebMeeting.actions.width = 100; // 设置宽度，单位px
@@ -188,3 +207,5 @@
     }
     neWebMeeting.actions.join(obj, callback)
   ```
+  
+- v1.3.1更新的初始化配置，不会影响现有的appkey和meetingServerDomain的配置，如果在login传入则优先使用login配置

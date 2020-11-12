@@ -82,6 +82,8 @@ macx {
 NEMeetingSDKConfig config;
 QString displayName = QObject::tr("NetEase Meeting");
 QByteArray byteDisplayName = displayName.toUtf8();
+// 设置你的 AppKey
+config.setAppKey("Your application key");
 // 设置程序启动后的显示名称，如 “网易会议”，在加入会议时会提示“正在进入网易会议...”
 config.getAppInfo()->ProductName(byteDisplayName.data());
 // 设置您的组织名
@@ -109,7 +111,8 @@ auto flag = NEMeetingSDK::getInstance()->isInitialized();
 auto authService = NEMeetingSDK::getInstance()->getAuthService();
 if (authService)
 {
-    // 指定您登录到 SDK 中所使用的 App key
+    // 指定您登录到 SDK 中所使用的 AppKey，当该参数为空时则使用 initialize
+    // 否则使用此处指定的 Appkey 用于加入不同企业
     QByteArray byteAppKey = appKey.toUtf8();
     // 指定您登录到 SDK 所使用的账户
     QByteArray byteAccountId = accountId.toUtf8();
@@ -117,6 +120,32 @@ if (authService)
     QByteArray byteAccountToken = accountToken.toUtf8();
     // 执行登录操作
     authService->login(byteAppKey.data(), byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
+        ...
+    });
+}
+```
+
+使用网易会议账号登录
+
+```C++
+auto authService = NEMeetingSDK::getInstance()->getAuthService();
+if (authService)
+{
+    // 指定网易会议的用户名及密码，您可以通过 RESTful API 来注册网易会议账号
+    authService->loginWithNEMeeting(username.toStdString(), password.toStdString(), [=](NEErrorCode errorCode, const std::string& errorMessage) {
+        ...
+    });
+}
+```
+
+使用 SSO Token 登录
+
+```C++
+auto authService = NEMeetingSDK::getInstance()->getAuthService();
+if (authService)
+{
+    // 通过网易会议服务器换回的 SSO token
+    authService->loginWithSSOToken(ssoToken.toStdString(), [=](NEErrorCode errorCode, const std::string& errorMessage) {
         ...
     });
 }

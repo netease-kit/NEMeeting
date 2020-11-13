@@ -33,7 +33,7 @@
         // IM私有化配置
       }
     }
-    neWebMeeting.actions.init(800, 600);  // （width，height）单位px 建议比例4:3
+    neWebMeeting.actions.init(800, 600, config);  // （width，height）单位px 建议比例4:3
     neWebMeeting.actions.afterLeave(() => {
       console.log('离开会议回调')
     })
@@ -53,7 +53,7 @@
   }
 
   function loginWithNEMeeting() { // 账号密码登陆
-    const accoount = '',password = '';
+    const account = '',password = '';
     neWebMeeting.actions.loginWithNEMeeting(account, password, function(e) {
       console.log(e)
     })

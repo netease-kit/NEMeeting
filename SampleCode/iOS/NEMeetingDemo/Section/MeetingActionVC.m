@@ -10,6 +10,8 @@
 #import "LoginViewController.h"
 #import "MeetingSettingVC.h"
 #import "LoginInfoManager.h"
+#import "NEMeetingLoginViewController.h"
+#import "MainViewController.h"
 
 @interface MeetingActionVC ()
 
@@ -22,10 +24,10 @@
     self.title = @"网易会议Demo";
 }
 
-- (void)popToLoginVC {
+- (void)popToMainVC {
     __block UIViewController *targetVC = nil;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[LoginViewController class]]) {
+        if ([obj isKindOfClass:[MainViewController class]]) {
             targetVC = obj;
             *stop = YES;
         }
@@ -43,7 +45,7 @@
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         } else {
             [[LoginInfoManager shareInstance] cleanLoginInfo];
-            [weakSelf popToLoginVC];
+            [weakSelf popToMainVC];
         }
     }];
 }

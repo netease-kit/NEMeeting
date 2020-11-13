@@ -11,6 +11,8 @@ NSString *const kNEMeetingLoginAccount = @"kNEMeetingLoginAccount";
 NSString *const kNEMeetingLoginPassword = @"kNEMeetingLoginPassword";
 NSString *const kNEMeetingLoginInfoCleanNotication = @"kNEMeetingLoginInfoCleanNotication";
 NSString *const kNEMeetingEnablereuseNIM = @"kNEMeetingEnablereuseNIM";
+NSString *const kNEMeetingDidGetSSOToken = @"kNEMeetingDidGetSSOToken";
+
 
 @interface LoginInfoManager ()
 

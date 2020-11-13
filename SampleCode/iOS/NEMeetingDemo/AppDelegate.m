@@ -11,6 +11,9 @@
 #import "LoginInfoManager.h"
 #import "BaseViewController.h"
 #import <NIMSDK/NIMSDK.h>
+#import "NSString+Demo.h"
+
+static NSString * const prefixName = @"meetingdemo://";
 
 @interface AppDelegate ()
 
@@ -21,7 +24,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self doSetupMeetingSdk];
 #if PRIVATE
-/// IM私有化AppKey
+/// 私有化AppKey
     [self setupIMSDKPrivateAppKey];
 #endif
     [SystemAuthHelper requestAuthority];
@@ -60,5 +63,18 @@
                                                             object:nil];
     }];
 }
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    if ([url.absoluteString containsString:prefixName]) {
+        NSDictionary *dic = [url.absoluteString queryParametersFromURLString];
+        NSLog(@"dic:%@",dic);
+        NSString *ssoToken = [dic objectForKey:@"ssoToken"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNEMeetingDidGetSSOToken object:ssoToken];
+        return YES;
+    }
+    return NO;
+}
+
 
 @end

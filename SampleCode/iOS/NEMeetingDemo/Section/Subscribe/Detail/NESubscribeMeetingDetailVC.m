@@ -204,6 +204,9 @@
         }
         ret = account;
     }
+    if (ret.length){
+        ret = @"xxxx";
+    }
     return ret;
 }
 

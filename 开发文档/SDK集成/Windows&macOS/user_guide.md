@@ -4,14 +4,7 @@
 
 ## 变更记录
 
-| 日期 | 版本 | 变更内容 |
-| :------: | :------: | :------- |
-| 2020-07-10  | 1.0.0 | 首次正式发布 |
-| 2020-08-31 | 1.1.0 | 新增如下接口：<br />`NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
-| 2020-09-04 | 1.2.0 | 新增如下接口：<br />`NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
-| 2020-09-18 | 1.2.3 | 新增如下接口：<br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`MeetingDisconnectCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#registerScheduleMeetingStatusListener:`注册预约会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChanged`会议状态回调 |
-| 2020-09-29 | 1.2.6 | 新增如下接口：<br /><li>`NEAuthListener#onAuthInfoExpired`新增账号信息过期通知 </li>  <li>`MeetingDisconnectCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED`新增账号信息过期对应的会议退出码</li><li>`NEMeetingService#leaveMeeting`新增从会议中离开会议接口</li> |
-| 2020-10-29 | 1.3.0 | 新增如下接口：<br /><li>`NESettingsService#NEVideoController#setTurnOnMyVideoWhenJoinMeeting`新增入会前视频开关状态设置 </li><li>`NESettingsService#NEVideoController#isTurnOnMyVideoWhenJoinMeetingEnabled`新增入会前视频开关状态获取 </li><li>`NESettingsService#NEAudioController#setTurnOnMyAudioWhenJoinMeeting`新增入会前音频开关状态设置 </li><li>`NESettingsService#NEAudioController#isTurnOnMyAudioWhenJoinMeetingEnabled`新增入会前音频开关状态获取 </li> <li>`NEAuthService#getAccountInfo`新增获取用户信息接口 </li><li>`NEAccountService#getAccountInfo`废弃此接口，推荐使用`NEAuthService#getAccountInfo` </li>
+[点击查看变更记录](CHANGELOG.md)
 
 ## 环境要求
 
@@ -24,8 +17,8 @@
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1603978824/NEMeeting_SDK_Windows_v1.3.0.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1603978737/NEMeeting_SDK_macOS_v1.3.0.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1605260196/NEMeeting_SDK_Windows_v1.3.1.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1605259816/NEMeeting_SDK_macOS_v1.3.1.zip)
 
 **1）Windows 开发环境配置**
 
@@ -89,6 +82,8 @@ macx {
 NEMeetingSDKConfig config;
 QString displayName = QObject::tr("NetEase Meeting");
 QByteArray byteDisplayName = displayName.toUtf8();
+// 设置你的 AppKey
+config.setAppKey("Your application key");
 // 设置程序启动后的显示名称，如 “网易会议”，在加入会议时会提示“正在进入网易会议...”
 config.getAppInfo()->ProductName(byteDisplayName.data());
 // 设置您的组织名
@@ -116,7 +111,8 @@ auto flag = NEMeetingSDK::getInstance()->isInitialized();
 auto authService = NEMeetingSDK::getInstance()->getAuthService();
 if (authService)
 {
-    // 指定您登录到 SDK 中所使用的 App key
+    // 指定您登录到 SDK 中所使用的 AppKey，当该参数为空时则使用 initialize 初始化传入的 AppKey
+    // 否则使用此处指定的 Appkey 用于加入不同企业
     QByteArray byteAppKey = appKey.toUtf8();
     // 指定您登录到 SDK 所使用的账户
     QByteArray byteAccountId = accountId.toUtf8();
@@ -124,6 +120,32 @@ if (authService)
     QByteArray byteAccountToken = accountToken.toUtf8();
     // 执行登录操作
     authService->login(byteAppKey.data(), byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
+        ...
+    });
+}
+```
+
+使用网易会议账号登录
+
+```C++
+auto authService = NEMeetingSDK::getInstance()->getAuthService();
+if (authService)
+{
+    // 指定网易会议的用户名及密码，您可以通过 RESTful API 来注册网易会议账号
+    authService->loginWithNEMeeting(username.toStdString(), password.toStdString(), [=](NEErrorCode errorCode, const std::string& errorMessage) {
+        ...
+    });
+}
+```
+
+使用 SSO Token 登录
+
+```C++
+auto authService = NEMeetingSDK::getInstance()->getAuthService();
+if (authService)
+{
+    // 通过网易会议服务器换回的 SSO token
+    authService->loginWithSSOToken(ssoToken.toStdString(), [=](NEErrorCode errorCode, const std::string& errorMessage) {
         ...
     });
 }

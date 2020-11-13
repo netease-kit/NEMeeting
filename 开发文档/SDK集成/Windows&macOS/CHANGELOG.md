@@ -6,13 +6,22 @@
 
  * 使用网易会议账号登录接口 `NEAuthService::loginWithNEMeeting`
  * 使用 SSO token 登录接口 `NEAuthService::loginWithSSOToken`
+ * 屏幕共享若系统没有分配权限则弹出强提示
  * 自动登录接口 `NEAuthService::tryAutoLogin`
  * 创建及加入会议 option 中增加 `NEShowMeetingIdOption` 配置会议中显示会议 ID 的策略
 
-## Updated
+## Changed
 
- * 账户绑定的 AppKey 从 login 接口移动至 `NEMeetingSDK::initialized` 接口的 config 参数中
+ * `NEMeetingSDK::initialized` config 参数新增 Appkey 用以设置全局应用唯一 Key 信息
  * `NEAuthService::logout` 新增了带默认参数的形参，用以决定在退出时是否清理 SDK 缓存的用户信息
+
+## Fixed
+
+ * 登录相关接口在已经是登录状态下调用没有回调
+ * 账户信息过期被踢后正在进入会议的输入密码框未隐藏
+ * 共享屏幕时的偶现崩溃问题
+ * 窗口中部分 Toast 提示被遮挡
+ * 个别场景下会议结束但会议状态不正确
 
 # 2020-10-29 @ v1.3.0
 

@@ -111,7 +111,7 @@ auto flag = NEMeetingSDK::getInstance()->isInitialized();
 auto authService = NEMeetingSDK::getInstance()->getAuthService();
 if (authService)
 {
-    // 指定您登录到 SDK 中所使用的 AppKey，当该参数为空时则使用 initialize
+    // 指定您登录到 SDK 中所使用的 AppKey，当该参数为空时则使用 initialize 初始化传入的 AppKey
     // 否则使用此处指定的 Appkey 用于加入不同企业
     QByteArray byteAppKey = appKey.toUtf8();
     // 指定您登录到 SDK 所使用的账户

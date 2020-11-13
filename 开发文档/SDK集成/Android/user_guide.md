@@ -22,9 +22,11 @@
 1. 新建Android工程
 
     a. 运行Android Sudio，顶部菜单依次选择“File -> New -> New Project...”新建工程，选择'Phone and Tablet' -> 'Empty Activity' 单击Next。
+
     ![new android project](images/new_project.png)
     
     b. 配置工程相关信息，请注意Minimum API Level为API 21。
+    
     ![configure project](images/configure_project.png)
     
     c. 单击'Finish'完成工程创建。

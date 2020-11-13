@@ -20,8 +20,17 @@ public class EntranceFragment extends BaseFragment<FragmentEntranceBinding> {
     protected void initView() {
 
         setHandleOnBackDesktopPressed(true);
-        binding.btnLogin.setOnClickListener(v ->
-                Navigation.findNavController(getView()).navigate(R.id.action_entranceFragment_to_loginFragment)
+
+        binding.btnLoginWithNeMeeting.setOnClickListener(v ->
+                Navigation.findNavController(getView()).navigate(R.id.action_entranceFragment_to_loginWithNEMeetingFragment)
+        );
+
+        binding.btnLoginWithToken.setOnClickListener(v ->
+                Navigation.findNavController(getView()).navigate(R.id.action_entranceFragment_to_loginWithTokenFragment)
+        );
+
+        binding.btnLoginWithSso.setOnClickListener(v ->
+                Navigation.findNavController(getView()).navigate(R.id.action_entranceFragment_to_loginWithSSOFragment)
         );
 
         binding.btnJoinMeeting.setOnClickListener(v ->

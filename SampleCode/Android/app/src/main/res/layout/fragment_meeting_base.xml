@@ -52,7 +52,7 @@
                 android:text="自定义会议设置"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                app:layout_constraintTop_toBottomOf="@id/no_minimize" />
+                app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
 
             <CheckBox
                 android:id="@+id/videoOption"
@@ -130,6 +130,33 @@
                 android:text="显示会议持续时间"
                 app:layout_constraintLeft_toLeftOf="@id/audioOption"
                 app:layout_constraintTop_toBottomOf="@id/noInviteOptions" />
+
+            <CheckBox
+                android:id="@+id/showLongMeetingIdOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="仅显示会议ID长号"
+                app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+                app:layout_constraintTop_toBottomOf="@id/no_minimize" />
+
+            <CheckBox
+                android:id="@+id/showShortMeetingIdOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="仅显示会议ID短号"
+                app:layout_constraintLeft_toLeftOf="@id/audioOption"
+                app:layout_constraintTop_toBottomOf="@id/show_meeting_time" />
+
+            <CheckBox
+                android:id="@+id/noGalleryOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="入会时关闭画廊模式"
+                app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+                app:layout_constraintTop_toBottomOf="@id/showLongMeetingIdOnly" />
 
             <EditText
                 android:id="@+id/firstEditor"

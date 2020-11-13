@@ -89,29 +89,38 @@
 
 6. 调用相关接口完成特定功能，详情请参考API文档。
 
-- 登录鉴权
+- [登录鉴权](#登录鉴权)
     ```objective-c
     //[NEMeetingSDK getInstance]
+
+    //Token登录
     - (void)login:(NSString *)account
         token:(NSString *)token
          callback:(NECallbackOnResult)callback
+
+    //SSOToken登录
+    - (void)loginWithSSOToken:(NSString *)ssoToken
+     callback:(NECallbackOnResult)callback
+
+    //自动登录
+    - (void)tryAutoLogin:(NECallbackOnResult)callback
     ```
     
-- 创建会议
+- [创建会议](#创建会议)
     ```objective-c
     //[[NEMeetingSDK getInstance] getMeetingService]
     - (void)startMeeting:(NEStartMeetingParams *)param
                     opts:(NEStartMeetingOptions *)opts
                 callback:(NECallbackOnResult)callback;
     ```
-- 加入会议
+- [加入会议](#加入会议)
     ```objective-c
     //[[NEMeetingSDK getInstance] getMeetingService]
     - (void)joinMeeting:(NEJoinMeetingParams *)param
                    opts:(NEJoinMeetingOptions *)opts
                callback:(NECallbackOnResult)callback;
     ```
-- 注销登录
+- [注销登录](#注销)
     ```objective-c
     //[NEMeetingSDK getInstance]
     - (void)logout:(NECallbackOnResult)callback;
@@ -158,7 +167,15 @@ config.appKey = [DemoConfig shareConfig].appKey; //应用APPKey
 
 #### 描述
 
-请求SDK进行登录鉴权，只有完成SDK登录鉴权才允许创建会议。
+请求SDK进行登录鉴权，只有完成SDK登录鉴权才允许创建会议。SDK提供了多种登录方式可供选择，不同的登录接口需要不同的入参数。说明如下：
+
+| 登录方式 | 说明 | 接口 | 参数 | 其他 |
+| :------ | :------ | :------ | :------ | :------ |
+| Token登录 | 无 | `NEMeetingSDK#login` | accountId、accountToken | 账号信息需要从会议服务器获取，由接入方自行实现相关业务逻辑 |
+| SSOToken登录 | 无 | `NEMeetingSDK#loginWithSSOToken` | ssoToken | 无 |
+| 自动登录 | SDK尝试使用最近一次成功登录过的账号信息登录 | `NEMeetingSDK#tryAutoLogin` | 无 | 无 |
+
+下面就`Token登录`方式说明SDK登录逻辑，其他登录方式同理。
 
 #### 业务流程
 
@@ -233,6 +250,7 @@ NEMeetingService *meetingServce = [NEMeetingSDK getInstance].getMeetingService;
 #### 注意事项
 
 - 创建会议时，会议号可以配置为个人会议号(登录后可通过**[NEMeetingSDK getInstance].getAccountService**获取)，或者置空(此时由服务器随机分配会议号)。
+- 会议SDK提供了大量的入会选项可供配置，可自定义会中的UI显示、菜单、行为等，可根据需要进行设置，可参考[入会选项](#入会选项)进行设置
 - 该接口仅支持**在登录鉴权成功后调用**，其他状态下调用不会成功
 
 --------------------
@@ -278,6 +296,7 @@ NEMeetingService *meetingServce = [NEMeetingSDK getInstance].getMeetingService;
 
 - 会议号不能为空，需要配置为真实进行中的会议ID
 - 该接口支持登录和未登录状态调用
+- 会议SDK提供了大量的入会选项可供配置，可自定义会中的UI显示、菜单、行为等，可根据需要进行设置，可参考[入会选项](#入会选项)进行设置
 
 --------------------
 
@@ -744,9 +763,26 @@ BOOL videoEnabled = [settingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
 
 ```
 
-
-
 #### 注意事项
 
 - 登陆状态下才能够使用遥控器服务
 - 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者位互斥逻辑。
+
+
+## 附录
+
+### 入会选项
+
+SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显示、菜单、行为等。列举如下：
+
+|选项名称|选项说明|默认值|
+| :------ | :------ | :------ |
+| noVideo | 入会时关闭视频 | true |
+| noAudio | 入会时关闭音频 | true |
+| noMinimize | 隐藏会议内“最小化”功能 | true |
+| noInvite | 隐藏会议内“邀请”功能 | false |
+| noChat | 隐藏会议内“聊天”功能 | true |
+| noGallery | 关闭会议中“画廊”模式功能 | false |
+| showMeetingTime | 显示会议“持续时间” | false |
+| meetingIdDisplayOption | 会议内长短号会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
+| injectedMoreMenuItems | 会议内自定义菜单 | NULL |

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.netease.meetinglib.demo.view.LoginWithTokenFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_login_with_sdk_token"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/button_circle_shape"
+            android:text="登录(token)"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_login_account_token" />
+
+        <EditText
+            android:id="@+id/edt_login_account_token"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="60dp"
+            android:gravity="center|left"
+            android:hint="请输入accountToken"
+            android:inputType="textPassword"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_with_sdk_token"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_login_account_id"
+            />
+
+
+        <EditText
+            android:id="@+id/edt_login_account_id"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="22dp"
+            android:gravity="center|left"
+            android:hint="请输入accountId"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/edt_login_account_token"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_login_with_app_token"
+            />
+
+        <Button
+            android:id="@+id/btn_login_with_app_token"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/button_circle_shape"
+            android:text="登录(应用换取token)"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/edt_login_account_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_login_pwd" />
+
+        <EditText
+            android:id="@+id/edt_login_pwd"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="60dp"
+            android:gravity="center|left"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_with_app_token"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_login_account"
+            tools:inputType="text|textPassword"
+            tools:text="1234567" />
+
+
+        <EditText
+            android:id="@+id/edt_login_account"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="22dp"
+            android:gravity="center|left"
+            android:hint="请输入账户"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textSize="16sp"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/edt_login_pwd"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

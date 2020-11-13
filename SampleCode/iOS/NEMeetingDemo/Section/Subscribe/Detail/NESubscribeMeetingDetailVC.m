@@ -204,7 +204,7 @@
         }
         ret = account;
     }
-    if (ret.length){
+    if (ret.length == 0){
         ret = @"xxxx";
     }
     return ret;

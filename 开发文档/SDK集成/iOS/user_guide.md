@@ -784,5 +784,5 @@ SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显
 | noChat | 隐藏会议内“聊天”功能 | true |
 | noGallery | 关闭会议中“画廊”模式功能 | false |
 | showMeetingTime | 显示会议“持续时间” | false |
-| meetingIdDisplayOption | 会议内长短号会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
+| meetingIdDisplayOption | 会议内会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
 | injectedMoreMenuItems | 会议内自定义菜单 | NULL |

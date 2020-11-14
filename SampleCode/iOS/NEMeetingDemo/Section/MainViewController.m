@@ -8,7 +8,6 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
-#import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
 #import "MeetingControlVC.h"
@@ -58,11 +57,6 @@
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
     }];
-}
-
-- (void)onEnterMulAction:(UIButton *)sender {
-    IMLoginVC *vc = [[IMLoginVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)onRestoreMeetingAction:(UIButton *)sender {

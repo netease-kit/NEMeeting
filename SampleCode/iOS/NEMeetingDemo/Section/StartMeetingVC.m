@@ -9,6 +9,7 @@
 #import "MeetingSettingVC.h"
 #import "CheckBox.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import <NEMeetingSDK/NEMeetingSDK.h>
 
 @interface StartMeetingVC ()<CheckBoxDelegate>
 
@@ -28,6 +29,7 @@
 @property (nonatomic, readonly) BOOL disableChat;
 @property (nonatomic, readonly) BOOL disableInvite;
 @property (nonatomic, readonly) BOOL disableMinimize;
+@property (nonatomic, readonly) BOOL disableGallery;
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
@@ -59,7 +61,10 @@
                                               @"入会时关闭邀请菜单",
                                               @"入会时隐藏最小化",
                                               @"使用个人会议号",
-                                              @"使用默认会议设置"]];
+                                              @"使用默认会议设置",
+                                              @"入会时关闭画廊模式",
+                                              @"仅显示会议ID长号",
+                                              @"仅显示会议ID短号"]];
     [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
@@ -76,10 +81,12 @@
         options.noVideo = ![self openVideoWhenJoinMeeting];
         options.noAudio = ![self openMicWhenJoinMeeting];
         options.showMeetingTime = [self showMeetingTime];
+        options.meetingIdDisplayOption = [self meetingIdDisplayOption];
         options.noInvite = [self disableInvite];
         options.noChat = [self disableChat];
         options.noMinimize = [self disableMinimize];
         options.injectedMoreMenuItems = _menuItems;
+        options.noGallery = [self disableGallery];
     }
     
     WEAK_SELF(weakSelf);
@@ -97,18 +104,17 @@
 - (void)doGetUserMeetingId {
     WEAK_SELF(weakSelf);
     [SVProgressHUD show];
-    [[NEMeetingSDK getInstance].getAccountService getPersonalMeetingId:^(NSInteger resultCode, NSString *resultMsg, id result) {
+    
+    [[NEMeetingSDK getInstance].getAccountService getAccontInfo:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         } else {
-            NSString *userId = result;
-            if (![result isKindOfClass:[NSString class]]
-                || result == nil) {
-                userId = @"";
-            }
-            weakSelf.meetingIdInput.text = userId;
-        }
+            if (![result isKindOfClass:[NEAccountInfo class]] || result == nil) return;
+            NEAccountInfo *accountInfo = result;
+            NSString *showText = [NSString stringWithFormat:@"%@(短号:%@)",accountInfo.meetingId,accountInfo.shortMeetingId];
+            weakSelf.meetingIdInput.text = showText;
+        };
     }];
 }
 
@@ -150,6 +156,8 @@
     if (index == 3) { //使用个人会议号
         if ([self useUserMeetingId]) {
             [self doGetUserMeetingId];
+        }else {
+            self.meetingIdInput.text = @"";
         }
     } else if (index == 4) {
         _configCheckBox.disableAllItems = [self useDefaultConfig];
@@ -188,6 +196,19 @@
 
 - (BOOL)useDefaultConfig {
     return [_settingCheckBox getItemSelectedAtIndex:4];
+}
+
+- (BOOL)disableGallery {
+    return [_settingCheckBox getItemSelectedAtIndex:5];
+}
+
+- (NEMeetingIdDisplayOption) meetingIdDisplayOption {
+    if ([_settingCheckBox getItemSelectedAtIndex:6]) {
+        return DISPLAY_LONG_ID_ONLY;
+    } else if ([_settingCheckBox getItemSelectedAtIndex:7]) {
+        return DISPLAY_SHORT_ID_ONLY;
+    }
+    return DISPLAY_ALL;
 }
 
 @end

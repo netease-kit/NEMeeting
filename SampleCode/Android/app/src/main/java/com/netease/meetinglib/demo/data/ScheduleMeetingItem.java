@@ -11,7 +11,7 @@ public class ScheduleMeetingItem {
 
     private int clickAction;
 
-    public static final int EDIT_TEXT_TITTLE_ACTION = 0;
+    public static final int EDIT_TEXT_TITLE_ACTION = 0;
     public static final int SET_START_TIME_ACTION = 1;
     public static final int SET_END_TIME_ACTION = 2;
     public static final int ENABLE_MEETING_PWD_ACTION = 3;

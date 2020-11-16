@@ -11,12 +11,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
 import com.netease.meetinglib.sdk.NEMeetingError;
+import com.netease.meetinglib.sdk.NEMeetingIdDisplayOption;
 import com.netease.meetinglib.sdk.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
@@ -27,6 +26,8 @@ import com.netease.meetinglib.sdk.NESettingsService;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+
 public abstract class MeetingCommonFragment extends CommonFragment {
 
     MeetingCommonFragment() {
@@ -34,7 +35,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     protected CheckBox usePersonalMeetingId;
-    private CheckBox[] checkBoxes = new CheckBox[6];
+    private final CheckBox[] checkBoxes = new CheckBox[9];
     private CheckBox useDefaultMeetingOptions;
     protected List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
 
@@ -51,6 +52,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         checkBoxes[3] = view.findViewById(R.id.noInviteOptions);
         checkBoxes[4] = view.findViewById(R.id.no_minimize);
         checkBoxes[5] = view.findViewById(R.id.show_meeting_time);
+        checkBoxes[6] = view.findViewById(R.id.showLongMeetingIdOnly);
+        checkBoxes[7] = view.findViewById(R.id.showShortMeetingIdOnly);
+        checkBoxes[8] = view.findViewById(R.id.noGalleryOptions);
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
         useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
@@ -61,7 +65,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(1, R.id.secondEditor, labels);
 
         addEditorArray(2, R.id.addItemIdEditor, labels);
-        addEditorArray(3, R.id.addTittleEditor, labels);
+        addEditorArray(3, R.id.addTitleEditor, labels);
         addEditorArray(4, R.id.thirdEditor, labels);
         Button addMenuItemButton = getView().findViewById(R.id.addMenuItemButton);
         addMenuItemButton.setOnClickListener(v -> addMenuItem());
@@ -75,7 +79,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             checkBoxes[5].setChecked(false);
         });
         injectedMoreMenuItems.clear();
-        NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
+        if ( NEMeetingSDK.getInstance().getMeetingService() != null) {
+            NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
+        }
     }
 
 
@@ -109,11 +115,19 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
         options.noMinimize = isChecked(4);
+        options.meetingIdDisplayOption = getMeetingIdDisplayOption();
+        options.noGallery = isChecked(8);
 //        addMeetingInfoItem();
         if (injectedMoreMenuItems != null && injectedMoreMenuItems.size() > 0) {
             options.injectedMoreMenuItems = injectedMoreMenuItems;
         }
         return options;
+    }
+
+    private NEMeetingIdDisplayOption getMeetingIdDisplayOption() {
+        if (isChecked(6)) return NEMeetingIdDisplayOption.DISPLAY_LONG_ID_ONLY;
+        if (isChecked(7)) return NEMeetingIdDisplayOption.DISPLAY_SHORT_ID_ONLY;
+        return NEMeetingIdDisplayOption.DISPLAY_ALL;
     }
 
     protected final boolean isNotUseDefaultMeetingOptions() {

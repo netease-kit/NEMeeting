@@ -13,7 +13,8 @@
 #import "SubscribeMeetingListVC.h"
 #import "NESubscribeMeetingConfigVC.h"
 #import "MeetingActionVC.h"
-
+#import "NEMeetingLoginViewController.h"
+#import "MainViewController.h"
 @interface MeetingControlVC ()<NEAuthListener, NEControlListener>
 
 @property (weak, nonatomic) IBOutlet UIView *subscribeListContainer;
@@ -48,10 +49,10 @@
     [self.subscribeListContainer addSubview:self.subscribeListVC.view];
 }
 
-- (void)popToLoginVC {
+- (void)popToMainVC {
     __block UIViewController *targetVC = nil;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[LoginViewController class]]) {
+        if ([obj isKindOfClass:[MainViewController class]]) {
             targetVC = obj;
             *stop = YES;
         }
@@ -74,7 +75,7 @@
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         }
         [[LoginInfoManager shareInstance] cleanLoginInfo];
-        [weakSelf popToLoginVC];
+        [weakSelf popToMainVC];
     }];
 }
 

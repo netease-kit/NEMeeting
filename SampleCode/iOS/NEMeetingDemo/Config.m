@@ -15,7 +15,7 @@ NSString *const kAppKey = @"请填入您的AppKey";
 + (void)queryAccountInfoWithUserName:(NSString *)userName
                             password:(NSString *)password
                           completion:(QueryAccoutInfoBlock)completion {
-    // 请根据自己情况获得真正的用户id和token,并调用completion返回
+//    请根据自己情况获得真正的用户id和token,并调用completion返回
 }
 
 @end

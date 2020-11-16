@@ -8,9 +8,9 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
-//#import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
+#import "MeetingControlVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
@@ -46,18 +46,17 @@
 }
 
 - (void)autoLogin {
-    BOOL infoValid = [[LoginInfoManager shareInstance] infoValid];
-    if (infoValid) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *vc =  [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        vc.autoLogin = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
-
-- (void)onEnterMulAction:(UIButton *)sender {
-//    IMLoginVC *vc = [[IMLoginVC alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK getInstance] tryAutoLogin:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        [SVProgressHUD dismiss];
+        NSLog(@"resultMsg:%@",resultMsg);
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        } else {
+            MeetingControlVC *vc = [[MeetingControlVC alloc] init];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }
+    }];
 }
 
 - (void)onRestoreMeetingAction:(UIButton *)sender {
@@ -135,9 +134,10 @@
     }
 
     _restoreMeetingBtn.neTitle = info.subject;
-    int64_t currentTime = [[NSDate date] timeIntervalSince1970];
-    int64_t startTime = info.startTime/1000;
-    int64_t interval = currentTime - startTime;
+    //int64_t currentTime = [[NSDate date] timeIntervalSince1970];
+    //int64_t startTime = info.startTime/1000;
+    //int64_t interval = currentTime - startTime;
+    int64_t interval = info.duration/1000;
     if (interval > 0) {
         _restoreMeetingBtn.startTime = interval;
     }

@@ -7,6 +7,9 @@ package com.netease.meetinglib.demo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.netease.meetinglib.demo.base.BaseActivity;
 import com.netease.meetinglib.demo.databinding.ActivityMainBinding;
+import com.netease.meetinglib.demo.log.LogUtil;
 import com.netease.meetinglib.demo.viewmodel.MainViewModel;
 import com.netease.meetinglib.sdk.NEMeetingInfo;
 import com.netease.meetinglib.sdk.NEMeetingMenuItem;
@@ -47,6 +51,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         if (meetingService != null && meetingService.getMeetingStatus()
                 == NEMeetingStatus.MEETING_STATUS_INMEETING) {
             meetingService.returnToMeeting(this);
+            LogUtil.log(TAG, "onRestart returnToMeeting");
         }
     }
 
@@ -58,6 +63,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         if (meetingService != null && meetingService.getMeetingStatus()
                 == NEMeetingStatus.MEETING_STATUS_INMEETING) {
             meetingService.returnToMeeting(this);
+            LogUtil.log(TAG, "initView returnToMeeting");
             finish();
             return;
         }
@@ -105,7 +111,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 });
     }
 
-    private void onInitialized(int total) {
+    private void onInitialized(int initializeIndex) {
         mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener());
         mViewModel.setOnControlCustomMenuItemClickListener(new OnControlCustomMenuListener());
         mViewModel.registerControlListener(controlListener);
@@ -134,7 +140,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                     });
                     break;
                 default:
-                    Toast.makeText(context, "点击事件Id:" + menuItem.itemId + "#点击事件tittle:" + menuItem.itemId, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "点击事件Id:" + menuItem.itemId + "#点击事件title:" + menuItem.itemId, Toast.LENGTH_SHORT).show();
                     break;
 
             }
@@ -157,6 +163,24 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.app_settings:
+                AppSettingsActivity.start(this);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -170,7 +194,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
     private void toggleMeetingMinimizedView(boolean show) {
-        Log.i(TAG, "toggleMeetingMinimizedView: " + show + "==" + binding.meetingMinimizedLayout.getX());
+        LogUtil.log(TAG, "toggleMeetingMinimizedView: " + show + "==" + binding.meetingMinimizedLayout.getX());
         int dx = getResources().getDimensionPixelSize(R.dimen.meeting_minimized_layout_size);
         if (show) {
             mViewModel.getMeetingTimeLiveData().observe(this, this::updateMeetingTime);
@@ -186,6 +210,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     private void updateMeetingTime(String timeText) {
         binding.meetingTime.setText(timeText);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String deepLink = intent.getDataString();
+        ssoLogin(deepLink);
+    }
+
+    private void ssoLogin(String deepLink){
+        if(!TextUtils.isEmpty(deepLink)) {
+            String ssoToken = Uri.parse(deepLink).getQueryParameter("ssoToken");
+            if(!TextUtils.isEmpty(ssoToken)){
+                SdkAuthenticator.getInstance().loginWithSSO(ssoToken);
+            }
+        }
     }
 
     @Override

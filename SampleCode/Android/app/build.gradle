@@ -46,7 +46,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    //app demo dependencies
+
+    //Demo依赖
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
@@ -55,15 +56,14 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-
-    //meeting
-    implementation 'com.netease.yunxin:meetinglib:1.3.0'
-    //nim
-    implementation 'com.netease.nimlib:basesdk:7.6.0'
-
-    //third party
     implementation 'com.manu:MDatePicker:1.0.1'
     implementation 'com.kyleduo.switchbutton:library:2.0.2'
+
+    //NEMeeting-SDK
+    implementation 'com.netease.yunxin:meetinglib:1.3.1'
+
+    //NIM-SDK, 如果单独接入了云信NIM，则可根据需要进行依赖声明。正常情况下不用声明
+    implementation 'com.netease.nimlib:basesdk:7.6.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

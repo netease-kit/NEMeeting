@@ -41,18 +41,18 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
         return INSTANCE;
     }
 
+    private static final String KEY_LOGIN_SUCCEED = "LOGIN_SUCCEED";
     private static final String KEY_ACCOUNT = "ACCOUNT";
     private static final String KEY_PWD = "PWD";
     public static final String KEY_NICK_NAME = "NICK_NAME";
 
     private Context context;
 
-    private AtomicInteger state = new AtomicInteger(UN_AUTHORIZE);
+    private final AtomicInteger state = new AtomicInteger(UN_AUTHORIZE);
     private AuthStateChangeListener authStateChangeListener;
-    private DataRepository dataRepository = new DefaultDataRepository();
+    private final DataRepository dataRepository = new DefaultDataRepository();
 
-    private SdkAuthenticator() {
-    }
+    private SdkAuthenticator() {}
 
     public void initialize(Context context) {
         this.context = context;
@@ -62,7 +62,7 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     @Override
     public void onInitialized(int initializeIndex) {
         if (initializeIndex == 1) {
-            loginWithCachedAccount();
+            tryAutoLogin();
         }
         NEMeetingSDK.getInstance().addAuthListener(new NEAuthListener() {
             @Override
@@ -99,11 +99,13 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
         return state.get();
     }
 
-    private void loginWithCachedAccount() {
-        final String account = SPUtils.getInstance().getString(KEY_ACCOUNT, "");
-        final String pwd = SPUtils.getInstance().getString(KEY_PWD, "");
-        if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(pwd)) {
-            login(account, pwd);
+    public void loginWithNEMeeting(final String account, final String pwd) {
+        if (state.get() == AUTHORIZED) {
+            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
+        }else{
+            state.set(AUTHORIZING);
+            notifyStateChanged();
+            handleLoginWithNEMeeting(account, pwd);
         }
     }
 
@@ -130,6 +132,28 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
+    public void loginWithSDKToken(final String accountId, final String accountToken) {
+        NEMeetingSDK.getInstance().login(accountId, accountToken,
+                new ToastCallback<Void>(context, "登录") {
+                    @Override
+                    public void onResult(int resultCode, String resultMsg, Void resultData) {
+                        super.onResult(resultCode, resultMsg, resultData);
+                        onLoginResult(resultCode, null, null);
+                    }
+                });
+    }
+
+    public void loginWithSSO(final String ssoToken) {
+        if (state.get() == AUTHORIZED) {
+            Toast.makeText(context, "您已登录", Toast.LENGTH_SHORT).show();
+        }else{
+            state.set(AUTHORIZING);
+            notifyStateChanged();
+            handleLoginWithSSO(ssoToken);
+        }
+    }
+
     public void logout(boolean manual) {
         if (state.get() == AUTHORIZED) {
             NEMeetingSDK.getInstance().logout(new ToastCallback<Void>(context, "注销") {
@@ -143,6 +167,7 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                             SPUtils.getInstance().remove(KEY_NICK_NAME);
                             notifyStateChanged();
                         }
+                        SPUtils.getInstance().put(KEY_LOGIN_SUCCEED, false);
                     }
                 }
             });
@@ -156,15 +181,9 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                         @Override
                         public void onResult(int resultCode, String resultMsg, Void resultData) {
                             super.onResult(resultCode, resultMsg, resultData);
-                            if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
-                                state.set(AUTHORIZED);
-                                SPUtils.getInstance()
-                                        .put(KEY_ACCOUNT, account)
-                                        .put(KEY_PWD, pwd);
-                            } else {
-                                state.set(AUTHOR_FAIL);
-                            }
-                            notifyStateChanged();
+                            onLoginResult(resultCode,
+                                    () -> SPUtils.getInstance().put(KEY_ACCOUNT, account).put(KEY_PWD, pwd),
+                                    null);
                         }
                     });
         } else {
@@ -174,6 +193,62 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
                     result != null && !TextUtils.isEmpty(result.msg) ? result.msg : "登录失败，请检查网络连接后重试！",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void handleLoginWithNEMeeting(String account, String pwd) {
+        NEMeetingSDK.getInstance().loginWithNEMeeting(account, pwd,
+                new ToastCallback<Void>(context, "登录") {
+                    @Override
+                    public void onResult(int resultCode, String resultMsg, Void resultData) {
+                        super.onResult(resultCode, resultMsg, resultData);
+                        onLoginResult(resultCode,
+                                () -> SPUtils.getInstance().put(KEY_ACCOUNT, account).put(KEY_PWD, pwd),
+                                null);
+                    }
+                });
+    }
+
+    private void handleLoginWithSSO(String ssoToken) {
+        NEMeetingSDK.getInstance().loginWithSSOToken(ssoToken,
+                new ToastCallback<Void>(context, "SSO登录") {
+                    @Override
+                    public void onResult(int resultCode, String resultMsg, Void resultData) {
+                        super.onResult(resultCode, resultMsg, resultData);
+                        onLoginResult(resultCode, null, null);
+                    }
+                });
+    }
+
+    private void tryAutoLogin(){
+        if (SPUtils.getInstance().getBoolean(KEY_LOGIN_SUCCEED)) {
+            NEMeetingSDK.getInstance().tryAutoLogin(
+                    new ToastCallback<Void>(context, "自动登录") {
+                        @Override
+                        public void onResult(int resultCode, String resultMsg, Void resultData) {
+                            super.onResult(resultCode, resultMsg, resultData);
+                            onLoginResult(resultCode, null, null);
+                        }
+                    });
+        }
+    }
+
+    private void onLoginResult(int code, Runnable onSuccessAction, Runnable onFailAction) {
+        final boolean success;
+        if (code == NEMeetingError.ERROR_CODE_SUCCESS) {
+            success = true;
+            state.set(AUTHORIZED);
+            if (onSuccessAction != null) {
+                onSuccessAction.run();
+            }
+        } else {
+            success = false;
+            state.set(AUTHOR_FAIL);
+            if (onFailAction != null) {
+                onFailAction.run();
+            }
+        }
+        SPUtils.getInstance().put(KEY_LOGIN_SUCCEED, success);
+        notifyStateChanged();
     }
 
     private void onKickedOut() {

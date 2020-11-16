@@ -7,6 +7,9 @@ package com.netease.meetinglib.demo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -207,6 +210,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     private void updateMeetingTime(String timeText) {
         binding.meetingTime.setText(timeText);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String deepLink = intent.getDataString();
+        ssoLogin(deepLink);
+    }
+
+    private void ssoLogin(String deepLink){
+        if(!TextUtils.isEmpty(deepLink)) {
+            String ssoToken = Uri.parse(deepLink).getQueryParameter("ssoToken");
+            if(!TextUtils.isEmpty(ssoToken)){
+                SdkAuthenticator.getInstance().loginWithSSO(ssoToken);
+            }
+        }
     }
 
     @Override

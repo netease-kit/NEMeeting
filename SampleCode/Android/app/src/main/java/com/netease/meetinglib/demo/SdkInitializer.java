@@ -14,6 +14,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.netease.meetinglib.demo.nim.NIMInitializer;
 import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
@@ -77,6 +78,7 @@ public class SdkInitializer {
         Log.i(TAG, "initializeSdk");
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
         config.appKey = context.getString(R.string.appkey);
+        config.reuseNIM = NIMInitializer.getInstance().isReuseNIMEnabled();
         config.appName = context.getString(R.string.app_name);
         config.useAssetServerConfig = SPUtils.getInstance().getBoolean("use-asset-server-config");
         //配置会议时显示前台服务

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSString (Demo)
 
 - (NSString *)authValueEncode;
-
+-(NSDictionary<NSString *, NSString *> *)queryParametersFromURLString;
 @end
 
 NS_ASSUME_NONNULL_END

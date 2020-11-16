@@ -22,9 +22,11 @@
 1. 新建Android工程
 
     a. 运行Android Sudio，顶部菜单依次选择“File -> New -> New Project...”新建工程，选择'Phone and Tablet' -> 'Empty Activity' 单击Next。
+
     ![new android project](images/new_project.png)
     
     b. 配置工程相关信息，请注意Minimum API Level为API 21。
+    
     ![configure project](images/configure_project.png)
     
     c. 单击'Finish'完成工程创建。
@@ -35,7 +37,7 @@
     ```groovy
     dependencies {
       //声明SDK依赖，版本可根据实际需要修改
-      implementation 'com.netease.yunxin:meetinglib:1.2.6'
+      implementation 'com.netease.yunxin:meetinglib:1.3.1'
     }
     ```
     之后通过顶部菜单'Build -> Make Project'构建工程，触发依赖下载，完成后即可在代码中引入SDK中的类和方法。
@@ -93,32 +95,28 @@
 
 5. 调用相关接口完成特定功能，详情请参考API文档。
 
-- 登录鉴权
+- [登录鉴权](#登录鉴权)
     ```java
+    //Token登录
     NEMeetingSDK.getInstance().login(String account, String token, NECallback<Void> callback);
+
+    //SSOToken登录
+    NEMeetingSDK.getInstance().loginWithSSOToken(String ssoToken, NECallback<Void> callback);
+
+    //自动登录
+    NEMeetingSDK.getInstance().tryAutoLogin(NECallback<Void> callback);
     ```
-- 创建会议
+- [创建会议](#创建会议)
     ```java
     NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
     meetingService.startMeeting(Context context, NEStartMeetingParams param, NEStartMeetingOptions opts, NECallback<Void> callback);
     ```
-- 加入会议
+- [加入会议](#加入会议)
     ```java
     NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
     meetingService.joinMeeting(Context context, NEJoinMeetingParams param, NEJoinMeetingOptions opts, NECallback<Void> callback);
     ```
-- 添加/移除会议状态监听
-    ```java
-    NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
-    meetingService.addMeetingStatusListener(NEMeetingStatusListener listener);    //添加监听
-    meetingService.removeMeetingStatusListener(NEMeetingStatusListener listener); //移除监听
-    ```
-- 添加/移除登录状态监听
-    ```java
-    NEMeetingSDK.getInstance().addAuthListener(NEAuthListener authListener);    //添加监听
-    NEMeetingSDK.getInstance().removeAuthListener(NEAuthListener authListener); //移除监听
-    ```
-- 注销登录
+- [注销登录](#注销)
     ```java
     NEMeetingSDK.getInstance().logout(NECallback<Void> callback);
     ```
@@ -172,7 +170,15 @@ NEMeetingSDK.getInstance().initialize(getApplication(), config, new NECallback<V
 
 #### 描述
 
-请求SDK进行登录鉴权，只有完成SDK登录鉴权才允许创建会议。
+请求SDK进行登录鉴权，只有完成SDK登录鉴权才允许创建会议。SDK提供了多种登录方式可供选择，不同的登录接口需要不同的入参数。说明如下：
+
+| 登录方式 | 说明 | 接口 | 参数 | 其他 |
+| :------ | :------ | :------ | :------ | :------ |
+| Token登录 | 无 | `NEMeetingSDK#login` | accountId、accountToken | 账号信息需要从会议服务器获取，由接入方自行实现相关业务逻辑 |
+| SSOToken登录 | 无 | `NEMeetingSDK#loginWithSSOToken` | ssoToken | 无 |
+| 自动登录 | SDK尝试使用最近一次成功登录过的账号信息登录 | `NEMeetingSDK#tryAutoLogin` | 无 | 无 |
+
+下面就`Token登录`方式说明SDK登录逻辑，其他登录方式同理。
 
 #### 业务流程
 
@@ -258,6 +264,7 @@ NEMeetingSDK.getInstance().getMeetingService().startMeeting(getActivity(), param
 
 - 创建会议时，会议号可以配置为个人会议号(登录后可通过**AccountService**获取)，或者置空(此时由服务器随机分配会议号)。
 - 该接口仅支持**在登录鉴权成功后调用**，其他状态下调用不会成功
+- 会议SDK提供了大量的入会选项可供配置，可自定义会中的UI显示、菜单、行为等，可根据需要进行设置，可参考[入会选项](#入会选项)进行设置
 - 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
 - android 进入会议后，某些机型如果点击了Home按键，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 - 当会中修改密码，增加NEMeetingCode#MEETING_DISCONNECTING_AUTH_INFO_EXPIRED通知
@@ -319,6 +326,7 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
 
 - 会议号不能为空，需要配置为真实进行中的会议ID
 - 该接口支持登录和未登录状态调用
+- 会议SDK提供了大量的入会选项可供配置，可自定义会中的UI显示、菜单、行为等，可根据需要进行设置，可参考[入会选项](#入会选项)进行设置
 - 当进入会议前配置了允许最小化会议页面，在会中最小化会议页面，通过会议状态**NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED**回调进行通知。
 - android 进入会议后，某些机型如果点击了Home，请使用最小化Icon的方式，回到会议界面。实例参考Sample
 --------------------
@@ -844,3 +852,22 @@ NEMeetingSDK.getInstance().getControlService().setOnCustomMenuItemClickListener(
 - 登陆状态下才能够使用遥控器服务
 - 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者为互斥逻辑。
 
+
+
+## 附录
+
+### 入会选项
+
+SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显示、菜单、行为等。列举如下：
+
+|选项名称|选项说明|默认值|
+| :------ | :------ | :------ |
+| noVideo | 入会时关闭视频 | true |
+| noAudio | 入会时关闭音频 | true |
+| noMinimize | 隐藏会议内“最小化”功能 | true |
+| noInvite | 隐藏会议内“邀请”功能 | false |
+| noChat | 隐藏会议内“聊天”功能 | true |
+| noGallery | 关闭会议中“画廊”模式功能 | false |
+| showMeetingTime | 显示会议“持续时间” | false |
+| meetingIdDisplayOption | 会议内会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
+| injectedMoreMenuItems | 会议内自定义菜单 | NULL |

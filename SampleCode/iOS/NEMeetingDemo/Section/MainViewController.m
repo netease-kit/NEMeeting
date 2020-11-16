@@ -10,9 +10,11 @@
 #import "LoginViewController.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
+#import "MeetingControlVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
+@property (nonatomic, strong) UIButton *mulIMBtn;
 @property (nonatomic, strong) TimerButton *restoreMeetingBtn;
 
 @end
@@ -44,13 +46,17 @@
 }
 
 - (void)autoLogin {
-    BOOL infoValid = [[LoginInfoManager shareInstance] infoValid];
-    if (infoValid) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *vc =  [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        vc.autoLogin = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK getInstance] tryAutoLogin:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        [SVProgressHUD dismiss];
+        NSLog(@"resultMsg:%@",resultMsg);
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        } else {
+            MeetingControlVC *vc = [[MeetingControlVC alloc] init];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }
+    }];
 }
 
 - (void)onRestoreMeetingAction:(UIButton *)sender {
@@ -74,10 +80,23 @@
                                env_lab.frame.size.height);
     [[UIApplication sharedApplication].keyWindow addSubview:env_lab];
 #endif
-   
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.mulIMBtn];
+    self.navigationItem.rightBarButtonItem = item;
     [[UIApplication sharedApplication].keyWindow addSubview:self.restoreMeetingBtn];
 }
 
+- (UIButton *)mulIMBtn {
+    if (!_mulIMBtn) {
+        _mulIMBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_mulIMBtn setTitle:@"IM复用" forState:UIControlStateNormal];
+        _mulIMBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        _mulIMBtn.frame = CGRectMake(0, 0, 60, 40);
+        [_mulIMBtn addTarget:self
+                      action:@selector(onEnterMulAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _mulIMBtn;
+}
 
 #pragma mark - MeetingServiceListener
 - (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem

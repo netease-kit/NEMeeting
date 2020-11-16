@@ -31,6 +31,7 @@
 @property (nonatomic, readonly) BOOL disableChat;
 @property (nonatomic, readonly) BOOL disableInvite;
 @property (nonatomic, readonly) BOOL disableMinimize;
+@property (nonatomic, readonly) BOOL disableGallery;
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 @end
@@ -62,7 +63,10 @@
     [_settingCheckBox setItemTitleWithArray:@[@"入会时关闭聊天菜单",
                                               @"入会时关闭邀请菜单",
                                               @"入会时隐藏最小化",
-                                              @"使用默认会议设置"]];
+                                              @"使用默认会议设置",
+                                              @"入会时关闭画廊模式",
+                                              @"仅显示会议ID长号",
+                                              @"仅显示会议ID短号"]];
     [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
@@ -80,10 +84,12 @@
         options.noAudio = ![self openMicWhenJoin];
         options.noVideo = ![self openVideoWhenJoin];
         options.showMeetingTime = [self showMeetingTime];
+        options.meetingIdDisplayOption = [self meetingIdDisplayOption];
         options.noChat = [self disableChat];
         options.noInvite = [self disableInvite];
         options.noMinimize = [self disableMinimize];
         options.injectedMoreMenuItems = _menuItems;
+        options.noGallery = [self disableGallery];
     }
 
     WEAK_SELF(weakSelf);
@@ -184,6 +190,19 @@
 
 - (BOOL)useDefaultConfig {
     return [_settingCheckBox getItemSelectedAtIndex:3];
+}
+
+- (BOOL)disableGallery {
+    return [_settingCheckBox getItemSelectedAtIndex:4];
+}
+
+- (NEMeetingIdDisplayOption) meetingIdDisplayOption {
+    if ([_settingCheckBox getItemSelectedAtIndex:5]) {
+        return DISPLAY_LONG_ID_ONLY;
+    } else if ([_settingCheckBox getItemSelectedAtIndex:6]) {
+        return DISPLAY_SHORT_ID_ONLY;
+    }
+    return DISPLAY_ALL;
 }
 
 @end

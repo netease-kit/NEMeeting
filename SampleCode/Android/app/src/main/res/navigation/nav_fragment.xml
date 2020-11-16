@@ -11,8 +11,14 @@
         android:label="EntranceFragment"
         tools:layout="@layout/fragment_entrance">
         <action
-            android:id="@+id/action_entranceFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_entranceFragment_to_loginWithNEMeetingFragment"
+            app:destination="@id/loginWithNEMeetingFragment" />
+        <action
+            android:id="@+id/action_entranceFragment_to_loginWithTokenFragment"
+            app:destination="@id/loginWithTokenFragment" />
+        <action
+            android:id="@+id/action_entranceFragment_to_loginWithSSOFragment"
+            app:destination="@id/loginWithSSOFragment" />
         <action
             android:id="@+id/action_entranceFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -21,10 +27,28 @@
             app:destination="@id/joinMeetingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.netease.meetinglib.demo.view.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
+        android:id="@+id/loginWithNEMeetingFragment"
+        android:name="com.netease.meetinglib.demo.view.LoginWithNEMeetingFragment"
+        android:label="LoginWithNEMeetingFragment"
+        tools:layout="@layout/fragment_login_with_ne_meeting">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginWithTokenFragment"
+        android:name="com.netease.meetinglib.demo.view.LoginWithTokenFragment"
+        android:label="LoginWithTokenFragment"
+        tools:layout="@layout/fragment_login_with_token">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginWithSSOFragment"
+        android:name="com.netease.meetinglib.demo.view.LoginWithSSOFragment"
+        android:label="LoginWithSSOFragment"
+        tools:layout="@layout/fragment_login_with_sso">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

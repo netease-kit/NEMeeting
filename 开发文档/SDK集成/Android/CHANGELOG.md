@@ -1,5 +1,18 @@
 # CHANGELOG
 
+# 2020-11-13 @ v1.3.1
+
+## Added
+* 观看屏幕共享时支持手势缩放
+* 新增SSOToken登录、自动登录
+    - SSOToken登录：`NEMeetingSDK.loginWithSSOToken(String ssoToken, NECallback<Void> callback)`
+    - 自动登录：`NEMeetingSDK.getInstance().tryAutoLogin(NECallback<Void> callback)`
+* 支持配置会议内“会议号”显示规则
+    - 配置项：`NEMeetingOptions.meetingIdDisplayOptions`
+* 支持配置画廊模式开关
+    - 配置项：`NEMeetingOptions.noGallery`
+
+
 
 # 2020-10-29 @ v1.3.0
 

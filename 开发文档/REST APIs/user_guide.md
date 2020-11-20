@@ -396,6 +396,7 @@ public enum MsgTypeEnum {
     MEETING_CANCEL(2, "会议取消且会议号回收"),
     MEETING_ROOM_END(3, "会议房间结束"),
     MEETING_RECYCLE(4, "会议回收且会议号回收"),
+    MEETING_RECORDING(7, "会议录制"),
 }
 ```
 ###### 会议号回收
@@ -408,20 +409,28 @@ public enum MsgTypeEnum {
 会议房间开始是指为一场还存在的会议打开一个音视频房间</br>
 会议房间结束是指一场会议的音视频房间已经关闭
 
+###### 会议录制
+开启会议录制功能，当会议结束或者超过固定会议长度时（默认2小时），会生成会议录像视频。
+
 ##### 消息体说明
-###### 会议抄送
+###### 公共字段
 |消息体属性|类型|说明|必须|
 |:--- | :-------| :--- | :--- |
 | meetingUniqueId | Long | 会议记录唯一id | 是 |
 | meetingId | String | 个人会议码,10位数字，若为空，则随机分配会议Id | 是 |
+| shortId | String | 会议短号 | 否 |
+| time | Long | 事件触发的时间，毫秒 | 是 |
+
+###### 会议抄送
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
 | type | int | 会议类型，1.快速会议，2.个人会议，3.预约会议 | 是 |
 | subject | String | 会议主题 | 是 |
-| time | Long | 事件触发的时间，毫秒 | 是 |
 | reserveStartTime | Long | 预约开始时间，毫秒 | 否 |
 | reserveEndTime | Long | 预约结束时间，毫秒 | 否 |
 | roomCreateTime | Long | 房间开始时间，毫秒 | 否 |
 
-###### 示例
+###### 会议抄送示例
 ```json
 {
   "msgType": 3,
@@ -434,6 +443,41 @@ public enum MsgTypeEnum {
     "reserveStartTime": 1600782488572,
     "reserveEndTime": 1600782488572,
     "time": 1600782498147
+  }
+}
+```
+
+###### 会议录制抄送
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
+| fileInfo | JsonObject | 录制文件信息 | 是 |
+| accountId | String | 用户id | 否 |
+| filename | String | 文件名 | 是 |
+| md5 | String | 文件的md5值 | 是 |
+| size | Long | 文件大小，单位为字符，可转为Long值 | 是 |
+| type | String | 文件的类型（扩展名），包括：实时音频录制文件(aac)、白板录制文件(gz)、实时视频录制文件(mp4)、互动直播视频录制文件(flv) | 是 |
+| url | String | 文件的下载地址 | 是 |
+| mix | Integer | 是否为混合录制文件，1：混合录制文件；2：单人录制文件 | 是 |
+| pieceIndex | Integer | 录制文件的切片索引，如果单通通话录制时长超过切片时长，则录制文件会被且被切割成多个文件 | 是 |
+
+###### 会议录制抄送示例
+```json
+{
+  "msgType": 7,
+  "msgBody": {
+    "fileInfo": {
+      "accountId": "12345678",
+      "filename": "1234-0.mp4",
+      "md5": "xxxxxxxx",
+      "size": 250224434,
+      "type": "mp4",
+      "url": "http://xiazai.vod.126.net/xxxx/1234-0.mp4",
+      "mix": 2,
+      "pieceIndex": 0
+    },
+    "meetingId": "1122334455",
+    "meetingUniqueId": 112211,
+    "time": 1605857677012
   }
 }
 ```

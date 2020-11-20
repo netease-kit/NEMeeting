@@ -232,6 +232,7 @@ Rectangle {
                     displayModel.append({ name: 'Display Short Only' })
                     displayModel.append({ name: 'Display Long Only' })
                     displayModel.append({ name: 'Display All' })
+                    displayOption.currentIndex = 0
                 }
             }
 

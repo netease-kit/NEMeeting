@@ -12,7 +12,7 @@
 | 2020-10-29  | 1.3.0 | 支持预约会议密码加入，修复已知bug |
 | 2020-10-22 | 1.2.8 | 支持多端互踢，增加*NEMeetingInfo*字段
 | 2020-11-12 | 1.3.1 | 增加*shortId*字段  <br>  增加两种登陆方式 *loginWithNEMeeting* *loginWithSSOToken* <br> 增加初始化配置，兼容已有方案|
-| 2020-11-20 | 1.3.2 | 增加创会入会额外可选配置： *NEMeetingIdDisplayOption* 会议号展示逻辑 |
+| 2020-11-20 | 1.3.2 | 增加创会入会额外可选配置： *meetingIdDisplayOptions* 会议号展示逻辑 |
 
 ## 快速接入
 

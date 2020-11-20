@@ -6,7 +6,7 @@
 
 * 新增会议初始化信息配置
 
-  - 额外增加创会，入会时配置项 `NEMeetingIdDisplayOption` 短号显示规则（可选）
+  - 额外增加创会，入会时配置项 `meetingIdDisplayOptions` 短号显示规则（可选）
 
   - 增加底部展示参会人数
 

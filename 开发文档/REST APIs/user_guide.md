@@ -59,6 +59,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | accountId  | String | 否 | 会议账号，如果不传则系统自动生成|
     | imAccid  | String | 否 | 复用的imAccid |
     | imToken  | String | 否 | 复用的imAccid的Token |
+    | shortId | String| 否 | 个人会议短号，4-8位 |
     
 ##### 备注
 accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只能包含"-"、"_"、小写字母和数字，去除限制的优化方案正在开发中
@@ -73,6 +74,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | accountId | String | 会议用户账号ID |
     | accountToken | String | 会议用户账号令牌 |
     | personalMeetingId | Long | 个人会议的会议码 |
+    | shortId | String | 个人会议短号 |
     
 ### 会议账号更新令牌
 
@@ -94,6 +96,26 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
 4. 输出参数
     公共响应
 
+### 更新个人会议短号
+
+1. 接口描述  
+    更新个人会议短号
+    
+2. 接口请求地址
+    ```
+    POST https://{host}/v1/account/updateShortId HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+    | 参数 | 类型 | 必选 | 描述 |
+    | :------: | :------: | :------: | :------: |
+    | accountId  | String | 是 | 会议用户账号 |
+    | shortId | String | 否 | 个人会议短号，4-8位，不传表示清除短号 |
+
+4. 输出参数
+    公共响应
+    
 ### 创建会议
 
 1. 接口描述  
@@ -133,6 +155,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | settings | JsonObject | 会议设置 |
     | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
+    | shortId | String | 会议短号   |
 
 ### 查询会议（meetingUniqueId）
 
@@ -165,6 +188,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | settings | JsonObject | 会议设置 |
     | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
+    | shortId | String | 会议短号   |
     
 ### 修改会议
 
@@ -261,8 +285,10 @@ Content-Type: application/json;charset=utf-8
 |302 | 非法header |
 |303 | 非法字符集参数 |
 |401 | 请求未通过验证 |
+|402 | 服务未开通 |
 |501 | 服务器内部异常 |
 |510 | 请求过于频繁 |
+|512 | 服务繁忙 |
 |652 | 直播设置错误 |
 |701 | 匿名账号分配失败，稍后重试 |
 |1000 | 分配帐号失败 |
@@ -370,6 +396,7 @@ public enum MsgTypeEnum {
     MEETING_CANCEL(2, "会议取消且会议号回收"),
     MEETING_ROOM_END(3, "会议房间结束"),
     MEETING_RECYCLE(4, "会议回收且会议号回收"),
+    MEETING_RECORDING(7, "会议录制"),
 }
 ```
 ###### 会议号回收
@@ -382,20 +409,28 @@ public enum MsgTypeEnum {
 会议房间开始是指为一场还存在的会议打开一个音视频房间</br>
 会议房间结束是指一场会议的音视频房间已经关闭
 
+###### 会议录制
+开启会议录制功能，当会议结束或者超过固定会议长度时（默认2小时），会生成会议录像视频。
+
 ##### 消息体说明
-###### 会议抄送
+###### 公共字段
 |消息体属性|类型|说明|必须|
 |:--- | :-------| :--- | :--- |
 | meetingUniqueId | Long | 会议记录唯一id | 是 |
 | meetingId | String | 个人会议码,10位数字，若为空，则随机分配会议Id | 是 |
+| shortId | String | 会议短号 | 否 |
+| time | Long | 事件触发的时间，毫秒 | 是 |
+
+###### 会议抄送
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
 | type | int | 会议类型，1.快速会议，2.个人会议，3.预约会议 | 是 |
 | subject | String | 会议主题 | 是 |
-| time | Long | 事件触发的时间，毫秒 | 是 |
 | reserveStartTime | Long | 预约开始时间，毫秒 | 否 |
 | reserveEndTime | Long | 预约结束时间，毫秒 | 否 |
 | roomCreateTime | Long | 房间开始时间，毫秒 | 否 |
 
-###### 示例
+###### 会议抄送示例
 ```json
 {
   "msgType": 3,
@@ -404,10 +439,44 @@ public enum MsgTypeEnum {
     "meetingId": "4130603726",
     "meetingUniqueId": 26775,
     "subject": "DEMO",
-    "reserveAccountId": "12345",
     "reserveStartTime": 1600782488572,
     "reserveEndTime": 1600782488572,
     "time": 1600782498147
+  }
+}
+```
+
+###### 会议录制抄送
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
+| fileInfo | JsonObject | 录制文件信息 | 是 |
+| accountId | String | 用户id | 否 |
+| filename | String | 文件名 | 是 |
+| md5 | String | 文件的md5值 | 是 |
+| size | Long | 文件大小，单位为字符，可转为Long值 | 是 |
+| type | String | 文件的类型（扩展名），包括：实时音频录制文件(aac)、白板录制文件(gz)、实时视频录制文件(mp4)、互动直播视频录制文件(flv) | 是 |
+| url | String | 文件的下载地址 | 是 |
+| mix | Integer | 是否为混合录制文件，1：混合录制文件；2：单人录制文件 | 是 |
+| pieceIndex | Integer | 录制文件的切片索引，如果单通通话录制时长超过切片时长，则录制文件会被且被切割成多个文件 | 是 |
+
+###### 会议录制抄送示例
+```json
+{
+  "msgType": 7,
+  "msgBody": {
+    "fileInfo": {
+      "accountId": "12345678",
+      "filename": "1234-0.mp4",
+      "md5": "xxxxxxxx",
+      "size": 250224434,
+      "type": "mp4",
+      "url": "http://xiazai.vod.126.net/xxxx/1234-0.mp4",
+      "mix": 2,
+      "pieceIndex": 0
+    },
+    "meetingId": "1122334455",
+    "meetingUniqueId": 112211,
+    "time": 1605857677012
   }
 }
 ```

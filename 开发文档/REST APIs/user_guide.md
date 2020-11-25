@@ -439,7 +439,6 @@ public enum MsgTypeEnum {
     "meetingId": "4130603726",
     "meetingUniqueId": 26775,
     "subject": "DEMO",
-    "reserveAccountId": "12345",
     "reserveStartTime": 1600782488572,
     "reserveEndTime": 1600782488572,
     "time": 1600782498147

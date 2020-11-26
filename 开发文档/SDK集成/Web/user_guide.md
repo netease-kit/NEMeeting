@@ -13,6 +13,7 @@
 | 2020-10-22 | 1.2.8 | 支持多端互踢，增加*NEMeetingInfo*字段
 | 2020-11-12 | 1.3.1 | 增加*shortId*字段  <br>  增加两种登陆方式 *loginWithNEMeeting* *loginWithSSOToken* <br> 增加初始化配置，兼容已有方案|
 | 2020-11-20 | 1.3.2 | 增加创会入会额外可选配置： *meetingIdDisplayOptions* 会议号展示逻辑 |
+| 2020-11-27 | 1.3.3 | 补充关闭预约会议密码回调监听 <br> 补充创建会议提示已存在会议取消监听 <br> 加入会议增加预约会议密码参数*password* <br> 调整会议画廊模式展示策略 |
 
 ## 快速接入
 
@@ -122,8 +123,9 @@
       meetingId: '', //要加入会议ID
       video: 1, // 1开启2关闭（匿名加入房间需要）
       audio: 1,  // 1开启2关闭（匿名加入房间需要）
-      appkey: '', //云信服务appkey（匿名加入房间需要）
+      password: '', // 加入预约会议时可使用
       meetingIdDisplayOptions: 0, // 0 都展示 1 展示长号，2 展示短号 默认为 0
+      appkey: '', //云信服务appkey（匿名加入房间需要，初始化传入则暂不需要）
       meetingServerDomain: '' //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器（匿名加入房间需要）
     }
     neWebMeeting.actions.join(obj, callback)

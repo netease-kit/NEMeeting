@@ -21,10 +21,11 @@
 
 | 名称 | 要求 |
 | :------ | :------ |
-| iOS版本 | 9.0以上 |
-| CPU架构支持 | ARM64、ARMV7 |
-| IDE | XCode |
-| 其他 | CocoaPods |
+| Chrome | 72以上 |
+| Safari | 12以上 |
+| Node | 8以上 |
+| IE | 不支持 |
+| 其他 | 未测试 |
 
 #### SDK快速接入
 
@@ -107,7 +108,7 @@
     ```js
     const obj = {
       nickName: '', //人员昵称
-      meetingId: '', //会议ID，如果为0则是随机会议ID，1为固定私人会议ID
+      meetingId: '', //会议ID，如果为1则是随机会议ID，0为固定私人会议ID
       video: 1, // 1开启2关闭
       audio: 1, // 1开启2关闭
       meetingIdDisplayOptions: 0, // 0 都展示 1 展示长号，2 展示短号 默认为 0

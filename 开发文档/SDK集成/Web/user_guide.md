@@ -195,7 +195,19 @@
     ```js
     neWebMeeting.actions.width = 100; // 设置宽度，单位px
     neWebMeeting.actions.height = 100; // 设置高度，单位px
+
     ```
+
+13. 动态更新底部列表
+
+    ```js
+    var obj = {
+        toolBarList: [], // 主区按钮自定义设置
+        moreBarList: [], // 更多区按钮自定义排列
+    }
+    neWebMeeting.actions.updateCutomList(obj, callback)
+    ```
+    关于自定义按钮详细配置可以参考[自定义按钮详细介绍](#自定义按钮详细介绍)
 
 #### 自定义按钮详细介绍
 
@@ -249,24 +261,31 @@
 
 2. 配置项目介绍
 
-| 字段 | 含义 | 类型 | 必填 | 样例 |
-| :-: | :-: | :-: | :-: | :- |
-| id | 按钮的唯一标识 <br> 非预置按钮id大于100 <br> 预置则小于等于100 | number | 是 | 0 |
-| type | 按钮类型 <br> 单状态：single <br> 多状态：multiple| string | 非预置按钮必填 | single |
-| btnConfig | 按钮配置项 <br> 单状态Object <br> 多状态Array[Object] | object\|array | 非预置按钮必填 | [参考样例](#custom-introduction) |
-| btnConfig下object | 图标url：icon（必填） <br> 图标文案：text（必填） <br> 图标状态：status（多状态按钮必填） | object | 非预置按钮必填 | [参考样例](#custom-introduction) |
-| visibility | 按钮可见范围 <br> 全局可见（**默认**）：0  <br> 主持人可见：1 <br> 非主持人可见：2 | number | 否 | 0 |
-| btnStatus | 多状态按钮展示状态配置字段 <br> 类型未限制需与btnConfig配置状态保持对应 | number\|boolean\|string | 多状态必填 | [参考样例](#custom-introduction) |
-|injectItemClick| 按钮触发回调 | function | 是 | [参考样例](#custom-introduction) |
+    | 字段 | 含义 | 类型 | 必填 | 样例 |
+    | :-: | :-: | :-: | :-: | :- |
+    | id | 按钮的唯一标识 <br> 非预置按钮id大于100 <br> 预置则小于等于100 | number | 是 | 0 |
+    | type | 按钮类型 <br> 单状态：single <br> 多状态：multiple| string | 非预置按钮必填 | single |
+    | btnConfig | 按钮配置项 <br> 单状态Object <br> 多状态Array[Object] | object\|array | 非预置按钮必填 | [参考样例](#custom-introduction) |
+    | btnConfig下object | 图标url：icon（必填） <br> 图标文案：text（必填） <br> 图标状态：status（多状态按钮必填） | object | 非预置按钮必填 | [参考样例](#custom-introduction) |
+    | visibility | 按钮可见范围 <br> 全局可见（**默认**）：0  <br> 主持人可见：1 <br> 非主持人可见：2 | number | 否 | 0 |
+    | btnStatus | 多状态按钮展示状态配置字段 <br> 类型未限制需与btnConfig配置状态保持对应 | number\|boolean\|string | 多状态必填 | [参考样例](#custom-introduction) |
+    |injectItemClick| 按钮触发回调 | function | 是 | [参考样例](#custom-introduction) |
 
 3. 预置属性说明
 
-| 配置字段 | 详细内容 |
-| :-: | :- |
-| 预置按钮唯一值（id） | 0音频 <br> 1视频 <br> 2屏幕共享 <br> 3参会者列表 <br> 5画廊切换 <br> 20邀请 <br> 21聊天（尚未开放 <br>  |
-| 按钮可见性（visibility）| 0总是可见(默认) <br> 1主持人可见 <br> 2非主持人可见 <br> |
+    | 配置字段 | 内容(id, type) |
+    | :-: | :- |
+    | 预置按钮唯一值（id） | 0音频(multiple) <br> 1视频(multiple) <br> 2屏幕共享(multiple) <br> 3参会者列表(single) <br> 5画廊切换(multiple) <br> 20邀请(single) <br> 21聊天（尚未开放)<br>  |
+    | 按钮可见性（visibility）| 0总是可见(默认) <br> 1主持人可见 <br> 2非主持人可见 <br> |
 
-#### 注意事项
+    | 多状态按钮 | 默认状态顺序（数组第一位与第二位） |
+    | :- | :- |
+    | 0 音频 | 开启，关闭 |
+    | 1 视频 | 开启，关闭 |
+    | 2 屏幕共享 | 结束共享，共享屏幕 |
+    | 5 视图布局 | 演讲者模式，画廊模式 |
+
+## 注意事项
 
 - web会议组件sdk要求运行在**https**环境中
 - 初始化以及单独设置宽高时，建议使用比例4：3

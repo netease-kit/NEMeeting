@@ -1,9 +1,13 @@
 package com.netease.meetinglib.demo.data;
 
 
+import com.netease.meetinglib.sdk.NEMeetingItemLive;
+import com.netease.meetinglib.sdk.NEMeetingItemSetting;
 import com.netease.meetinglib.sdk.NEMeetingItemStatus;
 
-public class MeetingItem implements Comparable<MeetingItem> {
+import java.io.Serializable;
+
+public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     /**
      * 会议唯一Id，服务器生成
      */
@@ -60,21 +64,16 @@ public class MeetingItem implements Comparable<MeetingItem> {
     /**
      * 会议额外选项
      */
-    private MeetingItemSetting setting;
+    private NEMeetingItemSetting setting;
     /**
      * 会议状态
      */
     private NEMeetingItemStatus status;
+    
+    private NEMeetingItemLive live;
+    
     private boolean isGroupFirst;
-
-    public MeetingItemSetting getSetting() {
-        return setting;
-    }
-
-    public void setSetting(MeetingItemSetting setting) {
-        this.setting = setting;
-    }
-
+    
     public NEMeetingItemStatus getStatus() {
         return status;
     }
@@ -179,6 +178,22 @@ public class MeetingItem implements Comparable<MeetingItem> {
         this.createTime = createTime;
     }
 
+    public NEMeetingItemLive getLive() {
+        return live;
+    }
+    public void setLive(NEMeetingItemLive live) {
+        this.live = live;
+    }
+
+    public void setSetting(NEMeetingItemSetting setting) {
+        this.setting = setting;
+    }
+
+    public NEMeetingItemSetting getSetting() {
+        return setting;
+    }
+
+
     @Override
     public int compareTo(MeetingItem meetingItem) {
         long t = getStartTime() - meetingItem.getStartTime();
@@ -186,21 +201,6 @@ public class MeetingItem implements Comparable<MeetingItem> {
             t = getCreateTime() - meetingItem.getCreateTime();
         }
         return t > 0 ? 0 : -1;
-    }
-
-    public static class MeetingItemSetting {
-        /**
-         * 入会时音频开关
-         */
-        public boolean isAttendeeAudioOff;
-
-        public boolean isAttendeeAudioOff() {
-            return isAttendeeAudioOff;
-        }
-
-        public void setAttendeeAudioOff(boolean attendeeAudioOff) {
-            isAttendeeAudioOff = attendeeAudioOff;
-        }
     }
 
     @Override
@@ -220,4 +220,5 @@ public class MeetingItem implements Comparable<MeetingItem> {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

@@ -31,4 +31,20 @@ public class SettingsViewModel extends AndroidViewModel {
     public void openController(NEControlParams params, NEControlOptions opts, NECallback<Void> callback) {
         mRepository.openController(context, params, opts, callback);
     }
+
+    public void openBeautyUI( NECallback<Void> callback) {
+        mRepository.openBeautyUI(context, callback);
+    }
+
+    public boolean isBeautyFaceEnabled() {
+        return mRepository.isBeautyFaceEnabled();
+    }
+
+    public void getBeautyFaceValue(NECallback<Integer> callback) {
+         mRepository.getBeautyFaceValue(callback);
+    }
+
+    public void setBeautyFaceValue(int beautyFaceValue) {
+         mRepository.setBeautyFaceValue(beautyFaceValue);
+    }
 }

@@ -31,7 +31,7 @@ public class LoginWithSSOFragment extends BaseFragment<FragmentLoginWithSsoBindi
 
             String ssoAppNamespace = binding.edtLoginCorpCode.getText().toString().trim();
             String ssoClientLoginUrl = "nemeetingdemo://meeting.netease.im/";
-            String targetUrl = "https://meeting-api-test.netease.im/v1/auth/sso/authorize?ssoAppNamespace=" + ssoAppNamespace + "&ssoClientLoginUrl=" + Uri.encode(ssoClientLoginUrl);
+            String targetUrl = "https://meeting-api.netease.im/v1/auth/sso/authorize?ssoAppNamespace=" + ssoAppNamespace + "&ssoClientLoginUrl=" + Uri.encode(ssoClientLoginUrl);
             Uri uri = Uri.parse(targetUrl);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);

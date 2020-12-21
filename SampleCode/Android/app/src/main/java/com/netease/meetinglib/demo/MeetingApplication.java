@@ -18,8 +18,13 @@ public class MeetingApplication extends Application {
         super.onCreate();
         instance = this;
         LogUtil.init(this);
-        NIMInitializer.getInstance().startInitialize(this);
+
+        //注意：只在开启NIM复用时，才需要手动进行NIM的初始化操作，其他情况下一律忽略
+        //NIMInitializer.getInstance().startInitialize(this);
+
+        //初始化会议SDK登录状态监听
         SdkAuthenticator.getInstance().initialize(this);
+        //初始化会议SDK
         SdkInitializer.getInstance().startInitialize(this);
     }
 

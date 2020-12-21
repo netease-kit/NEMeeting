@@ -7,4 +7,9 @@
         android:title="应用设置"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/im_login"
+        android:title="NIM登录"
+        app:showAsAction="never" />
+
 </menu>

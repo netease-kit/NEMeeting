@@ -743,6 +743,7 @@ NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsServic
 
 2. 调用不同接口保存设置项或查询设置项
 
+- 设置并保存会议设置
 ```java
 // 设置并保存会议设置
 settingsService.enableShowMyMeetingElapseTime(true);
@@ -754,12 +755,49 @@ boolean showMeetingElapseTimeEnabled = settingsService.isShowMyMeetingElapseTime
 boolean audioEnabled = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
 boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
 ```
+
+- 设置并保存美颜配置
+```java
+
+    /**
+     * 设置美颜参数
+     * @param value 传入美颜等级，参数规则为[0,10]整数
+     */
+    NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(value);
+```
+```java
+    /**
+      * 查询美颜开通状态，开通请咨询下面注意事项官网地址
+      * @return true-打开，false-关闭
+      */
+    boolean isBeautyFaceEnabled = NEMeetingSDK.getInstance().getSettingsService().isBeautyFaceEnabled();
+```
+```java
+    /**
+     * 获取当前美颜参数，关闭返回0
+     */
+    NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue((resultCode, resultMsg, resultData)->
+    Log.d("SettingsFragment", "initView:getBeautyFaceValue =  " +resultData ));
+```
+```java
+    /**
+     * 打开美颜界面，必须在init之后调用该接口，支持会前设置使用。
+     *
+     * @param context
+     * @param callback 回调
+     */
+    NEMeetingSDK.getInstance().getSettingsService().openBeautyUI(context,(resultCode, resultMsg, resultData) ->
+    Log.d("SettingsFragment", "initView:resultData =  " +resultData ));
+```
+
 3. 调用不同接口保存设置项或查询设置项
 #### 注意事项
 
 - 针对已登录用户而言，每个用户有自己独立的一份会议设置；其他所有未登录用户、匿名用户共享一份会议设置。
 - 会议设置项仅在当前设备上保存，不会漫游。
 - 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
+- 美颜服务开通官网咨询渠道：[云信官网](http://yunxin.163.com/)
+- 美颜配置支持多端漫游。
 
 
 --------------------

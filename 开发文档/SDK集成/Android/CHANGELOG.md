@@ -1,5 +1,19 @@
 # CHANGELOG
 
+# CHANGELOG
+
+
+# 2020-12-21 @ v1.5.0
+
+## Added
+
+* 新增`isBeautyFaceEnabled` 查询“美颜状态”
+* 新增`openBeautyUI` 打开美颜界面，必须在init之后调用该接口，支持会前设置使用。
+* 新增`getBeautyFaceValue` 获取“当前美颜参数“，关闭返回0
+* 新增`setBeautyFaceValue` “设置美颜参数“，传入美颜等级，参数规则为[0,1]整数
+
+## Fixed
+* 优化视频镜像显示
 
 # 2020-10-29 @ v1.3.0
 

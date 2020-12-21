@@ -756,6 +756,23 @@ boolean audioEnabled = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
 boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
 ```
 
+- 查询直播开通状态
+```java
+
+    /**
+      * 查询直播开通状态
+      * @return true-打开，false-关闭
+     */
+    NEMeetingSDK.getInstance().getSettingsService().isMeetingLiveEnabled();
+```
+- 查询美颜开通状态
+```java
+    /**
+      * 查询美颜开通状态，开通请咨询下面注意事项官网地址
+      * @return true-打开，false-关闭
+      */
+    boolean isBeautyFaceEnabled = NEMeetingSDK.getInstance().getSettingsService().isBeautyFaceEnabled();
+```
 - 设置并保存美颜配置
 ```java
 
@@ -765,13 +782,7 @@ boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
      */
     NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(value);
 ```
-```java
-    /**
-      * 查询美颜开通状态，开通请咨询下面注意事项官网地址
-      * @return true-打开，false-关闭
-      */
-    boolean isBeautyFaceEnabled = NEMeetingSDK.getInstance().getSettingsService().isBeautyFaceEnabled();
-```
+- 查询美颜配置
 ```java
     /**
      * 获取当前美颜参数，关闭返回0
@@ -779,6 +790,7 @@ boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
     NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue((resultCode, resultMsg, resultData)->
     Log.d("SettingsFragment", "initView:getBeautyFaceValue =  " +resultData ));
 ```
+- 打开美颜界面
 ```java
     /**
      * 打开美颜界面，必须在init之后调用该接口，支持会前设置使用。

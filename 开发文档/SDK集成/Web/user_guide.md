@@ -14,6 +14,7 @@
 | 2020-11-12 | 1.3.1 | 增加*shortId*字段  <br>  增加两种登陆方式 *loginWithNEMeeting* *loginWithSSOToken* <br> 增加初始化配置，兼容已有方案|
 | 2020-11-20 | 1.3.2 | 增加创会入会额外可选配置： *meetingIdDisplayOptions* 会议号展示逻辑 |
 | 2020-11-27 | 1.3.3 | 补充关闭预约会议密码回调监听 <br> 补充创建会议提示已存在会议取消操作监听 <br> 加入会议增加预约会议密码参数*password* <br> 调整会议画廊模式展示策略 |
+| 2020-12-18 | 1.5.0 | 补充自定义按钮配置 |
 
 ## 快速接入
 
@@ -219,9 +220,26 @@
       {"id":0}, // 预置按钮
       {"id":1},
       {"id":2},
-      {"id":3},
-      {"id":20},
-      {"id":5},
+      {
+          "id":3, // 预置按钮根据Id区分单状态与多状态
+          "btnConfig":{ // 单状态按钮配置-object
+            "icon":"", // 图标 url地址
+            "text":"我是展示文案" // 展示文案
+          },
+      },
+      {
+          "id":5
+      },
+      {
+          "id":20, // 预置按钮根据Id区分单状态与多状态
+          "btnConfig":[{ // 多状态按钮配置-array
+              "icon":"", // 图标 url地址
+              "text":"", // 展示文案
+          },{
+              "icon":"",
+              "text":"",
+          }],
+      },
    ],
    "moreBarList":[
       {
@@ -238,7 +256,7 @@
       },{
          "id":103,
          "type":"multiple", // 多状态按钮
-         "btnConfig":[{ // 多状态按钮配置-数组
+         "btnConfig":[{ // 多状态按钮配置-array
             "icon":"", // 图标 url地址
             "text":"我是false", // 展示文案
             "status":false // 按钮状态
@@ -263,7 +281,7 @@
 
     | 字段 | 含义 | 类型 | 必填 | 样例 |
     | :-: | :-: | :-: | :-: | :- |
-    | id | 按钮的唯一标识 <br> 非预置按钮id大于100 <br> 预置则小于等于100 | number | 是 | 0 |
+    | id | 按钮的唯一标识 <br> 非预置按钮id大于100 <br> 预置按钮则小于等于100 | number | 是 | 0 |
     | type | 按钮类型 <br> 单状态：single <br> 多状态：multiple| string | 非预置按钮必填 | single |
     | btnConfig | 按钮配置项 <br> 单状态Object <br> 多状态Array[Object] | object\|array | 非预置按钮必填 | [参考样例](#custom-introduction) |
     | btnConfig下object | 图标url：icon（必填） <br> 图标文案：text（必填） <br> 图标状态：status（多状态按钮必填） | object | 非预置按钮必填 | [参考样例](#custom-introduction) |
@@ -274,10 +292,10 @@
 3. 预置属性说明
 
 
-    | 配置字段 | 内容(id, type) |
-    | :-: | :- |
-    | 预置按钮唯一值（id） | 0音频(multiple) <br> 1视频(multiple) <br> 2屏幕共享(multiple) <br> 3参会者列表(single) <br> 5画廊切换(multiple) <br> 20邀请(single) <br> 21聊天（尚未开放)<br>  |
-    | 按钮可见性（visibility）| 0总是可见(默认) <br> 1主持人可见 <br> 2非主持人可见 <br> |
+    | 配置字段 | 内容(id, type) | 能否在更多区域配置 |
+    | :-: | :- | :- |
+    | 预置按钮唯一值（id） | 音频(0, multiple) <br> 视频(1, multiple) <br> 屏幕共享(2, multiple) <br> 参会者列表(3, single) <br> 画廊切换(5, multiple) <br> 邀请(20, single) <br> 聊天（21, 尚未开放)<br>  | false <br> false <br> true <br> false <br> true <br> false <br> false |
+    | 按钮可见性（visibility）| 0总是可见(默认) <br> 1主持人可见 <br> 2非主持人可见 <br> | -- |
 
     预置按钮无法设置状态，只能根据预先设置的状态调整文案与icon
 
@@ -290,10 +308,17 @@
 
 4. 使用说明以及注意事项
 
-    * 预置按钮，无法替换其默认方法，需要自定义方法的情况下请使用自定义按钮
-    * 多状态的预置按钮需按照顺序填入需要配置的按钮信息
-    * 配置按钮icon时**仅限**使用url进行配置
+    * 预置按钮中，仅屏幕共享，视图切换可以放置在更多区域，其他预置按钮放置**不会生效**
+    * 预置按钮，**无法**替换其默认方法，需要自定义方法的情况下请使用自定义按钮
+    * 多状态的预置按钮需**按照顺序**填入需要配置的按钮信息
+    * 配置按钮icon时**仅限**使用url网络资源进行配置
+    * icon资源尺寸
+
+            mdpi 24px * 24px
+            xhdpi 48px * 48px
+
     * 配置异常时请参考返回的报错信息进行处理（即加入创建时的callback）
+    * 未配置成功时，不会影响整体已有按钮配置
 
 ## 注意事项
 

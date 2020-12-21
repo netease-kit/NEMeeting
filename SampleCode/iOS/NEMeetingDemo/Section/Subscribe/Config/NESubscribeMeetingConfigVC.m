@@ -123,7 +123,20 @@
     };
     [group3.rows addObject:autoMuteRow];
     
-    self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+    if([[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]){
+        NEFromGroup *group4 = [[NEFromGroup alloc] init];
+        NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
+        liveRow.title = @"开启直播";
+        liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.item.live.enable = [newValue boolValue];
+        };
+        liveRow.value = @false;
+        [group4.rows addObject:liveRow];
+        
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
+    }else{
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+    }
 }
 
 - (void)insertPassworkRowBelow:(NEFromRow *)row {

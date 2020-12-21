@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D38F24825837EC800406DCC /* SelectedMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38F24125837EC800406DCC /* SelectedMenuItemCell.m */; };
+		2D38F24925837EC800406DCC /* MenuItemArrangementVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38F24525837EC800406DCC /* MenuItemArrangementVC.m */; };
+		2D38F24A25837EC800406DCC /* SelectedMenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D38F24625837EC800406DCC /* SelectedMenuItemCell.xib */; };
+		2D38F24B25837EC800406DCC /* SelectedMenuItemEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38F24725837EC800406DCC /* SelectedMenuItemEditVC.m */; };
+		3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */; };
+		3AAF4F452559739000EB25E5 /* SSOLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF4F442559739000EB25E5 /* SSOLoginViewController.m */; };
 		410B431124AB289600017FA6 /* CheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B431024AB289600017FA6 /* CheckBox.m */; };
 		410B431A24AB294100017FA6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B431924AB294100017FA6 /* LoginViewController.m */; };
 		410B432124AB2DB000017FA6 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B432024AB2DB000017FA6 /* UIView+Toast.m */; };
@@ -56,9 +62,12 @@
 		41A1C99124A302F9003369D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41A1C99024A302F9003369D3 /* Assets.xcassets */; };
 		41A1C99424A302F9003369D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41A1C99224A302F9003369D3 /* LaunchScreen.storyboard */; };
 		41A1C99724A302F9003369D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A1C99624A302F9003369D3 /* main.m */; };
+		41B3B51D24EA99F6001FCFFA /* IMLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */; };
+		41B3B51E24EA99F6001FCFFA /* IMLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */; };
 		41E9117A25010E6900E63D80 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E9117925010E6900E63D80 /* CustomViewController.m */; };
 		41F8C3A624B5971E0039301B /* strip_archs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 41F8C3A524B5971E0039301B /* strip_archs.sh */; };
 		41FE2B9224AD8F5800624342 /* SystemAuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */; };
+		69D4DD7E58D55ABF010E2F0C /* Pods_NEMeetingDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C507316749FEFB681B0A39 /* Pods_NEMeetingDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +84,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2D38F24125837EC800406DCC /* SelectedMenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedMenuItemCell.m; sourceTree = "<group>"; };
+		2D38F24225837EC800406DCC /* MenuItemArrangementVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemArrangementVC.h; sourceTree = "<group>"; };
+		2D38F24325837EC800406DCC /* SelectedMenuItemEditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedMenuItemEditVC.h; sourceTree = "<group>"; };
+		2D38F24425837EC800406DCC /* SelectedMenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedMenuItemCell.h; sourceTree = "<group>"; };
+		2D38F24525837EC800406DCC /* MenuItemArrangementVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemArrangementVC.m; sourceTree = "<group>"; };
+		2D38F24625837EC800406DCC /* SelectedMenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedMenuItemCell.xib; sourceTree = "<group>"; };
+		2D38F24725837EC800406DCC /* SelectedMenuItemEditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedMenuItemEditVC.m; sourceTree = "<group>"; };
+		3AAF4F402559733700EB25E5 /* NEMeetingLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEMeetingLoginViewController.h; sourceTree = "<group>"; };
+		3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NEMeetingLoginViewController.m; sourceTree = "<group>"; };
+		3AAF4F432559739000EB25E5 /* SSOLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSOLoginViewController.h; sourceTree = "<group>"; };
+		3AAF4F442559739000EB25E5 /* SSOLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSOLoginViewController.m; sourceTree = "<group>"; };
 		410B430F24AB289600017FA6 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
 		410B431024AB289600017FA6 /* CheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckBox.m; sourceTree = "<group>"; };
 		410B431824AB294100017FA6 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -165,11 +185,18 @@
 		41A1C99524A302F9003369D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41A1C99624A302F9003369D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		41A1CA7524A33994003369D3 /* NEMeetingDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEMeetingDemo.pch; sourceTree = "<group>"; };
+		41B3B51A24EA99F6001FCFFA /* IMLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMLoginVC.h; sourceTree = "<group>"; };
+		41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMLoginVC.m; sourceTree = "<group>"; };
+		41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLoginVC.xib; sourceTree = "<group>"; };
 		41E9117825010E6900E63D80 /* CustomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
 		41E9117925010E6900E63D80 /* CustomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
 		41F8C3A524B5971E0039301B /* strip_archs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = strip_archs.sh; sourceTree = "<group>"; };
 		41FE2B9024AD8F5800624342 /* SystemAuthHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemAuthHelper.h; sourceTree = "<group>"; };
 		41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAuthHelper.m; sourceTree = "<group>"; };
+		447849DB8A2AD45B13EAE7DA /* Pods-NEMeetingDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo.debug.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		54C507316749FEFB681B0A39 /* Pods_NEMeetingDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NEMeetingDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97AF9101435562B74D2DA5A5 /* Pods-NEMeetingDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo.release.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo.release.xcconfig"; sourceTree = "<group>"; };
+		F74840C13D4514195059FE02 /* Pods-NEMeetingDemo.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo.profile.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo.profile.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,12 +204,46 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69D4DD7E58D55ABF010E2F0C /* Pods_NEMeetingDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20D42DFDFB92D7BDA91068DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				54C507316749FEFB681B0A39 /* Pods_NEMeetingDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2D38F24025837EC800406DCC /* menu */ = {
+			isa = PBXGroup;
+			children = (
+				2D38F24125837EC800406DCC /* SelectedMenuItemCell.m */,
+				2D38F24225837EC800406DCC /* MenuItemArrangementVC.h */,
+				2D38F24325837EC800406DCC /* SelectedMenuItemEditVC.h */,
+				2D38F24425837EC800406DCC /* SelectedMenuItemCell.h */,
+				2D38F24525837EC800406DCC /* MenuItemArrangementVC.m */,
+				2D38F24625837EC800406DCC /* SelectedMenuItemCell.xib */,
+				2D38F24725837EC800406DCC /* SelectedMenuItemEditVC.m */,
+			);
+			path = menu;
+			sourceTree = "<group>";
+		};
+		3E78B38EEBDF01328ED26281 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				447849DB8A2AD45B13EAE7DA /* Pods-NEMeetingDemo.debug.xcconfig */,
+				97AF9101435562B74D2DA5A5 /* Pods-NEMeetingDemo.release.xcconfig */,
+				F74840C13D4514195059FE02 /* Pods-NEMeetingDemo.profile.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		410B431E24AB2B7500017FA6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,7 +261,11 @@
 				41A1C98A24A302F9003369D3 /* MainViewController.h */,
 				41A1C98B24A302F9003369D3 /* MainViewController.m */,
 				410B431824AB294100017FA6 /* LoginViewController.h */,
+				3AAF4F432559739000EB25E5 /* SSOLoginViewController.h */,
+				3AAF4F442559739000EB25E5 /* SSOLoginViewController.m */,
 				410B431924AB294100017FA6 /* LoginViewController.m */,
+				3AAF4F402559733700EB25E5 /* NEMeetingLoginViewController.h */,
+				3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */,
 				410B431B24AB295B00017FA6 /* EnterMeetingVC.h */,
 				410B431C24AB295B00017FA6 /* EnterMeetingVC.m */,
 				410B432E24AB5C2A00017FA6 /* StartMeetingVC.h */,
@@ -216,7 +281,9 @@
 				41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
 				41E9117925010E6900E63D80 /* CustomViewController.m */,
+				2D38F24025837EC800406DCC /* menu */,
 				419EE4D02508B989004F8984 /* Subscribe */,
+				41B3B51F24EB6B51001FCFFA /* IM */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -386,6 +453,8 @@
 			children = (
 				41A1C98324A302F9003369D3 /* NEMeetingDemo */,
 				41A1C98224A302F9003369D3 /* Products */,
+				3E78B38EEBDF01328ED26281 /* Pods */,
+				20D42DFDFB92D7BDA91068DB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -419,6 +488,16 @@
 			path = NEMeetingDemo;
 			sourceTree = "<group>";
 		};
+		41B3B51F24EB6B51001FCFFA /* IM */ = {
+			isa = PBXGroup;
+			children = (
+				41B3B51A24EA99F6001FCFFA /* IMLoginVC.h */,
+				41B3B51B24EA99F6001FCFFA /* IMLoginVC.m */,
+				41B3B51C24EA99F6001FCFFA /* IMLoginVC.xib */,
+			);
+			path = IM;
+			sourceTree = "<group>";
+		};
 		41FE2B9324ADB3D700624342 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,6 +521,7 @@
 				DC78D237D713B7DA319BEAAA /* [CP] Embed Pods Frameworks */,
 				41F8C3A724B597580039301B /* Strip Archs */,
 				CA1EF2752541596400AC0777 /* Embed Frameworks */,
+				9FF25C873681939AA5B36488 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -490,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41F8C3A624B5971E0039301B /* strip_archs.sh in Resources */,
+				2D38F24A25837EC800406DCC /* SelectedMenuItemCell.xib in Resources */,
 				419EE4DD2508BE36004F8984 /* SubDateCell.xib in Resources */,
 				410B433224AB5C2A00017FA6 /* StartMeetingVC.xib in Resources */,
 				41937CAF24B4611C00A06BF2 /* SVProgressHUD.bundle in Resources */,
@@ -499,6 +580,7 @@
 				41A1C99424A302F9003369D3 /* LaunchScreen.storyboard in Resources */,
 				41A1C99124A302F9003369D3 /* Assets.xcassets in Resources */,
 				419EE4CF2508ABA3004F8984 /* SubMeetingCell.xib in Resources */,
+				41B3B51E24EA99F6001FCFFA /* IMLoginVC.xib in Resources */,
 				41A1C98F24A302F9003369D3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +628,23 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/bin/sh \"${SRCROOT}/NEMeetingDemo/strip_archs.sh\"\n";
 		};
+		9FF25C873681939AA5B36488 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DC78D237D713B7DA319BEAAA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -580,6 +679,7 @@
 				41937CAE24B4611C00A06BF2 /* SVIndefiniteAnimatedView.m in Sources */,
 				410B431124AB289600017FA6 /* CheckBox.m in Sources */,
 				419EE5192509F413004F8984 /* NEFromTitleInputCell.m in Sources */,
+				3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */,
 				41A1C98C24A302F9003369D3 /* MainViewController.m in Sources */,
 				419EE4F52508D3DB004F8984 /* NEFromLabelCell.m in Sources */,
 				419EE4F22508D2D1004F8984 /* NEFromCellFactory.m in Sources */,
@@ -590,18 +690,22 @@
 				41E9117A25010E6900E63D80 /* CustomViewController.m in Sources */,
 				419EE5112509BB25004F8984 /* NEFromBaseCell.m in Sources */,
 				419EE4F82508D3EE004F8984 /* NEFromTextFieldCell.m in Sources */,
+				2D38F24925837EC800406DCC /* MenuItemArrangementVC.m in Sources */,
 				41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m in Sources */,
 				414EF236251C9D1700F9D91A /* NENavigationController.m in Sources */,
 				419EE5182509D5C6004F8984 /* NESubscribeMeetingConfigVC.m in Sources */,
 				414EF22B251C8F4B00F9D91A /* TimerButton.m in Sources */,
+				41B3B51D24EA99F6001FCFFA /* IMLoginVC.m in Sources */,
 				410B435C24AC914900017FA6 /* StartMeetingVC.m in Sources */,
 				410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m in Sources */,
 				419EE5122509C202004F8984 /* NEFromRow.m in Sources */,
 				419EE52C250A4B96004F8984 /* NEDateItem.m in Sources */,
 				419EE51B250A0501004F8984 /* NEFromTitleSwitchCell.m in Sources */,
+				2D38F24B25837EC800406DCC /* SelectedMenuItemEditVC.m in Sources */,
 				419EE51A250A018D004F8984 /* NEFromDatePicker.m in Sources */,
 				414EF1EC251AE73F00F9D91A /* MeetingActionVC.m in Sources */,
 				410B431A24AB294100017FA6 /* LoginViewController.m in Sources */,
+				3AAF4F452559739000EB25E5 /* SSOLoginViewController.m in Sources */,
 				410B432124AB2DB000017FA6 /* UIView+Toast.m in Sources */,
 				41937CAD24B4611C00A06BF2 /* SVProgressHUD.m in Sources */,
 				41937CB324B4626100A06BF2 /* LoginInfoManager.m in Sources */,
@@ -610,6 +714,7 @@
 				419EE4DC2508BE36004F8984 /* SubDateCell.m in Sources */,
 				41A1C99724A302F9003369D3 /* main.m in Sources */,
 				419EE4D42508BA23004F8984 /* SubscribeMeetingListVC.m in Sources */,
+				2D38F24825837EC800406DCC /* SelectedMenuItemCell.m in Sources */,
 				419EE5142509C547004F8984 /* NEFromTitleDateCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -750,6 +855,7 @@
 		};
 		41A1C99B24A302F9003369D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 447849DB8A2AD45B13EAE7DA /* Pods-NEMeetingDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -767,7 +873,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -778,6 +884,7 @@
 		};
 		41A1C99C24A302F9003369D3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97AF9101435562B74D2DA5A5 /* Pods-NEMeetingDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -792,7 +899,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -856,6 +963,7 @@
 		};
 		41FF7ED824E121AC00D1921A /* Profile */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F74840C13D4514195059FE02 /* Pods-NEMeetingDemo.profile.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -870,7 +978,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

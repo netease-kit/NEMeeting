@@ -8,6 +8,7 @@
 #import "EnterMeetingVC.h"
 #import "CheckBox.h"
 #import "MeetingSettingVC.h"
+#import "MenuItemArrangementVC.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
 @interface EnterMeetingVC ()<CheckBoxDelegate, MeetingServiceListener>
@@ -32,8 +33,14 @@
 @property (nonatomic, readonly) BOOL disableInvite;
 @property (nonatomic, readonly) BOOL disableMinimize;
 @property (nonatomic, readonly) BOOL disableGallery;
+@property (nonatomic, readonly) BOOL disableCameraSwitch;
+@property (nonatomic, readonly) BOOL disableAudioModeSwitch;
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
+
+@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
+
+@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullMoreMenuItems;
 @end
 
 @implementation EnterMeetingVC
@@ -66,7 +73,9 @@
                                               @"使用默认会议设置",
                                               @"入会时关闭画廊模式",
                                               @"仅显示会议ID长号",
-                                              @"仅显示会议ID短号"]];
+                                              @"仅显示会议ID短号",
+                                              @"关闭摄像头切换",
+                                              @"关闭音频模式切换"]];
     [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
@@ -90,7 +99,12 @@
         options.noMinimize = [self disableMinimize];
         options.injectedMoreMenuItems = _menuItems;
         options.noGallery = [self disableGallery];
+        options.noSwitchCamera = [self disableCameraSwitch];
+        options.noSwitchAudioMode = [self disableAudioModeSwitch];
     }
+
+    options.fullToolbarMenuItems = _fullToolbarMenuItems;
+    options.fullMoreMenuItems = _fullMoreMenuItems;
 
     WEAK_SELF(weakSelf);
     [SVProgressHUD show];
@@ -100,6 +114,9 @@
         [SVProgressHUD dismiss];
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
+        }else {
+            weakSelf.fullMoreMenuItems = nil;
+            weakSelf.fullToolbarMenuItems = nil;
         }
     }];
 }
@@ -119,6 +136,26 @@
         _configCheckBox.disableAllItems = [self useDefaultConfig];
         _settingBtn.hidden = ![self useDefaultConfig];
     }
+}
+
+- (IBAction)configToolbarMenuItems:(UIButton *)sender {
+    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
+    vc.menuItems = _fullToolbarMenuItems;
+    __weak __typeof__ (self)weakSelf = self;
+    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
+        weakSelf.fullToolbarMenuItems = menuItems;
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)configMoreMenuItems:(UIButton *)sender {
+    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
+    vc.menuItems = _fullMoreMenuItems;
+    __weak __typeof__ (self)weakSelf = self;
+    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
+        weakSelf.fullMoreMenuItems = menuItems;
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)addMenuAction:(UIButton *)sender {
@@ -203,6 +240,14 @@
         return DISPLAY_SHORT_ID_ONLY;
     }
     return DISPLAY_ALL;
+}
+
+- (BOOL)disableCameraSwitch {
+    return [_settingCheckBox getItemSelectedAtIndex:7];
+}
+
+- (BOOL)disableAudioModeSwitch {
+    return [_settingCheckBox getItemSelectedAtIndex:8];
 }
 
 @end

@@ -5,18 +5,28 @@
 
 package com.netease.meetinglib.demo.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
+import com.netease.meetinglib.demo.menu.InjectMenuArrangeActivity;
+import com.netease.meetinglib.demo.menu.InjectMenuContainer;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingIdDisplayOption;
-import com.netease.meetinglib.sdk.NEMeetingMenuItem;
+import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
@@ -26,8 +36,6 @@ import com.netease.meetinglib.sdk.NESettingsService;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-
 public abstract class MeetingCommonFragment extends CommonFragment {
 
     MeetingCommonFragment() {
@@ -35,9 +43,24 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     protected CheckBox usePersonalMeetingId;
-    private final CheckBox[] checkBoxes = new CheckBox[9];
+    private final CheckBox checkBoxes[] = new CheckBox[11];
     private CheckBox useDefaultMeetingOptions;
-    protected List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
+
+    private EditText injectedMenuIdEdx, injectedMenuTitleEdx;
+
+    private List<NEMeetingMenuItem> toolbarMenu;
+    ActivityResultLauncher<Intent> configToolbarMenuResult =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) toolbarMenu = InjectMenuContainer.getSelectedMenu();
+    });
+
+    private List<NEMeetingMenuItem> moreMenu;
+    ActivityResultLauncher<Intent> configMoreMenuResult =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) moreMenu = InjectMenuContainer.getSelectedMenu();
+            });
+
+    List<com.netease.meetinglib.sdk.NEMeetingMenuItem> injectedMoreMenuItems;
 
     protected abstract String[] getEditorLabel();
 
@@ -55,6 +78,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         checkBoxes[6] = view.findViewById(R.id.showLongMeetingIdOnly);
         checkBoxes[7] = view.findViewById(R.id.showShortMeetingIdOnly);
         checkBoxes[8] = view.findViewById(R.id.noGalleryOptions);
+        checkBoxes[9] = view.findViewById(R.id.noSwitchCamera);
+        checkBoxes[10] = view.findViewById(R.id.noSwitchAudioMode);
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
         useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
@@ -63,14 +88,27 @@ public abstract class MeetingCommonFragment extends CommonFragment {
 
         addEditorArray(0, R.id.firstEditor, labels);
         addEditorArray(1, R.id.secondEditor, labels);
+        addEditorArray(2, R.id.thirdEditor, labels);
 
-        addEditorArray(2, R.id.addItemIdEditor, labels);
-        addEditorArray(3, R.id.addTitleEditor, labels);
-        addEditorArray(4, R.id.thirdEditor, labels);
-        Button addMenuItemButton = getView().findViewById(R.id.addMenuItemButton);
-        addMenuItemButton.setOnClickListener(v -> addMenuItem());
+        injectedMenuIdEdx = view.findViewById(R.id.injectedMenuIdEdx);
+        injectedMenuTitleEdx = view.findViewById(R.id.injectedMenuTitleEdx);
+        view.findViewById(R.id.addInjectedMenuItem).setOnClickListener( v -> addInjectedMenuItem());
+
+        Button configToolbarMenu =
+                getView().findViewById(R.id.configToolbarMenus);
+        configToolbarMenu.setOnClickListener(v -> {
+            InjectMenuContainer.setSelectedMenu(toolbarMenu);
+            configToolbarMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
+        });
+        Button configMoreMenu = getView().findViewById(R.id.configMoreMenus);
+        configMoreMenu.setOnClickListener(v -> {
+            InjectMenuContainer.setSelectedMenu(moreMenu);
+            configMoreMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
+        });
+
         useDefaultMeetingOptions.setChecked(false);
-        useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox, checked) -> {
+        useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox,
+                                                             checked) -> {
             checkBoxes[0].setEnabled(!checked);
             checkBoxes[0].setChecked(false);
             checkBoxes[1].setEnabled(!checked);
@@ -78,27 +116,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             checkBoxes[5].setEnabled(!checked);
             checkBoxes[5].setChecked(false);
         });
-        injectedMoreMenuItems.clear();
-        if ( NEMeetingSDK.getInstance().getMeetingService() != null) {
+        if (NEMeetingSDK.getInstance().getMeetingService() != null) {
             NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
         }
-    }
-
-
-    private void addMenuItem() {
-        String id = getEditorText(2);
-        String tittle = getEditorText(3);
-        if ("".equals(id) || "".equals(tittle)) {
-            Toast.makeText(getActivity(), "参数不允许为空" + id, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
-        assert id != null;
-        meetingMenuItem.itemId = Integer.parseInt(id);
-        meetingMenuItem.title = tittle;
-        injectedMoreMenuItems.add(meetingMenuItem);
-        Toast.makeText(getActivity(), "添加自定义菜单成功", Toast.LENGTH_SHORT).show();
     }
 
     public NEMeetingOptions getMeetingOptions(NEMeetingOptions options) {
@@ -106,22 +126,40 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             options.noVideo = !isChecked(0);
             options.noAudio = !isChecked(1);
             options.showMeetingTime = isChecked(5);
-        }else {
-            NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsService();
-            options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
-            options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
-            options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
+        } else {
+            NESettingsService settingsService =
+                    NEMeetingSDK.getInstance().getSettingsService();
+            options.noVideo =
+                    !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
+            options.noAudio =
+                    !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
+            options.showMeetingTime =
+                    settingsService.isShowMyMeetingElapseTimeEnabled();
         }
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
         options.noMinimize = isChecked(4);
         options.meetingIdDisplayOption = getMeetingIdDisplayOption();
         options.noGallery = isChecked(8);
-//        addMeetingInfoItem();
-        if (injectedMoreMenuItems != null && injectedMoreMenuItems.size() > 0) {
-            options.injectedMoreMenuItems = injectedMoreMenuItems;
-        }
+        options.noSwitchCamera = isChecked(9);
+        options.noSwitchAudioMode = isChecked(10);
+        options.fullToolbarMenuItems = toolbarMenu;
+        options.fullMoreMenuItems = moreMenu;
+        options.injectedMoreMenuItems = injectedMoreMenuItems;
         return options;
+    }
+
+    private void addInjectedMenuItem() {
+        if (!TextUtils.isEmpty(injectedMenuIdEdx.getText()) && !TextUtils.isEmpty(injectedMenuTitleEdx.getText())) {
+            if (injectedMoreMenuItems == null) {
+                injectedMoreMenuItems = new ArrayList<>();
+            }
+            com.netease.meetinglib.sdk.NEMeetingMenuItem item =
+                    new com.netease.meetinglib.sdk.NEMeetingMenuItem();
+            item.itemId = Integer.parseInt(injectedMenuIdEdx.getText().toString());
+            item.title = injectedMenuTitleEdx.getText().toString();
+            injectedMoreMenuItems.add(item);
+        }
     }
 
     private NEMeetingIdDisplayOption getMeetingIdDisplayOption() {
@@ -151,7 +189,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         }
 
         @Override
-        public void onResult(int resultCode, String resultMsg, Void resultData) {
+        public void onResult(int resultCode, String resultMsg,
+                             Void resultData) {
             if (isAdded()) dissMissDialogProgress();
             if (resultCode == NEMeetingError.ERROR_CODE_NO_AUTH) {
                 Toast.makeText(context, "当前账号已在其他设备上登录", Toast.LENGTH_SHORT).show();
@@ -162,9 +201,6 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             } else {
                 super.onResult(resultCode, resultMsg, resultData);
             }
-            if (injectedMoreMenuItems != null) {
-                injectedMoreMenuItems.clear();
-            }
         }
     }
 
@@ -173,7 +209,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         if (event.status == NEMeetingStatus.MEETING_STATUS_DISCONNECTING) {
             clear();
             // 增加会议断开连接提示。
-            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "会议已断开连接", Toast.LENGTH_SHORT).show());
+            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(),
+                    "会议已断开连接", Toast.LENGTH_SHORT).show());
         }
         if (event.status != NEMeetingStatus.MEETING_STATUS_WAITING) {
             dissMissDialogProgress();//输入密码等待中

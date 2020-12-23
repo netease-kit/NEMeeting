@@ -56,7 +56,7 @@ public abstract class CommonFragment extends Fragment {
 
         Button action = getView().findViewById(R.id.actionBtn);
         action.setText(getActionLabel());
-        action.setOnClickListener(v -> performAction(getFirstEditTextContent(), getEditorText(1),getEditorText(4)));
+        action.setOnClickListener(v -> performAction(getFirstEditTextContent(), getEditorText(1),getEditorText(2)));
 
         Button actionToMeetingSettings = getView().findViewById(R.id.action_to_meeting_settings);
         actionToMeetingSettings.setOnClickListener(v ->  MeetingSettingsActivity.start(getActivity()));

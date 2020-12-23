@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:id="@+id/itemId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:inputType="numberDecimal"
+        android:minHeight="60dp"
+        android:hint="菜单ID"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/uncheckedTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:inputType="text"
+        android:minHeight="60dp"
+        android:hint="未选中状态描述"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/checkedTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:inputType="text"
+        android:minHeight="60dp"
+        android:layout_marginTop="8dp"
+        android:hint="选中状态描述"
+        android:textSize="14sp"
+        />
+
+</LinearLayout>

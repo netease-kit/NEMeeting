@@ -74,6 +74,21 @@
 }
 
 
+#pragma mark - 开启美颜预览
+- (IBAction)doOpenBeautyAction:(UIButton *)sender {
+//    bool enbale =  [[NEMeetingSDK getInstance].getSettingsService isBeautyFaceEnabled];
+//    [[NEMeetingSDK getInstance].getSettingsService setBeautyFaceValue:9];
+    [[NEMeetingSDK getInstance].getSettingsService getBeautyFaceValue:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        NSLog(@"NEMeetingSDK getBeautyFaceValue resultData  %@",resultData);
+    }];
+    __weak typeof(self) weakSelf = self;
+    [[[NEMeetingSDK getInstance] getSettingsService] openBeautyUI:^(NSInteger resultCode, NSString *resultMsg) {
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        }
+    }];
+}
+
 - (IBAction)doOpenMeetingSetting:(UIButton *)sender {
     MeetingSettingVC *vc = [[MeetingSettingVC alloc] init];
     [self.navigationController pushViewController:vc animated:YES];

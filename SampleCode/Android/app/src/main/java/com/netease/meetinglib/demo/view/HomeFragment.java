@@ -7,33 +7,19 @@ package com.netease.meetinglib.demo.view;
 
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.netease.meetinglib.demo.R;
-import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.adapter.MeetingListAdapter;
 import com.netease.meetinglib.demo.base.BaseFragment;
 import com.netease.meetinglib.demo.data.MeetingItem;
 import com.netease.meetinglib.demo.databinding.FragmentHomeBinding;
-import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.demo.viewmodel.HomeViewModel;
-import com.netease.meetinglib.sdk.NECallback;
-import com.netease.meetinglib.sdk.NEMeetingCode;
-import com.netease.meetinglib.sdk.NEMeetingError;
-import com.netease.meetinglib.sdk.NEMeetingItemStatus;
-import com.netease.meetinglib.sdk.NEMeetingOptions;
-import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
-import com.netease.meetinglib.sdk.control.NEControlMenuItem;
-import com.netease.meetinglib.sdk.control.NEControlOptions;
-import com.netease.meetinglib.sdk.control.NEControlParams;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
@@ -54,13 +40,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         mAdapter.setOnItemClickListener((view, position) -> {
             MeetingItem item = mAdapter.getData().get(position);
             Bundle bundle = new Bundle();
-            bundle.putLong("meetingUniqueId", item.getMeetingUniqueId());
-            bundle.putString("meetingId", String.valueOf(item.getMeetingId()));
-            bundle.putLong("startTime", item.getStartTime());
-            bundle.putLong("endTime", item.getEndTime());
-            bundle.putString("password", item.getPassword());
-            bundle.putString("subject", item.getSubject());
-            bundle.putSerializable("status", item.getStatus());
+            bundle.putSerializable("meetingItem", item);
             Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_scheduleMeetingDetailFragment, bundle);
         });
 

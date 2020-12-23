@@ -28,19 +28,75 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/action_to_meeting_settings"
+                app:layout_constraintTop_toBottomOf="@+id/configToolbarMenus"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="加入会议" />
 
-            <Button
-                android:id="@+id/addMenuItemButton"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/injectedMenuIdEdx"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="增加菜单"
-                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/actionBtn"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:hint="注入菜单Id"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="10dp"
+                />
+
+            <EditText
+                android:id="@+id/injectedMenuTitleEdx"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="注入菜单title"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:inputType="text"
+                app:layout_constraintLeft_toRightOf="@id/injectedMenuIdEdx"
+                app:layout_constraintTop_toBottomOf="@id/actionBtn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <Button
+                android:id="@+id/addInjectedMenuItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="添加注入菜单"
+                android:textSize="12sp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toRightOf="@id/injectedMenuTitleEdx"
+                app:layout_constraintTop_toBottomOf="@id/actionBtn"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <Button
+                android:id="@+id/configToolbarMenus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="自定义工具栏菜单"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+                app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
+
+            <Button
+                android:id="@+id/configMoreMenus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="自定义更多菜单"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@id/configToolbarMenus"
+                app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
 
             <Button
                 android:id="@+id/action_to_meeting_settings"
@@ -49,10 +105,10 @@
                 android:layout_marginTop="15dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
-                android:text="自定义会议设置"
+                android:text="会议设置"
                 android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+                app:layout_constraintLeft_toRightOf="@id/configMoreMenus"
+                app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
 
             <CheckBox
                 android:id="@+id/videoOption"
@@ -108,7 +164,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:checked="true"
                 android:text="入会时隐藏最小化"
                 app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
                 app:layout_constraintTop_toBottomOf="@id/noChatOptions" />
@@ -158,6 +213,24 @@
                 app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
                 app:layout_constraintTop_toBottomOf="@id/showLongMeetingIdOnly" />
 
+            <CheckBox
+                android:id="@+id/noSwitchCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="关闭切换摄像头"
+                app:layout_constraintLeft_toLeftOf="@id/audioOption"
+                app:layout_constraintTop_toBottomOf="@id/showShortMeetingIdOnly" />
+
+            <CheckBox
+                android:id="@+id/noSwitchAudioMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="关闭听筒扬声器切换"
+                app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
+                app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+
             <EditText
                 android:id="@+id/firstEditor"
                 android:layout_width="0dp"
@@ -190,27 +263,6 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/secondEditor" />
 
-            <EditText
-                android:id="@+id/addItemIdEditor"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:hint="100"
-                android:inputType="number"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/menuItemId"
-                app:layout_constraintLeft_toRightOf="@+id/menuItemId" />
-
-            <EditText
-                android:id="@+id/addTitleEditor"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/menuItemId"
-                app:layout_constraintLeft_toRightOf="@+id/menuTitle"
-                tools:text="1234567" />
-
 
             <TextView
                 android:id="@+id/title"
@@ -223,31 +275,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="加入会议" />
-
-            <TextView
-                android:id="@+id/menuItemId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:paddingBottom="8dp"
-                android:text="id"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
-
-            <TextView
-                android:id="@+id/menuTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:paddingBottom="8dp"
-                android:text="title"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/menuItemId"
-                app:layout_constraintLeft_toRightOf="@+id/addItemIdEditor" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

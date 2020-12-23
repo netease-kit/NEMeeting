@@ -107,12 +107,25 @@
     meetingKeyRow.value = _item.password;
     [group3.rows addObject:meetingKeyRow];
     
-    if (_item.password.length != 0) {
-        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
-    } else {
-        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2]];
-    }
+    NEFromGroup *group4 = [[NEFromGroup alloc] init];
+    NEFromRow *meetingLiveRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingLive"];
+    meetingLiveRow.title = @"直播地址";
+    meetingLiveRow.value = _item.live.liveUrl;
+    [group4.rows addObject:meetingLiveRow];
     
+    if (_item.password.length != 0) {
+        if(_item.live.liveUrl.length !=0 ){
+            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
+        }else{
+            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+        }
+    } else {
+        if(_item.live.liveUrl.length !=0){
+            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group4]];
+        }else{
+            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2]];
+        }
+    }
 }
 
 - (void)updateWithMeetingStatus {

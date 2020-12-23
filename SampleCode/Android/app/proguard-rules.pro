@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+### 美颜 SDK
+-keep class com.faceunity.wrapper.faceunity {*;}
+-keep class com.faceunity.wrapper.faceunity$RotatedImage {*;}

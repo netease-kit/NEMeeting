@@ -1,5 +1,37 @@
 # CHANGELOG
 
+# 2020-12-21 @ v1.5.0
+
+## Added
+* 支持会议内菜单自定义
+    - 新增单状态菜单项：`NESingleStateMenuItem`
+    - 新增可切换状态的双状态菜单项：`NECheckableMenuItem`
+    - 新增菜单项状态迁移控制器回调：`NEMenuStateController`
+    - 新增SDK预置菜单Id与菜单项定义: `NEMenuId`, `NEMenuItems`
+    - 配置工具栏菜单列表：`NEMeetingOptions.fullToolbarMenuItems`
+    - 配置更多展开菜单列表：`NEMeetingOptions.fullMoreMenuItems`
+* 新增直播功能
+    - 直播开关状态查询：`NESettingsService.isMeetingLiveEnabled();`
+* 设置服务新增美颜接口
+    - 查询美颜状态开启状态：`NESettingsService.isBeautyFaceEnabled()`
+    - 打开美颜预览界面: `NESettingsService.openBeautyUI()`
+    - 获取当前美颜等级参数: `NESettingsService.getBeautyFaceValue()`
+    - 设置美颜等级参数：`NESettingsService.setBeautyFaceValue(int level)`
+* 新增切换摄像头开关入会配置：
+    - `NEMeetingOptions.noSwitchCamera`
+* 新增切换音频模式开关入会配置：
+    - `NEMeetingOptions.noSwitchAudioMode`
+* 新增SIP拨号入会 
+  
+## Changed
+
+* 废弃`NEMeetingMenuItem.title`菜单名称字段，使用`NESingleStateMenuItem`或`NECheckableMenuItem`创建菜单项
+* 废弃`MeetingServiceListener onInjectedMenuItemClick:meetingInfo:`协议回调，使用`MeetingServiceListener onInjectedMenuItemClick:meetingInfo:stateController：`代替
+
+## Fixed
+* 视频镜像优化
+* 入会前后横竖屏切换逻辑优化
+
 # 2020-11-13 @ v1.3.1
 
 ## Added

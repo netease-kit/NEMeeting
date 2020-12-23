@@ -29,7 +29,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号", "昵称", "100", "title","请输入密码"};
+        return new String[]{"会议号", "昵称", "请输入密码"};
     }
 
     @Override

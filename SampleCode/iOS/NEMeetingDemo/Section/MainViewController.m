@@ -8,6 +8,7 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
+#import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
 #import "MeetingControlVC.h"
@@ -57,6 +58,11 @@
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
     }];
+}
+
+- (void)onEnterMulAction:(UIButton *)sender {
+    IMLoginVC *vc = [[IMLoginVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)onRestoreMeetingAction:(UIButton *)sender {
@@ -127,12 +133,40 @@
     }
 }
 
+
+- (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
+                    meetingInfo:(NEMeetingInfo *)meetingInfo
+                stateController:(NEMenuStateController)stateController {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        stateController(NO,nil);
+    }];
+    UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        stateController(YES,nil);
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:ignoreAction];
+    [alert addAction:okAction];
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+    if (!preVC) {
+        preVC = keyWindow.rootViewController;
+    }
+    [preVC presentViewController:alert animated:YES completion:nil];
+    
+}
+
+
+
 - (void)updateMeetingBtnWithInfo:(NEMeetingInfo *)info {
     NEMeetingStatus status = [[NEMeetingSDK getInstance] getMeetingService].getMeetingStatus;
     if (status != MEETING_STATUS_INMEETING_MINIMIZED) {
         return;;
     }
 
+    NSLog(@"meetingId: %@ meetingUniqueId: %llu", info.meetingId, info.meetingUniqueId);
     _restoreMeetingBtn.neTitle = info.subject;
     //int64_t currentTime = [[NSDate date] timeIntervalSince1970];
     //int64_t startTime = info.startTime/1000;

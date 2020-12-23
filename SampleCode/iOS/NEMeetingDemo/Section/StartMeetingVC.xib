@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -113,6 +113,21 @@
                         <action selector="addMenuAction:" destination="-1" eventType="touchUpInside" id="PPC-9V-d5A"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3e7-LZ-R6s">
+                    <rect key="frame" x="5" y="760" width="120" height="48"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="1nS-aZ-V2O"/>
+                        <constraint firstAttribute="height" constant="48" id="Jy4-MX-Ubv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="自定义Toolbar菜单">
+                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="configToolbarMenuItems:" destination="-1" eventType="touchUpInside" id="bgc-iw-dkV"/>
+                    </connections>
+                </button>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="按钮文本" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s17-VQ-gVv">
                     <rect key="frame" x="112" y="816" width="180" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -128,17 +143,34 @@
                         <action selector="onEnterSettingAction:" destination="-1" eventType="touchUpInside" id="9ps-Ef-oJM"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OwW-lk-i1Y">
+                    <rect key="frame" x="142" y="760" width="120" height="48"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="Rv6-DT-f03"/>
+                        <constraint firstAttribute="height" constant="48" id="cRK-7t-h0V"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="自定义更多菜单">
+                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="configMoreMenuItems:" destination="-1" eventType="touchUpInside" id="vSC-YV-1Q7"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="leading" secondItem="Jfc-T7-66b" secondAttribute="leading" id="2yj-nV-cjO"/>
+                <constraint firstItem="4rM-kd-1UT" firstAttribute="top" secondItem="3e7-LZ-R6s" secondAttribute="bottom" constant="8" id="5po-b0-Z7N"/>
                 <constraint firstItem="WRG-Pt-POL" firstAttribute="top" secondItem="MKt-2h-9Ht" secondAttribute="bottom" constant="16" id="6CD-PL-CK4"/>
                 <constraint firstItem="kjx-eM-LpW" firstAttribute="centerY" secondItem="4rM-kd-1UT" secondAttribute="centerY" id="9qA-mU-Fbw"/>
                 <constraint firstItem="CTz-SU-8uc" firstAttribute="leading" secondItem="7cy-0b-BqG" secondAttribute="leading" id="Fzn-pR-QSq"/>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="trailing" secondItem="Jfc-T7-66b" secondAttribute="trailing" id="JIs-xQ-XC7"/>
                 <constraint firstItem="afo-Xb-gX8" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="16" id="MCd-K5-PAw"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="kjx-eM-LpW" secondAttribute="trailing" constant="16" id="MsG-Mc-dcZ"/>
+                <constraint firstItem="OwW-lk-i1Y" firstAttribute="baseline" secondItem="3e7-LZ-R6s" secondAttribute="baseline" id="Mxc-Gu-H78"/>
                 <constraint firstItem="MKt-2h-9Ht" firstAttribute="top" secondItem="F15-my-g2s" secondAttribute="bottom" constant="4" id="NHm-ae-lc4"/>
                 <constraint firstItem="7cy-0b-BqG" firstAttribute="top" secondItem="mEx-5R-qub" secondAttribute="bottom" constant="16" id="NeM-oa-h5w"/>
                 <constraint firstItem="s17-VQ-gVv" firstAttribute="leading" secondItem="4rM-kd-1UT" secondAttribute="trailing" constant="16" id="NoW-yB-ItV"/>
@@ -149,6 +181,7 @@
                 <constraint firstItem="7cy-0b-BqG" firstAttribute="leading" secondItem="Jfc-T7-66b" secondAttribute="leading" id="WOb-2X-plc"/>
                 <constraint firstItem="7cy-0b-BqG" firstAttribute="trailing" secondItem="Jfc-T7-66b" secondAttribute="trailing" id="WOq-HL-5a8"/>
                 <constraint firstItem="h6T-jh-8Mb" firstAttribute="top" secondItem="WRG-Pt-POL" secondAttribute="bottom" constant="8" id="X0e-fL-OPh"/>
+                <constraint firstItem="3e7-LZ-R6s" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="5" id="aEx-L2-oE2"/>
                 <constraint firstItem="h6T-jh-8Mb" firstAttribute="centerX" secondItem="WRG-Pt-POL" secondAttribute="centerX" id="bmj-JG-yLI"/>
                 <constraint firstItem="MKt-2h-9Ht" firstAttribute="leading" secondItem="F15-my-g2s" secondAttribute="leading" id="dWs-yz-PuP"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="top" secondItem="CTz-SU-8uc" secondAttribute="bottom" constant="8" id="fG1-UB-c65"/>
@@ -163,6 +196,7 @@
                 <constraint firstItem="afo-Xb-gX8" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="r2m-g2-Aw3"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="trailing" secondItem="7cy-0b-BqG" secondAttribute="trailing" id="sFJ-AX-xHH"/>
                 <constraint firstItem="Jfc-T7-66b" firstAttribute="top" secondItem="afo-Xb-gX8" secondAttribute="bottom" constant="24" id="xvy-2d-7wx"/>
+                <constraint firstItem="OwW-lk-i1Y" firstAttribute="leading" secondItem="3e7-LZ-R6s" secondAttribute="trailing" constant="17" id="yTW-DM-tdh"/>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="top" secondItem="Jfc-T7-66b" secondAttribute="bottom" constant="4" id="yYn-vg-C7y"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Jfc-T7-66b" secondAttribute="trailing" constant="16" id="z72-VA-eAO"/>
             </constraints>

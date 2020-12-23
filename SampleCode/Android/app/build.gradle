@@ -56,13 +56,17 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation "androidx.activity:activity:1.2.0-beta02"
+    implementation "androidx.fragment:fragment:1.3.0-beta02"
     implementation 'com.manu:MDatePicker:1.0.1'
     implementation 'com.kyleduo.switchbutton:library:2.0.2'
+    implementation 'com.google.android:flexbox:2.0.1'
 
     //NEMeeting-SDK
-    implementation 'com.netease.yunxin:meetinglib:1.3.1'
+    implementation 'com.netease.yunxin:meetinglib:1.5.0'
 
-    //NIM-SDK, 如果单独接入了云信NIM，则可根据需要进行依赖声明。正常情况下不用声明
+    //NIM-SDK, 如果单独接入了云信NIM，或者需要依赖指定的NIM版本，则可根据需要进行依赖声明。
+    //正常情况下不用声明
     implementation 'com.netease.nimlib:basesdk:7.6.0'
 
     testImplementation 'junit:junit:4.12'

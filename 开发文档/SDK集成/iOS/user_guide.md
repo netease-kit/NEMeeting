@@ -63,11 +63,12 @@
                              completionHandler:^(BOOL granted) {}];
     ```
 
-4. 渲染view注册。在info.plist文件中注册平台渲染视图，保证正常渲染。
+4. 渲染view注册。在info.plist文件中注册平台渲染视图，保证正常渲染，添加如下两行配置即可。
 
-    `io.flutter.embedded_views_preview     String       YES`
-    
-    ![viewconfig](/Users/zhanggenning/Documents/meeting-sdk-docs/ios-sdk/images/viewconfig.png)
+    ```xml
+    <key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
+    ```
     
 5. SDK初始化
 
@@ -569,7 +570,7 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 
 --------------------
 
-### 自定义会中【更多】菜单内容
+### [自定义会中【更多】菜单内容](../../SDK进阶/自定义菜单.md)
 
 #### 描述
 
@@ -577,21 +578,28 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 
 #### 业务流程
 
-	1. 配置匿名入会/创建会议/加入会议的Options相关参数，增加自定义列表
+1. 配置匿名入会/创建会议/加入会议的Options相关参数，增加自定义列表
 
   ```objective-c
-NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
-options.noChat = NO;
-options.noInvite = NO;
+    NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
+    options.noChat = NO;
+    options.noInvite = NO;
 
-//配置自定义菜单
-NSMutableArray *menuItems = [NSMutableArray array];
-for (int i = 0; i < 3; i++) { //最多不能超过3个，超过之后只取前3个
-    NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
-    item.itemId = 100 + i; //必须大于100，且要保证不重复
-    item.title = [@"测试Title" stringByAppendingString:@(i).stringValue];
-}
-options.injectedMoreMenuItems = menuItems;
+    //1. 创建更多菜单列表构建类，列表默认包含："邀请"、"聊天"
+    NSMutableArray<NEMeetingMenuItem *> *moreMenus = [NEMenuItems defaultMoreMenuItems];
+    //2. 添加一个多选菜单项
+    NECheckableMenuItem * newItem = [[NECheckableMenuItem alloc] init];
+    newItem.itemId = 100;
+    newItem.visibility = VISIBLE_ALWAYS;
+    newItem.uncheckStateItem = [[NEMeetingInfo alloc] init];
+    newItem.uncheckStateItem.icon = @"ic_menu_uncheck";
+    newItem.uncheckStateItem.text = @"多选按钮-未选中";
+    newItem.checkedStateItem = [[NEMeetingInfo alloc] init];
+    newItem.checkedStateItem.icon = @"ic_menu_check";
+    newItem.checkedStateItem.text = @"多选按钮-已选中";
+    [moreMenus addObject: newItem];
+    //3. 配置完成，设置参数字段
+    options.fullMoreMenuItems = moreMenus;
   ```
 
 2. 设置回调接口开始监听，并在回调方法中处理自定义按钮事件
@@ -601,10 +609,19 @@ options.injectedMoreMenuItems = menuItems;
 [[NEMeetingSDK getInstance].getMeetingService addListener:self];
 
 //实现MeetingServiceListener协议方法
-- (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem
-                    meetingInfo:(NEMeetingInfo *)meetingInfo {
-      //menuItem 是点击的item，需要用户根据itemId进行匹配
-      //meetingInfo 是当前的会议状态
+- (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
+                    meetingInfo:(NEMeetingInfo *)meetingInfo
+                stateController:(NEMenuStateController)stateController {
+    //1. 获取被点击菜单项ID
+    int menuId = clickInfo.itemId;
+    //2. 如果是多状态菜单，获取被点击时的状态
+    if ([clickInfo isKindOfClass: [NEStatefulMenuClickInfo class]]) {
+        // 菜单项点击时的选中状态
+        BOOL isChecked = [(NEStatefulMenuClickInfo*)clickInfo isChecked];
+        // 3. 控制菜单项的状态迁移
+        BOOL needTransition = conditionCheck();
+        stateController(needTransition, nil);
+    }
 }
 
 ```
@@ -612,11 +629,7 @@ options.injectedMoreMenuItems = menuItems;
 #### 注意事项
 
 - 自定义会中【更多】菜单内容，需要在入会前完成设置，在会议中设置不会生效
-- 默认【更多】菜单内容中的邀请和聊天，支持隐藏/显示配置
-- 合法的自定义菜单项需满足以下条件：
-  - itemId >= 100，且为整数Int类型
-  - title不为空和空格（对空格做trim处理），且长度不大于10字符
-- 会议自定义菜单项，更多菜单中最多支持添加三个自定义菜单项，如果超过三个仅显示前三个合法自定义按钮
+- *更详细自定义菜单可参考[自定义会议中菜单](../../SDK进阶/自定义菜单.md)*
 
 --------------------
 
@@ -661,6 +674,8 @@ NESettingsService *settingsService = [NEMeetingSDK getInstance].getSettingsServi
 ```
 
 2. 调用不同接口保存设置项或查询设置项
+   
+- 查询通用入会设置
 
 ```objective-c
 // 设置并保存会议设置
@@ -674,11 +689,67 @@ BOOL audioEnabled = [settingsService isTurnOnMyAudioWhenJoinMeetingEnabled];
 BOOL videoEnabled = [settingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
 ```
 
+- 查询直播开关状态
+```objective-c
+
+   /**
+     * 查询直播开关状态
+     * @return true-打开，false-关闭
+     */
+  BOOL liveEnable = [[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]
+```
+- 查询美颜开关状态
+```objective-c
+
+   /**
+     * 查询直播开关状态
+     * @return true-打开，false-关闭
+     */
+ BOOL enbale =  [[NEMeetingSDK getInstance].getSettingsService isBeautyFaceEnabled];
+```
+- 查询当前美颜参数
+```objective-c
+    /**
+     * 获取当前美颜参数，关闭返回0
+     * @param callback 回调
+     */
+      [[NEMeetingSDK getInstance].getSettingsService getBeautyFaceValue:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+           NSLog(@"NEMeetingSDK getBeautyFaceValue resultData  %@",resultData);
+       }];
+```
+- 设置美颜等级
+```objective-c
+    /**
+     * 设置美颜等级
+     * @param value 传入美颜等级，参数规则为[0,10]整数
+     * @return true-打开，false-关闭
+     */
+   [[NEMeetingSDK getInstance].getSettingsService setBeautyFaceValue:value];
+```
+- 打开美颜界面
+```objective-c
+   /**
+    * 打开美颜界面，支持会前设置使用。
+    *
+    * @param callback 回调
+    */
+    __weak typeof(self) weakSelf = self;
+     [[[NEMeetingSDK getInstance] getSettingsService] openBeautyUI:^(NSInteger resultCode, NSString *resultMsg) {
+         if (resultCode == ERROR_CODE_SUCCESS) {
+             //success
+         } else {
+             //handle error
+         }
+     }];
+```
+
 #### 注意事项
 
 - 针对已登录用户而言，每个用户有自己独立的一份会议设置；其他所有未登录用户、匿名用户共享一份会议设置。
-- 会议设置项仅在当前设备上保存，不会漫游。
+- 部分会议设置项仅在当前设备上保存，不会漫游。
 - 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
+- 美颜服务开通官网咨询渠道：[云信官网](http://yunxin.163.com/)
+- 美颜配置支持多端漫游。
 
 --------------------
 
@@ -783,6 +854,9 @@ SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显
 | noInvite | 隐藏会议内“邀请”功能 | false |
 | noChat | 隐藏会议内“聊天”功能 | true |
 | noGallery | 关闭会议中“画廊”模式功能 | false |
+| noSwitchCamera | 关闭会议中“切换摄像头”功能 | false |
+| noSwitchAudioMode | 关闭会议中“切换音频模式”功能 | false |
 | showMeetingTime | 显示会议“持续时间” | false |
 | meetingIdDisplayOption | 会议内会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
-| injectedMoreMenuItems | 会议内自定义菜单 | NULL |
+| fullToolbarMenuItems | 会议内工具栏菜单列表 | nil |
+| fullMoreMenuItems | 会议内更多展开菜单列表 | nil |

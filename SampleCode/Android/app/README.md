@@ -43,7 +43,7 @@ Appkey是应用接入会议SDK的凭证，开发者首先需要在网易会议�
 
 在此示例项目中，开发者需要实现`com.netease.meetinglib.demo.data.DefaultDataRepository#getSDKAuthInfo`方法，返回当前对应AppKey下一个真实有效的会议账号的ID和TOKEN，它们会被用来作为参数完成会议SDK中 login 接口的调用。
 
-完成会议账号的登录实现后，运行示例项目，可体验完整的会议功能。
+完成会议账号的登录实现后，运行示例项目，即可体验完整的会议功能。
 
 ### 运行环境
 

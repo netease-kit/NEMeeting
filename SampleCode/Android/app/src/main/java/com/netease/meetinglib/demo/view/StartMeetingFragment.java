@@ -41,7 +41,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "100", "title", "请输入密码"};
+        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "请输入密码"};
     }
 
     @Override
@@ -52,7 +52,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
     @Override
     protected void performAction(String first, String second, String third) {
         NEStartMeetingParams params = new NEStartMeetingParams();
-        params.meetingId = first;
+        params.meetingId = usePersonalMeetingId.isChecked() && !TextUtils.isEmpty(currentMeetingId) ? currentMeetingId : first;
         params.displayName = second;
         NEStartMeetingOptions options = (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
 
@@ -77,7 +77,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
                     if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS && resultData != null) {
                         meetingId = resultData.meetingId;
                         currentMeetingId = meetingId;
-                        content = resultData.meetingId + (!TextUtils.isEmpty(resultData.shortMeetingId) ? "(短号：" + resultData.shortMeetingId + ")" : "");
+                        content = meetingId + (!TextUtils.isEmpty(resultData.shortMeetingId) ? "(短号：" + resultData.shortMeetingId + ")" : "");
                         getEditor(0).setText(content);
                     } else {
                         onGetPersonalMeetingIdError();

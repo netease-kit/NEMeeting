@@ -231,16 +231,8 @@ options.noAudio = true;                                      //入会时关闭�
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
 options.noMinimize = true;                              //入会是否允许最小化会议页面，默认为true
-options.injectedMoreMenuItems = addMeetingInfoItem();    //自定义【更多】按钮菜单。（参考自定义会中【更多】菜单内容#注意事项）
-
-private List<NEMeetingMenuItem> addMeetingInfoItem() {
-        List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
-        NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
-        meetingMenuItem.itemId = 101;
-        meetingMenuItem.title = "获取房间信息";
-        injectedMoreMenuItems.add(meetingMenuItem);
-        return injectedMoreMenuItems;
-}
+//options.fullToolbarMenuItems = configToolbarMenuItems();    //自定义【Toolbar】菜单
+//options.fullToolbarMenuItems = configMoreMenuItems();    //自定义【更多】菜单
 ```
 
 2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
@@ -293,16 +285,8 @@ options.noAudio = true;                                      //入会时关闭�
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
 options.noMinimize = true;                              //入会是否允许最小化会议页面，默认为true
-options.injectedMoreMenuItems = addMeetingInfoItem();    //自定义【更多】按钮菜单。（参考自定义会中【更多】菜单内容#注意事项）
- 
-private List<NEMeetingMenuItem> addMeetingInfoItem() {
-        List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
-        NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
-        meetingMenuItem.itemId = 101;
-        meetingMenuItem.title = "获取房间信息";
-        injectedMoreMenuItems.add(meetingMenuItem);
-        return injectedMoreMenuItems;
-}
+//options.fullToolbarMenuItems = configToolbarMenuItems();    //自定义【Toolbar】菜单
+//options.fullToolbarMenuItems = configMoreMenuItems();    //自定义【更多】菜单
 ```
 
 2. 调用接口并进行回调处理。该接口无额外回调结果数据，可根据错误码判断是否成功
@@ -657,51 +641,58 @@ NEMeetingSDK.getInstance().removeAuthListener(authListener); //移除监听
 --------------------
 
 
-### 自定义会中【更多】菜单内容
+### [自定义会中【更多】菜单内容](../../SDK进阶/自定义菜单.md)
 1. 配置匿名入会/创建会议/加入会议的Options相关参数
 
 ```java
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
-options.injectedMoreMenuItems = addMeetingInfoItem();    //入会隐藏"聊天"按钮，默认为false。（参考注意事项）
+configMoreMenus(options);
 
-private List<NEMeetingMenuItem> addMeetingInfoItem() {
-        List<NEMeetingMenuItem> injectedMoreMenuItems = new ArrayList<>();
-        NEMeetingMenuItem meetingMenuItem = new NEMeetingMenuItem();
-        meetingMenuItem.itemId = 101;
-        meetingMenuItem.title = "获取房间信息";
-        injectedMoreMenuItems.add(meetingMenuItem);
-        return injectedMoreMenuItems;
-}
+private void configMoreMenus(NEMeetingOptions options) {
+        //1. 创建更多菜单列表构建类，列表默认包含："邀请"、"聊天"
+        NEMenuItemListBuilder moreMenuBuilder = NEMenuItemListBuilder.moreMenuBuilder();
+        //2. 添加一个多选菜单项
+        moreMenuBuilder.addMenu(new NECheckableMenuItem(
+                        100, NEMenuVisibility.VISIBLE_ALWAYS,
+                        new NEMenuItemInfo("菜单-未选中", R.drawable.icon),
+                        new NEMenuItemInfo("菜单-选中", R.drawable.icon)
+                )
+        );
+        //3. 配置完成，设置参数字段
+        options.fullMoreMenuItems = moreMenuBuilder.build();
+    }
 ```
 2. 设置回调接口开始监听，并在回调方法中处理自定义按钮的事件
   
 ```java
-NEMeetingSDK.getInstance().getMeetingService().setOnInjectedMenuItemClickListener(new OnCustomMenuListener());
-   NEMeetingStatusListener listener = new NEMeetingStatusListener() {
-       @Override
-       public void onMeetingStatusChanged(Event event) {
-          //处理会议状态变更事件          
-       }
-   };
-   public class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
-        @Override
-        public void onInjectedMenuItemClick(NEMeetingMenuItem menuItem, NEMeetingInfo meetingInfo) {
-            switch (menuItem.itemId) {
-                case 101:
-                        //TODO 
-                    break;
-            }
-        }
+// 监听"菜单点击"，只需设置一次即可，不用每次入会都进行设置
+    private void setupMenuClickListener() {
+        NEMeetingSDK.getInstance().getMeetingService()
+                .setOnInjectedMenuItemClickListener(new NEMeetingOnInjectedMenuItemClickListener() {
+
+                    @Override
+                    public void onInjectedMenuItemClick(Context context,
+                                                        NEMenuClickInfo clickInfo, NEMeetingInfo meetingInfo, NEMenuStateController stateController) {
+                        //1. 获取被点击菜单项ID
+                        final int id = clickInfo.getItemId();
+                        //2. 如果是多状态菜单，获取被点击时的状态
+                        if (clickInfo instanceof NEStatefulMenuClickInfo) {
+                            // 菜单项点击时的选中状态
+                            final boolean isChecked = ((NEStatefulMenuClickInfo) clickInfo).isChecked();
+                            // 3. 控制菜单项的状态迁移
+                            final boolean needTransition = conditionCheck();
+                            stateController.didStateTransition(needTransition, null);
+                        }
+                    }
+                });
     }
 ```
 
 #### 注意事项
 
 - 自定义会中【更多】菜单内容，需要在入会前完成设置，在会议中设置不会生效
-- 默认【更多】菜单内容中的邀请和聊天，支持隐藏/显示配置
-- 合法的自定义菜单项需满足以下条件： <ul><li>itemId >= 100，且为整数Int类型</li><li>title不为空和空格（对空格做trim处理），且长度不大于10字符</li></ul>
-- 会议自定义菜单项，**更多**菜单中最多支持添加**三个**自定义菜单项，如果超过**三个**个仅显示前三个合法自定义按钮
+- *更详细自定义菜单可参考[自定义会议中菜单](../../SDK进阶/自定义菜单.md)*
 
 --------------------
 
@@ -751,6 +742,8 @@ NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsServic
 
 2. 调用不同接口保存设置项或查询设置项
 
+- 查询通用入会设置
+
 ```java
 // 设置并保存会议设置
 settingsService.enableShowMyMeetingElapseTime(true);
@@ -762,13 +755,73 @@ boolean showMeetingElapseTimeEnabled = settingsService.isShowMyMeetingElapseTime
 boolean audioEnabled = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
 boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
 ```
-3. 调用不同接口保存设置项或查询设置项
+
+- 查询直播开通状态
+```java
+
+    /**
+      * 查询直播开通状态
+      * @return true-打开，false-关闭
+     */
+    NEMeetingSDK.getInstance().getSettingsService().isMeetingLiveEnabled();
+```
+- 查询美颜开通状态
+```java
+    /**
+      * 查询美颜开通状态，开通请咨询下面注意事项官网地址
+      * @return true-打开，false-关闭
+      */
+    boolean isBeautyFaceEnabled = NEMeetingSDK.getInstance().getSettingsService().isBeautyFaceEnabled();
+```
+- 设置并保存美颜配置
+```java
+
+    /**
+     * 设置美颜参数
+     * @param value 传入美颜等级，参数规则为[0,10]整数
+     */
+    NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(value);
+```
+- 查询美颜配置
+```java
+    /**
+     * 获取当前美颜参数，关闭返回0
+     */
+    NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue(
+        (resultCode, resultMsg, resultData)->
+        if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
+            //获取成功
+            Log.d("TAG", "getBeautyFaceValue = " +resultData )
+        } else {
+            //获取失败
+        }
+    );
+```
+- 打开美颜界面
+```java
+    /**
+     * 打开美颜界面，必须在init之后调用该接口，支持会前设置使用。
+     *
+     * @param context
+     * @param callback 回调
+     */
+    NEMeetingSDK.getInstance().getSettingsService().openBeautyUI(context,
+        (resultCode, resultMsg, resultData) ->
+        if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
+            //打开预览页面成功
+        } else {
+            //打开预览页面失败
+        }
+    );
+```
+
 #### 注意事项
 
 - 针对已登录用户而言，每个用户有自己独立的一份会议设置；其他所有未登录用户、匿名用户共享一份会议设置。
 - 会议设置项仅在当前设备上保存，不会漫游。
 - 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
-
+- 美颜服务开通官网咨询渠道：[云信官网](http://yunxin.163.com/)
+- 美颜配置支持多端漫游。
 
 --------------------
 
@@ -868,6 +921,9 @@ SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显
 | noInvite | 隐藏会议内“邀请”功能 | false |
 | noChat | 隐藏会议内“聊天”功能 | true |
 | noGallery | 关闭会议中“画廊”模式功能 | false |
+| noSwitchCamera | 关闭会议中“切换摄像头”功能 | false |
+| noSwitchAudioMode | 关闭会议中“切换音频模式”功能 | false |
 | showMeetingTime | 显示会议“持续时间” | false |
 | meetingIdDisplayOption | 会议内会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
-| injectedMoreMenuItems | 会议内自定义菜单 | NULL |
+| fullToolbarMenuItems | 会议内工具栏菜单列表 | NULL |
+| fullMoreMenuItems | 会议内更多展开菜单列表 | NULL |

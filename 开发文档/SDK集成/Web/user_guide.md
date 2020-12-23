@@ -26,14 +26,14 @@
 | Safari | 12以上 |
 | Node | 8以上 |
 | IE | 不支持 |
-| 其他 | 未测试 |
+| 其他 | 待验证 |
 
 #### SDK快速接入
 
-1. 将代码加入到页面head中（将文件路径替换为真是存在路径）
+1. 将代码加入到页面head中（将文件路径替换为真实存在路径）
 
     ```js
-    <script src="./NeWebMeeting_V1.3.1.js"></script>
+    <script src="./NeWebMeeting_V1.5.0.js"></script>
     ```
 
 2. 页面添加dom
@@ -344,5 +344,15 @@
     }
     neWebMeeting.actions.join(obj, callback)
   ```
-  
-- v1.3.1更新的初始化配置，不会影响现有的appkey和meetingServerDomain的配置，如果在login传入则优先使用login配置
+
+* 支持es6 import形式引入，如使用es6，请参考以下方式使用
+
+    ```js
+    import { actions } from './NeWebMeeting_V1.5.0.js'
+    aciotns.init();
+    // or
+    import neWebMeeting from './NeWebMeeting_V1.5.0.js'
+    neWebMeeting.init();
+    ```
+
+* v1.3.1更新的初始化配置，不会影响现有的appkey和meetingServerDomain的配置，如果在login传入则优先使用login配置

@@ -43,8 +43,8 @@
       var obj = {
         ...common,
         meetingId: getDom('.meeting-id').value,
-        accountToken: getDom('.account-id').value,
-        accountId: getDom('.account-token').value,
+        accountToken: getDom('.account-token').value,
+        accountId: getDom('.account-id').value,
       };
       neWebMeetingLive.actions.login(obj, (e) => {
         if (e) {

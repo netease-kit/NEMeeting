@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./NeWebMeetingLive.js"></script>
+  <style>
+    html,body{
+      height: 100%;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" class="meeting-id" placeholder="meetingID" value="">
+  <br>
+  <input type="text" class="account-id" placeholder="accountId" value="">
+  <input type="text" class="account-token" placeholder="accountToken" value="">
+  <button onclick="login()">登陆</button>
+  <br>
+  <input type="text" class="account" placeholder="account" value="">
+  <input type="text" class="password" placeholder="password" value="">
+  <button onclick="loginWithNEMeeting()">登陆(账密)</button>
+  <br>
+  <input type="text" class="ssoToken" placeholder="ssoToken" value="">
+  <button onclick="loginWithSSOToken()">登陆(SSO)</button>
+  <br>
+  <button onclick="destory()">销毁</button>
+  <div id="ne-web-meeting-live"></div>
+  <script>
+    function getDom(string) {
+      return document.querySelector(string);
+    }
+    var common = {
+      appKey: '',
+      meetingServerDomain: '',
+      cancelJoin: function() {
+        console.warn('你点击的关闭');
+      }
+    }
+    function login(){
+      var obj = {
+        ...common,
+        meetingId: getDom('.meeting-id').value,
+        accountToken: getDom('.account-token').value,
+        accountId: getDom('.account-id').value,
+      };
+      neWebMeetingLive.actions.login(obj, (e) => {
+        if (e) {
+          console.error(e);
+        }
+      })
+    }
+    function loginWithNEMeeting() {
+      var obj = {
+        ...common,
+        meetingId: getDom('.meeting-id').value,
+        account: getDom('.account').value,
+        password: getDom('.password').value,
+      };
+      neWebMeetingLive.actions.loginWithNEMeeting(obj, (e) => {
+        if (e) {
+          console.error(e);
+        }
+      })
+    }
+    function loginWithSSOToken() {
+      var obj = {
+        ...common,
+        meetingId: getDom('.meeting-id').value,
+        ssoToken: getDom('.ssoToken').value,
+      };
+      neWebMeetingLive.actions.loginWithSSOToken(obj, (e) => {
+        if (e) {
+          console.error(e);
+        }
+      })
+    }
+
+    function destory() {
+      neWebMeetingLive.actions.destory()
+    }
+  </script>
+</body>
+</html>

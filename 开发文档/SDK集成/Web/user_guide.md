@@ -55,10 +55,10 @@
 1. 始化化会议组件，设置宽高
 
     ```js
-    const config = { // 选填，仅限于私有化配置时使用
+    const config = {
         appKey: '', //云信服务appkey
         meetingServerDomain: '' //会议服务器地址，支持私有化部署
-        NIMconf: {
+        NIMconf: {// 选填，仅限于私有化配置时使用
             // IM私有化配置项
         }
     }

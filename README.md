@@ -3,7 +3,14 @@
 
 本仓库用以说明 网易会议（NEMeeting）的产品使用、SDK集成、服务端API及示例项目（Sample code）
 
-## Native SDKs
+## 更新日志
+1. [iOS SDK 更新日志](开发文档/SDK集成/iOS/CHANGELOG.md)
+2. [Android SDK 更新日志](开发文档/SDK集成/Android/CHANGELOG.md)
+3. [Windows&macOS SDK API 更新日志](开发文档/SDK集成/Windows&macOS/CHANGELOG.md)
+4. [Web SDK API 更新日志](开发文档/SDK集成/Web/CHANGELOG.md)
+4. [Android TV SDK API 更新日志](开发文档/SDK集成/TV/CHANGELOG.md)
+
+## 使用手册
 1. [iOS SDK API使用手册](开发文档/SDK集成/iOS/user_guide.md)
 2. [Android SDK API使用手册](开发文档/SDK集成/Android/user_guide.md)
 3. [Windows&macOS SDK API使用手册](开发文档/SDK集成/Windows&macOS/user_guide.md)

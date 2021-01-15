@@ -15,6 +15,7 @@
 | 2020-11-20 | 1.3.2 | 增加创会入会额外可选配置： *meetingIdDisplayOptions* 会议号展示逻辑 |
 | 2020-11-27 | 1.3.3 | 补充关闭预约会议密码回调监听 <br> 补充创建会议提示已存在会议取消操作监听 <br> 加入会议增加预约会议密码参数*password* <br> 调整会议画廊模式展示策略 |
 | 2020-12-21 | 1.5.0 | 补充自定义按钮配置 |
+| 2021-01-15 | 1.5.2 | 增加音频流订阅方法 <br> *subscribeRemoteAudioStream*订阅用户音频流 <br> *subscribeAllRemoteAudioStreams*订阅所有用户音频流 <br> *subscribeRemoteAudioStreams*订阅用户音频流Bylist |
 
 ## 快速接入
 
@@ -85,8 +86,6 @@
     const obj = {
       accountId: '', //账号ID
       accountToken: '', //账号Token
-      appkey: '', //云信服务appkey
-      meetingServerDomain: '' //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器
     }
     neWebMeeting.actions.login(obj, callback)
     ```
@@ -134,7 +133,7 @@
       password: '', // 加入预约会议时可使用
       meetingIdDisplayOptions: 0, // 0 都展示 1 展示长号，2 展示短号 默认为 0
       appkey: '', //云信服务appkey（匿名加入房间需要，初始化传入则暂不需要）
-      meetingServerDomain: '', //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器（匿名加入房间需要）
+      meetingServerDomain: '', //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器（匿名加入房间需要，初始化传入则暂不需要）
       toolBarList: [], // 主区按钮自定义设置
       moreBarList: [], // 更多区按钮自定义排列
     }
@@ -175,7 +174,7 @@
             isFocus:false, // 是否焦点视频
             isHost:true, // 是否主持人
             nickName:"txntm7o", // 入会名称
-            stream:MediaStream, // 视频流
+            stream: MediaStream, // 视频流
             video:2, // 视频状态
         }
     }
@@ -189,6 +188,7 @@
     // isHost 是否主持人
     // isLocked 会议是否锁定
     // shortMeetingId 短号
+    // password 会议密码，没有则为空
     ```
 
 12. 设置组件的宽高
@@ -208,7 +208,40 @@
     }
     neWebMeeting.actions.updateCutomList(obj, callback)
     ```
+
     关于自定义按钮详细配置可以参考[自定义按钮详细介绍](#自定义按钮详细介绍)
+
+14. 订阅用户音频流
+
+    ```js
+    var accountId = '', // 账号accountId string
+        subscribe = false, // 是否订阅，true订阅 false取消订阅 boolean
+        callback = (e) => {
+            if(e) console.error(e)
+        }; // 执行回调，包含e则执行有错误（对照错误码参考）
+    neWebMeeting.actions.subscribeRemoteAudioStream(accountId, subscribe, callback)
+    ```
+
+15. 订阅全体用户音频流
+
+    ```js
+    var subscribe = false, // 是否订阅，true订阅 false取消订阅 boolean
+        callback = (e) => {
+            if(e) console.error(e)
+        }; // 执行回调，包含e则执行有错误（对照错误码参考）
+    neWebMeeting.actions.subscribeAllRemoteAudioStreams(subscribe, callback)
+    ```
+
+16. 订阅用户音频流bylist
+
+    ```js
+    var accountIds = [], // 账号accountId Array<string>
+        subscribe = false, // 是否订阅，true订阅 false取消订阅 boolean
+        callback = (e) => {
+            if(e) console.error(e)
+        }; // 执行回调，包含e则执行有错误（对照错误码参考）
+    neWebMeeting.actions.subscribeRemoteAudioStreams(accountIds, subscribe, callback)
+    ```
 
 #### 自定义按钮详细介绍
 
@@ -348,10 +381,10 @@
 * 支持es6 import形式引入，如使用es6，请参考以下方式使用
 
     ```js
-    import { actions } from './NeWebMeeting_V1.5.0.js'
+    import { actions } from './NeWebMeeting_V1.5.2.js'
     aciotns.init();
     // or
-    import neWebMeeting from './NeWebMeeting_V1.5.0.js'
+    import neWebMeeting from './NeWebMeeting_V1.5.2.js'
     neWebMeeting.init();
     ```
 

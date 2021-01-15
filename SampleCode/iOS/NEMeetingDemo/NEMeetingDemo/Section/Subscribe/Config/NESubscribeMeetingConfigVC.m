@@ -7,6 +7,7 @@
 
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
+#import "NEFromDatePicker.h"
 
 @interface NESubscribeMeetingConfigVC ()
 
@@ -35,6 +36,11 @@
     _sureBtn.top = self.view.height - 42.0 - _sureBtn.height;
     _sureBtn.centerX = self.view.width/2;
     _sureBtn.layer.cornerRadius = _sureBtn.height/2;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [NEFromDatePickerBar dismiss];
 }
 
 - (void)setupUI {
@@ -117,7 +123,20 @@
     };
     [group3.rows addObject:autoMuteRow];
     
-    self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+    if([[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]){
+        NEFromGroup *group4 = [[NEFromGroup alloc] init];
+        NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
+        liveRow.title = @"开启直播";
+        liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.item.live.enable = [newValue boolValue];
+        };
+        liveRow.value = @false;
+        [group4.rows addObject:liveRow];
+        
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
+    }else{
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+    }
 }
 
 - (void)insertPassworkRowBelow:(NEFromRow *)row {

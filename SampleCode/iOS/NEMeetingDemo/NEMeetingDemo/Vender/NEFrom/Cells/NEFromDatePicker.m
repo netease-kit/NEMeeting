@@ -142,8 +142,15 @@
     bar.minDate = minDate;
     bar.maxDate = maxDate;
     bar.selectedBlock = selectedBlock;
+    bar.tag = 10000;
     [bar showPicker];
     
+}
+
++ (void)dismiss {
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    NEFromDatePickerBar *bar = [keyWindow viewWithTag:10000];
+    [bar dismiss];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {

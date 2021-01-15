@@ -16,6 +16,8 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
 @property (nonatomic, assign) BOOL showMeetingTime;
 @property (nonatomic, assign) BOOL openVideoWhenJoin;
 @property (nonatomic, assign) BOOL openAudioWhenJoin;
+@property (nonatomic, assign) BOOL openCustomServerUrl;
+
 
 @end
 
@@ -66,6 +68,15 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
         weakSelf.openAudioWhenJoin = [newValue boolValue];
     };
     [section addFormRow:row2];
+    XLFormRowDescriptor *row3 = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingOpenAudio
+                                                                      rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                                        title:@"开启自定义服务器域名"];
+    row3.height = 60.0;
+    row3.value = @(self.openCustomServerUrl);
+    row3.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        weakSelf.openCustomServerUrl = [newValue boolValue];
+    };
+    [section addFormRow:row3];
     return form;
 }
 
@@ -92,6 +103,14 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
 
 - (void)setOpenAudioWhenJoin:(BOOL)openAudioWhenJoin {
     [[NEMeetingSDK getInstance].getSettingsService setTurnOnMyAudioWhenJoinMeeting:openAudioWhenJoin];
+}
+
+- (BOOL)openCustomServerUrl {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"openCustomServerUrl"];
+}
+
+- (void)setOpenCustomServerUrl:(BOOL)openCustomServerUrl {
+    [[NSUserDefaults standardUserDefaults] setBool:openCustomServerUrl forKey:@"openCustomServerUrl"];
 }
 
 @end

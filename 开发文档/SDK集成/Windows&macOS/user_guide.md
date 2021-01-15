@@ -17,8 +17,8 @@
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1608630467/NEMeeting_SDK_Windows_v1.5.0.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1608631076/NEMeeting_SDK_macOS_v1.5.0.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1610713210/NEMeeting_SDK_Windows_v1.5.2.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1610713917/NEMeeting_SDK_macOS_v1.5.2.zip)
 
 **1）Windows 开发环境配置**
 
@@ -111,15 +111,12 @@ auto flag = NEMeetingSDK::getInstance()->isInitialized();
 auto authService = NEMeetingSDK::getInstance()->getAuthService();
 if (authService)
 {
-    // 指定您登录到 SDK 中所使用的 AppKey，当该参数为空时则使用 initialize 初始化传入的 AppKey
-    // 否则使用此处指定的 Appkey 用于加入不同企业
-    QByteArray byteAppKey = appKey.toUtf8();
     // 指定您登录到 SDK 所使用的账户
     QByteArray byteAccountId = accountId.toUtf8();
     // 指定您登录到 SDK 使用的密码
     QByteArray byteAccountToken = accountToken.toUtf8();
     // 执行登录操作
-    authService->login(byteAppKey.data(), byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
+    authService->login(byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
         ...
     });
 }
@@ -254,7 +251,7 @@ if (meetingService)
         item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
         item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
         item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
-        options.injected_more_menu_items_.push_back(item);
+        options.full_more_menu_items_.push_back(item);
     }
     meetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // ... 创建会议后的回调函数
@@ -290,10 +287,56 @@ if (meetingService)
         item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
         item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
         item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
-        options.injected_more_menu_items_.push_back(item);
+        options.full_more_menu_items_.push_back(item);
     }
     meetingService->joinMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // 加入会议的回调，可通过返回值判断是否成功
+    });
+}
+```
+
+```C++
+// 订阅/取消订阅单个用户音频示例
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    // 用户Id
+    std::string strAccoundId;
+    bool subcribe = true; true订阅/false取消订阅
+    ipcMeetingService->subscribeRemoteAudioStream(strAccoundId, subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            // 可通过返回值判断是否成功
+        });
+    });
+}
+```
+
+```C++
+// 订阅/取消订阅多个用户音频示例
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    // 用户Id列表
+    std::vector<std::string> strAccoundIdList;
+    bool subcribe = true; true订阅/false取消订阅
+    ipcMeetingService->subscribeRemoteAudioStreams(strAccoundIdList, subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            // 可通过返回值判断是否成功
+        });
+    });
+}
+```
+
+```C++
+// 订阅/取消订阅全部用户音频示例
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    bool subcribe = true; true订阅/false取消订阅
+    ipcMeetingService->subscribeAllRemoteAudioStreams(subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            // 可通过返回值判断是否成功
+        });
     });
 }
 ```

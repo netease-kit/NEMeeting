@@ -1,24 +1,20 @@
-﻿#include "nemeeting_manager.h"
-#include <QGuiApplication>
+#include "nemeeting_manager.h"
 #include <QDesktopServices>
-#include <QUrl>
-#include <QJsonObject>
+#include <QGuiApplication>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <QUrl>
 #include <future>
 #include <iostream>
 
-NEMeetingManager::NEMeetingManager(QObject *parent)
+NEMeetingManager::NEMeetingManager(QObject* parent)
     : QObject(parent)
-    , m_initialized(false)
-{
-    connect(this, &NEMeetingManager::unInitializeSignal, this, []() {
-        qApp->exit();
-    });
+    , m_initialized(false) {
+    connect(this, &NEMeetingManager::unInitializeSignal, this, []() { qApp->exit(); });
 }
 
-void NEMeetingManager::initialize()
-{
-    if (m_initialized){
+void NEMeetingManager::initialize(const QString& strAppkey) {
+    if (m_initialized) {
         emit initializeSignal(0, "");
         return;
     }
@@ -31,11 +27,11 @@ void NEMeetingManager::initialize()
     config.getAppInfo()->OrganizationName("NetEase");
     config.getAppInfo()->ApplicationName("MeetingSample");
     config.setDomain("yunxin.163.com");
+    config.setAppKey(strAppkey.toStdString());
     auto pMeetingSDK = NEMeetingSDK::getInstance();
-    //level value: DEBUG = 0, INFO = 1, WARNING=2, ERROR=3, FATAL=4
-    pMeetingSDK->setLogHandler([](int level, const std::string& log){
-        switch (level)
-        {
+    // level value: DEBUG = 0, INFO = 1, WARNING=2, ERROR=3, FATAL=4
+    pMeetingSDK->setLogHandler([](int level, const std::string& log) {
+        switch (level) {
         case 0:
             qDebug() << log.c_str();
             break;
@@ -57,34 +53,34 @@ void NEMeetingManager::initialize()
     });
     pMeetingSDK->initialize(config, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         qInfo() << "Initialize callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
-        emit initializeSignal(errorCode, QString::fromStdString(errorMessage));
+
         auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
-        if (ipcMeetingService)
-        {
+        if (ipcMeetingService) {
             ipcMeetingService->addMeetingStatusListener(this);
             ipcMeetingService->setOnInjectedMenuItemClickListener(this);
         }
         auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
-        if (ipcPreMeetingService)
-        {
+        if (ipcPreMeetingService) {
             ipcPreMeetingService->registerScheduleMeetingStatusListener(this);
         }
         auto settingsService = NEMeetingSDK::getInstance()->getSettingsService();
-        if (settingsService)
-        {
+        if (settingsService) {
             settingsService->setNESettingsChangeNotifyHandler(this);
-
         }
+
         m_initialized = true;
+        emit initializeSignal(errorCode, QString::fromStdString(errorMessage));
     });
 }
 
-void NEMeetingManager::unInitialize()
-{
+void NEMeetingManager::unInitialize() {
     qInfo() << "Do uninitialize, initialize flag: " << m_initialized;
 
-    if (!m_initialized)
+    if (!m_initialized) {
+        emit unInitializeSignal(ERROR_CODE_SUCCESS, "");
+        qInfo() << "Uninitialized successfull";
         return;
+    }
 
     NEMeetingSDK::getInstance()->setExceptionHandler(nullptr);
     NEMeetingSDK::getInstance()->unInitialize([&](NEErrorCode errorCode, const std::string& errorMessage) {
@@ -95,50 +91,50 @@ void NEMeetingManager::unInitialize()
     });
 }
 
-bool NEMeetingManager::isInitializd()
-{
+bool NEMeetingManager::isInitializd() {
     return NEMeetingSDK::getInstance()->isInitialized();
 }
 
-void NEMeetingManager::login(const QString& appKey, const QString &accountId, const QString &accountToken)
-{
+void NEMeetingManager::login(const QString& appKey, const QString& accountId, const QString& accountToken) {
     qInfo() << "Login to apaas server, appkey: " << appKey << ", account ID: " << accountId << ", token: " << accountToken;
 
+    initialize(appKey);
+    while (!m_initialized) {
+        std::this_thread::yield();
+    }
     auto ipcAuthService = NEMeetingSDK::getInstance()->getAuthService();
-    if (ipcAuthService)
-    {
+    if (ipcAuthService) {
         QByteArray byteAppKey = appKey.toUtf8();
         QByteArray byteAccountId = accountId.toUtf8();
         QByteArray byteAccountToken = accountToken.toUtf8();
-        ipcAuthService->login(byteAppKey.data(), byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
+        ipcAuthService->login(
+                    byteAppKey.data(), byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Login callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit loginSignal(errorCode, QString::fromStdString(errorMessage));
         });
     }
 }
 
-void NEMeetingManager::getAccountInfo()
-{
+void NEMeetingManager::getAccountInfo() {
     qInfo() << "Get account info";
+    while (!m_initialized) {
+        std::this_thread::yield();
+    }
     auto ipcAuthService = NEMeetingSDK::getInstance()->getAuthService();
-    if (ipcAuthService)
-    {
+    if (ipcAuthService) {
         ipcAuthService->getAccountInfo([=](NEErrorCode errorCode, const std::string& errorMessage, const AccountInfo& authInfo) {
-            if (errorCode == ERROR_CODE_SUCCESS)
-            {
+            if (errorCode == ERROR_CODE_SUCCESS) {
                 setPersonalMeetingId(QString::fromStdString(authInfo.personalMeetingId));
             }
         });
     }
 }
 
-void NEMeetingManager::logout()
-{
+void NEMeetingManager::logout() {
     qInfo() << "Logout from apaas server";
 
     auto ipcAuthService = NEMeetingSDK::getInstance()->getAuthService();
-    if (ipcAuthService)
-    {
+    if (ipcAuthService) {
         ipcAuthService->logout(true, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Logout callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit logoutSignal(errorCode, QString::fromStdString(errorMessage));
@@ -146,13 +142,11 @@ void NEMeetingManager::logout()
     }
 }
 
-void NEMeetingManager::showSettings()
-{
+void NEMeetingManager::showSettings() {
     qInfo() << "Post show settings request";
 
     auto ipcSettingsService = NEMeetingSDK::getInstance()->getSettingsService();
-    if (ipcSettingsService)
-    {
+    if (ipcSettingsService) {
         ipcSettingsService->showSettingUIWnd(NESettingsUIWndConfig(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Show settings wnd callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit showSettingsSignal(errorCode, QString::fromStdString(errorMessage));
@@ -160,12 +154,17 @@ void NEMeetingManager::showSettings()
     }
 }
 
-void NEMeetingManager::scheduleMeeting(const QString &meetingSubject, qint64 startTime, qint64 endTime, const QString &password, bool attendeeAudioOff)
-{
+void NEMeetingManager::scheduleMeeting(const QString& meetingSubject,
+                                       qint64 startTime,
+                                       qint64 endTime,
+                                       const QString& password,
+                                       bool attendeeAudioOff) {
     QString strPassword = password.isEmpty() ? "null" : "no null";
+    while (!m_initialized) {
+        std::this_thread::yield();
+    }
     auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
-    if (ipcPreMeetingService)
-    {
+    if (ipcPreMeetingService) {
         NEMeetingItem item;
         item.subject = meetingSubject.toUtf8().data();
         item.startTime = startTime;
@@ -180,13 +179,13 @@ void NEMeetingManager::scheduleMeeting(const QString &meetingSubject, qint64 sta
     }
 }
 
-void NEMeetingManager::cancelMeeting(const qint64 &meetingUniqueId)
-{
+void NEMeetingManager::cancelMeeting(const qint64& meetingUniqueId) {
     qInfo() << "cancel a meeting with meeting uniqueId:" << meetingUniqueId;
-
+    while (!m_initialized) {
+        std::this_thread::yield();
+    }
     auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
-    if (ipcPreMeetingService)
-    {
+    if (ipcPreMeetingService) {
         ipcPreMeetingService->cancelMeeting(meetingUniqueId, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Cancel meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit cancelSignal(errorCode, QString::fromStdString(errorMessage));
@@ -194,18 +193,20 @@ void NEMeetingManager::cancelMeeting(const qint64 &meetingUniqueId)
     }
 }
 
-void NEMeetingManager::editMeeting(const qint64& meetingUniqueId, const QString& meetingId, const QString &meetingSubject, qint64 startTime, qint64 endTime, const QString &password, bool attendeeAudioOff)
-{
+void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
+                                   const QString& meetingId,
+                                   const QString& meetingSubject,
+                                   qint64 startTime,
+                                   qint64 endTime,
+                                   const QString& password,
+                                   bool attendeeAudioOff) {
     QString strPassword = password.isEmpty() ? "null" : "no null";
-    qInfo() << "Edit a meeting with meeting subject:" << meetingSubject
-            << ", meetingUniqueId: " << meetingUniqueId << ", meetingId: " << meetingId
-            << ", startTime: " << startTime << ", endTime: " << endTime
-            << ", attendeeAudioOff: " << attendeeAudioOff
+    qInfo() << "Edit a meeting with meeting subject:" << meetingSubject << ", meetingUniqueId: " << meetingUniqueId << ", meetingId: " << meetingId
+            << ", startTime: " << startTime << ", endTime: " << endTime << ", attendeeAudioOff: " << attendeeAudioOff
             << ", password: " << strPassword;
 
     auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
-    if (ipcPreMeetingService)
-    {
+    if (ipcPreMeetingService) {
         NEMeetingItem item;
         item.meetingUniqueId = meetingUniqueId;
         item.meetingId = meetingId.toUtf8().data();
@@ -222,32 +223,25 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId, const QString&
     }
 }
 
-void NEMeetingManager::getMeetingList()
-{
+void NEMeetingManager::getMeetingList() {
     qInfo() << "Get meeting list from IPC client.";
 
     auto ipcPreMeetingService = NEMeetingSDK::getInstance()->getPremeetingService();
-    if (ipcPreMeetingService)
-    {
+    if (ipcPreMeetingService) {
         std::list<NEMeetingItemStatus> status;
         status.push_back(MEETING_INIT);
         status.push_back(MEETING_STARTED);
         status.push_back(MEETING_ENDED);
-        ipcPreMeetingService->getMeetingList(status, [this](NEErrorCode errorCode, const std::string& errorMessage, std::list<NEMeetingItem>& meetingItems) {
+        ipcPreMeetingService->getMeetingList(
+                    status, [this](NEErrorCode errorCode, const std::string& errorMessage, std::list<NEMeetingItem>& meetingItems) {
             qInfo() << "GetMeetingList callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             QJsonArray jsonArray;
-            if (errorCode == ERROR_CODE_SUCCESS)
-            {
-                for (auto& item : meetingItems)
-                {
+            if (errorCode == ERROR_CODE_SUCCESS) {
+                for (auto& item : meetingItems) {
                     qInfo() << "Got meeting list, unique meeting ID: " << item.meetingUniqueId
-                            << ", meeting ID: " << QString::fromStdString(item.meetingId)
-                            << ", topic: " << QString::fromStdString(item.subject)
-                            << ", start time: " << item.startTime
-                            << ", end time: " << item.endTime
-                            << ", create time: " << item.createTime
-                            << ", update time: " << item.updateTime
-                            << ", status: " << item.status
+                            << ", meeting ID: " << QString::fromStdString(item.meetingId) << ", topic: " << QString::fromStdString(item.subject)
+                            << ", start time: " << item.startTime << ", end time: " << item.endTime << ", create time: " << item.createTime
+                            << ", update time: " << item.updateTime << ", status: " << item.status
                             << ", mute after member join: " << item.setting.attendeeAudioOff;
                     QJsonObject object;
                     object["uniqueMeetingId"] = item.meetingUniqueId;
@@ -263,23 +257,25 @@ void NEMeetingManager::getMeetingList()
                     jsonArray.push_back(object);
                 }
                 emit getScheduledMeetingList(errorCode, jsonArray);
-            }
-            else
-            {
+            } else {
                 emit getScheduledMeetingList(errorCode, jsonArray);
             }
         });
     }
 }
 
-void NEMeetingManager::invokeStart(const QString &meetingId, const QString &nickname, bool audio, bool video,
-                                   bool enableChatroom/* = true*/, bool enableInvitation/* = true*/, int displayOption)
-{
-    qInfo() << "Start a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video << ", display id: " << displayOption;
+void NEMeetingManager::invokeStart(const QString& meetingId,
+                                   const QString& nickname,
+                                   bool audio,
+                                   bool video,
+                                   bool enableChatroom /* = true*/,
+                                   bool enableInvitation /* = true*/,
+                                   int displayOption) {
+    qInfo() << "Start a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
+            << ", display id: " << displayOption;
 
     auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
-    if (ipcMeetingService)
-    {
+    if (ipcMeetingService) {
         QByteArray byteMeetingId = meetingId.toUtf8();
         QByteArray byteNickname = nickname.toUtf8();
 
@@ -293,9 +289,7 @@ void NEMeetingManager::invokeStart(const QString &meetingId, const QString &nick
         options.noChat = !enableChatroom;
         options.noInvite = !enableInvitation;
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
-
-        pushSubmenus(options.injected_more_menu_items_);
-
+        // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
         ipcMeetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Start meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit startSignal(errorCode, QString::fromStdString(errorMessage));
@@ -303,14 +297,23 @@ void NEMeetingManager::invokeStart(const QString &meetingId, const QString &nick
     }
 }
 
-void NEMeetingManager::invokeJoin(const QString &meetingId, const QString &nickname, bool audio, bool video,
-                                  bool enableChatroom/* = true*/, bool enableInvitation/* = true*/, const QString& password, int displayOption)
-{
-    qInfo() << "Join a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video << ", display id: " << displayOption;
+void NEMeetingManager::invokeJoin(const QString& meetingId,
+                                  const QString& nickname,
+                                  bool audio,
+                                  bool video,
+                                  bool enableChatroom /* = true*/,
+                                  bool enableInvitation /* = true*/,
+                                  const QString& password,
+                                  int displayOption) {
+    qInfo() << "Join a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
+            << ", display id: " << displayOption;
+
+    while (!m_initialized) {
+        std::this_thread::yield();
+    }
 
     auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
-    if (ipcMeetingService)
-    {
+    if (ipcMeetingService) {
         QByteArray byteMeetingId = meetingId.toUtf8();
         QByteArray byteNickname = nickname.toUtf8();
 
@@ -325,9 +328,7 @@ void NEMeetingManager::invokeJoin(const QString &meetingId, const QString &nickn
         options.noChat = !enableChatroom;
         options.noInvite = !enableInvitation;
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
-
-        pushSubmenus(options.injected_more_menu_items_);
-
+        // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
         ipcMeetingService->joinMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Join meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit joinSignal(errorCode, QString::fromStdString(errorMessage));
@@ -335,11 +336,9 @@ void NEMeetingManager::invokeJoin(const QString &meetingId, const QString &nickn
     }
 }
 
-void NEMeetingManager::leaveMeeting(bool finish)
-{
+void NEMeetingManager::leaveMeeting(bool finish) {
     auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
-    if (ipcMeetingService)
-    {
+    if (ipcMeetingService) {
         ipcMeetingService->leaveMeeting(finish, [=](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Leave meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit leaveSignal(errorCode, QString::fromStdString(errorMessage));
@@ -347,140 +346,182 @@ void NEMeetingManager::leaveMeeting(bool finish)
     }
 }
 
-int NEMeetingManager::getMeetingStatus()
-{
+int NEMeetingManager::getMeetingStatus() {
     auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
-    if (ipcMeetingService)
-    {
+    if (ipcMeetingService) {
         return ipcMeetingService->getMeetingStatus();
     }
 
     return MEETING_STATUS_IDLE;
 }
 
-void NEMeetingManager::getMeetingInfo()
-{
+void NEMeetingManager::getMeetingInfo() {
     auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
-    if (ipcMeetingService)
-    {
+    if (ipcMeetingService) {
         ipcMeetingService->getCurrentMeetingInfo([this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingInfo& meetingInfo) {
             if (errorCode == ERROR_CODE_SUCCESS)
-                emit getCurrentMeetingInfo(QString::fromStdString(meetingInfo.meetingId), meetingInfo.isHost, meetingInfo.isLocked, meetingInfo.duration);
+                emit getCurrentMeetingInfo(QString::fromStdString(meetingInfo.meetingId), meetingInfo.isHost, meetingInfo.isLocked,
+                                           meetingInfo.duration);
             else
                 emit error(errorCode, QString::fromStdString(errorMessage));
         });
     }
 }
 
-void NEMeetingManager::onMeetingStatusChanged(int status, int code)
-{
+void NEMeetingManager::onMeetingStatusChanged(int status, int code) {
     qInfo() << "Meeting status changed, status:" << status << ", code:" << code;
     emit meetingStatusChanged(status, code);
 }
 
-void NEMeetingManager::onInjectedMenuItemClick(const NEMeetingMenuItem &meeting_menu_item)
-{
+void NEMeetingManager::onInjectedMenuItemClick(const NEMeetingMenuItem& meeting_menu_item) {
     qInfo() << "Meeting injected menu item clicked, item index: " << meeting_menu_item.itemId
-            << ", guid: " << QString::fromStdString(meeting_menu_item.itemGuid)
-            << ", title: " << QString::fromStdString(meeting_menu_item.itemTitle)
+            << ", guid: " << QString::fromStdString(meeting_menu_item.itemGuid) << ", title: " << QString::fromStdString(meeting_menu_item.itemTitle)
             << ", image path: " << QString::fromStdString(meeting_menu_item.itemImage);
 
     QDesktopServices::openUrl(QUrl(QString::fromStdString("https://www.google.com.hk/search?q=" + meeting_menu_item.itemTitle)));
 
-    emit meetingInjectedMenuItemClicked(meeting_menu_item.itemId,
-                                        QString::fromStdString(meeting_menu_item.itemGuid),
-                                        QString::fromStdString(meeting_menu_item.itemTitle),
-                                        QString::fromStdString(meeting_menu_item.itemImage));
+    emit meetingInjectedMenuItemClicked(meeting_menu_item.itemId, QString::fromStdString(meeting_menu_item.itemGuid),
+                                        QString::fromStdString(meeting_menu_item.itemTitle), QString::fromStdString(meeting_menu_item.itemImage));
 }
 
-void NEMeetingManager::onScheduleMeetingStatusChanged(uint64_t uniqueMeetingId, const int &meetingStatus)
-{
+void NEMeetingManager::onScheduleMeetingStatusChanged(uint64_t uniqueMeetingId, const int& meetingStatus) {
     qInfo() << "Scheduled meeting status changed, unique meeting ID:" << uniqueMeetingId << meetingStatus;
     QMetaObject::invokeMethod(this, "onGetMeetingListUI", Qt::AutoConnection);
 }
 
-QString NEMeetingManager::personalMeetingId() const
-{
+void NEMeetingManager::onInjectedMenuItemClickEx(const NEMeetingMenuItem& meeting_menu_item, const NEInjectedMenuItemClickCallback& cb) {
+    qInfo() << "Meeting injected menu item clicked, item index: " << meeting_menu_item.itemId
+            << ", guid: " << QString::fromStdString(meeting_menu_item.itemGuid) << ", title: " << QString::fromStdString(meeting_menu_item.itemTitle)
+            << ", image path: " << QString::fromStdString(meeting_menu_item.itemImage)
+            << ", title2: " << QString::fromStdString(meeting_menu_item.itemTitle2)
+            << ", image path2: " << QString::fromStdString(meeting_menu_item.itemImage2)
+            << ", itemVisibility: " << (int)meeting_menu_item.itemVisibility << ", itemCheckedIndex: " << meeting_menu_item.itemCheckedIndex;
+
+    if ((kFirstinjectedMenuId + 1) == meeting_menu_item.itemId || (kFirstinjectedMenuId + 50 + 1) == meeting_menu_item.itemId) {
+        cb(meeting_menu_item.itemId, meeting_menu_item.itemGuid, 1 == meeting_menu_item.itemCheckedIndex ? 2 : 1);
+    } else {
+        cb(meeting_menu_item.itemId, meeting_menu_item.itemGuid, meeting_menu_item.itemCheckedIndex);
+    }
+
+    emit meetingInjectedMenuItemClicked(
+                meeting_menu_item.itemId, QString::fromStdString(meeting_menu_item.itemGuid),
+                QString::fromStdString(1 == meeting_menu_item.itemCheckedIndex ? meeting_menu_item.itemTitle : meeting_menu_item.itemTitle2),
+                QString::fromStdString(meeting_menu_item.itemImage));
+}
+
+QString NEMeetingManager::personalMeetingId() const {
     return m_personalMeetingId;
 }
 
-void NEMeetingManager::setPersonalMeetingId(const QString &personalMeetingId)
-{
+void NEMeetingManager::setPersonalMeetingId(const QString& personalMeetingId) {
     m_personalMeetingId = personalMeetingId;
     emit personalMeetingIdChanged();
 }
 
-void NEMeetingManager::OnAudioSettingsChange(bool status)
-{
+void NEMeetingManager::OnAudioSettingsChange(bool status) {
     emit deviceStatusChanged(1, status);
 }
 
-void NEMeetingManager::OnVideoSettingsChange(bool status)
-{
+void NEMeetingManager::OnVideoSettingsChange(bool status) {
     emit deviceStatusChanged(2, status);
 }
 
-void NEMeetingManager::OnOtherSettingsChange(bool status)
-{
+void NEMeetingManager::OnOtherSettingsChange(bool status) {}
 
-}
-
-void NEMeetingManager::pushSubmenus(std::vector<NEMeetingMenuItem> &items_list)
-{
+void NEMeetingManager::pushSubmenus(std::vector<NEMeetingMenuItem>& items_list, int MenuIdIndex) {
     auto applicationPath = qApp->applicationDirPath();
-    for (auto i = 0; i < 3; i++)
-    {
-        NEMeetingMenuItem item;
-        item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
-        item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
-        item.itemImage = QString(applicationPath + "/icon_qr code.png").toStdString();
-        items_list.push_back(item);
-    }
+#ifdef Q_OS_WIN32
+    QByteArray byteImage = QString(QGuiApplication::applicationDirPath() + "/" + "feedback.png").toUtf8();
+    QByteArray byteImage2 = QString(QGuiApplication::applicationDirPath() + "/" + "feedback 2.png").toUtf8();
+#else
+    QByteArray byteImage = QString(QGuiApplication::applicationDirPath() + "/../Resources/feedback.png").toUtf8();
+    QByteArray byteImage2 = QString(QGuiApplication::applicationDirPath() + "/../Resources/feedback 2.png").toUtf8();
+#endif
+
+    NEMeetingMenuItem item;
+    item.itemId = MenuIdIndex++;
+    item.itemTitle = QString(QStringLiteral("Menu1")).toStdString();
+    item.itemImage = byteImage.data();
+    item.itemVisibility = NEMenuVisibility::VISIBLE_TO_HOST_ONLY;
+    items_list.push_back(item);
+
+    NEMeetingMenuItem item2;
+    item2.itemId = MenuIdIndex++;
+    item2.itemTitle = QString(QStringLiteral("Menu2")).toStdString();
+    item2.itemImage = byteImage.data();
+    item2.itemTitle2 = QString(QStringLiteral("Menu2_2")).toStdString();
+    item2.itemImage2 = byteImage2.data();
+    item2.itemVisibility = NEMenuVisibility::VISIBLE_TO_HOST_ONLY;
+    items_list.push_back(item2);
+
+    return;
+    NEMeetingMenuItem item3;
+    item3.itemId = MenuIdIndex++;
+    item3.itemTitle = QString(QStringLiteral("Menu3")).toStdString();
+    item3.itemImage = byteImage.data();
+    item3.itemTitle2 = QString(QStringLiteral("Menu3_2")).toStdString();
+    item3.itemImage2 = byteImage2.data();
+    items_list.push_back(item3);
+
+    NEMeetingMenuItem item4;
+    item4.itemId = MenuIdIndex++;
+    item4.itemTitle = QString(QStringLiteral("Menu4")).toStdString();
+    item4.itemImage = byteImage.data();
+    items_list.push_back(item4);
+
+    NEMeetingMenuItem item5;
+    item5.itemId = MenuIdIndex++;
+    item5.itemTitle = QString(QStringLiteral("Menu5")).toStdString();
+    item5.itemImage = byteImage.data();
+    items_list.push_back(item5);
+
+    NEMeetingMenuItem item6;
+    item6.itemId = MenuIdIndex++;
+    item6.itemTitle = QString(QStringLiteral("Menu6")).toStdString();
+    item6.itemImage = byteImage.data();
+    items_list.push_back(item6);
+
+    NEMeetingMenuItem item7;
+    item7.itemId = MenuIdIndex++;
+    item7.itemTitle = QString(QStringLiteral("Menu7")).toStdString();
+    item7.itemImage = byteImage.data();
+    items_list.push_back(item7);
 }
 
-void NEMeetingManager::onGetMeetingListUI()
-{
+void NEMeetingManager::onGetMeetingListUI() {
     getMeetingList();
 }
 
-bool NEMeetingManager::checkAudio()
-{
+bool NEMeetingManager::checkAudio() {
     auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
-    if (ipcSettingService)
-    {
+    if (ipcSettingService) {
         auto AudioController = ipcSettingService->GetAudioController();
-        if (AudioController)
-        {
-            //std::promise<bool> promise;
-            AudioController->isTurnOnMyAudioWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+        if (AudioController) {
+            // std::promise<bool> promise;
+            AudioController->isTurnOnMyAudioWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn) {
                 if (errorCode == ERROR_CODE_SUCCESS)
                     OnAudioSettingsChange(bOn);
-                else
-                {
-                    //promise.set_value(false);
+                else {
+                    // promise.set_value(false);
                     emit error(errorCode, QString::fromStdString(errorMessage));
                 }
             });
 
-            //std::future<bool> future = promise.get_future();
-            return true;//future.get();
+            // std::future<bool> future = promise.get_future();
+            return true;  // future.get();
         }
     }
     return false;
 }
 
-void NEMeetingManager::setCheckAudio(bool checkAudio)
-{
+void NEMeetingManager::setCheckAudio(bool checkAudio) {
     auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
-    if (ipcSettingService)
-    {
+    if (ipcSettingService) {
         auto audioController = ipcSettingService->GetAudioController();
-        if (audioController)
-        {
-            audioController->setTurnOnMyAudioWhenJoinMeeting(checkAudio, [this, checkAudio](NEErrorCode errorCode, const std::string& errorMessage){
+        if (audioController) {
+            audioController->setTurnOnMyAudioWhenJoinMeeting(checkAudio, [this, checkAudio](NEErrorCode errorCode, const std::string& errorMessage) {
                 if (errorCode != ERROR_CODE_SUCCESS)
                     emit error(errorCode, QString::fromStdString(errorMessage));
-
 
                 OnAudioSettingsChange(checkAudio);
             });
@@ -488,21 +529,16 @@ void NEMeetingManager::setCheckAudio(bool checkAudio)
     }
 }
 
-bool NEMeetingManager::checkVideo()
-{
+bool NEMeetingManager::checkVideo() {
     auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
-    if (ipcSettingService)
-    {
+    if (ipcSettingService) {
         auto videoController = ipcSettingService->GetVideoController();
-        if (videoController)
-        {
-
-            videoController->isTurnOnMyVideoWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+        if (videoController) {
+            videoController->isTurnOnMyVideoWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn) {
                 if (errorCode == ERROR_CODE_SUCCESS)
                     OnVideoSettingsChange(bOn);
-                else
-                {
-                    //promise.set_value(false);
+                else {
+                    // promise.set_value(false);
                     emit error(errorCode, QString::fromStdString(errorMessage));
                 }
             });
@@ -513,18 +549,14 @@ bool NEMeetingManager::checkVideo()
     return false;
 }
 
-void NEMeetingManager::setCheckVideo(bool checkVideo)
-{
+void NEMeetingManager::setCheckVideo(bool checkVideo) {
     auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
-    if (ipcSettingService)
-    {
+    if (ipcSettingService) {
         auto videoController = ipcSettingService->GetVideoController();
-        if (videoController)
-        {
-            videoController->setTurnOnMyVideoWhenJoinMeeting(checkVideo, [this,checkVideo](NEErrorCode errorCode, const std::string& errorMessage){
+        if (videoController) {
+            videoController->setTurnOnMyVideoWhenJoinMeeting(checkVideo, [this, checkVideo](NEErrorCode errorCode, const std::string& errorMessage) {
                 if (errorCode != ERROR_CODE_SUCCESS)
                     emit error(errorCode, QString::fromStdString(errorMessage));
-
 
                 OnVideoSettingsChange(checkVideo);
             });
@@ -532,7 +564,41 @@ void NEMeetingManager::setCheckVideo(bool checkVideo)
     }
 }
 
-//bool NEMeetingManager::checkDuration()
+void NEMeetingManager::subcribeAudio(const QString& accoundIdList, bool subcribe, int type) {
+    auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+    if (!ipcMeetingService) {
+        return;
+    }
+
+    if (0 == type) {
+        ipcMeetingService->subscribeRemoteAudioStream(accoundIdList.toStdString(), subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            if (errorCode != ERROR_CODE_SUCCESS) {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+    } else if (1 == type) {
+        std::vector<std::string> vTmp;
+        QStringList strList = accoundIdList.split(',');
+        vTmp.reserve(strList.size());
+        if (!accoundIdList.isEmpty()) {
+            std::transform(strList.begin(), strList.end(), std::back_inserter(vTmp), [](const QString& str) { return str.toStdString(); });
+        }
+        ipcMeetingService->subscribeRemoteAudioStreams(vTmp, subcribe, [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            if (errorCode != ERROR_CODE_SUCCESS) {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+    }else if (2 == type) {
+        ipcMeetingService->subscribeAllRemoteAudioStreams(subcribe, [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            if (errorCode != ERROR_CODE_SUCCESS) {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+    }
+}
+
+// bool NEMeetingManager::checkDuration()
 //{
 //    auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
 //    if (ipcSettingService)
@@ -541,7 +607,8 @@ void NEMeetingManager::setCheckVideo(bool checkVideo)
 //        if (otherController)
 //        {
 //            std::promise<bool> promise;
-//            otherController->isShowMyMeetingElapseTimeEnabled([this, &promise](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+//            otherController->isShowMyMeetingElapseTimeEnabled([this, &promise](NEErrorCode errorCode, const std::string& errorMessage, const bool&
+//            bOn){
 //                if (errorCode == ERROR_CODE_SUCCESS)
 //                    promise.set_value(bOn);
 //                else
@@ -558,7 +625,7 @@ void NEMeetingManager::setCheckVideo(bool checkVideo)
 //    return false;
 //}
 
-//void NEMeetingManager::setCheckDuration(bool checkDuration)
+// void NEMeetingManager::setCheckDuration(bool checkDuration)
 //{
 //    auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
 //    if (ipcSettingService)

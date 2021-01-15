@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020 NetEase, Inc.
+// Copyright (c) 2014-2020 NetEase, Inc.
 // All right reserved.
 
 #ifndef NEMEETINGMANAGER_H
@@ -57,13 +57,6 @@ public:
     Q_ENUM(ExtStatus)
 };
 
-enum MoreItemSubMenuIndex
-{
-    kFirstSubmenu = NEM_MORE_MENU_USER_INDEX + 1,
-    kSecondSubmenu,
-    kThirdSubmue
-};
-
 class NEMeetingManager
         : public QObject
         , public NEMeetingStatusListener
@@ -77,7 +70,7 @@ public:
 
     Q_PROPERTY(QString personalMeetingId READ personalMeetingId WRITE setPersonalMeetingId NOTIFY personalMeetingIdChanged)
 
-    Q_INVOKABLE void initialize();
+    Q_INVOKABLE void initialize(const QString& strAppkey);
     Q_INVOKABLE void unInitialize();
     Q_INVOKABLE bool isInitializd();
     Q_INVOKABLE void login(const QString& appKey, const QString& accountId, const QString& accountToken);
@@ -97,11 +90,13 @@ public:
     Q_INVOKABLE int getMeetingStatus();
     Q_INVOKABLE void getMeetingInfo();
 
+    Q_INVOKABLE void subcribeAudio(const QString& accoundIdList, bool subcribe, int type);
+
     // override virtual functions
     virtual void onMeetingStatusChanged(int status, int code) override;
     virtual void onInjectedMenuItemClick(const NEMeetingMenuItem &meeting_menu_item) override;
     virtual void onScheduleMeetingStatusChanged(uint64_t uniqueMeetingId, const int& meetingStatus) override;
-
+    virtual void onInjectedMenuItemClickEx(const NEMeetingMenuItem& meeting_menu_item, const NEInjectedMenuItemClickCallback& cb) override;
     // properties
     QString personalMeetingId() const;
     void setPersonalMeetingId(const QString& personalMeetingId);
@@ -111,7 +106,7 @@ public:
     virtual void OnOtherSettingsChange(bool status) override;
 
 private:
-    void pushSubmenus(std::vector<NEMeetingMenuItem>& items_list);
+    void pushSubmenus(std::vector<NEMeetingMenuItem>& items_list, int MenuIdIndex);
 
 signals:
     void error(int errorCode, const QString& errorMessage);
@@ -146,8 +141,8 @@ public slots:
     //void setCheckDuration(bool checkDuration);
 
 private:
-    std::atomic_bool    m_initialized;
-    QString             m_personalMeetingId;
+    std::atomic_bool m_initialized;
+    QString m_personalMeetingId;
 };
 
 #endif // NEMEETINGMANAGER_H

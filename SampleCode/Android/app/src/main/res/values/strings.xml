@@ -2,4 +2,15 @@
     <string name="app_name">网易会议Demo</string>
     <string name="loading_progress">玩命加载中</string>
     <string name="login">玩命登录中...</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+    <string name="inputSubscribeId">请输入你需要订阅人的id</string>
+    <string name="inputSubscribeIds">请输入你需要订阅人的id,用英文逗号分割</string>
+    <string name="audioSubscribeManager">音频订阅管理</string>
+    <string name="audioSubscribeAll">订阅所有音频</string>
+    <string name="audioUnSubscribeAll">取消订阅所有音频</string>
+    <string name="audioSubscribe">订阅成员音频</string>
+    <string name="audioUnSubscribe">取消订阅成员音频</string>
+    <string name="audioSubscribes">批量订阅成员音频</string>
+    <string name="audioUnSubscribes">批量取消订阅成员音频</string>
 </resources>

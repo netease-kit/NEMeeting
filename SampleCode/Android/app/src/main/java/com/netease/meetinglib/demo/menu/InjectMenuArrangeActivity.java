@@ -16,12 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
@@ -40,6 +34,12 @@ import com.netease.meetinglib.sdk.menu.NESingleStateMenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * 自定义注入菜单编排
  */
@@ -50,11 +50,11 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
         context.startActivity(starter);
     }
 
-    private boolean edited = false;
-    private ActivityMenuArrangementBinding binding;
+    protected boolean edited = false;
+    protected ActivityMenuArrangementBinding binding;
     List<NEMeetingMenuItem> selectedItems = new ArrayList<>();
 
-    private static int itemId = NEMenuIDs.FIRST_INJECTED_MENU_ID;
+    protected static int itemId = NEMenuIDs.FIRST_INJECTED_MENU_ID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,39 +76,32 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
     }
 
     private void initSelections() {
-        List<NEMeetingMenuItem> selectedMenu =
-                InjectMenuContainer.getSelectedMenu();
+        List<NEMeetingMenuItem> selectedMenu = InjectMenuContainer.getSelectedMenu();
         if (selectedMenu != null) {
             selectedItems.addAll(selectedMenu);
         }
-
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         binding.selected.setLayoutManager(layoutManager);
         binding.selected.addItemDecoration(new ItemDecoration());
-        binding.selected.setAdapter(new Adapter(this, Adapter.TYPE_SELECTED,
-                selectedItems));
+        binding.selected.setAdapter(new Adapter(this, Adapter.TYPE_SELECTED, selectedItems));
     }
 
     private void initCandidates() {
         List<NEMeetingMenuItem> items = new ArrayList<>();
         items.addAll(NEMenuItems.getBuiltinToolbarMenuItemList());
         items.addAll(NEMenuItems.getBuiltinMoreMenuItemList());
-        items.add(new NESingleStateMenuItem(100,
-                NEMenuVisibility.VISIBLE_ALWAYS,
-                new NEMenuItemInfo("单选菜单", 0)));
-        items.add(new NESingleStateMenuItem(101,
-                NEMenuVisibility.VISIBLE_ALWAYS,
-                new NEMenuItemInfo("多选菜单", 0)));
-
+        items.add(new NESingleStateMenuItem(100, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo("单选菜单", 0)));
+        items.add(new NESingleStateMenuItem(101, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo("多选菜单", 0)));
+        items.add(new NESingleStateMenuItem(102, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo("音频管理", 0)));
+        items.add(NEMenuItems.switchShowTypeMenu());
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         binding.choices.setLayoutManager(layoutManager);
         binding.choices.addItemDecoration(new ItemDecoration());
-        binding.choices.setAdapter(new Adapter(this, Adapter.TYPE_CANDIDATE,
-                items));
+        binding.choices.setAdapter(new Adapter(this, Adapter.TYPE_CANDIDATE, items));
     }
 
     private void selectItem(NEMeetingMenuItem item) {
@@ -139,7 +132,7 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
         }
     }
 
-    private void changeItemIcon(int index) {
+    protected void changeItemIcon(int index) {
         if (index >= 0 && index < selectedItems.size()) {
             edited = true;
             NEMeetingMenuItem item = selectedItems.get(index);
@@ -194,13 +187,13 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
         }
     }
 
-    private static NESingleStateMenuItem createSingleStateMenuItem() {
+    protected NESingleStateMenuItem createSingleStateMenuItem() {
         final int id = itemId++;
         return new NESingleStateMenuItem(id, NEMenuVisibility.VISIBLE_ALWAYS,
                 new NEMenuItemInfo(String.valueOf(id), R.drawable.mood));
     }
 
-    private static NECheckableMenuItem createCheckableMenuItem() {
+    protected NECheckableMenuItem createCheckableMenuItem() {
         final int id = itemId++;
         return new NECheckableMenuItem(id,
                 NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo(

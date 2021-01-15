@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/action_list"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/action_text"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dp_size_10"
+        android:layout_marginTop="@dimen/dp_size_6"
+        android:background="@drawable/white_round_box_13dp_shape"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_size_18"/>
+
+</RelativeLayout>

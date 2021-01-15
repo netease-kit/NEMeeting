@@ -15,26 +15,27 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
 import com.netease.meetinglib.demo.menu.InjectMenuArrangeActivity;
 import com.netease.meetinglib.demo.menu.InjectMenuContainer;
+import com.netease.meetinglib.demo.utils.AlertDialogUtil;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingIdDisplayOption;
-import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
 import com.netease.meetinglib.sdk.NESettingsService;
+import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 
 public abstract class MeetingCommonFragment extends CommonFragment {
 
@@ -49,15 +50,21 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     private EditText injectedMenuIdEdx, injectedMenuTitleEdx;
 
     private List<NEMeetingMenuItem> toolbarMenu;
-    ActivityResultLauncher<Intent> configToolbarMenuResult =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) toolbarMenu = InjectMenuContainer.getSelectedMenu();
-    });
+
+    ActivityResultLauncher<Intent> configToolbarMenuResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    toolbarMenu = InjectMenuContainer.getSelectedMenu();
+                }
+            });
 
     private List<NEMeetingMenuItem> moreMenu;
-    ActivityResultLauncher<Intent> configMoreMenuResult =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) moreMenu = InjectMenuContainer.getSelectedMenu();
+
+    ActivityResultLauncher<Intent> configMoreMenuResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    moreMenu = InjectMenuContainer.getSelectedMenu();
+                }
             });
 
     List<com.netease.meetinglib.sdk.NEMeetingMenuItem> injectedMoreMenuItems;
@@ -89,13 +96,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(0, R.id.firstEditor, labels);
         addEditorArray(1, R.id.secondEditor, labels);
         addEditorArray(2, R.id.thirdEditor, labels);
-
         injectedMenuIdEdx = view.findViewById(R.id.injectedMenuIdEdx);
         injectedMenuTitleEdx = view.findViewById(R.id.injectedMenuTitleEdx);
-        view.findViewById(R.id.addInjectedMenuItem).setOnClickListener( v -> addInjectedMenuItem());
-
-        Button configToolbarMenu =
-                getView().findViewById(R.id.configToolbarMenus);
+        view.findViewById(R.id.addInjectedMenuItem).setOnClickListener(v -> addInjectedMenuItem());
+        Button configToolbarMenu = getView().findViewById(R.id.configToolbarMenus);
         configToolbarMenu.setOnClickListener(v -> {
             InjectMenuContainer.setSelectedMenu(toolbarMenu);
             configToolbarMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
@@ -105,10 +109,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             InjectMenuContainer.setSelectedMenu(moreMenu);
             configMoreMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
         });
-
         useDefaultMeetingOptions.setChecked(false);
-        useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox,
-                                                             checked) -> {
+        useDefaultMeetingOptions.setOnCheckedChangeListener((checkbox, checked) -> {
             checkBoxes[0].setEnabled(!checked);
             checkBoxes[0].setChecked(false);
             checkBoxes[1].setEnabled(!checked);
@@ -127,14 +129,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             options.noAudio = !isChecked(1);
             options.showMeetingTime = isChecked(5);
         } else {
-            NESettingsService settingsService =
-                    NEMeetingSDK.getInstance().getSettingsService();
-            options.noVideo =
-                    !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
-            options.noAudio =
-                    !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
-            options.showMeetingTime =
-                    settingsService.isShowMyMeetingElapseTimeEnabled();
+            NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsService();
+            options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
+            options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
+            options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
         }
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
@@ -154,8 +152,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             if (injectedMoreMenuItems == null) {
                 injectedMoreMenuItems = new ArrayList<>();
             }
-            com.netease.meetinglib.sdk.NEMeetingMenuItem item =
-                    new com.netease.meetinglib.sdk.NEMeetingMenuItem();
+            com.netease.meetinglib.sdk.NEMeetingMenuItem item = new com.netease.meetinglib.sdk.NEMeetingMenuItem();
             item.itemId = Integer.parseInt(injectedMenuIdEdx.getText().toString());
             item.title = injectedMenuTitleEdx.getText().toString();
             injectedMoreMenuItems.add(item);
@@ -211,6 +208,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             // 增加会议断开连接提示。
             getActivity().runOnUiThread(() -> Toast.makeText(getActivity(),
                     "会议已断开连接", Toast.LENGTH_SHORT).show());
+            if (AlertDialogUtil.getAlertDialog() != null) {
+                AlertDialogUtil.getAlertDialog().dismiss();
+            }
         }
         if (event.status != NEMeetingStatus.MEETING_STATUS_WAITING) {
             dissMissDialogProgress();//输入密码等待中

@@ -1,3 +1,26 @@
+# 2021-01-15 @ v1.5.2
+
+## Added
+
+* 支持单个用户音频订阅/取消订阅接口`NEMeetingSDK::subscribeRemoteAudioStream`
+* 支持多个用户音频订阅/取消订阅接口`NEMeetingSDK::subscribeRemoteAudioStreams`
+* 支持全部用户音频订阅/取消订阅接口`NEMeetingSDK::subscribeAllRemoteAudioStreams`
+
+## Changed
+
+* 优化账号登录流程
+* 调整`NEAuthService::Login`接口为不带appkey
+
+## Fixed
+
+* 修复结束共享时视频显示为共享画面的问题
+* 修复macOS下部分wps的版本播放时不能共享的问题
+* 修复会议非正常退出后，关联进程没有退出的问题
+* 修复画廊模式下成员列表切换会闪烁的问题
+* 修复部分显卡下会崩溃的问题
+* 修复windows下共享时聊天窗口闪烁的问题
+* 修复结束共享时偶现的崩溃问题
+
 # 2020-12-21 @ v1.5.0
 
 ## Added
@@ -18,13 +41,9 @@
 ## Fixed
 
 * 修复共享状态下断网重连后其他端画面异常问题
-
 * 修复win7下共享崩溃问题
-
 * 修复窗口闪烁问题
-
   
-
 # 2020-11-27 @ v1.3.3
 
 ## Added

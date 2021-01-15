@@ -6,30 +6,28 @@
 package com.netease.meetinglib.demo;
 
 import android.Manifest;
-import android.animation.TimeInterpolator;
-import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.viewbinding.ViewBinding;
 
 import com.netease.meetinglib.demo.base.BaseActivity;
 import com.netease.meetinglib.demo.databinding.ActivityMainBinding;
+import com.netease.meetinglib.demo.log.LogUtil;
+import com.netease.meetinglib.demo.nim.NIMInitializer;
+import com.netease.meetinglib.demo.nim.NIMLoginActivity;
 import com.netease.meetinglib.demo.viewmodel.MainViewModel;
 import com.netease.meetinglib.sdk.NEMeetingInfo;
-import com.netease.meetinglib.sdk.NEMeetingMenuItem;
+import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingService;
@@ -38,13 +36,16 @@ import com.netease.meetinglib.sdk.control.NEControlListener;
 import com.netease.meetinglib.sdk.control.NEControlMenuItem;
 import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
 import com.netease.meetinglib.sdk.control.NEControlResult;
+import com.netease.meetinglib.sdk.control.NETCProtocolUpgrade;
+import com.netease.meetinglib.sdk.menu.NEMenuClickInfo;
+import com.netease.meetinglib.sdk.menu.NEMenuStateController;
 import com.permissionx.guolindev.PermissionX;
 
-import org.jetbrains.annotations.NotNull;
+import java.lang.reflect.Method;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private final String TAG = MainActivity.class.getSimpleName() + '@' + hashCode();
 
     private MainViewModel mViewModel;
 
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         if (meetingService != null && meetingService.getMeetingStatus()
                 == NEMeetingStatus.MEETING_STATUS_INMEETING) {
             meetingService.returnToMeeting(this);
+            LogUtil.log(TAG, "onRestart returnToMeeting");
         }
     }
 
@@ -66,6 +68,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         if (meetingService != null && meetingService.getMeetingStatus()
                 == NEMeetingStatus.MEETING_STATUS_INMEETING) {
             meetingService.returnToMeeting(this);
+            LogUtil.log(TAG, "initView returnToMeeting");
             finish();
             return;
         }
@@ -79,8 +82,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             } else if (state == SdkAuthenticator.AuthStateChangeListener.UN_AUTHORIZE) {
                 dissMissDialogProgress();
                 Navigation.findNavController(MainActivity.this, R.id.fragment).navigate(R.id.entranceFragment);
-            } else {
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHORIZING) {
                 showDialogProgress(getString(R.string.login));
+            } else if (state == SdkAuthenticator.AuthStateChangeListener.AUTHOR_FAIL) {
+                dissMissDialogProgress();
             }
         });
 
@@ -111,7 +116,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 });
     }
 
-    private void onInitialized(int total) {
+    private void onInitialized(int initializeIndex) {
         mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener());
         mViewModel.setOnControlCustomMenuItemClickListener(new OnControlCustomMenuListener());
         mViewModel.registerControlListener(controlListener);
@@ -127,24 +132,39 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         public void onJoinMeetingResult(NEControlResult status) {
             Toast.makeText(MainActivity.this, "遥控器加入会议事件回调:" + status.code + "#" + status.message, Toast.LENGTH_SHORT).show();
         }
+        @Override
+        public void onUnbind(int unBindType) {
+            Toast.makeText(MainActivity.this, "遥控器解绑，原因:" + unBindType, Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onTCProtocolUpgrade(NETCProtocolUpgrade protocolUpgrade) {
+            Toast.makeText(MainActivity.this, "遥控器与电视的协议不同，遥控器协议版本：" + protocolUpgrade.controllerProtocolVersion
+                                              + "，电视的协议版本：" + protocolUpgrade.tvProtocolVersion + "，是否兼容：" + protocolUpgrade.isCompatible, Toast.LENGTH_SHORT).show();
+        }
     };
 
-    public class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
-        @Override
-        public void onInjectedMenuItemClick(NEMeetingMenuItem menuItem, NEMeetingInfo meetingInfo) {
-            switch (menuItem.itemId) {
-                case 101:
-                    NEMeetingSDK.getInstance().getMeetingService().getCurrentMeetingInfo((resultCode, resultMsg, resultData) -> {
-                        Toast.makeText(MainActivity.this, "获取房间信息NEMeetingInfo:" + resultData.toString(), Toast.LENGTH_SHORT).show();
-                        Log.d("OnCustomMenuListener", "getCurrentMeetingInfo:resultCode " + resultCode + "#resultData " + resultData.toString());
-                    });
-                    break;
-                default:
-                    Toast.makeText(MainActivity.this, "点击事件Id:" + menuItem.itemId + "#点击事件tittle:" + menuItem.itemId, Toast.LENGTH_SHORT).show();
-                    break;
+    public static class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
 
+        @Override
+        public void onInjectedMenuItemClick(Context context,
+                                            NEMenuClickInfo clickInfo,
+                                            NEMeetingInfo meetingInfo, NEMenuStateController stateController) {
+            Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
+            new AlertDialog.Builder(context)
+                    .setTitle("菜单项被点击了")
+                    .setMessage(clickInfo.toString()+ "\n" + meetingInfo.toString())
+                    .setPositiveButton("确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
+                    .setNegativeButton("取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
+                    .setNeutralButton("忽略", (dialog, which) -> {})
+                    .setCancelable(false)
+                    .create()
+                    .show();
+        }
+
+        private static void didMenuItemStateTransition(NEMenuStateController controller, boolean didTransition) {
+            if (controller != null) {
+                controller.didStateTransition(didTransition, null);
             }
-            Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + menuItem.toString() + "#" + meetingInfo.toString());
         }
     }
 
@@ -164,6 +184,37 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.im_login);
+        if (item != null) {
+            item.setVisible(NIMInitializer.getInstance().isReuseNIMEnabled());
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.app_settings:
+                AppSettingsActivity.start(this);
+                break;
+            case R.id.im_login:
+                NIMLoginActivity.start(this);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
         return NavHostFragment.findNavController(fragment).navigateUp();
@@ -175,6 +226,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
     private void toggleMeetingMinimizedView(boolean show) {
+        LogUtil.log(TAG, "toggleMeetingMinimizedView: " + show + "==" + binding.meetingMinimizedLayout.getX());
         int dx = getResources().getDimensionPixelSize(R.dimen.meeting_minimized_layout_size);
         if (show) {
             mViewModel.getMeetingTimeLiveData().observe(this, this::updateMeetingTime);

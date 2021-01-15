@@ -6,8 +6,9 @@ import NetEase.Meeting.MeetingStatus 1.0
 
 Rectangle {
     Component.onCompleted: {
-        meetingManager.getPersonalMeetingId()
         meetingManager.isInitializd()
+        checkAudio.checked = meetingManager.checkAudio()
+        checkVideo.checked = meetingManager.checkVideo()
     }
 
     ToolButton {
@@ -74,9 +75,9 @@ Rectangle {
             }
             ListView {
                 Component.onCompleted: {
-                    meetingManager.getMeetingList()
+                    Qt.callLater(function() { meetingManager.getMeetingList() })
                 }
-                Layout.fillHeight: true
+                Layout.preferredHeight: 240
                 Layout.fillWidth: true
                 spacing: 10
                 clip: true
@@ -84,22 +85,57 @@ Rectangle {
                     id: listModel
                 }
                 delegate: ItemDelegate {
-                    height: 72
+                    height: 240
                     width: parent.width
                     ColumnLayout {
                         width: parent.width
-                        Label {
-                            text: {
-                                const startTime = new Date(model.startTime)
-                                const endTime = new Date(model.endTime)
-                                return qsTr('%1 ~ %2').arg(startTime.toLocaleString()).arg(endTime.toLocaleString())
+                        spacing: 0
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Label {
+                                text: qsTr('Timestamp')
+                            }
+                            TextField {
+                                id: startTimestamp2
+                                Layout.fillWidth: true
+                                text: model.startTime.toString()
+                            }
+                            Label {
+                                text: qsTr('~')
+                            }
+                            TextField {
+                                id: endTimestamp2
+                                Layout.fillWidth: true
+                                text: model.endTime.toString()
                             }
                         }
                         RowLayout {
+                            Layout.fillWidth: true
                             Label {
                                 text: prettyConferenceId(model.meetingId)
                             }
                             Label {
+                                text: qsTr('Password')
+                            }
+                            TextField {
+                                id: password2
+                                text: model.password
+                            }
+
+                        }
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            CheckBox {
+                                id: muteCheckbox2
+                                text: qsTr('Automatically mute after members join')
+                                checked: model.attendeeAudioOff
+                            }
+                        }
+
+                        RowLayout {
+                            TextField {
+                                id: topic2
                                 text: model.topic
                             }
                             Label {
@@ -138,8 +174,19 @@ Rectangle {
                                     meetingManager.cancelMeeting(model.uniqueMeetingId)
                                 }
                             }
+                            Button {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 30
+                                text: qsTr('Edit')
+                                onClicked: {
+                                    meetingManager.editMeeting(model.uniqueMeetingId, model.meetingId, topic2.text, startTimestamp2.text, endTimestamp2.text, password2.text, muteCheckbox2.checked)
+                                }
+                            }
                         }
                     }
+                }
+                ScrollBar.vertical: ScrollBar {
+                    width: 7
                 }
             }
         }
@@ -161,18 +208,48 @@ Rectangle {
                 Layout.fillWidth: true
             }
 
+            TextField {
+                id: textpassword
+                placeholderText: qsTr('meeting password')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+
+            ComboBox {
+                id: displayOption
+                Layout.fillWidth: true
+                model: ListModel {
+                    id: displayModel
+                }
+                delegate: ItemDelegate {
+                    width: parent.width
+                    text: model.name
+                    onClicked: {
+                        displayOption.currentIndex = model.index
+                    }
+                }
+                Component.onCompleted: {
+                    displayModel.append({ name: 'Display Short Only' })
+                    displayModel.append({ name: 'Display Long Only' })
+                    displayModel.append({ name: 'Display All' })
+                    displayOption.currentIndex = 0
+                }
+            }
+
             RowLayout {
                 Layout.fillWidth: true
                 CheckBox {
                     id: checkAudio
                     checked: true
                     text: qsTr('Enable audio')
+                    onClicked: meetingManager.setCheckAudio(checkAudio.checked)
                 }
 
                 CheckBox {
                     id: checkVideo
                     checked: true
                     text: qsTr('Enable video')
+                    onClicked: meetingManager.setCheckVideo(checkVideo.checked)
                 }
             }
 
@@ -208,7 +285,7 @@ Rectangle {
                     onClicked: {
                         meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
                                                    checkAudio.checked, checkVideo.checked,
-                                                   checkChatroom.checked, checkInvitation.checked)
+                                                   checkChatroom.checked, checkInvitation.checked, displayOption.currentIndex)
                     }
                 }
                 Button {
@@ -219,7 +296,7 @@ Rectangle {
                     onClicked: {
                         meetingManager.invokeJoin(textMeetingId.text, textNickname.text,
                                                   checkAudio.checked, checkVideo.checked,
-                                                  checkChatroom.checked, checkInvitation.checked)
+                                                  checkChatroom.checked, checkInvitation.checked, textpassword.text, displayOption.currentIndex)
                     }
                 }
                 Button {
@@ -269,7 +346,7 @@ Rectangle {
                 toast.show(qsTr('Failed to start meeting'))
                 break
             default:
-                toast.show(errorMessage)
+                toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
         }
@@ -295,7 +372,7 @@ Rectangle {
                 toast.show(qsTr('Failed to join meeting'))
                 break
             default:
-                toast.show(errorMessage)
+                toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
         }
@@ -332,7 +409,7 @@ Rectangle {
             toast.show('Meeting item clicked, item title: ' + itemTitle)
         }
         onGetCurrentMeetingInfo: {
-            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked)
+            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked + ', duration: ' + duration)
         }
         onGetScheduledMeetingList: {
             listModel.clear()
@@ -340,6 +417,52 @@ Rectangle {
             for (let i = 0; i < meetingList.length; i++) {
                 const meeting = meetingList[i]
                 listModel.append(meeting)
+            }
+            meetingManager.getAccountInfo()
+        }
+
+        onDeviceStatusChanged :{
+            if(type === 1){
+                checkAudio.checked = status
+                toast.show('audio device status is '+ status);
+            }
+            else if(type === 2){
+                checkVideo.checked = status;
+                toast.show('video device status is '+ status);
+
+            }
+        }
+
+        onScheduleSignal: {
+            switch (errorCode) {
+            case 0:
+                toast.show(qsTr("Schedule successfull"))
+                break
+            default:
+                toast.show(errorCode + '(' + errorMessage + ')')
+                break
+            }
+        }
+
+        onCancelSignal: {
+            switch (errorCode) {
+            case 0:
+                toast.show(qsTr("Cancel successfull"))
+                break
+            default:
+                toast.show(errorCode + '(' + errorMessage + ')')
+                break
+            }
+        }
+
+        onEditSignal: {
+            switch (errorCode) {
+            case 0:
+                toast.show(qsTr("Edit successfull"))
+                break
+            default:
+                toast.show(errorCode + '(' + errorMessage + ')')
+                break
             }
         }
     }

@@ -45,8 +45,25 @@
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_meeting_settings"
+            app:layout_constraintBottom_toTopOf="@+id/btn_open_beauty"
             app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
+
+        <Button
+            android:id="@+id/btn_open_beauty"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/button_circle_shape"
+            android:text="进入美颜预览"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_open_control"
+            app:layout_constraintTop_toBottomOf="@+id/btn_meeting_settings" />
 
         <Button
             android:id="@+id/btn_meeting_settings"
@@ -62,6 +79,6 @@
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_open_control" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_open_beauty" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

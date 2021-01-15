@@ -3,9 +3,6 @@ package com.netease.meetinglib.demo.data;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.netease.meetinglib.sdk.NECallback;
 import com.netease.meetinglib.sdk.NEJoinMeetingOptions;
 import com.netease.meetinglib.sdk.NEJoinMeetingParams;
@@ -26,6 +23,9 @@ import com.netease.meetinglib.sdk.control.NEControlOptions;
 import com.netease.meetinglib.sdk.control.NEControlParams;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class MeetingDataRepository {
     private volatile static MeetingDataRepository INSTANCE;
@@ -50,7 +50,6 @@ public class MeetingDataRepository {
     }
 
     public void getCurrentMeetingInfo(NECallback<NEMeetingInfo> callback) {
-
     }
 
     public NEMeetingService getMeetingService() {
@@ -145,5 +144,31 @@ public class MeetingDataRepository {
 
     /////////////////////////////////////////////////
     /***          ControlService end           **/
+    /////////////////////////////////////////////////
+
+
+
+    /////////////////////////////////////////////////
+    /***          SettingsService start           **/
+    /////////////////////////////////////////////////
+
+    public void openBeautyUI(Context context,  NECallback<Void> callback) {
+        NEMeetingSDK.getInstance().getSettingsService().openBeautyUI(context, callback);
+    }
+
+    public boolean isBeautyFaceEnabled() {
+        return NEMeetingSDK.getInstance().getSettingsService().isBeautyFaceEnabled();
+    }
+
+    public void getBeautyFaceValue(NECallback<Integer> callback) {
+         NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue(callback);
+    }
+
+    public void setBeautyFaceValue(int beautyFaceValue) {
+         NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
+    }
+
+    /////////////////////////////////////////////////
+    /***          SettingsService end           **/
     /////////////////////////////////////////////////
 }

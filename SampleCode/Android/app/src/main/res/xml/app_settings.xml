@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <SwitchPreferenceCompat
+        app:key="meeting-reuse-nim"
+        app:title="NIM复用"
+        app:summary="重启应用后生效"
+        style="@style/MySwitchPreference"
+        />
+
+    <SwitchPreferenceCompat
+        app:key="use-asset-server-config"
+        app:title="读取私有化服务器配置"
+        app:summary="重启应用后生效"
+        style="@style/MySwitchPreference"
+        />
+
+
+</PreferenceScreen>

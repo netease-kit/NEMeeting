@@ -10,7 +10,6 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -20,13 +19,37 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity android:name=".EntryActivity"
+            android:launchMode="singleTask"
+            >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="meeting.netease.im"
+                    android:scheme="nemeetingdemo" />
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".MeetingSettingsActivity"
             android:label="会议设置" />
         <activity
+            android:name=".AppSettingsActivity"
+            android:label="应用设置" />
+        <activity
             android:name=".nim.NIMLoginActivity"
             android:label="IM登录" />
+
+        <activity android:name=".menu.InjectMenuArrangeActivity" />
     </application>
     <!--日历-->
     <uses-permission android:name="android.permission.READ_CALENDAR" />

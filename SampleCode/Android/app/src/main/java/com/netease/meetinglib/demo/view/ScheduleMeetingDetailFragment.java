@@ -14,14 +14,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
 import com.netease.meetinglib.demo.adapter.ScheduleMeetingDetailAdapter;
 import com.netease.meetinglib.demo.base.BaseFragment;
+import com.netease.meetinglib.demo.data.MeetingItem;
 import com.netease.meetinglib.demo.data.ScheduleMeetingDetailItem;
 import com.netease.meetinglib.demo.databinding.FragmentScheduleDatailBinding;
 import com.netease.meetinglib.demo.viewmodel.ScheduleDetailViewModel;
@@ -32,20 +29,24 @@ import com.netease.meetinglib.sdk.NEMeetingItemStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 
 public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentScheduleDatailBinding> {
+
     private static final String TAG = ScheduleMeetingDetailFragment.class.getSimpleName();
+
     private List<ScheduleMeetingDetailItem> dataList = new ArrayList<>();
+
     private ScheduleMeetingDetailAdapter mAdapter;
+
     private ScheduleDetailViewModel mViewModel;
+
     private Bundle arguments;
-    private String password;
-    private String subject;
-    private NEMeetingItemStatus status;
-    private String meetingId;
-    private long endTime;
-    private long startTime;
-    private long meetingUniqueId;
+
+    private MeetingItem item;
 
     public static ScheduleMeetingDetailFragment newInstance() {
         return new ScheduleMeetingDetailFragment();
@@ -60,21 +61,23 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
     protected void initView() {
         mViewModel = ViewModelProviders.of(this).get(ScheduleDetailViewModel.class);
         mAdapter = new ScheduleMeetingDetailAdapter(getActivity(), new ArrayList<>());
-        binding.rvScheduleMeeting.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.rvScheduleMeeting.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mAdapter.setHasStableIds(true);
         binding.rvScheduleMeeting.setAdapter(mAdapter);
-
         mAdapter.setOnItemClickListener((view, position) -> {
             ScheduleMeetingDetailItem item = dataList.get(position);
 
         });
-
-
         mAdapter.setOnChildClickListener((clickAction) -> {
             switch (clickAction) {
                 case ScheduleMeetingDetailItem.COPY_MEETING_ID_ACTION:
                     copyValue(mAdapter.getData().get(clickAction).getDescription());
                     Toast.makeText(getActivity(), "会议Id复制成功", Toast.LENGTH_SHORT).show();
+                    break;
+                case ScheduleMeetingDetailItem.COPY_LIVE_URL_ACTION:
+                    copyValue(mAdapter.getData().get(clickAction).getDescription());
+                    Toast.makeText(getActivity(), "直播地址复制成功", Toast.LENGTH_SHORT).show();
                     break;
                 case ScheduleMeetingDetailItem.COPY_PASSWORD_ACTION:
                     copyValue(mAdapter.getData().get(clickAction).getDescription());
@@ -82,26 +85,25 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
                     break;
             }
         });
-
-
         binding.btnJoinScheduleMeeting.setOnClickListener(view -> {
             NEJoinMeetingParams params = new NEJoinMeetingParams();
-            params.meetingId = meetingId;
-            params.password = password;
+            params.meetingId = item.getMeetingId();
+            params.password = item.getPassword();
             params.displayName = SdkAuthenticator.getAccount();
             mViewModel.joinMeeting(params, null, new ToastCallback<>(getActivity(), "scheduleMeeting"));
         });
-
         binding.btnCancelScheduleMeeting.setOnClickListener(view -> {
-            mViewModel.cancelMeeting(meetingUniqueId, new ToastCallback<Void>(getActivity(), "scheduleMeeting") {
-                @Override
-                public void onResult(int resultCode, String resultMsg, Void resultData) {
-                    super.onResult(resultCode, resultMsg, resultData);
-                    if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
-                        Navigation.findNavController(getView()).popBackStack();
-                    }
-                }
-            });
+            mViewModel.cancelMeeting(item.getMeetingUniqueId(),
+                                     new ToastCallback<Void>(getActivity(), "scheduleMeeting") {
+
+                                         @Override
+                                         public void onResult(int resultCode, String resultMsg, Void resultData) {
+                                             super.onResult(resultCode, resultMsg, resultData);
+                                             if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
+                                                 Navigation.findNavController(getView()).popBackStack();
+                                             }
+                                         }
+                                     });
         });
     }
 
@@ -118,26 +120,24 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
     protected void initData() {
         //接收传参数据
         arguments = getArguments();
-        meetingUniqueId = arguments.getLong("meetingUniqueId");
-        password = arguments.getString("password");
-        subject = arguments.getString("subject");
-        meetingId = arguments.getString("meetingId");
-        startTime = arguments.getLong("startTime");
-        endTime = arguments.getLong("endTime");
-        status = (NEMeetingItemStatus) arguments.getSerializable("status");
-
+        item = (MeetingItem) arguments.getSerializable("meetingItem");
         if (dataList != null) {
             dataList.clear();
         }
-        dataList.add(new ScheduleMeetingDetailItem(subject, "", "", 0));
-        dataList.add(new ScheduleMeetingDetailItem("会议ID", meetingId, "复制", ScheduleMeetingDetailItem.COPY_MEETING_ID_ACTION));
-        dataList.add(new ScheduleMeetingDetailItem("开始时间", "", String.valueOf(startTime), 0));
-        dataList.add(new ScheduleMeetingDetailItem("结束时间", "", String.valueOf(endTime), 0));
-
-        if (!TextUtils.isEmpty(password)) {
-            dataList.add(new ScheduleMeetingDetailItem("会议密码", password, "复制", ScheduleMeetingDetailItem.COPY_PASSWORD_ACTION));
+        dataList.add(new ScheduleMeetingDetailItem(item.getSubject(), "", "", 0));
+        dataList.add(new ScheduleMeetingDetailItem("会议ID", item.getMeetingId(), "复制",
+                                                   ScheduleMeetingDetailItem.COPY_MEETING_ID_ACTION));
+        dataList.add(new ScheduleMeetingDetailItem("开始时间", "", String.valueOf(item.getStartTime()), 0));
+        dataList.add(new ScheduleMeetingDetailItem("结束时间", "", String.valueOf(item.getEndTime()), 0));
+        if (!TextUtils.isEmpty(item.getPassword())) {
+            dataList.add(new ScheduleMeetingDetailItem("会议密码", item.getPassword(), "复制",
+                                                       ScheduleMeetingDetailItem.COPY_PASSWORD_ACTION));
         }
-
+        if (item.getLive() != null && !TextUtils.isEmpty(item.getLive().liveUrl())) {
+            dataList.add(new ScheduleMeetingDetailItem("直播地址", item.getLive().liveUrl(), "复制",
+                                                       ScheduleMeetingDetailItem.COPY_LIVE_URL_ACTION));
+        }
+        NEMeetingItemStatus status = item.getStatus();
         if (status == NEMeetingItemStatus.cancel || status == NEMeetingItemStatus.recycled) {
             binding.btnCancelScheduleMeeting.setVisibility(View.GONE);
             binding.btnJoinScheduleMeeting.setVisibility(View.GONE);
@@ -147,7 +147,6 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
             binding.btnCancelScheduleMeeting.setVisibility(View.VISIBLE);
             binding.btnJoinScheduleMeeting.setVisibility(View.VISIBLE);
         }
-
         mAdapter.resetData(dataList);
     }
 }

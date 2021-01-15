@@ -157,6 +157,66 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     | shortId | String | 会议短号   |
 
+### 匿名入会获取会议信息
+
+1. 接口描述  
+    匿名入会获取会议信息。
+    
+2. 接口请求地址
+    ```
+    POST https://{host}/v1/meeting/anonymousJoinInfo HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+    调用请求头
+    
+    |请求头|说明|必须|
+    |:--- | :-------| :--- |
+    | authorization| body加密值，md5(body.toJsonString()@163) | 是  |
+    | clientType | Integer | 是 | 客户端类型。1：TV，2：IOS，3：AOS，4：PC，5：MAC，6：WEB，7：sip，8：linux |
+
+    请求参数
+    
+    | 参数 | 类型 | 必选 | 描述 |
+    | :------: | :------: | :------: | :------: |
+    | meetingId  | String | 是 | 会议id |
+    | deviceId | String | 是 | 客户端设备编号 |
+    | nickName | String | 是 | 用户加入会议时的昵称，10位以内的汉字、字母、数字 |
+    | video | Integer | 是 | 画面状态，1：打开，2：关闭 |
+    | audio | Integer | 是 | 声音状态，1：打开，2：关闭 |
+    | password | String | 会议密码 | 否 |
+    
+4. 输出参数
+    
+    `以下是公共响应参数的ret属性内包含的参数`
+
+    | 参数 | 类型 | 描述 |
+    | :------: | :------: | :------: |
+    | code        | int    | 状态码         |
+    | msg         | String | 错误信息        |
+    | appKey| String | 网易会议appkey| 
+    | imAppKey| String | | 
+    | nrtcAppKey| String | | 
+    | accountId| String | 匿名网易会议帐号id | 
+    | accountToken| String | 匿名网易会议帐号密码token|
+    | imAccid | String | 匿名网易会议帐号IM通信ID | 
+    | imToken |String | 匿名网易会议帐号IM通信ID的密码|
+    | avRoomCheckSum| String    | 音视频服务器请求token |
+    | avRoomCName | String | 音视频房间名称 |
+    | avRoomCid | String | 音视频房间id |
+    | avRoomUid | long    | 音视频房间成员uid |
+    | duration| long| 会议持续时长（单位：s）|
+    | createTime| long| 会议创建时间，unix时间戳（单位：s）|
+    | audioAllMute | Int    | 是否有全体禁音，0：否，1：有 |
+    | chatRoomId| long| 聊天室id: 创建参数chatRoom=1时返回|
+    | pushUrl | String    | 直播推流地址,为空表示改会议没有开启直播推流 |
+    | meetingKey| String| 会议唯一key, 可用于获取直播参数|
+    | meetingId | String| 会议号 |
+    | shortId| String| 会议短号|
+    | meetingUniqueId | String| 会议唯一id|
+    | sipCid | String| sip会议号|
+
 ### 查询会议（meetingUniqueId）
 
 1. 接口描述  
@@ -190,6 +250,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     | shortId | String | 会议短号   |
     
+
 ### 修改会议
 
 1. 接口描述  

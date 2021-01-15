@@ -822,6 +822,7 @@ boolean videoEnabled = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
 - 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
 - 美颜服务开通官网咨询渠道：[云信官网](http://yunxin.163.com/)
 - 美颜配置支持多端漫游。
+- [Android美颜集成方式](beauty_guide.md)
 
 --------------------
 

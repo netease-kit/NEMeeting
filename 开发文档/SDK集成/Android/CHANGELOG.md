@@ -1,5 +1,22 @@
 # CHANGELOG
 
+# 2021-1-15 @ v1.5.2
+
+## Added
+* 支持自定义音频流
+    - 订阅会议内某一音视频流：`NEMeetingService.subscribeRemoteAudioStream`
+    - 批量订阅会议内某一音视频流：`NEMeetingService.subscribeRemoteAudioStreams`
+    - 订阅会议内全部音视频流：`NEMeetingService.subscribeAllRemoteAudioStreams`
+
+* 遥控器支持会议内菜单自定义
+    - 新增单状态菜单项：`NESingleStateMenuItem`
+    - 新增可切换状态的双状态菜单项：`NECheckableMenuItem`
+    - 新增菜单项状态迁移控制器：`NEMenuStateController`
+    - 新增SDK预置菜单Id与菜单项定义: `NEMenuIds`, `NEMenuItems`
+    - [Android]新增菜单列表构建帮助类：`NEMenuItemListBuilder`
+    - 配置工具栏菜单列表：`NEMeetingOptions.fullToolbarMenuItems`
+    - 配置更多展开菜单列表：`NEMeetingOptions.fullMoreMenuItems`
+
 # 2020-12-25 @ v1.5.1
 ## Fixed
 * 修复IM复用时登录状态错误

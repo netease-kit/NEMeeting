@@ -133,7 +133,7 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
             dataList.add(new ScheduleMeetingDetailItem("会议密码", item.getPassword(), "复制",
                                                        ScheduleMeetingDetailItem.COPY_PASSWORD_ACTION));
         }
-        if (item.getLive() != null && !TextUtils.isEmpty(item.getLive().liveUrl())) {
+        if (item.getLive() != null &&item.getLive().isEnable() && !TextUtils.isEmpty(item.getLive().liveUrl())) {
             dataList.add(new ScheduleMeetingDetailItem("直播地址", item.getLive().liveUrl(), "复制",
                                                        ScheduleMeetingDetailItem.COPY_LIVE_URL_ACTION));
         }

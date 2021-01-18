@@ -7,16 +7,11 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.SdkInitializer;
 import com.netease.meetinglib.demo.data.MeetingDataRepository;
 import com.netease.meetinglib.demo.log.LogUtil;
+import com.netease.meetinglib.sdk.NECallback;
 import com.netease.meetinglib.sdk.NEMeetingInfo;
 import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
 import com.netease.meetinglib.sdk.NEMeetingService;
@@ -24,6 +19,14 @@ import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
 import com.netease.meetinglib.sdk.control.NEControlListener;
 import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel implements NEMeetingStatusListener, SdkInitializer.InitializeListener, SdkAuthenticator.AuthStateChangeListener {
 
@@ -83,6 +86,10 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
 
     public void setOnInjectedMenuItemClickListener(NEMeetingOnInjectedMenuItemClickListener listener) {
         mRepository.setOnInjectedMenuItemClickListener(listener);
+    }
+
+    public void setOnControllerInjectedMenuItemClickListener(NEMeetingOnInjectedMenuItemClickListener listener) {
+        mRepository.setOnControllerInjectedMenuItemClickListener(listener);
     }
 
     public void setOnControlCustomMenuItemClickListener(NEControlMenuItemClickListener listener) {
@@ -156,5 +163,34 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     @Override
     public void onAuthStateChanged(int state) {
         stateLiveData.setValue(state);
+    }
+
+    /**
+     * 订阅会议内某一音频流
+     *
+     * @param accountId 订阅或者取消订阅的id
+     * @param subscribe true：订阅， false：取消订阅
+     */
+    public void subscribeRemoteAudioStream(String accountId, boolean subscribe, NECallback<Void> callback) {
+        mRepository.subscribeRemoteAudioStream(accountId, subscribe, callback);
+    }
+
+    /**
+     * 批量订阅会议内音频流
+     *
+     * @param accountIds 订阅或者取消订阅的id列表
+     * @param subscribe  true：订阅， false：取消订阅
+     */
+    public void subscribeRemoteAudioStreams(List<String> accountIds, boolean subscribe, NECallback<List<String>> callback) {
+        mRepository.subscribeRemoteAudioStreams(accountIds, subscribe, callback);
+    }
+
+    /**
+     * 订阅会议内全部音频流
+     *
+     * @param subscribe true：订阅， false：取消订阅
+     */
+    public void subscribeAllRemoteAudioStreams(boolean subscribe, NECallback<Void> callback) {
+        mRepository.subscribeAllRemoteAudioStreams(subscribe, callback);
     }
 }

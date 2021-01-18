@@ -52,6 +52,35 @@ public class MeetingDataRepository {
     public void getCurrentMeetingInfo(NECallback<NEMeetingInfo> callback) {
     }
 
+    /**
+     * 订阅会议内某一音频流
+     *
+     * @param accountId 订阅或者取消订阅的id
+     * @param subscribe true：订阅， false：取消订阅
+     */
+    public void subscribeRemoteAudioStream(String accountId, boolean subscribe, NECallback<Void> callback) {
+        NEMeetingSDK.getInstance().getMeetingService().subscribeRemoteAudioStream(accountId, subscribe, callback);
+    }
+
+    /**
+     * 批量订阅会议内音频流
+     *
+     * @param accountIds 订阅或者取消订阅的id列表
+     * @param subscribe  true：订阅， false：取消订阅
+     */
+    public void subscribeRemoteAudioStreams(List<String> accountIds, boolean subscribe, NECallback<List<String>> callback) {
+        NEMeetingSDK.getInstance().getMeetingService().subscribeRemoteAudioStreams(accountIds, subscribe, callback);
+    }
+
+    /**
+     * 订阅会议内全部音频流
+     *
+     * @param subscribe true：订阅， false：取消订阅
+     */
+    public void subscribeAllRemoteAudioStreams(boolean subscribe, NECallback<Void> callback) {
+        NEMeetingSDK.getInstance().getMeetingService().subscribeAllRemoteAudioStreams(subscribe, callback);
+    }
+
     public NEMeetingService getMeetingService() {
         return NEMeetingSDK.getInstance().getMeetingService();
     }
@@ -59,6 +88,12 @@ public class MeetingDataRepository {
     public void setOnInjectedMenuItemClickListener(NEMeetingOnInjectedMenuItemClickListener listener) {
         if (NEMeetingSDK.getInstance().getMeetingService() != null) {
             NEMeetingSDK.getInstance().getMeetingService().setOnInjectedMenuItemClickListener(listener);
+        }
+    }
+
+    public void setOnControllerInjectedMenuItemClickListener(NEMeetingOnInjectedMenuItemClickListener listener) {
+        if (NEMeetingSDK.getInstance().getMeetingService() != null) {
+            NEMeetingSDK.getInstance().getControlService().setOnInjectedMenuItemClickListener(listener);
         }
     }
 
@@ -161,11 +196,11 @@ public class MeetingDataRepository {
     }
 
     public void getBeautyFaceValue(NECallback<Integer> callback) {
-         NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue(callback);
+        NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue(callback);
     }
 
     public void setBeautyFaceValue(int beautyFaceValue) {
-         NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
+        NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
     }
 
     /////////////////////////////////////////////////

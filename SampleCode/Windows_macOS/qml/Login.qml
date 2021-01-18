@@ -1,52 +1,82 @@
 ﻿import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import Qt.labs.settings 1.0
 import NetEase.Meeting.MeetingStatus 1.0
 
 Rectangle {
     Component.onCompleted: {
-        toast.show('Init successfully.')
+    }
+
+    Settings {
+        id: setting
+        property string sampleAppkey
+        property string sampleAccoundId
+        property string sampleAccoundToken
+
+        property string sampleAnonAppkey
+        property string sampleAnonMeetingId
+        property string sampleAnonMeetingPwd
     }
 
     ColumnLayout {
         anchors.centerIn: parent
         Image {
+            Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: 58
             Layout.preferredWidth: 220
             source: 'qrc:/images/logo.png'
         }
-        TextField {
-            id: textAppKey
-            placeholderText: qsTr('Your application key')
-            text: ''
-            selectByMouse: true
-            Layout.fillWidth: true
-            Layout.topMargin: 20
+        RowLayout {
+            TextField {
+                implicitWidth: 300
+                id: textAppKey
+                placeholderText: qsTr('Your application key')
+                text: !anon.checked ? setting.value('sampleAppkey', '') : setting.value('sampleAnonAppkey', '')
+                selectByMouse: true
+                Layout.fillWidth: true
+                Layout.topMargin: 20
+            }
+            CheckBox {
+                id: anon
+                text: qsTr('Anon')
+            }
         }
         TextField {
             id: textAccountId
-            placeholderText: qsTr('Your account ID')
-            text: ''
+            placeholderText: !anon.checked ? qsTr('Your account ID') : qsTr('Meeting ID')
+            text: !anon.checked ? setting.value('sampleAccoundId', '') : setting.value('sampleAnonMeetingId', '')
             selectByMouse: true
             Layout.fillWidth: true
         }
         TextField {
             id: textPassword
-            placeholderText: qsTr('Your password')
-            text: ''
+            placeholderText: !anon.checked ? qsTr('Your password') : qsTr('Password')
+            text: !anon.checked ? setting.value('sampleAccoundToken', '') : setting.value('sampleAnonMeetingPwd', '')
             selectByMouse: true
             Layout.fillWidth: true
         }
         Button {
             id: btnSubmit
             highlighted: true
-            text: 'Login'
+            text: !anon.checked ? qsTr('Login') : qsTr('Join')
             Layout.fillWidth: true
-            enabled: textAppKey.text.length > 0 & textAccountId.text.length > 0 && textPassword.text.length > 0
+            enabled: textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0)
             onClicked: {
-                meetingManager.login(textAppKey.text,
-                                     textAccountId.text,
-                                     textPassword.text)
+                if (!anon.checked) {
+                    setting.setValue('sampleAppkey', textAppKey.text)
+                    setting.setValue('sampleAccoundId', textAccountId.text)
+                    setting.setValue('sampleAccoundToken', textPassword.text)
+                    meetingManager.login(textAppKey.text,
+                                         textAccountId.text,
+                                         textPassword.text)
+                } else {
+                    setting.setValue('sampleAnonAppkey', textAppKey.text)
+                    setting.setValue('sampleAnonMeetingId', textAccountId.text)
+                    setting.setValue('sampleAnonMeetingPwd', textPassword.text)
+                    meetingManager.initialize(textAppKey.text)
+                    meetingManager.invokeJoin(textAccountId.text, 'nickname', false, false, true, true, textPassword.text)
+                }
                 enabled = false
             }
         }
@@ -55,11 +85,40 @@ Rectangle {
     Connections {
         target: meetingManager
         onLoginSignal: {
-            btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 & textAccountId.text.length > 0 && textPassword.text.length > 0 })
+            btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0) })
             if (errorCode === MeetingStatus.ERROR_CODE_SUCCESS)
                 pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Front.qml'))
             else
                 toast.show(errorCode + '(' + errorMessage + ')')
+        }
+
+        onJoinSignal: {
+            btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0) })
+            switch (errorCode) {
+            case MeetingStatus.ERROR_CODE_SUCCESS:
+                toast.show(qsTr("Join successfull"))
+                btnLeave.enabled = true
+                btnGet.enabled = true
+                btnCreate.enabled = false
+                btnJoin.enabled = false
+                subscribeAudio.enabled = true
+                break
+            case MeetingStatus.MEETING_ERROR_LOCKED_BY_HOST:
+                toast.show(qsTr('The meeting is locked'))
+                break
+            case MeetingStatus.MEETING_ERROR_INVALID_ID:
+                toast.show(qsTr('Meeting not exist'))
+                break
+            case MeetingStatus.MEETING_ERROR_LIMITED:
+                toast.show(qsTr('Exceeds the limit'))
+                break
+            case MeetingStatus.ERROR_CODE_FAILED:
+                toast.show(qsTr('Failed to join meeting'))
+                break
+            default:
+                toast.show(errorCode + '(' + errorMessage + ')')
+                break
+            }
         }
     }
 }

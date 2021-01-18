@@ -114,13 +114,13 @@
     [group4.rows addObject:meetingLiveRow];
     
     if (_item.password.length != 0) {
-        if(_item.live.liveUrl.length !=0 ){
+        if(_item.live.enable && _item.live.liveUrl.length !=0 ){
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
         }else{
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
         }
     } else {
-        if(_item.live.liveUrl.length !=0){
+        if(_item.live.enable && _item.live.liveUrl.length !=0){
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group4]];
         }else{
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2]];
@@ -170,7 +170,12 @@
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
     [alertVC addAction:cancel];
+    
+    UIPopoverPresentationController *popPresenter = [alertVC popoverPresentationController];
+    
     _alertVC = alertVC;
+    popPresenter.sourceView = _cancelMeetingBtn;
+    popPresenter.sourceRect = _cancelMeetingBtn.bounds;
     [self presentViewController:alertVC animated:YES completion:nil];
 }
 

@@ -8,16 +8,15 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
-#import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
 #import "MeetingControlVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
-@property (nonatomic, strong) UIButton *mulIMBtn;
 @property (nonatomic, strong) TimerButton *restoreMeetingBtn;
-
+@property (nonatomic, strong) UIViewController *preVC;
+@property (nonatomic, strong) UIAlertController *alert;
 @end
 
 @implementation MainViewController
@@ -60,11 +59,6 @@
     }];
 }
 
-- (void)onEnterMulAction:(UIButton *)sender {
-    IMLoginVC *vc = [[IMLoginVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 - (void)onRestoreMeetingAction:(UIButton *)sender {
     BOOL ret = [[NEMeetingSDK getInstance].getMeetingService returnToMeeting];
     if (ret) {
@@ -86,23 +80,9 @@
                                env_lab.frame.size.height);
     [[UIApplication sharedApplication].keyWindow addSubview:env_lab];
 #endif
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.mulIMBtn];
-    self.navigationItem.rightBarButtonItem = item;
     [[UIApplication sharedApplication].keyWindow addSubview:self.restoreMeetingBtn];
 }
 
-- (UIButton *)mulIMBtn {
-    if (!_mulIMBtn) {
-        _mulIMBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_mulIMBtn setTitle:@"IM复用" forState:UIControlStateNormal];
-        _mulIMBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        _mulIMBtn.frame = CGRectMake(0, 0, 60, 40);
-        [_mulIMBtn addTarget:self
-                      action:@selector(onEnterMulAction:)
-            forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _mulIMBtn;
-}
 
 #pragma mark - MeetingServiceListener
 - (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem
@@ -137,28 +117,137 @@
 - (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
                     meetingInfo:(NEMeetingInfo *)meetingInfo
                 stateController:(NEMenuStateController)stateController {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        stateController(NO,nil);
+    if(clickInfo.itemId==100){
+        UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"音频管理" message:@"自定义音频订阅管理" preferredStyle:UIAlertControllerStyleAlert];
+
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"订阅所有音频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self handleSubscribeAll: YES];
+        }]];
+
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"取消订阅所有音频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self handleSubscribeAll: NO];
+        }]];
+
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"订阅成员音频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self handleSubscribeSingle: YES];
+        }]];
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"取消订阅成员音频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self handleSubscribeSingle: NO];
+        }]];
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"批量订阅成员音频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self handleSubscribeBatch: YES];
+        }]];
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"批量取消订阅成员音频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self handleSubscribeBatch: NO];
+        }]];
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        // Present action sheet.
+
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+        if (!preVC) {
+            preVC = keyWindow.rootViewController;
+        }
+        [preVC presentViewController:actionSheet animated:YES completion:nil];
+
+    }else{
+        _alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            stateController(NO,nil);
+        }];
+        UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            stateController(YES,nil);
+        }];
+        [_alert addAction:cancelAction];
+        [_alert addAction:ignoreAction];
+        [_alert addAction:okAction];
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        _preVC = keyWindow.rootViewController.presentedViewController;
+        if (!_preVC) {
+            _preVC = keyWindow.rootViewController;
+        }
+        [_preVC presentViewController:_alert animated:YES completion:nil];
+    }
+}
+
+- (void)handleSubscribeAll:(BOOL)subscribe {
+    [[[NEMeetingSDK getInstance] getMeetingService] subscribeAllRemoteAudioStreams:subscribe
+                                                                          callback:^(NSInteger resultCode, NSString *resultMsg, id resultData){
+        NSString *toastString = [NSString stringWithFormat:@"subscribeAllRemoteAudioStreams code: %ld msg: %@", (long)resultCode, resultMsg];
+        [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:CSToastPositionCenter];
     }];
-    UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+}
+
+- (void)handleSubscribeSingle:(BOOL)subscribe {
+    UIAlertController *editeDialog = [UIAlertController alertControllerWithTitle:@"音频订阅管理" message:@"请输入你需要订阅人的id" preferredStyle:UIAlertControllerStyleAlert];
+
+    [editeDialog addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入用户accountId";
     }];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        stateController(YES,nil);
+
+    //添加确定和取消按钮
+    UIAlertAction *cacleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+
     }];
-    [alert addAction:cancelAction];
-    [alert addAction:ignoreAction];
-    [alert addAction:okAction];
+
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        NSString *accountId =  editeDialog.textFields[0].text;
+        [[[NEMeetingSDK getInstance] getMeetingService] subscribeRemoteAudioStream:accountId
+                                                                         subscribe:subscribe callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+            NSString *toastString = [NSString stringWithFormat:@"subscribeRemoteAudioStream code: %ld msg: %@", (long)resultCode, resultMsg];
+            [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:CSToastPositionCenter];
+        }];
+    }];
+    [editeDialog addAction:cacleAction];
+    [editeDialog addAction:sureAction];
+
+    
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
     if (!preVC) {
         preVC = keyWindow.rootViewController;
     }
-    [preVC presentViewController:alert animated:YES completion:nil];
-    
+    [preVC presentViewController:editeDialog animated:YES completion:nil];
 }
 
+- (void)handleSubscribeBatch:(BOOL)subscribe {
+    UIAlertController *editeDialog = [UIAlertController alertControllerWithTitle:@"音频订阅管理" message:@"请输入你需要订阅人的id，用英文逗号分割" preferredStyle:UIAlertControllerStyleAlert];
 
+    [editeDialog addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入用户accountId用英文逗号分割";
+    }];
+
+    //添加确定和取消按钮
+    UIAlertAction *cacleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+
+    }];
+
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        NSString *list =  editeDialog.textFields[0].text;
+        NSArray *listItems = [list componentsSeparatedByString:@","];
+        
+        [[[NEMeetingSDK getInstance] getMeetingService] subscribeRemoteAudioStreams:listItems
+                                                                         subscribe:subscribe callback:^(NSInteger resultCode, NSString *resultMsg, NSArray <NSString *>* faildAccountIds) {
+            NSString *faildIdString = [faildAccountIds componentsJoinedByString:@" "];
+            NSString *toastString = [NSString stringWithFormat:@"subscribeRemoteAudioStreams code: %ld msg: %@ faildIds %@", (long)resultCode, resultMsg,faildIdString];
+            [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:CSToastPositionCenter];
+            [self.view makeToast:toastString];
+        }];
+    }];
+    [editeDialog addAction:cacleAction];
+    [editeDialog addAction:sureAction];
+
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+    if (!preVC) {
+        preVC = keyWindow.rootViewController;
+    }
+    [preVC presentViewController:editeDialog animated:YES completion:nil];
+
+}
 
 - (void)updateMeetingBtnWithInfo:(NEMeetingInfo *)info {
     NEMeetingStatus status = [[NEMeetingSDK getInstance] getMeetingService].getMeetingStatus;
@@ -179,7 +268,6 @@
 }
 
 - (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
-    
     if (event.status == MEETING_STATUS_INMEETING_MINIMIZED) {
         __weak typeof(self) weakSelf = self;
         [[[NEMeetingSDK getInstance] getMeetingService] getCurrentMeetingInfo:^(NSInteger resultCode, NSString * _Nonnull resultMsg, NEMeetingInfo * _Nonnull info) {
@@ -187,9 +275,29 @@
                 [weakSelf updateMeetingBtnWithInfo:info];
             }
         }];
-    } else {
+    }else{
+        if(event.status == MEETING_STATUS_DISCONNECTING && _preVC != nil){
+            [_preVC dismissViewControllerAnimated:YES completion:nil];
+        }
         _restoreMeetingBtn.hidden = YES;
     }
+}
+
+- (void)onUnbind:(int)unBindType {
+    NSString *msg = [NSString stringWithFormat:@"电视与遥控器解绑，原因:%d", unBindType];
+    [[UIApplication sharedApplication].keyWindow makeToast:msg
+                                                  duration:2
+                                                  position:CSToastPositionCenter];
+    if(_preVC != nil){
+        [_preVC dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)onTCProtocolUpgrade:(NETCProtocolUpgrade *)tcProtocolUpgrade {
+    NSString *msg = [NSString stringWithFormat:@"遥控器与电视协议版本不同，遥控器的协议版本：%@，电视的协议版本：%@，是否兼容：%hhd", tcProtocolUpgrade.controllerProtocolVersion, tcProtocolUpgrade.tvProtocolVersion, tcProtocolUpgrade.isCompatible];
+    [[UIApplication sharedApplication].keyWindow makeToast:msg
+                                                  duration:2
+                                                  position:CSToastPositionCenter];
 }
 
 - (UIButton *)restoreMeetingBtn {

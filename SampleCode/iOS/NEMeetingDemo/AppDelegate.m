@@ -38,7 +38,7 @@ static NSString * const prefixName = @"meetingdemo://";
 - (void)setupIMSDKPrivateAppKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[NIMSDK sharedSDK] registerWithAppID:@"请填入您的IMAppKey" cerName:nil];
+        [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
     });
 }
 - (void)doSetupMeetingSdk {
@@ -69,8 +69,11 @@ static NSString * const prefixName = @"meetingdemo://";
     if ([url.absoluteString containsString:prefixName]) {
         NSDictionary *dic = [url.absoluteString queryParametersFromURLString];
         NSLog(@"dic:%@",dic);
-        NSString *ssoToken = [dic objectForKey:@"ssoToken"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNEMeetingDidGetSSOToken object:ssoToken];
+        NSString *ssoToken = [dic objectForKey:@"ssoToken"]?:@"";
+        NSString *appKey = [dic objectForKey:@"appKey"]?:@"";
+        NSDictionary *ssoDict = @{@"appKey":appKey,@"ssoToken":ssoToken};
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNEMeetingDidGetSSOToken object:ssoDict];
         return YES;
     }
     return NO;

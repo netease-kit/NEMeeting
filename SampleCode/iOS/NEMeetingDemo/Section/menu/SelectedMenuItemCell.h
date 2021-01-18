@@ -10,7 +10,7 @@
 
 @interface SelectedMenuItemCell : UICollectionViewCell
 
-- (void) bindData: (NEMeetingMenuItem*)data;
+- (void)bindData:(NEMeetingMenuItem*)data;
 
 @end
 

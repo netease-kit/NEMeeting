@@ -26,7 +26,6 @@
 @implementation SelectedMenuItemEditVC
 
 - (void)viewDidLoad {
-    
     _itemIdEdx.placeholder = @"菜单ID";
     _itemIdEdx.keyboardType = UIKeyboardTypeNumberPad;
     _itemUncheckText.placeholder = @"未选中状态描述";
@@ -149,7 +148,7 @@
     return YES;
 }
 
-- (void) makeToast: (NSString *)message {
+- (void)makeToast: (NSString *)message {
     [self.view makeToast:message duration:[CSToastManager defaultDuration] position:CSToastPositionCenter style:nil];
 }
 

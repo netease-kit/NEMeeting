@@ -8,10 +8,15 @@
 #import "EnterMeetingVC.h"
 #import "CheckBox.h"
 #import "MeetingSettingVC.h"
-#import "MenuItemArrangementVC.h"
+#import "MeetingMenuSelectVC.h"
+
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
-@interface EnterMeetingVC ()<CheckBoxDelegate, MeetingServiceListener>
+typedef NS_ENUM(NSInteger, MeetingMenuType) {
+    MeetingMenuTypeToolbar = 1,
+    MeetingMenuTypeMore = 2,
+};
+@interface EnterMeetingVC ()<CheckBoxDelegate, MeetingServiceListener,MeetingMenuSelectVCDelegate>
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
 @property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
@@ -38,9 +43,12 @@
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
+@property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
 
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullMoreMenuItems;
+@property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullMoreMenuItems;
+// 自定义菜单类型：toolbar/更多
+@property (nonatomic, assign) MeetingMenuType currentType;
+
 @end
 
 @implementation EnterMeetingVC
@@ -83,7 +91,7 @@
 #pragma mark - Action
 - (IBAction)onEnterMeetingAction:(id)sender {
     NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
-    params.meetingId = _meetingIdInput.text;
+    params.meetingId =  _meetingIdInput.text;
     params.displayName = _nickInput.text;
     params.password = _passworkInput.text;
     
@@ -139,23 +147,19 @@
 }
 
 - (IBAction)configToolbarMenuItems:(UIButton *)sender {
-    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
-    vc.menuItems = _fullToolbarMenuItems;
-    __weak __typeof__ (self)weakSelf = self;
-    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
-        weakSelf.fullToolbarMenuItems = menuItems;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
+    self.currentType = MeetingMenuTypeToolbar;
+    [self enterMenuVC:_fullToolbarMenuItems];
 }
 
 - (IBAction)configMoreMenuItems:(UIButton *)sender {
-    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
-    vc.menuItems = _fullMoreMenuItems;
-    __weak __typeof__ (self)weakSelf = self;
-    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
-        weakSelf.fullMoreMenuItems = menuItems;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
+    self.currentType = MeetingMenuTypeMore;
+    [self enterMenuVC:_fullMoreMenuItems];
+}
+- (void)enterMenuVC:(NSArray *)items {
+    MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
+    menuSeletedVC.seletedItems = items;
+    menuSeletedVC.delegate = self;
+    [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 
 - (IBAction)addMenuAction:(UIButton *)sender {
@@ -176,7 +180,19 @@
                      @(item.itemId), item.title];
     [self.view makeToast:msg];
 }
-
+- (void)showSeletedItemResult:(NSArray *)menuItems {
+    NSString *string = @"已选";
+    for (NEMeetingMenuItem *item in menuItems) {
+        if ([item isKindOfClass:[NESingleStateMenuItem class]]) {
+            NESingleStateMenuItem *single = (NESingleStateMenuItem *)item;
+            [string stringByAppendingFormat:@"%@ ",single.singleStateItem.text];
+        }else {
+            NECheckableMenuItem *checkableItem = (NECheckableMenuItem *)item;
+            [string stringByAppendingFormat:@"%@ ",checkableItem.checkedStateItem.text];
+        }
+    }
+    [self.view makeToast:string];
+}
 #pragma mark - MeetingServiceListener
 - (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
     if (event.arg == MEETING_WAITING_VERIFY_PASSWORD) {
@@ -184,7 +200,14 @@
     }
 }
 
-
+- (void)didSelectedItems:(NSArray<NEMeetingMenuItem *> *)menuItems {
+    if (self.currentType == MeetingMenuTypeToolbar) {
+        self.fullToolbarMenuItems = menuItems;
+    }else {
+        self.fullMoreMenuItems = menuItems;
+    }
+    [self showSeletedItemResult:menuItems];
+}
 #pragma mark - Setter && Getter
 - (void)setType:(EnterMeetingType)type {
     _type = type;

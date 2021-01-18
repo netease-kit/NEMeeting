@@ -48,9 +48,17 @@
 }
 - (void)getSSOToken:(NSNotification *)notification {
     NSLog(@"notification:%@",notification.object);
-    NSString *SSOToken = notification.object;
+    NSDictionary *ssoDict = notification.object;
+    NSString *appKey = [ssoDict objectForKey:@"appKey"];
+    NSString *ssoToken = [ssoDict objectForKey:@"ssoToken"];
+    if (![kAppKey isEqualToString:appKey]) {
+        NSString *msg = @"和当前初始化的appKey不同，不能进行sso登录";
+        [self.view makeToast:msg];
+        return;
+    }
+    
     WEAK_SELF(weakSelf);
-    [[NEMeetingSDK getInstance] loginWithSSOToken:SSOToken
+    [[NEMeetingSDK getInstance] loginWithSSOToken:ssoToken
                              callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];
         if (resultCode != ERROR_CODE_SUCCESS) {

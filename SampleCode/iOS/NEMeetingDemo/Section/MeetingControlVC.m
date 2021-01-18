@@ -143,18 +143,28 @@
     }
 }
 
-- (void)onUnbind:(int)unBindType {
-    NSString *msg = [NSString stringWithFormat:@"电视与遥控器解绑，原因:%d", unBindType];
-    [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                  duration:2
-                                                  position:CSToastPositionCenter];
-}
-
-- (void)onTCProtocolUpgrade:(NETCProtocolUpgrade *)tcProtocolUpgrade {
-    NSString *msg = [NSString stringWithFormat:@"遥控器与电视协议版本不同，遥控器的协议版本：%@，电视的协议版本：%@，是否兼容：%hhd", tcProtocolUpgrade.controllerProtocolVersion, tcProtocolUpgrade.tvProtocolVersion, tcProtocolUpgrade.isCompatible];
-    [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                  duration:2
-                                                  position:CSToastPositionCenter];
+- (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
+                    meetingInfo:(NEMeetingInfo *)meetingInfo
+                stateController:(NEMenuStateController)stateController {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        stateController(NO,nil);
+    }];
+    UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        stateController(YES,nil);
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:ignoreAction];
+    [alert addAction:okAction];
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+    if (!preVC) {
+        preVC = keyWindow.rootViewController;
+    }
+    [preVC presentViewController:alert animated:YES completion:nil];
+    
 }
 
 #pragma mark - Getter

@@ -20,13 +20,21 @@
 
 @implementation SelectedMenuItemCell
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.itemLabel.layer.cornerRadius = 8;
+    }
+    return self;
+}
 
 - (void)bindData:(NEMeetingMenuItem *)data {
-    if ([data isKindOfClass: [NESingleStateMenuItem class]]) {
+    if ([data isKindOfClass:[NESingleStateMenuItem class]]) {
         NESingleStateMenuItem *sItem = (NESingleStateMenuItem *)data;
         _itemLabel.text = sItem.singleStateItem.text;
     }
-    if ([data isKindOfClass: [NECheckableMenuItem class]]) {
+    if ([data isKindOfClass:[NECheckableMenuItem class]]) {
         NECheckableMenuItem *sItem = (NECheckableMenuItem *)data;
         _itemLabel.text = sItem.uncheckStateItem.text;
     }

@@ -3,7 +3,15 @@
 网易会议iOS SDK提供了一套简单易用的接口，允许开发者通过调用NEMeeting SDK(以下简称SDK)提供的API，快速地集成音视频会议功能至现有iOS应用中。
 
 ## 变更记录
-[CHANGELOG.md](CHANGELOG.md)
+
+| 日期 | 版本 | 变更内容 |
+| :------: | :------: | :------- |
+| 2020-07-10  | 1.0.0 | 首次正式发布 |
+| 2020-08-31 | 1.1.0 | 新增如下接口：<br />     `NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
+| 2020-09-04 | 1.2.0 | 新增如下接口：<br />    `NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
+| 2020-09-18 | 1.2.3 | 新增如下接口：<br /><br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#createScheduleMeetingItem`创建一个会议条目<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#addListener:`注册会议事件回调<br />`NEPreMeetingService#removeListener`反注册会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChange`会议状态回调 |
+| 2020-09-24 | 1.2.5 | 新增如下接口：<br />`NEMeetingSDKConfig#appName`增加配置入会应用名称<br /> `NEMeetingOptions#noMinimize `配置会议中是否允许最小化会议页面<br /> `NEMeetingStatus#MEETING_STATUS_INMEETING_MINIMIZED`会议最小化状态<br />`NEMeetingSDK#getControlService` 遥控器服务<br />`NEControlService#openControlUI`打开遥控器<br /> `NEControlService#getCurrentMeetingInfo ` 获取当前会议详情。如果当前无正在进行中的会议，则回调数据对象为空<br /> `NEControlService#addListener`注册遥控器事件回调<br />`NEControlService#removeListener`反注册遥控器事件回调<br />`NEMeetingService#returnToMeeting`返回已最小化的会议页面<br /> |
+| 2021-01-15 | 1.5.2 | 新增如下接口：<br />`NEMeetingSDK#subscribeRemoteAudioStream:subscribe:callback:`订阅会议内某一音频流<br />`NEMeetingSDK#subscribeRemoteAudioStreams:subscribe:callback:`批量订阅会议内音频流<br />`NEMeetingSDK#subscribeAllRemoteAudioStreams:callback:`订阅会议内全部音频流<br /> |
 
 ## 快速接入
 
@@ -63,12 +71,11 @@
                              completionHandler:^(BOOL granted) {}];
     ```
 
-4. 渲染view注册。在info.plist文件中注册平台渲染视图，保证正常渲染，添加如下两行配置即可。
+4. 渲染view注册。在info.plist文件中注册平台渲染视图，保证正常渲染。
 
-    ```xml
-    <key>io.flutter.embedded_views_preview</key>
-	<string>YES</string>
-    ```
+    `io.flutter.embedded_views_preview     String       YES`
+    
+    ![viewconfig](/Users/zhanggenning/Documents/meeting-sdk-docs/ios-sdk/images/viewconfig.png)
     
 5. SDK初始化
 
@@ -90,38 +97,29 @@
 
 6. 调用相关接口完成特定功能，详情请参考API文档。
 
-- [登录鉴权](#登录鉴权)
+- 登录鉴权
     ```objective-c
     //[NEMeetingSDK getInstance]
-
-    //Token登录
     - (void)login:(NSString *)account
         token:(NSString *)token
          callback:(NECallbackOnResult)callback
-
-    //SSOToken登录
-    - (void)loginWithSSOToken:(NSString *)ssoToken
-     callback:(NECallbackOnResult)callback
-
-    //自动登录
-    - (void)tryAutoLogin:(NECallbackOnResult)callback
     ```
     
-- [创建会议](#创建会议)
+- 创建会议
     ```objective-c
     //[[NEMeetingSDK getInstance] getMeetingService]
     - (void)startMeeting:(NEStartMeetingParams *)param
                     opts:(NEStartMeetingOptions *)opts
                 callback:(NECallbackOnResult)callback;
     ```
-- [加入会议](#加入会议)
+- 加入会议
     ```objective-c
     //[[NEMeetingSDK getInstance] getMeetingService]
     - (void)joinMeeting:(NEJoinMeetingParams *)param
                    opts:(NEJoinMeetingOptions *)opts
                callback:(NECallbackOnResult)callback;
     ```
-- [注销登录](#注销)
+- 注销登录
     ```objective-c
     //[NEMeetingSDK getInstance]
     - (void)logout:(NECallbackOnResult)callback;
@@ -168,15 +166,7 @@ config.appKey = [DemoConfig shareConfig].appKey; //应用APPKey
 
 #### 描述
 
-请求SDK进行登录鉴权，只有完成SDK登录鉴权才允许创建会议。SDK提供了多种登录方式可供选择，不同的登录接口需要不同的入参数。说明如下：
-
-| 登录方式 | 说明 | 接口 | 参数 | 其他 |
-| :------ | :------ | :------ | :------ | :------ |
-| Token登录 | 无 | `NEMeetingSDK#login` | accountId、accountToken | 账号信息需要从会议服务器获取，由接入方自行实现相关业务逻辑 |
-| SSOToken登录 | 无 | `NEMeetingSDK#loginWithSSOToken` | ssoToken | 无 |
-| 自动登录 | SDK尝试使用最近一次成功登录过的账号信息登录 | `NEMeetingSDK#tryAutoLogin` | 无 | 无 |
-
-下面就`Token登录`方式说明SDK登录逻辑，其他登录方式同理。
+请求SDK进行登录鉴权，只有完成SDK登录鉴权才允许创建会议。
 
 #### 业务流程
 
@@ -251,7 +241,6 @@ NEMeetingService *meetingServce = [NEMeetingSDK getInstance].getMeetingService;
 #### 注意事项
 
 - 创建会议时，会议号可以配置为个人会议号(登录后可通过**[NEMeetingSDK getInstance].getAccountService**获取)，或者置空(此时由服务器随机分配会议号)。
-- 会议SDK提供了大量的入会选项可供配置，可自定义会中的UI显示、菜单、行为等，可根据需要进行设置，可参考[入会选项](#入会选项)进行设置
 - 该接口仅支持**在登录鉴权成功后调用**，其他状态下调用不会成功
 
 --------------------
@@ -297,7 +286,6 @@ NEMeetingService *meetingServce = [NEMeetingSDK getInstance].getMeetingService;
 
 - 会议号不能为空，需要配置为真实进行中的会议ID
 - 该接口支持登录和未登录状态调用
-- 会议SDK提供了大量的入会选项可供配置，可自定义会中的UI显示、菜单、行为等，可根据需要进行设置，可参考[入会选项](#入会选项)进行设置
 
 --------------------
 
@@ -570,7 +558,7 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 
 --------------------
 
-### [自定义会中【更多】菜单内容](../../SDK进阶/自定义菜单.md)
+### 自定义会中【更多】菜单内容
 
 #### 描述
 
@@ -578,28 +566,21 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 
 #### 业务流程
 
-1. 配置匿名入会/创建会议/加入会议的Options相关参数，增加自定义列表
+	1. 配置匿名入会/创建会议/加入会议的Options相关参数，增加自定义列表
 
   ```objective-c
-    NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
-    options.noChat = NO;
-    options.noInvite = NO;
+NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
+options.noChat = NO;
+options.noInvite = NO;
 
-    //1. 创建更多菜单列表构建类，列表默认包含："邀请"、"聊天"
-    NSMutableArray<NEMeetingMenuItem *> *moreMenus = [NEMenuItems defaultMoreMenuItems];
-    //2. 添加一个多选菜单项
-    NECheckableMenuItem * newItem = [[NECheckableMenuItem alloc] init];
-    newItem.itemId = 100;
-    newItem.visibility = VISIBLE_ALWAYS;
-    newItem.uncheckStateItem = [[NEMeetingInfo alloc] init];
-    newItem.uncheckStateItem.icon = @"ic_menu_uncheck";
-    newItem.uncheckStateItem.text = @"多选按钮-未选中";
-    newItem.checkedStateItem = [[NEMeetingInfo alloc] init];
-    newItem.checkedStateItem.icon = @"ic_menu_check";
-    newItem.checkedStateItem.text = @"多选按钮-已选中";
-    [moreMenus addObject: newItem];
-    //3. 配置完成，设置参数字段
-    options.fullMoreMenuItems = moreMenus;
+//配置自定义菜单
+NSMutableArray *menuItems = [NSMutableArray array];
+for (int i = 0; i < 3; i++) { //最多不能超过3个，超过之后只取前3个
+    NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
+    item.itemId = 100 + i; //必须大于100，且要保证不重复
+    item.title = [@"测试Title" stringByAppendingString:@(i).stringValue];
+}
+options.injectedMoreMenuItems = menuItems;
   ```
 
 2. 设置回调接口开始监听，并在回调方法中处理自定义按钮事件
@@ -609,19 +590,10 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 [[NEMeetingSDK getInstance].getMeetingService addListener:self];
 
 //实现MeetingServiceListener协议方法
-- (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
-                    meetingInfo:(NEMeetingInfo *)meetingInfo
-                stateController:(NEMenuStateController)stateController {
-    //1. 获取被点击菜单项ID
-    int menuId = clickInfo.itemId;
-    //2. 如果是多状态菜单，获取被点击时的状态
-    if ([clickInfo isKindOfClass: [NEStatefulMenuClickInfo class]]) {
-        // 菜单项点击时的选中状态
-        BOOL isChecked = [(NEStatefulMenuClickInfo*)clickInfo isChecked];
-        // 3. 控制菜单项的状态迁移
-        BOOL needTransition = conditionCheck();
-        stateController(needTransition, nil);
-    }
+- (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem
+                    meetingInfo:(NEMeetingInfo *)meetingInfo {
+      //menuItem 是点击的item，需要用户根据itemId进行匹配
+      //meetingInfo 是当前的会议状态
 }
 
 ```
@@ -629,7 +601,11 @@ NEAccountService *accountService = [NEMeetingSDK getInstance].getAccountService;
 #### 注意事项
 
 - 自定义会中【更多】菜单内容，需要在入会前完成设置，在会议中设置不会生效
-- *更详细自定义菜单可参考[自定义会议中菜单](../../SDK进阶/自定义菜单.md)*
+- 默认【更多】菜单内容中的邀请和聊天，支持隐藏/显示配置
+- 合法的自定义菜单项需满足以下条件：
+  - itemId >= 100，且为整数Int类型
+  - title不为空和空格（对空格做trim处理），且长度不大于10字符
+- 会议自定义菜单项，更多菜单中最多支持添加三个自定义菜单项，如果超过三个仅显示前三个合法自定义按钮
 
 --------------------
 
@@ -674,8 +650,6 @@ NESettingsService *settingsService = [NEMeetingSDK getInstance].getSettingsServi
 ```
 
 2. 调用不同接口保存设置项或查询设置项
-   
-- 查询通用入会设置
 
 ```objective-c
 // 设置并保存会议设置
@@ -689,67 +663,11 @@ BOOL audioEnabled = [settingsService isTurnOnMyAudioWhenJoinMeetingEnabled];
 BOOL videoEnabled = [settingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
 ```
 
-- 查询直播开关状态
-```objective-c
-
-   /**
-     * 查询直播开关状态
-     * @return true-打开，false-关闭
-     */
-  BOOL liveEnable = [[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]
-```
-- 查询美颜开关状态
-```objective-c
-
-   /**
-     * 查询直播开关状态
-     * @return true-打开，false-关闭
-     */
- BOOL enbale =  [[NEMeetingSDK getInstance].getSettingsService isBeautyFaceEnabled];
-```
-- 查询当前美颜参数
-```objective-c
-    /**
-     * 获取当前美颜参数，关闭返回0
-     * @param callback 回调
-     */
-      [[NEMeetingSDK getInstance].getSettingsService getBeautyFaceValue:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
-           NSLog(@"NEMeetingSDK getBeautyFaceValue resultData  %@",resultData);
-       }];
-```
-- 设置美颜等级
-```objective-c
-    /**
-     * 设置美颜等级
-     * @param value 传入美颜等级，参数规则为[0,10]整数
-     * @return true-打开，false-关闭
-     */
-   [[NEMeetingSDK getInstance].getSettingsService setBeautyFaceValue:value];
-```
-- 打开美颜界面
-```objective-c
-   /**
-    * 打开美颜界面，支持会前设置使用。
-    *
-    * @param callback 回调
-    */
-    __weak typeof(self) weakSelf = self;
-     [[[NEMeetingSDK getInstance] getSettingsService] openBeautyUI:^(NSInteger resultCode, NSString *resultMsg) {
-         if (resultCode == ERROR_CODE_SUCCESS) {
-             //success
-         } else {
-             //handle error
-         }
-     }];
-```
-
 #### 注意事项
 
 - 针对已登录用户而言，每个用户有自己独立的一份会议设置；其他所有未登录用户、匿名用户共享一份会议设置。
-- 部分会议设置项仅在当前设备上保存，不会漫游。
+- 会议设置项仅在当前设备上保存，不会漫游。
 - 调用创建会议/加入会议接口时，如果接口中`NEMeetingOptions`入参为`null`，SDK会使用会议设置服务中已保存的相关配置进行创会/入会。
-- 美颜服务开通官网咨询渠道：[云信官网](http://yunxin.163.com/)
-- 美颜配置支持多端漫游。
 
 --------------------
 
@@ -834,29 +752,9 @@ BOOL videoEnabled = [settingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
 
 ```
 
+
+
 #### 注意事项
 
 - 登陆状态下才能够使用遥控器服务
 - 会中状态暂不支持开启遥控器；遥控器打开时，不支持进入会议，二者位互斥逻辑。
-
-
-## 附录
-
-### 入会选项
-
-SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显示、菜单、行为等。列举如下：
-
-|选项名称|选项说明|默认值|
-| :------ | :------ | :------ |
-| noVideo | 入会时关闭视频 | true |
-| noAudio | 入会时关闭音频 | true |
-| noMinimize | 隐藏会议内“最小化”功能 | true |
-| noInvite | 隐藏会议内“邀请”功能 | false |
-| noChat | 隐藏会议内“聊天”功能 | true |
-| noGallery | 关闭会议中“画廊”模式功能 | false |
-| noSwitchCamera | 关闭会议中“切换摄像头”功能 | false |
-| noSwitchAudioMode | 关闭会议中“切换音频模式”功能 | false |
-| showMeetingTime | 显示会议“持续时间” | false |
-| meetingIdDisplayOption | 会议内会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
-| fullToolbarMenuItems | 会议内工具栏菜单列表 | nil |
-| fullMoreMenuItems | 会议内更多展开菜单列表 | nil |

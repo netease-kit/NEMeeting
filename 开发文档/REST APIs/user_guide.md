@@ -185,7 +185,8 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | nickName | String | 是 | 用户加入会议时的昵称，10位以内的汉字、字母、数字 |
     | video | Integer | 是 | 画面状态，1：打开，2：关闭 |
     | audio | Integer | 是 | 声音状态，1：打开，2：关闭 |
-    | password | String | 会议密码 | 否 |
+    | password | String | 否 | 会议密码 |
+    | roleType | Integer | 否 | 用户会议角色，1.成员，4.影子 |
     
 4. 输出参数
     

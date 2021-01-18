@@ -114,21 +114,13 @@
     [group4.rows addObject:meetingLiveRow];
     
     if (_item.password.length != 0) {
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/Subscribe/Detail/NESubscribeMeetingDetailVC.m
         if(_item.live.enable && _item.live.liveUrl.length !=0 ){
-=======
-        if(_item.live.liveUrl.length !=0 ){
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/Subscribe/Detail/NESubscribeMeetingDetailVC.m
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
         }else{
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
         }
     } else {
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/Subscribe/Detail/NESubscribeMeetingDetailVC.m
         if(_item.live.enable && _item.live.liveUrl.length !=0){
-=======
-        if(_item.live.liveUrl.length !=0){
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/Subscribe/Detail/NESubscribeMeetingDetailVC.m
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group4]];
         }else{
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2]];

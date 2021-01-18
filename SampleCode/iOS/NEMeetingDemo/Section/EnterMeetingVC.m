@@ -8,12 +8,8 @@
 #import "EnterMeetingVC.h"
 #import "CheckBox.h"
 #import "MeetingSettingVC.h"
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/EnterMeetingVC.m
 #import "MeetingMenuSelectVC.h"
 
-=======
-#import "MenuItemArrangementVC.h"
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/EnterMeetingVC.m
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
@@ -47,18 +43,12 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/EnterMeetingVC.m
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
 
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullMoreMenuItems;
 // 自定义菜单类型：toolbar/更多
 @property (nonatomic, assign) MeetingMenuType currentType;
 
-=======
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
-
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullMoreMenuItems;
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/EnterMeetingVC.m
 @end
 
 @implementation EnterMeetingVC
@@ -157,7 +147,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 }
 
 - (IBAction)configToolbarMenuItems:(UIButton *)sender {
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/EnterMeetingVC.m
     self.currentType = MeetingMenuTypeToolbar;
     [self enterMenuVC:_fullToolbarMenuItems];
 }
@@ -171,25 +160,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     menuSeletedVC.seletedItems = items;
     menuSeletedVC.delegate = self;
     [self.navigationController pushViewController:menuSeletedVC animated:YES];
-=======
-    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
-    vc.menuItems = _fullToolbarMenuItems;
-    __weak __typeof__ (self)weakSelf = self;
-    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
-        weakSelf.fullToolbarMenuItems = menuItems;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (IBAction)configMoreMenuItems:(UIButton *)sender {
-    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
-    vc.menuItems = _fullMoreMenuItems;
-    __weak __typeof__ (self)weakSelf = self;
-    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
-        weakSelf.fullMoreMenuItems = menuItems;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/EnterMeetingVC.m
 }
 
 - (IBAction)addMenuAction:(UIButton *)sender {

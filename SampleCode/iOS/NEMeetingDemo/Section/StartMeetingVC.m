@@ -8,11 +8,7 @@
 #import "StartMeetingVC.h"
 #import "MeetingSettingVC.h"
 #import "CheckBox.h"
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/StartMeetingVC.m
 #import "MeetingMenuSelectVC.h"
-=======
-#import "MenuItemArrangementVC.h"
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/StartMeetingVC.m
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <NEMeetingSDK/NEMeetingSDK.h>
 
@@ -47,17 +43,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/StartMeetingVC.m
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
 
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullMoreMenuItems;
 // 自定义菜单类型：toolbar/更多
 @property (nonatomic, assign) MeetingMenuType currentType;
-=======
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
-
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *fullMoreMenuItems;
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/StartMeetingVC.m
 
 @end
 
@@ -156,17 +146,12 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         } else {
             if (![result isKindOfClass:[NEAccountInfo class]] || result == nil) return;
             NEAccountInfo *accountInfo = result;
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/StartMeetingVC.m
             self.meetingId = accountInfo.meetingId;
             NSString *meetingId = accountInfo.meetingId;
             if (accountInfo.shortMeetingId) {
                 meetingId = [NSString stringWithFormat:@"%@(短号:%@)",meetingId,accountInfo.shortMeetingId];
             }
             weakSelf.meetingIdInput.text = meetingId;
-=======
-            NSString *showText = [NSString stringWithFormat:@"%@(短号:%@)",accountInfo.meetingId,accountInfo.shortMeetingId];
-            weakSelf.meetingIdInput.text = showText;
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/StartMeetingVC.m
         };
     }];
 }
@@ -177,7 +162,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 }
 
 - (IBAction)configToolbarMenuItems:(UIButton *)sender {
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/StartMeetingVC.m
     self.currentType = MeetingMenuTypeToolbar;
     [self enterMenuVC:_fullToolbarMenuItems];
 }
@@ -185,25 +169,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 - (IBAction)configMoreMenuItems:(UIButton *)sender {
     self.currentType = MeetingMenuTypeMore;
     [self enterMenuVC:_fullMoreMenuItems];
-=======
-    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
-    vc.menuItems = _fullToolbarMenuItems;
-    __weak __typeof__ (self)weakSelf = self;
-    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
-        weakSelf.fullToolbarMenuItems = menuItems;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (IBAction)configMoreMenuItems:(UIButton *)sender {
-    MenuItemArrangementVC *vc = (MenuItemArrangementVC *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuItemArrangementVC"];
-    vc.menuItems = _fullMoreMenuItems;
-    __weak __typeof__ (self)weakSelf = self;
-    vc.MenuItemSelectCallback = ^(NSMutableArray <NEMeetingMenuItem *> *menuItems) {
-        weakSelf.fullMoreMenuItems = menuItems;
-    };
-    [self.navigationController pushViewController:vc animated:YES];
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/StartMeetingVC.m
 }
 
 - (IBAction)addMenuAction:(UIButton *)sender {
@@ -259,10 +224,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
             [self doGetUserMeetingId];
         }else {
             self.meetingIdInput.text = @"";
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/StartMeetingVC.m
             self.meetingId = @"";
-=======
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/StartMeetingVC.m
         }
     } else if (index == 4) {
         _configCheckBox.disableAllItems = [self useDefaultConfig];

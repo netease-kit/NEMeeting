@@ -65,7 +65,6 @@
                         <action selector="doOpenControlAction:" destination="-1" eventType="touchUpInside" id="6D9-Iw-1oE"/>
                     </connections>
                 </button>
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MeetingActionVC.xib
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0z3-4X-QbJ">
                     <rect key="frame" x="76" y="191" width="123" height="30"/>
                     <color key="backgroundColor" red="0.15686274510000001" green="0.3921568627" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -80,10 +79,6 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BeZ-WW-dIo">
                     <rect key="frame" x="87" y="401" width="240" height="48"/>
-=======
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BeZ-WW-dIo">
-                    <rect key="frame" x="87" y="356" width="240" height="48"/>
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MeetingActionVC.xib
                     <color key="backgroundColor" red="0.15686274510000001" green="0.3921568627" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="Gqp-Im-osB"/>
@@ -100,7 +95,6 @@
                         <action selector="doOpenBeautyAction:" destination="-1" eventType="touchUpInside" id="5Ce-KX-XBj"/>
                     </connections>
                 </button>
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MeetingActionVC.xib
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JwL-g3-GgA">
                     <rect key="frame" x="224" y="191" width="116" height="30"/>
                     <color key="backgroundColor" red="0.15686274510000001" green="0.3921568627" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -113,8 +107,6 @@
                         <action selector="configMoreMenuItems:" destination="-1" eventType="touchUpInside" id="t8R-wy-hbq"/>
                     </connections>
                 </button>
-=======
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MeetingActionVC.xib
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -130,31 +122,20 @@
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Hwl-6G-QG6" secondAttribute="trailing" constant="87" id="Dds-Am-cnO"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="centerX" secondItem="Hwl-6G-QG6" secondAttribute="centerX" id="Hon-co-kFY"/>
                 <constraint firstItem="Hwl-6G-QG6" firstAttribute="centerX" secondItem="Cee-wt-LhL" secondAttribute="centerX" id="KOk-bS-dan"/>
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MeetingActionVC.xib
                 <constraint firstItem="JwL-g3-GgA" firstAttribute="top" secondItem="Cee-wt-LhL" secondAttribute="bottom" constant="33" id="Od6-SM-36U"/>
                 <constraint firstItem="BeZ-WW-dIo" firstAttribute="top" secondItem="SnZ-Tb-soM" secondAttribute="bottom" constant="48" id="Oop-0y-lVd"/>
                 <constraint firstItem="BeZ-WW-dIo" firstAttribute="leading" secondItem="SnZ-Tb-soM" secondAttribute="leading" id="Pp1-fP-pRB"/>
                 <constraint firstItem="BeZ-WW-dIo" firstAttribute="top" secondItem="SnZ-Tb-soM" secondAttribute="bottom" constant="34" id="T9v-Lg-cC7"/>
                 <constraint firstItem="Hwl-6G-QG6" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="87" id="aTs-SN-3hd"/>
-=======
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="top" secondItem="SnZ-Tb-soM" secondAttribute="bottom" constant="48" id="Oop-0y-lVd"/>
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="leading" secondItem="SnZ-Tb-soM" secondAttribute="leading" id="Pp1-fP-pRB"/>
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="top" secondItem="SnZ-Tb-soM" secondAttribute="bottom" constant="34" id="T9v-Lg-cC7"/>
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MeetingActionVC.xib
                 <constraint firstItem="Cee-wt-LhL" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="64" id="c9b-7j-pez"/>
                 <constraint firstItem="Cee-wt-LhL" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="ep8-jb-lmJ"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="top" secondItem="Hwl-6G-QG6" secondAttribute="bottom" constant="32" id="gVy-tG-nE9"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="height" secondItem="Cee-wt-LhL" secondAttribute="height" id="pGQ-yJ-UpX"/>
                 <constraint firstItem="Hwl-6G-QG6" firstAttribute="width" secondItem="Cee-wt-LhL" secondAttribute="width" id="tEc-no-2vF"/>
                 <constraint firstItem="Hwl-6G-QG6" firstAttribute="height" secondItem="Cee-wt-LhL" secondAttribute="height" id="tUJ-35-Y8X"/>
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MeetingActionVC.xib
                 <constraint firstItem="Hwl-6G-QG6" firstAttribute="top" secondItem="JwL-g3-GgA" secondAttribute="bottom" constant="14" id="tfa-Li-NcZ"/>
                 <constraint firstItem="Hwl-6G-QG6" firstAttribute="top" secondItem="0z3-4X-QbJ" secondAttribute="bottom" constant="14" id="x2G-4X-6FF"/>
                 <constraint firstItem="BeZ-WW-dIo" firstAttribute="trailing" secondItem="SnZ-Tb-soM" secondAttribute="trailing" id="xFs-w2-seK"/>
-=======
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="trailing" secondItem="SnZ-Tb-soM" secondAttribute="trailing" id="xFs-w2-seK"/>
-                <constraint firstItem="Hwl-6G-QG6" firstAttribute="top" secondItem="Cee-wt-LhL" secondAttribute="bottom" constant="32" id="xXE-nI-0k6"/>
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MeetingActionVC.xib
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="136.60714285714286"/>
         </view>

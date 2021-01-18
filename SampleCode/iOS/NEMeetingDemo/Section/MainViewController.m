@@ -8,14 +8,12 @@
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
-#import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
 #import "MeetingControlVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
-@property (nonatomic, strong) UIButton *mulIMBtn;
 @property (nonatomic, strong) TimerButton *restoreMeetingBtn;
 @property (nonatomic, strong) UIViewController *preVC;
 @property (nonatomic, strong) UIAlertController *alert;
@@ -59,14 +57,6 @@
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
     }];
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MainViewController.m
-=======
-}
-
-- (void)onEnterMulAction:(UIButton *)sender {
-    IMLoginVC *vc = [[IMLoginVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MainViewController.m
 }
 
 - (void)onRestoreMeetingAction:(UIButton *)sender {
@@ -90,27 +80,9 @@
                                env_lab.frame.size.height);
     [[UIApplication sharedApplication].keyWindow addSubview:env_lab];
 #endif
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MainViewController.m
-
-=======
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.mulIMBtn];
-    self.navigationItem.rightBarButtonItem = item;
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MainViewController.m
     [[UIApplication sharedApplication].keyWindow addSubview:self.restoreMeetingBtn];
 }
 
-- (UIButton *)mulIMBtn {
-    if (!_mulIMBtn) {
-        _mulIMBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_mulIMBtn setTitle:@"IM复用" forState:UIControlStateNormal];
-        _mulIMBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        _mulIMBtn.frame = CGRectMake(0, 0, 60, 40);
-        [_mulIMBtn addTarget:self
-                      action:@selector(onEnterMulAction:)
-            forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _mulIMBtn;
-}
 
 #pragma mark - MeetingServiceListener
 - (void)onInjectedMenuItemClick:(NEMeetingMenuItem *)menuItem
@@ -145,7 +117,6 @@
 - (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
                     meetingInfo:(NEMeetingInfo *)meetingInfo
                 stateController:(NEMenuStateController)stateController {
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MainViewController.m
     if(clickInfo.itemId==100){
         UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"音频管理" message:@"自定义音频订阅管理" preferredStyle:UIAlertControllerStyleAlert];
 
@@ -234,26 +205,11 @@
     [editeDialog addAction:sureAction];
 
     
-=======
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        stateController(NO,nil);
-    }];
-    UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        stateController(YES,nil);
-    }];
-    [alert addAction:cancelAction];
-    [alert addAction:ignoreAction];
-    [alert addAction:okAction];
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MainViewController.m
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
     if (!preVC) {
         preVC = keyWindow.rootViewController;
     }
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MainViewController.m
     [preVC presentViewController:editeDialog animated:YES completion:nil];
 }
 
@@ -292,13 +248,6 @@
     [preVC presentViewController:editeDialog animated:YES completion:nil];
 
 }
-=======
-    [preVC presentViewController:alert animated:YES completion:nil];
-    
-}
-
-
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MainViewController.m
 
 - (void)updateMeetingBtnWithInfo:(NEMeetingInfo *)info {
     NEMeetingStatus status = [[NEMeetingSDK getInstance] getMeetingService].getMeetingStatus;

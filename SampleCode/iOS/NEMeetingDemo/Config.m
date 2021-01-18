@@ -9,7 +9,7 @@
 #import "Config.h"
 
 NSString *const kAppKey = @"请填入您的AppKey";
-
+NSString *const kIMAppKey = @"请填入IMSDK私有化AppKey";
 @implementation Config
 
 + (void)queryAccountInfoWithUserName:(NSString *)userName

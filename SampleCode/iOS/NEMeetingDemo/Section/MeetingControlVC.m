@@ -143,7 +143,6 @@
     }
 }
 
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MeetingControlVC.m
 - (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
                     meetingInfo:(NEMeetingInfo *)meetingInfo
                 stateController:(NEMenuStateController)stateController {
@@ -166,20 +165,6 @@
     }
     [preVC presentViewController:alert animated:YES completion:nil];
     
-=======
-- (void)onUnbind:(int)unBindType {
-    NSString *msg = [NSString stringWithFormat:@"电视与遥控器解绑，原因:%d", unBindType];
-    [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                  duration:2
-                                                  position:CSToastPositionCenter];
-}
-
-- (void)onTCProtocolUpgrade:(NETCProtocolUpgrade *)tcProtocolUpgrade {
-    NSString *msg = [NSString stringWithFormat:@"遥控器与电视协议版本不同，遥控器的协议版本：%@，电视的协议版本：%@，是否兼容：%hhd", tcProtocolUpgrade.controllerProtocolVersion, tcProtocolUpgrade.tvProtocolVersion, tcProtocolUpgrade.isCompatible];
-    [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                  duration:2
-                                                  position:CSToastPositionCenter];
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MeetingControlVC.m
 }
 
 #pragma mark - Getter

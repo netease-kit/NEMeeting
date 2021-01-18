@@ -12,10 +12,7 @@
 #import "LoginInfoManager.h"
 #import "NEMeetingLoginViewController.h"
 #import "MainViewController.h"
-<<<<<<< HEAD:SampleCode/iOS/NEMeetingDemo/NEMeetingDemo/Section/MeetingActionVC.m
 #import "MeetingMenuSelectVC.h"
-=======
->>>>>>> upstream/master:SampleCode/iOS/NEMeetingDemo/Section/MeetingActionVC.m
 
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuTypeToolbar = 1,
@@ -136,21 +133,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     }
     [self showSeletedItemResult:menuItems];
 }
-#pragma mark - 开启美颜预览
-- (IBAction)doOpenBeautyAction:(UIButton *)sender {
-//    bool enbale =  [[NEMeetingSDK getInstance].getSettingsService isBeautyFaceEnabled];
-//    [[NEMeetingSDK getInstance].getSettingsService setBeautyFaceValue:9];
-    [[NEMeetingSDK getInstance].getSettingsService getBeautyFaceValue:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
-        NSLog(@"NEMeetingSDK getBeautyFaceValue resultData  %@",resultData);
-    }];
-    __weak typeof(self) weakSelf = self;
-    [[[NEMeetingSDK getInstance] getSettingsService] openBeautyUI:^(NSInteger resultCode, NSString *resultMsg) {
-        if (resultCode != ERROR_CODE_SUCCESS) {
-            [weakSelf showErrorCode:resultCode msg:resultMsg];
-        }
-    }];
-}
-
 #pragma mark - 开启美颜预览
 - (IBAction)doOpenBeautyAction:(UIButton *)sender {
 //    bool enbale =  [[NEMeetingSDK getInstance].getSettingsService isBeautyFaceEnabled];

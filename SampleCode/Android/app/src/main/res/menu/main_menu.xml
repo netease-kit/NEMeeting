@@ -11,5 +11,9 @@
         android:id="@+id/im_login"
         android:title="NIM登录"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/open_flutter_page"
+        android:title="打开Flutter页面"
+        app:showAsAction="never" />
 
 </menu>

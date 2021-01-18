@@ -274,6 +274,60 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
             }
 
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 0
+                id: subscribeAudio
+                enabled: false
+                TextField {
+                    id: accoundList
+                    placeholderText: single.checked ? qsTr('accoundId') : (multiple.checked ? qsTr('accoundId,accoundId,accoundId....') : '')
+                    selectByMouse: true
+                    enabled: !all.checked
+                    Layout.fillWidth: true
+                }
+                RowLayout {
+                    RadioButton {
+                        id: single
+                        text: qsTr('Single')
+                    }
+                    RadioButton {
+                        id: multiple
+                        text: qsTr('multiple')
+                        checked: true
+                    }
+                    RadioButton {
+                        id: all
+                        text: qsTr('all')
+                        onCheckedChanged: {
+                            if (checked) {
+                                accoundList.text = '';
+                            }
+                        }
+                    }
+                }
+                RowLayout {
+                    Button {
+                        id: btnSubscribe
+                        highlighted: true
+                        text: qsTr('Subscribe Audio')
+                        Layout.fillWidth: true
+                        onClicked: {
+                            meetingManager.subcribeAudio(accoundList.text, true, single.checked ? 0 : (multiple.checked ? 1 : 2))
+                        }
+                    }
+                    Button {
+                        id: btnUnSubscribe
+                        highlighted: true
+                        text: qsTr('UnSubscribe Audio')
+                        Layout.fillWidth: true
+                        onClicked: {
+                            meetingManager.subcribeAudio(accoundList.text, false, single.checked ? 0 : (multiple.checked ? 1 : 2))
+                        }
+                    }
+                }
+            }
+
             RowLayout {
                 Layout.topMargin: 20
                 Layout.alignment: Qt.AlignHCenter
@@ -338,6 +392,7 @@ Rectangle {
                 btnGet.enabled = true
                 btnCreate.enabled = false
                 btnJoin.enabled = false
+                subscribeAudio.enabled = true
                 break
             case MeetingStatus.MEETING_ERROR_FAILED_MEETING_ALREADY_EXIST:
                 toast.show(qsTr('Meeting already started'))
@@ -358,6 +413,7 @@ Rectangle {
                 btnGet.enabled = true
                 btnCreate.enabled = false
                 btnJoin.enabled = false
+                subscribeAudio.enabled = true
                 break
             case MeetingStatus.MEETING_ERROR_LOCKED_BY_HOST:
                 toast.show(qsTr('The meeting is locked'))
@@ -402,6 +458,7 @@ Rectangle {
                 btnCreate.enabled = true
                 btnJoin.enabled = true
                 btnLeave.enabled = false
+                subscribeAudio.enabled = false
                 break
             }
         }
@@ -429,7 +486,6 @@ Rectangle {
             else if(type === 2){
                 checkVideo.checked = status;
                 toast.show('video device status is '+ status);
-
             }
         }
 
@@ -464,6 +520,10 @@ Rectangle {
                 toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
+        }
+
+        onError: {
+            toast.show(errorCode + '(' + errorMessage + ')')
         }
     }
 

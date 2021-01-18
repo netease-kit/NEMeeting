@@ -50,6 +50,7 @@
             android:label="IM登录" />
 
         <activity android:name=".menu.InjectMenuArrangeActivity" />
+        <activity android:name=".menu.ControllerInjectMenuArrangeActivity" />
     </application>
     <!--日历-->
     <uses-permission android:name="android.permission.READ_CALENDAR" />

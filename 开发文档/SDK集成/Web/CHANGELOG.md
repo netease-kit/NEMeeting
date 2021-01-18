@@ -1,5 +1,15 @@
 # CHANGELOG
 
+# 2021-01-15 @ v1.5.2
+
+* 增加音频订阅方法
+
+  * *subscribeRemoteAudioStream* 订阅用户音频流
+  * *subscribeAllRemoteAudioStreams* 订阅所有用户音频流
+  * *subscribeRemoteAudioStreams* 订阅用户音频流Bylist
+
+* 修复部分情况下加入会议失败的问题
+
 # 2020-12-21 @ v1.5.0
 
 * 增加自定义按钮配置

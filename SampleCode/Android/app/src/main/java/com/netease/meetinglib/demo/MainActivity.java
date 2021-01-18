@@ -11,23 +11,21 @@ import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
 import com.netease.meetinglib.demo.base.BaseActivity;
 import com.netease.meetinglib.demo.databinding.ActivityMainBinding;
+import com.netease.meetinglib.demo.dialog.ActionSheetDialog;
+import com.netease.meetinglib.demo.dialog.EditDialog;
+import com.netease.meetinglib.demo.dialog.ItemClickListerAdapter;
 import com.netease.meetinglib.demo.log.LogUtil;
 import com.netease.meetinglib.demo.nim.NIMInitializer;
 import com.netease.meetinglib.demo.nim.NIMLoginActivity;
+import com.netease.meetinglib.demo.utils.AlertDialogUtil;
 import com.netease.meetinglib.demo.viewmodel.MainViewModel;
 import com.netease.meetinglib.sdk.NEMeetingInfo;
-import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingService;
@@ -42,6 +40,14 @@ import com.netease.meetinglib.sdk.menu.NEMenuStateController;
 import com.permissionx.guolindev.PermissionX;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
@@ -92,7 +98,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         SdkInitializer.getInstance().addListener(this::onInitialized);
         setupMeetingMinimizedLayout();
     }
-
+    
     @Override
     protected void initData() {
 
@@ -117,7 +123,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
     private void onInitialized(int initializeIndex) {
-        mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener());
+        mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener(mViewModel));
+        mViewModel.setOnControllerInjectedMenuItemClickListener(new OnCustomMenuListener(mViewModel));
         mViewModel.setOnControlCustomMenuItemClickListener(new OnControlCustomMenuListener());
         mViewModel.registerControlListener(controlListener);
     }
@@ -135,6 +142,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         @Override
         public void onUnbind(int unBindType) {
             Toast.makeText(MainActivity.this, "遥控器解绑，原因:" + unBindType, Toast.LENGTH_SHORT).show();
+            if (AlertDialogUtil.getAlertDialog() != null) {
+                AlertDialogUtil.getAlertDialog().dismiss();
+            }
         }
         @Override
         public void onTCProtocolUpgrade(NETCProtocolUpgrade protocolUpgrade) {
@@ -145,20 +155,99 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     public static class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
 
+        private MainViewModel viewModel;
+        
+        public  OnCustomMenuListener(MainViewModel viewModel){
+            this.viewModel = viewModel;
+        }
+
         @Override
         public void onInjectedMenuItemClick(Context context,
                                             NEMenuClickInfo clickInfo,
                                             NEMeetingInfo meetingInfo, NEMenuStateController stateController) {
             Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
-            new AlertDialog.Builder(context)
-                    .setTitle("菜单项被点击了")
-                    .setMessage(clickInfo.toString()+ "\n" + meetingInfo.toString())
-                    .setPositiveButton("确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
-                    .setNegativeButton("取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
-                    .setNeutralButton("忽略", (dialog, which) -> {})
-                    .setCancelable(false)
-                    .create()
-                    .show();
+            if(clickInfo.getItemId()==102){
+                handleAudioManager(context);
+            }else{
+                AlertDialogUtil.setAlertDialog(new AlertDialog.Builder(context)
+                                                       .setTitle("菜单项被点击了")
+                                                       .setMessage(clickInfo.toString() + "\n" + meetingInfo.toString())
+                                                       .setPositiveButton("确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
+                                                       .setNegativeButton("取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
+                                                       .setNeutralButton("忽略", (dialog, which) -> {
+                                                       })
+                                                       .setCancelable(false)
+                                                       .create());
+                if (AlertDialogUtil.getAlertDialog() != null) {
+                    AlertDialogUtil.getAlertDialog().show();
+                }
+            }
+
+        }
+        
+        private void handleAudioManager(Context context) {
+            final ActionSheetDialog dialog = new ActionSheetDialog(context);
+            dialog.setTitle(context.getString(R.string.audioSubscribeManager));
+            dialog.addAction(0, context.getString(R.string.audioSubscribeAll));
+            dialog.addAction(1, context.getString(R.string.audioUnSubscribeAll));
+            dialog.addAction(2, context.getString(R.string.audioSubscribe));
+            dialog.addAction(3, context.getString(R.string.audioUnSubscribe));
+            dialog.addAction(4, context.getString(R.string.audioSubscribes));
+            dialog.addAction(5, context.getString(R.string.audioUnSubscribes));
+            dialog.setOnItemClickListener(new ItemClickListerAdapter<ActionSheetDialog.ActionItem>() {
+                @Override
+                public void onClick(View v, int pos, ActionSheetDialog.ActionItem data) {
+                    dialog.dismiss();
+                    switch (data.action) {
+                        case 0:
+                            subscribeAllRemoteAudioStreams(context, true);
+                            break;
+                        case 1:
+                            subscribeAllRemoteAudioStreams(context, false);
+                            break;
+                        case 2:
+                            subscribeRemoteAudioStream(context, true);
+                            break;
+                        case 3:
+                            subscribeRemoteAudioStream(context, false);
+                            break;
+                        case 4:
+                            subscribeRemoteAudioStreams(context, true);
+                            break;
+                        case 5:
+                            subscribeRemoteAudioStreams(context, false);
+                            break;
+                    }
+                }
+            });
+            dialog.show();
+        }
+        
+        private void subscribeAllRemoteAudioStreams(Context context, boolean subscribe){
+            viewModel.subscribeAllRemoteAudioStreams(subscribe, (resultCode, resultMsg, resultData) -> Toast.makeText(context, "code=" + resultCode + " msg" + resultMsg, Toast.LENGTH_LONG).show());
+        }
+
+        private void subscribeRemoteAudioStream(Context context, boolean subscribe) {
+            EditDialog.show(context, context.getString(R.string.audioSubscribeManager),
+                            context.getString(R.string.inputSubscribeId), "请输入用户accountId", true, true, content -> {
+                        viewModel.subscribeRemoteAudioStream(content, subscribe, (resultCode, resultMsg, resultData) -> Toast
+                                                                     .makeText(context, "code=" + resultCode + " msg" +
+                                                                                        resultMsg, Toast.LENGTH_LONG)
+                                                                     .show());
+                    });
+
+        }
+
+        private void subscribeRemoteAudioStreams(Context context, boolean subscribe) {
+            EditDialog.show(context, context.getString(R.string.audioSubscribeManager),
+                            context.getString(R.string.inputSubscribeIds), "请输入用户accountId用英文逗号分割", true, true,
+                            content -> {
+                                List<String> ids = Arrays.asList(content.split(","));
+                                viewModel.subscribeRemoteAudioStreams(ids, subscribe, (resultCode, resultMsg, resultData) -> Toast
+                                        .makeText(context, "code=" + resultCode + " msg" + resultMsg + " data " +
+                                                           (resultData!=null? resultData.toString():""), Toast.LENGTH_LONG).show());
+                            });
+
         }
 
         private static void didMenuItemStateTransition(NEMenuStateController controller, boolean didTransition) {
@@ -168,16 +257,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     }
 
+
     public class OnControlCustomMenuListener implements NEControlMenuItemClickListener {
 
 
         @Override
         public void onSettingMenuItemClick(NEControlMenuItem menuItem) {
-            Toast.makeText(MainActivity.this, "点击了" + menuItem.title, Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onShareMenuItemClick(NEControlMenuItem menuItem, NEMeetingInfo meetingInfo) {
             Toast.makeText(MainActivity.this, "点击了" + menuItem.title, Toast.LENGTH_SHORT).show();
         }
 
@@ -207,6 +292,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 break;
             case R.id.im_login:
                 NIMLoginActivity.start(this);
+                break;
+            case R.id.open_flutter_page:
+                try {
+                    Class<?> clz = Class.forName("com.example.flutter_module_library.FlutterContainerActivity");
+                    Method startCached = clz.getDeclaredMethod("startCached", Context.class);
+                    startCached.setAccessible(true);
+                    startCached.invoke(null, this);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);

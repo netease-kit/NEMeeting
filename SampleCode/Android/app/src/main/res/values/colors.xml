@@ -16,4 +16,12 @@
     <color name="default_bg_disabled">#ff999999</color>
     <color name="default_text_color">#ffffff</color>
     <!--    imageText end-->
+
+    <color name="color_cccccc">#cccccc</color>
+    <color name="color_ff526c">#ff526c</color>
+    <color name="color_grey_eaeaea">#eaeaea</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_337EFF">#337EFF</color>
+    <color name="color_50_337EFF">#7f337eff</color>
+    <color name="color_f3f3f3">#f3f3f3</color>
 </resources>

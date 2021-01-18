@@ -186,6 +186,7 @@ accountId不能以 "a" 开头，不能以 "3" 开头，不能超过32位，只�
     | video | Integer | 是 | 画面状态，1：打开，2：关闭 |
     | audio | Integer | 是 | 声音状态，1：打开，2：关闭 |
     | password | String | 会议密码 | 否 |
+    | roleType | Integer | 用户会议角色，4.影子 | 否 |
     
 4. 输出参数
     

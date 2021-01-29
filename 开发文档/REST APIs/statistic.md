@@ -4,6 +4,7 @@
 查询应用当天的实时数据
 #### 接口地址
 POST {host}/v1/statistic/meeting/list   HTTP/1.1
+
 Content-Type: application/json;charset=utf-8
 #### 请求头
 |参数|类型|说明|
@@ -52,6 +53,7 @@ Content-Type: application/json;charset=utf-8
 按日期查询企业下的会议统计数据
 #### 接口地址
 POST {host}/v1/statistic/meeting/getByTimeRange   HTTP/1.1
+
 Content-Type: application/json;charset=utf-8
 #### 请求头
 |参数|类型|说明|
@@ -127,6 +129,7 @@ Content-Type: application/json;charset=utf-8
 查询应用下指定时间范围内的所有会议信息
 #### 接口地址
 POST {host}/v1/statistic/meeting/list   HTTP/1.1
+
 Content-Type: application/json;charset=utf-8
 #### 请求头
 |参数|类型|说明|
@@ -315,6 +318,7 @@ Content-Type: application/json;charset=utf-8
 查询单场会议的详细数据
 #### 接口地址
 POST {host}/v1/statistic/meeting/detail   HTTP/1.1
+
 Content-Type: application/json;charset=utf-8
 #### 请求头
 |参数|类型|说明|

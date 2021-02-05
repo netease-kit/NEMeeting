@@ -28,6 +28,7 @@ import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
 import com.netease.meetinglib.sdk.NESettingsService;
+import com.netease.meetinglib.sdk.NEWindowMode;
 import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     protected CheckBox usePersonalMeetingId;
-    private final CheckBox checkBoxes[] = new CheckBox[11];
+    private final CheckBox checkBoxes[] = new CheckBox[13];
     private CheckBox useDefaultMeetingOptions;
 
     private EditText injectedMenuIdEdx, injectedMenuTitleEdx;
@@ -87,6 +88,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         checkBoxes[8] = view.findViewById(R.id.noGalleryOptions);
         checkBoxes[9] = view.findViewById(R.id.noSwitchCamera);
         checkBoxes[10] = view.findViewById(R.id.noSwitchAudioMode);
+        checkBoxes[11] = view.findViewById(R.id.noWhiteBoard);
+        checkBoxes[12] = view.findViewById(R.id.defaultWhiteBoard);
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
         useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
@@ -141,6 +144,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noGallery = isChecked(8);
         options.noSwitchCamera = isChecked(9);
         options.noSwitchAudioMode = isChecked(10);
+        options.noWhiteBoard = isChecked(11);
+        options.defaultWindowMode = isChecked(12)? NEWindowMode.whiteBoard : NEWindowMode.normal;
         options.fullToolbarMenuItems = toolbarMenu;
         options.fullMoreMenuItems = moreMenu;
         options.injectedMoreMenuItems = injectedMoreMenuItems;

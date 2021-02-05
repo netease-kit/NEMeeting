@@ -196,11 +196,11 @@ public class MeetingDataRepository {
     }
 
     public void getBeautyFaceValue(NECallback<Integer> callback) {
-        NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue(callback);
+         NEMeetingSDK.getInstance().getSettingsService().getBeautyFaceValue(callback);
     }
 
     public void setBeautyFaceValue(int beautyFaceValue) {
-        NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
+         NEMeetingSDK.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
     }
 
     /////////////////////////////////////////////////

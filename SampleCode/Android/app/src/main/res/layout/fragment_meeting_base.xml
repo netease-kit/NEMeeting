@@ -231,6 +231,25 @@
                 app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
                 app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
 
+            <CheckBox
+                android:id="@+id/noWhiteBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="关闭白板"
+                app:layout_constraintLeft_toRightOf="@id/noSwitchAudioMode"
+                app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+
+
+            <CheckBox
+                android:id="@+id/defaultWhiteBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="默认开白板"
+                app:layout_constraintLeft_toRightOf="@id/noWhiteBoard"
+                app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+
             <EditText
                 android:id="@+id/firstEditor"
                 android:layout_width="0dp"

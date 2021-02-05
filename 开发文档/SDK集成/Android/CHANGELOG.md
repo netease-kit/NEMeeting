@@ -1,5 +1,16 @@
 # CHANGELOG
 
+# 2021-2-05 @ v1.6.0
+
+## Added
+* 增加会议内白板菜单自定义
+- 新增`NEMeetingSDK.getInstance().getMeetingService().NEStartMeetingOptions defaultWindowMode`
+  配置“默认会议视图模式”
+- 新增`NEMeetingSDK.getInstance().getMeetingService().NEStartMeetingOptions noWhiteBoard`
+  配置“默认会议是否显示白板入口”
+- 新增会中白板功能
+- 新增会中主持人结束其他端共享（屏幕/白板）
+- 优化会中邀请页面，时间显示格式为24小时制
 # 2021-1-15 @ v1.5.2
 
 ## Added

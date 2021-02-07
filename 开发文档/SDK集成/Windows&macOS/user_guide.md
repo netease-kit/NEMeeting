@@ -17,8 +17,8 @@
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1610713210/NEMeeting_SDK_Windows_v1.5.2.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1610713917/NEMeeting_SDK_macOS_v1.5.2.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1612539554/NEMeeting_SDK_Windows_v1.6.0.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1612539867/NEMeeting_SDK_macOS_v1.6.0.zip)
 
 **1）Windows 开发环境配置**
 
@@ -237,12 +237,13 @@ if (meetingService)
     params.meetingId = byteMeetingId.data();
     // 指定您加入会议后使用的昵称
     params.displayName = byteNickname.data();
-    // 设置是否在加入会议后启用视频和音频设备，是否显示邀请和聊天室按钮
+    // 设置是否在加入会议后启用视频和音频设备，是否显示邀请、聊天室和白板按钮
     NEStartMeetingOptions options;
     options.noAudio = !audio;
     options.noVideo = !video;
     options.noChat = !enableChatroom;
     options.noInvite = !enableInvitation;
+    options.noWhiteboard = !enableWhiteboard;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)
@@ -253,6 +254,9 @@ if (meetingService)
         item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
         options.full_more_menu_items_.push_back(item);
     }
+    // 通过 options 设置会议默认视图模式，默认正常视图模式
+    // 白板模式
+    options.viewMode = WHITEBOARD_MODE;
     meetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // ... 创建会议后的回调函数
     });
@@ -273,7 +277,7 @@ if (meetingService)
     // 指定您加入到会议后使用的昵称
     params.displayName = byteNickname.data();
 
-    // 设置是否在加入会议后启用视频和音频，是否显示邀请和聊天室按钮
+    // 设置是否在加入会议后启用视频和音频设备，是否显示邀请、聊天室和白板按钮
     NEJoinMeetingOptions options;
     options.noAudio = !audio;
     options.noVideo = !video;
@@ -289,6 +293,9 @@ if (meetingService)
         item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
         options.full_more_menu_items_.push_back(item);
     }
+    // 通过 options 设置会议默认视图模式，默认正常视图模式
+    // 白板模式
+    options.viewMode = WHITEBOARD_MODE;
     meetingService->joinMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // 加入会议的回调，可通过返回值判断是否成功
     });

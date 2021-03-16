@@ -34,3 +34,8 @@
 1. [NIM复用](开发文档/SDK进阶/NIM复用.md)
 2. [会议私有化部署](开发文档/SDK进阶/会议私有化部署.md)
 3. [自定义会议中菜单](开发文档/SDK进阶/自定义菜单.md)
+
+
+**推荐客户得比特币,首次推荐得0.02BTC,连续推荐得0.03BTC/单,上不封顶。点击参与https://hubble.netease.com/sl/aaagiT**
+
+![main](https://github.com/netease-im/NIM_iOS_UIKit/blob/master/800x160.png)

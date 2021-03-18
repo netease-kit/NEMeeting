@@ -245,7 +245,7 @@ if (meetingService)
     options.noInvite = !enableInvitation;
 	options.noWhiteboard = !noWhiteboard;
 	options.noRename = !noRename;
-	options.viewMode = NORMAL_MODE;
+	options.defaultWindowMode = NORMAL_MODE;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)
@@ -284,7 +284,7 @@ if (meetingService)
     options.noInvite = !enableInvitation;
 	options.noWhiteboard = !noWhiteboard;
 	options.noRename = !noRename;
-	options.viewMode = NORMAL_MODE;
+	options.defaultWindowMode = NORMAL_MODE;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)

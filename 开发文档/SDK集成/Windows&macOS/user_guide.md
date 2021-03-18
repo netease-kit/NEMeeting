@@ -10,15 +10,15 @@
 
 | 名称 | 要求 |
 | :------ | :------ |
-| IDE | Visual Studio 2017 or Qt5 or Xcode 11.3.1 以上 |
+| IDE | Visual Studio 2019 or Qt5 or Xcode 11.3.1 以上 |
 | OS | Windows 7 以上 or macOS 10.13 以上 |
 
 ## 业务开发
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1610713210/NEMeeting_SDK_Windows_v1.5.2.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1610713917/NEMeeting_SDK_macOS_v1.5.2.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1616054285/NEMeeting_SDK_Windows_v1.7.0.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1616054679/NEMeeting_SDK_macOS_v1.7.0.zip)
 
 **1）Windows 开发环境配置**
 
@@ -243,6 +243,9 @@ if (meetingService)
     options.noVideo = !video;
     options.noChat = !enableChatroom;
     options.noInvite = !enableInvitation;
+	options.noWhiteboard = !noWhiteboard;
+	options.noRename = !noRename;
+	options.defaultWindowMode = NORMAL_MODE;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)
@@ -279,6 +282,9 @@ if (meetingService)
     options.noVideo = !video;
     options.noChat = !enableChatroom;
     options.noInvite = !enableInvitation;
+	options.noWhiteboard = !noWhiteboard;
+	options.noRename = !noRename;
+	options.defaultWindowMode = NORMAL_MODE;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)

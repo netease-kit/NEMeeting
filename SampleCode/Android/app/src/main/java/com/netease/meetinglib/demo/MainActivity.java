@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     private void onInitialized(int initializeIndex) {
         mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener(mViewModel));
-        mViewModel.setOnControllerInjectedMenuItemClickListener(new OnCustomMenuListener(mViewModel));
+        mViewModel.setOnControllerInjectedMenuItemClickListener(new OnControlCustomInjectedMenuListener());
         mViewModel.setOnControlCustomMenuItemClickListener(new OnControlCustomMenuListener());
         mViewModel.registerControlListener(controlListener);
     }
@@ -257,6 +257,32 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     }
 
+    public static class OnControlCustomInjectedMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
+        @Override
+        public void onInjectedMenuItemClick(Context context,
+                                            NEMenuClickInfo clickInfo,
+                                            NEMeetingInfo meetingInfo, NEMenuStateController stateController) {
+            Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
+            AlertDialogUtil.setAlertDialog(new AlertDialog.Builder(context)
+                                                   .setTitle("菜单项被点击了")
+                                                   .setMessage(clickInfo.toString() + "\n" + meetingInfo.toString())
+                                                   .setPositiveButton("确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
+                                                   .setNegativeButton("取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
+                                                   .setNeutralButton("忽略", (dialog, which) -> {
+                                                   })
+                                                   .setCancelable(false)
+                                                   .create());
+            if (AlertDialogUtil.getAlertDialog() != null) {
+                AlertDialogUtil.getAlertDialog().show();
+            }
+        }
+
+        private static void didMenuItemStateTransition(NEMenuStateController controller, boolean didTransition) {
+            if (controller != null) {
+                controller.didStateTransition(didTransition, null);
+            }
+        }
+    }
 
     public class OnControlCustomMenuListener implements NEControlMenuItemClickListener {
 

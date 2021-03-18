@@ -16,6 +16,8 @@
 | 2020-11-27 | 1.3.3 | 补充关闭预约会议密码回调监听 <br> 补充创建会议提示已存在会议取消操作监听 <br> 加入会议增加预约会议密码参数*password* <br> 调整会议画廊模式展示策略 |
 | 2020-12-21 | 1.5.0 | 补充自定义按钮配置 |
 | 2021-01-15 | 1.5.2 | 增加音频流订阅方法 <br> *subscribeRemoteAudioStream*订阅用户音频流 <br> *subscribeAllRemoteAudioStreams*订阅所有用户音频流 <br> *subscribeRemoteAudioStreams*订阅用户音频流Bylist |
+| 2021-02-05 | 1.6.0 | 修复部分已知bug |
+| 2021-03-17 | 1.7.0 | 增加会中改名入口 <br> 创建，加入会议增加 *noRename* 字段（是否使用会中改名）<br> 新增*defaultWindowMode*选项配置“会议视图模式”，支持普通和白板模式 |
 
 ## 快速接入
 
@@ -34,7 +36,7 @@
 1. 将代码加入到页面head中（将文件路径替换为真实存在路径）
 
     ```js
-    <script src="./NeWebMeeting_V1.5.0.js"></script>
+    <script src="./NeWebMeeting_V1.6.0.js"></script>
     ```
 
 2. 页面添加dom
@@ -46,7 +48,7 @@
 3. 此时全局方法neWebMeeting已注册 在需要的执行初始化
 
     ```js
-    neWebMeeting.actions.init(800, 800);
+    neWebMeeting.actions.init(800, 800, config);
     ```
 
 4. 组件已注册，接入完成，使用组件 API使用会议功能
@@ -77,7 +79,7 @@
 2. 销毁WEB组件
 
     ```js
-    neWebMeeting.actions.destory()
+    neWebMeeting.actions.destroy()
     ```
 
 3. 账号登录
@@ -116,6 +118,8 @@
       meetingIdDisplayOptions: 0, // 0 都展示 1 展示长号，2 展示短号 默认为 0
       toolBarList: [], // 主区按钮自定义设置
       moreBarList: [], // 更多区按钮自定义排列
+      noRename: false, // 是否开启会中改名，默认为false（开启）
+      defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
     }
     neWebMeeting.actions.create(obj, callback)
     ```
@@ -136,6 +140,8 @@
       meetingServerDomain: '', //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器（匿名加入房间需要，初始化传入则暂不需要）
       toolBarList: [], // 主区按钮自定义设置
       moreBarList: [], // 更多区按钮自定义排列
+      noRename: false, // 是否开启会中改名，默认为false（开启）
+      defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
     }
     neWebMeeting.actions.join(obj, callback)
     ```
@@ -327,7 +333,7 @@
 
     | 配置字段 | 内容(id, type) | 能否在更多区域配置 |
     | :-: | :- | :- |
-    | 预置按钮唯一值（id） | 音频(0, multiple) <br> 视频(1, multiple) <br> 屏幕共享(2, multiple) <br> 参会者列表(3, single) <br> 画廊切换(5, multiple) <br> 邀请(20, single) <br> 聊天（21, 尚未开放)<br>  | false <br> false <br> true <br> false <br> true <br> false <br> false |
+    | 预置按钮唯一值（id） | 音频(0, multiple) <br> 视频(1, multiple) <br> 屏幕共享(2, multiple) <br> 参会者列表(3, single) <br> 画廊切换(5, multiple) <br> 邀请(20, single) <br> 聊天（21, 尚未开放)<br> 白板（22，multiple） | false <br> false <br> true <br> false <br> true <br> false <br> false <br> true|
     | 按钮可见性（visibility）| 0总是可见(默认) <br> 1主持人可见 <br> 2非主持人可见 <br> | -- |
 
     预置按钮无法设置状态，只能根据预先设置的状态调整文案与icon
@@ -363,6 +369,14 @@
 * 会议的全部功能在创建或加入之后即可使用，无需其他额外配置
 * 创建会议后会直接加入会议，无需执行join
 * 登陆的用户在其他页面登陆、创建或加入会议，会影响目前已经加入会议的页面，造成互踢
+* 如果期望会议组件全屏展示，需要在补充样式
+
+    ```css
+        html, body {
+            height: 100%;
+        }
+    ```
+
 * API方法在执行失败后，如需进行错误排查，可以通过callback输出，例：
 
   ```js
@@ -378,13 +392,13 @@
     neWebMeeting.actions.join(obj, callback)
   ```
 
-* 支持es6 import形式引入，如使用es6，请参考以下方式使用
+* 支持esmodule形式引入，如使用，请参考以下方式使用
 
     ```js
-    import { actions } from './NeWebMeeting_V1.5.2.js'
+    import { actions } from './NeWebMeeting_V1.6.0.js'
     aciotns.init();
     // or
-    import neWebMeeting from './NeWebMeeting_V1.5.2.js'
+    import neWebMeeting from './NeWebMeeting_V1.6.0.js'
     neWebMeeting.init();
     ```
 

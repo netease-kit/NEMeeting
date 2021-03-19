@@ -60,6 +60,14 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | imToken  | String | 否 | 复用的imAccid的Token |
     | shortId | String| 否 | 个人会议短号，4-8位 |
 
+请求示例
+```json
+{
+  "imAccid": "abcdefghijk",
+  "imToken": "qwer1234"
+}
+```
+
 4. 输出参数
 
     `以下是公共响应参数的ret属性内包含的参数`
@@ -87,6 +95,14 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | :------: | :------: | :------: | :------: |
     | accountId  | String | 是 | 会议用户账号 |
     | accountToken  | String | 是 | 会议用户账号令牌 |
+
+请求示例
+```json
+{
+  "accountId": "abcdefghijk",
+  "accountToken": "qwer1234"
+}
+```
 
 4. 输出参数
     公共响应
@@ -135,6 +151,15 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | startTime | Long| type=3: 是; type=1: 否| 预约开始时间，毫秒|
     | endTime | Long| type=3: 是; type=1: 否| 预约结束时间，毫秒|
 
+请求示例
+```json
+{
+  "host": "abcdefghijk",
+  "type": 1,
+  "subject": "随机会议"
+}
+```
+
 4. 输出参数
 
     `以下是公共响应参数的ret属性内包含的参数`
@@ -170,19 +195,29 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     |:--- | :-------| :--- |
     | authorization| body加密值，md5(body.toJsonString()@163) | 是  |
     | clientType | Integer | 是 | 客户端类型。1：TV，2：IOS，3：AOS，4：PC，5：MAC，6：WEB，7：sip，8：linux |
+    | deviceId | String | 是 | 客户端设备编号 |
 
     请求参数
     
     | 参数 | 类型 | 必选 | 描述 |
     | :------: | :------: | :------: | :------: |
     | meetingId  | String | 是 | 会议id |
-    | deviceId | String | 是 | 客户端设备编号 |
     | nickName | String | 是 | 用户加入会议时的昵称，10位以内的汉字、字母、数字 |
     | video | Integer | 是 | 画面状态，1：打开，2：关闭 |
     | audio | Integer | 是 | 声音状态，1：打开，2：关闭 |
     | password | String | 否 | 会议密码 |
     | roleType | Integer | 否 | 用户会议角色，1.成员，4.影子 |
-    
+
+请求示例
+```json
+{
+  "meetingId": "123456789",
+  "nickName": "hello",
+  "video": 1,
+  "audio": 1
+}
+```
+
 4. 输出参数
     
     `以下是公共响应参数的ret属性内包含的参数`
@@ -229,6 +264,13 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | :------: | :------: | :------: | :------: |
     | meetingUniqueId | String | 是 | 会议唯一id（meetingUniqueId） |
 
+请求示例
+```json
+{
+  "meetingUniqueId": 1234567890
+}
+```
+
 4. 输出参数
 
     `以下是公共响应参数的ret属性内包含的参数`
@@ -271,6 +313,14 @@ Content-Type: application/json;charset=utf-8
 | password | String | 会议密码，密码置空传空串 | 否 |
 | settings | JsonObject | 会议设置，设置有修改要传json里全部参数 | 否 |
 | attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 | 否 |
+
+请求示例
+```json
+{
+  "meetingUniqueId": 1234567890,
+  "subject": "新的主题"
+}
+```
 
 4. 输出参数
 无

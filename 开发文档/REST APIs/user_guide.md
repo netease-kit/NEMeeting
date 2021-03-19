@@ -60,7 +60,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | imToken  | String | 否 | 复用的imAccid的Token |
     | shortId | String| 否 | 个人会议短号，4-8位 |
 
-请求示例
+Request Body示例
 ```json
 {
   "imAccid": "abcdefghijk",
@@ -96,7 +96,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | accountId  | String | 是 | 会议用户账号 |
     | accountToken  | String | 是 | 会议用户账号令牌 |
 
-请求示例
+Request Body示例
 ```json
 {
   "accountId": "abcdefghijk",
@@ -151,7 +151,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | startTime | Long| type=3: 是; type=1: 否| 预约开始时间，毫秒|
     | endTime | Long| type=3: 是; type=1: 否| 预约结束时间，毫秒|
 
-请求示例
+Request Body示例
 ```json
 {
   "host": "abcdefghijk",
@@ -208,7 +208,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | password | String | 否 | 会议密码 |
     | roleType | Integer | 否 | 用户会议角色，1.成员，4.影子 |
 
-请求示例
+Request Body示例
 ```json
 {
   "meetingId": "123456789",
@@ -264,7 +264,7 @@ Rest API对每个访问请求进行身份验证，验证失败的请求无法调
     | :------: | :------: | :------: | :------: |
     | meetingUniqueId | String | 是 | 会议唯一id（meetingUniqueId） |
 
-请求示例
+Request Body示例
 ```json
 {
   "meetingUniqueId": 1234567890
@@ -314,7 +314,7 @@ Content-Type: application/json;charset=utf-8
 | settings | JsonObject | 会议设置，设置有修改要传json里全部参数 | 否 |
 | attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 | 否 |
 
-请求示例
+Request Body示例
 ```json
 {
   "meetingUniqueId": 1234567890,

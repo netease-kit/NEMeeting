@@ -17,8 +17,8 @@
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1616054285/NEMeeting_SDK_Windows_v1.7.0.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1616054679/NEMeeting_SDK_macOS_v1.7.0.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1616072217/NEMeeting_SDK_Windows_v1.7.1.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1616072755/NEMeeting_SDK_macOS_v1.7.1.zip)
 
 **1）Windows 开发环境配置**
 

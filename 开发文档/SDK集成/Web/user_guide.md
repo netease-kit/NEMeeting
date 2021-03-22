@@ -18,7 +18,7 @@
 | 2021-01-15 | 1.5.2 | 增加音频流订阅方法 <br> *subscribeRemoteAudioStream*订阅用户音频流 <br> *subscribeAllRemoteAudioStreams*订阅所有用户音频流 <br> *subscribeRemoteAudioStreams*订阅用户音频流Bylist |
 | 2021-02-05 | 1.6.0 | 修复部分已知bug |
 | 2021-03-17 | 1.7.0 | 增加会中改名入口 <br> 创建，加入会议增加 *noRename* 字段（是否使用会中改名）<br> 新增*defaultWindowMode*选项配置“会议视图模式”，支持普通和白板模式 |
-
+| 2021-03-22 | 1.7.2 | 增加成员进出事件监听*peerJoin* *peerLeave* <br> 网络事件监听*networkQuality*<br> 国际化配置*setLocale* *useLocale* |
 ## 快速接入
 
 #### 开发环境准备
@@ -249,6 +249,39 @@
     neWebMeeting.actions.subscribeRemoteAudioStreams(accountIds, subscribe, callback)
     ```
 
+17. 成员加入，成员离开通知
+
+    ```js
+    neWebMeeting.actions.on('peerJoin', function(uid) {
+      console.log('成员加入', uid);
+    })
+    neWebMeeting.actions.on('peerLeave', function(uid) {
+      console.log('成员离开', uid);
+    })
+    ```
+
+18. 网络情况通知[参考](https://dev.yunxin.163.com/docs/product/%E9%9F%B3%E8%A7%86%E9%A2%91%E9%80%9A%E8%AF%9D2.0/%E8%BF%9B%E9%98%B6%E5%8A%9F%E8%83%BD/%E4%BD%93%E9%AA%8C%E6%8F%90%E5%8D%87/%E9%80%9A%E8%AF%9D%E4%B8%AD%E8%B4%A8%E9%87%8F%E7%9B%91%E6%B5%8B?#%E4%B8%8A%E4%B8%8B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%B4%A8%E9%87%8F%E5%90%8C%E6%AD%A5)
+
+    ```js
+    neWebMeeting.actions.on('networkQuality', function(data) {
+      console.log('网络情况', data);
+      // data Array
+      //uid: 房间里具体那位成员的网络情况
+      //downlinkNetworkQuality：下行网络质量打分。
+      //uplinkNetworkQuality：上行网络质量打分。
+    })
+    ```
+
+19. 国际化配置
+
+    ```js
+        const enLocale = {
+            //
+        }
+        neWebMeeting.actions.setLocale('en', enLocale);
+        neWebMeeting.actions.useLocale('en');
+    ```
+
 #### 自定义按钮详细介绍
 
 1. <span id="custom-introduction">自定义组件的基本结构</span>
@@ -403,3 +436,5 @@
     ```
 
 * v1.3.1更新的初始化配置，不会影响现有的appkey和meetingServerDomain的配置，如果在login传入则优先使用login配置
+
+* 国际化默认配置为**zh**，如果替换的**zh**下的配置，会造成配置丢失，请谨慎操作

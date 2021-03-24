@@ -78,7 +78,78 @@ Request Body示例
     | accountToken | String | 会议用户账号令牌 |
     | personalMeetingId | Long | 个人会议的会议码 |
     | shortId | String | 个人会议短号 |
-    
+
+
+### 通过ImAccid查询会议账号
+
+1. 接口描述  
+   注册创建一个会议账号
+
+2. 接口请求地址
+    ```
+    POST https://{host}/v1/account/getByImAccid HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+   | 参数 | 类型 | 必选 | 描述 |
+       | :------: | :------: | :------: | :------: |
+   | imAccid  | String | 是 | imAccid |
+
+Request Body示例
+```json
+{
+  "imAccid": "abcdefghijk"
+}
+```
+
+4. 输出参数
+
+   `以下是公共响应参数的ret属性内包含的参数`
+
+   | 参数 | 类型 | 描述 |
+       | :------: | :------: | :------: |
+   | accountId | String | 会议用户账号ID |
+   | accountToken | String | 会议用户账号令牌 |
+   | personalMeetingId | Long | 个人会议的会议码 |
+   | shortId | String | 个人会议短号 |
+
+
+### 通过AccountId查询会议账号
+
+1. 接口描述  
+   注册创建一个会议账号
+
+2. 接口请求地址
+    ```
+    POST https://{host}/v1/account/getByAccountId HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+   | 参数 | 类型 | 必选 | 描述 |
+          | :------: | :------: | :------: | :------: |
+   | accountId  | String | 是 | accountId |
+
+Request Body示例
+```json
+{
+  "accountId": "abcdefghijk"
+}
+```
+
+4. 输出参数
+
+   `以下是公共响应参数的ret属性内包含的参数`
+
+   | 参数 | 类型 | 描述 |
+          | :------: | :------: | :------: |
+   | accountId | String | 会议用户账号ID |
+   | accountToken | String | 会议用户账号令牌 |
+   | personalMeetingId | Long | 个人会议的会议码 |
+   | shortId | String | 个人会议短号 |
+
+
 ### 会议账号更新令牌
 
 1. 接口描述  

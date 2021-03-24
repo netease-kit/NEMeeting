@@ -143,7 +143,7 @@ Request Body示例
    `以下是公共响应参数的ret属性内包含的参数`
 
    | 参数 | 类型 | 描述 |
-          | :------: | :------: | :------: |
+   | :------: | :------: | :------: |
    | accountId | String | 会议用户账号ID |
    | accountToken | String | 会议用户账号令牌 |
    | personalMeetingId | Long | 个人会议的会议码 |

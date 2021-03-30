@@ -370,7 +370,7 @@ Request Body示例
 2. 接口请求地址
 
 ```
-POST https:/${domain}/v2/meeting/edit HTTP/1.1
+POST https://{host}/v2/meeting/edit HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 
@@ -420,7 +420,7 @@ Request Body示例
 2. 接口请求地址
 
 ```
-POST https:/${domain}/v2/meeting/cancel HTTP/1.1
+POST https://{host}/v2/meeting/cancel HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 
@@ -544,7 +544,7 @@ public enum MeetingStatus {
 #### 请求说明
 
 ```
-POST ${callbackUrl} HTTP/1.1
+POST {callbackUrl} HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 

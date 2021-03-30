@@ -8,7 +8,9 @@ package com.netease.meetinglib.demo.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,6 +23,7 @@ import com.netease.meetinglib.demo.ToastCallback;
 import com.netease.meetinglib.demo.menu.InjectMenuArrangeActivity;
 import com.netease.meetinglib.demo.menu.InjectMenuContainer;
 import com.netease.meetinglib.demo.utils.AlertDialogUtil;
+import com.netease.meetinglib.sdk.NEHistoryMeetingItem;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingIdDisplayOption;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
@@ -36,7 +39,10 @@ import java.util.List;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleKt;
 
 public abstract class MeetingCommonFragment extends CommonFragment {
 
@@ -44,8 +50,15 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         super(R.layout.fragment_meeting_base);
     }
 
+    private final int[] checkBoxIds = new int[]{
+            R.id.videoOption, R.id.audioOption, R.id.noChatOptions,
+            R.id.noInviteOptions, R.id.no_minimize, R.id.show_meeting_time,
+            R.id.showLongMeetingIdOnly, R.id.showShortMeetingIdOnly, R.id.noGalleryOptions,
+            R.id.noSwitchCamera, R.id.noSwitchAudioMode, R.id.noWhiteBoard, R.id.defaultWhiteBoard, R.id.noRename,
+    };
+
     protected CheckBox usePersonalMeetingId;
-    private final CheckBox checkBoxes[] = new CheckBox[13];
+    private final CheckBox[] checkBoxes = new CheckBox[checkBoxIds.length];
     private CheckBox useDefaultMeetingOptions;
 
     private EditText injectedMenuIdEdx, injectedMenuTitleEdx;
@@ -77,19 +90,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View view = getView();
-        checkBoxes[0] = view.findViewById(R.id.videoOption);
-        checkBoxes[1] = view.findViewById(R.id.audioOption);
-        checkBoxes[2] = view.findViewById(R.id.noChatOptions);
-        checkBoxes[3] = view.findViewById(R.id.noInviteOptions);
-        checkBoxes[4] = view.findViewById(R.id.no_minimize);
-        checkBoxes[5] = view.findViewById(R.id.show_meeting_time);
-        checkBoxes[6] = view.findViewById(R.id.showLongMeetingIdOnly);
-        checkBoxes[7] = view.findViewById(R.id.showShortMeetingIdOnly);
-        checkBoxes[8] = view.findViewById(R.id.noGalleryOptions);
-        checkBoxes[9] = view.findViewById(R.id.noSwitchCamera);
-        checkBoxes[10] = view.findViewById(R.id.noSwitchAudioMode);
-        checkBoxes[11] = view.findViewById(R.id.noWhiteBoard);
-        checkBoxes[12] = view.findViewById(R.id.defaultWhiteBoard);
+        for (int index = 0; index < checkBoxIds.length; index++) {
+            checkBoxes[index] = view.findViewById(checkBoxIds[index]);
+        }
 
         usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
         useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
@@ -146,6 +149,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noSwitchAudioMode = isChecked(10);
         options.noWhiteBoard = isChecked(11);
         options.defaultWindowMode = isChecked(12)? NEWindowMode.whiteBoard : NEWindowMode.normal;
+        options.noRename = isCheckedById(R.id.noRename);
         options.fullToolbarMenuItems = toolbarMenu;
         options.fullMoreMenuItems = moreMenu;
         options.injectedMoreMenuItems = injectedMoreMenuItems;
@@ -184,6 +188,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         return checkBoxes[index].isChecked();
     }
 
+    protected final boolean isCheckedById(@IdRes int id) {
+        return ((CheckBox)getView().findViewById(id)).isChecked();
+    }
+
     protected class MeetingCallback extends ToastCallback<Void> {
 
         public MeetingCallback() {
@@ -216,6 +224,18 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             if (AlertDialogUtil.getAlertDialog() != null) {
                 AlertDialogUtil.getAlertDialog().dismiss();
             }
+
+            new Handler().postDelayed(() -> {
+                NEMeetingSDK.getInstance().getSettingsService().getHistoryMeetingItem((resultCode, resultMsg, resultData) -> {
+                    if (resultData != null && resultData.size() > 0) {
+                        NEHistoryMeetingItem history = resultData.get(0);
+                        Log.d("MeetingCommonFragment", "getHistoryMeetingItem: " + history);
+                        if (history.getMeetingId().equals(getFirstEditTextContent())) {
+                            getEditor(1).setText(history.getNickname());
+                        }
+                    }
+                });
+            }, 1500);
         }
         if (event.status != NEMeetingStatus.MEETING_STATUS_WAITING) {
             dissMissDialogProgress();//输入密码等待中

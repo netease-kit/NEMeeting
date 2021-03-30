@@ -14,6 +14,7 @@ import com.netease.meetinglib.demo.log.LogUtil;
 import com.netease.meetinglib.sdk.NECallback;
 import com.netease.meetinglib.sdk.NEMeetingInfo;
 import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
+import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;

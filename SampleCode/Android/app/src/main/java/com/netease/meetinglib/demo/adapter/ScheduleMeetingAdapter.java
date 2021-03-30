@@ -114,6 +114,7 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
                 tvMeetingSubTittle.setVisibility(View.VISIBLE);
                 break;
             case ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION:
+            case ScheduleMeetingItem.ENABLE_MEETING_LIVE_LEVEL_ACTION:
                 sbMeetingSwitch.setVisibility(View.VISIBLE);
                 sbMeetingSwitch.setChecked(data.isSwitchOn());
                 break;

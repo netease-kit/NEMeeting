@@ -18,6 +18,7 @@ import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingItem;
 import com.netease.meetinglib.sdk.NEMeetingItemLive;
 import com.netease.meetinglib.sdk.NEMeetingItemSetting;
+import com.netease.meetinglib.sdk.NEMeetingLiveAuthLevel;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NESettingsService;
 
@@ -44,7 +45,8 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
 
     private long startTime, endTime;
 
-    private boolean isAttendeeAudioOff, isUsePwd, isLiveOn;
+    private boolean isAttendeeAudioOff, isUsePwd, isLiveOn,isLiveLevelOpen;
+    private NESettingsService settingsService;
 
     public static ScheduleMeetingFragment newInstance() {
         return new ScheduleMeetingFragment();
@@ -115,6 +117,15 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                         break;
                     case ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION:
                         isLiveOn = enable;
+                        if(settingsService.isMeetingLiveEnabled()&& isLiveOn){
+                            mAdapter.addNewData(mAdapter.getItemCount(),new ScheduleMeetingItem("仅本企业员工可观看", false,
+                                                                                                ScheduleMeetingItem.ENABLE_MEETING_LIVE_LEVEL_ACTION));
+                        }else {
+                            mAdapter.deleteItem(mAdapter.getItemCount() -1);
+                        }
+                        break;
+                    case ScheduleMeetingItem.ENABLE_MEETING_LIVE_LEVEL_ACTION:
+                        isLiveLevelOpen = enable;
                         break;
                 }
             }
@@ -133,6 +144,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     neMeetingItem.setSetting(setting);
                     NEMeetingItemLive live = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemLive();
                     live.setEnable(isLiveOn);
+                    live.setLiveWebAccessControlLevel(isLiveLevelOpen? NEMeetingLiveAuthLevel.appToken:NEMeetingLiveAuthLevel.token);
                     neMeetingItem.setLive(live);
                     mViewModel.scheduleMeeting(neMeetingItem,
                                                new ToastCallback<NEMeetingItem>(getActivity(), "scheduleMeeting") {
@@ -178,7 +190,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         dataList.add(new ScheduleMeetingItem("会议密码", false, ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION));
         dataList.add(
                 new ScheduleMeetingItem("自动静音", "参会者加入会议时自动静音", false, ScheduleMeetingItem.ENABLE_MEETING_MUTE_ACTION));
-        NESettingsService settingsService = NEMeetingSDK.getInstance().getSettingsService();
+        settingsService = NEMeetingSDK.getInstance().getSettingsService();
         if(settingsService.isMeetingLiveEnabled()){
             dataList.add(new ScheduleMeetingItem("开启直播", false, ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION));
         }

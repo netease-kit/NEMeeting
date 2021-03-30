@@ -24,6 +24,8 @@ public class ScheduleMeetingItem {
 
     public static final int ENABLE_MEETING_LIVE_ACTION = 5;
 
+    public static final int ENABLE_MEETING_LIVE_LEVEL_ACTION = 6;
+
     public ScheduleMeetingItem(String tittle, String subTittle, String timeTip, boolean isSwitchOn,
                                int clickAction) {
         this.tittle = tittle;

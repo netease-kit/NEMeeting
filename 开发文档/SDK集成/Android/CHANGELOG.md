@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# 2021-4-30 @ v1.7.2
+
+## Added
+* 支持预约会议设置直播安全模式 
+- 新增`NEMeetingItemLive.NEMeetingLiveAuthLevel`选项配置“直播安全模式”
+
 # 2021-3-18 @ v1.7.0
 
 ## Added
@@ -12,13 +18,6 @@
 * 新增会中主持人可结束其他端共享（屏幕/白板）
 * 优化会中邀请页面，时间显示格式为24小时制
 * 支持会中聊天室文本消息长按复制
-
-
-# 2021-4-30 @ v1.7.2
-
-## Added
-* 支持预约会议设置直播安全模式 
-- 新增`NEMeetingItemLive.NEMeetingLiveAuthLevel`选项配置“直播安全模式”
 
 
 # 2021-2-05 @ v1.6.0

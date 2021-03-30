@@ -113,15 +113,24 @@
     meetingLiveRow.value = _item.live.liveUrl;
     [group4.rows addObject:meetingLiveRow];
     
+    NEFromGroup *group5 = [[NEFromGroup alloc] init];
+    NEFromRow *meetingLiveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
+    meetingLiveLevelRow.title = @"仅本企业员工可观看";
+    meetingLiveLevelRow.subTitle = _item.live.liveWebAccessControlLevel == NEMeetingLiveAuthLevelAppToken?@"已开启":@"未开启";
+    meetingLiveLevelRow.value = _item.live.liveWebAccessControlLevel == NEMeetingLiveAuthLevelAppToken ? @(YES) : @(NO);
+    meetingLiveLevelRow.hideRightItem = YES;
+   
+    [group5.rows addObject:meetingLiveLevelRow];
+    
     if (_item.password.length != 0) {
         if(_item.live.enable && _item.live.liveUrl.length !=0 ){
-            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
+            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4,group5]];
         }else{
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
         }
     } else {
         if(_item.live.enable && _item.live.liveUrl.length !=0){
-            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group4]];
+            self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group4,group5]];
         }else{
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2]];
         }

@@ -44,6 +44,8 @@ typedef void(^onRowSelectedBlock)(NEFromRow *row);
 
 @property (nonatomic, strong) NSDictionary *config;
 
+@property (nonatomic, assign) BOOL hideRightItem;
+
 + (instancetype)rowWithType:(NEFromRowType)type tag:(NSString *)tag;
 
 @end

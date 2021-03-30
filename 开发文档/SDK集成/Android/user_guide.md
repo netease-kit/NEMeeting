@@ -351,6 +351,10 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
                     }
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
                     setting.isAttendeeAudioOff = false; //是否使用入会时音频开关
+                     NEMeetingItemLive live = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemLive();
+                    live.setEnable(isLiveOn);
+                    live.setLiveWebAccessControlLevel(isLiveLevelOpen? NEMeetingLiveAuthLevel.appToken:NEMeetingLiveAuthLevel.token);
+                    neMeetingItem.setLive(live);
                     neMeetingItem.setSetting(setting);
 NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem, new ToastCallback<NEMeetingItem>() {
                         @Override

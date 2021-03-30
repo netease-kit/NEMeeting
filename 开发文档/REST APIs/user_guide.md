@@ -358,6 +358,7 @@ Request Body示例
     | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     | shortId | String | 会议短号   |
+    | valid | Boolean | 会议是否可用，true：可用，false：不可用   |
     
 
 ### 修改会议

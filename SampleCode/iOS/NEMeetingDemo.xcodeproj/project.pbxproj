@@ -10,6 +10,8 @@
 		2D38F24825837EC800406DCC /* SelectedMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38F24125837EC800406DCC /* SelectedMenuItemCell.m */; };
 		2D38F24A25837EC800406DCC /* SelectedMenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D38F24625837EC800406DCC /* SelectedMenuItemCell.xib */; };
 		2D38F24B25837EC800406DCC /* SelectedMenuItemEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38F24725837EC800406DCC /* SelectedMenuItemEditVC.m */; };
+		2D7233F926034622004E39F6 /* IMLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7233F726034622004E39F6 /* IMLoginVC.m */; };
+		2D7233FA26034622004E39F6 /* IMLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7233F826034622004E39F6 /* IMLoginVC.xib */; };
 		3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */; };
 		3AAF4F452559739000EB25E5 /* SSOLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF4F442559739000EB25E5 /* SSOLoginViewController.m */; };
 		410B431124AB289600017FA6 /* CheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B431024AB289600017FA6 /* CheckBox.m */; };
@@ -88,6 +90,9 @@
 		2D38F24425837EC800406DCC /* SelectedMenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedMenuItemCell.h; sourceTree = "<group>"; };
 		2D38F24625837EC800406DCC /* SelectedMenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedMenuItemCell.xib; sourceTree = "<group>"; };
 		2D38F24725837EC800406DCC /* SelectedMenuItemEditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedMenuItemEditVC.m; sourceTree = "<group>"; };
+		2D7233F626034622004E39F6 /* IMLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMLoginVC.h; sourceTree = "<group>"; };
+		2D7233F726034622004E39F6 /* IMLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMLoginVC.m; sourceTree = "<group>"; };
+		2D7233F826034622004E39F6 /* IMLoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IMLoginVC.xib; sourceTree = "<group>"; };
 		3AAF4F402559733700EB25E5 /* NEMeetingLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEMeetingLoginViewController.h; sourceTree = "<group>"; };
 		3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NEMeetingLoginViewController.m; sourceTree = "<group>"; };
 		3AAF4F432559739000EB25E5 /* SSOLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSOLoginViewController.h; sourceTree = "<group>"; };
@@ -230,6 +235,16 @@
 			path = menu;
 			sourceTree = "<group>";
 		};
+		2D7233F526034622004E39F6 /* IM */ = {
+			isa = PBXGroup;
+			children = (
+				2D7233F626034622004E39F6 /* IMLoginVC.h */,
+				2D7233F726034622004E39F6 /* IMLoginVC.m */,
+				2D7233F826034622004E39F6 /* IMLoginVC.xib */,
+			);
+			path = IM;
+			sourceTree = "<group>";
+		};
 		3E78B38EEBDF01328ED26281 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +292,7 @@
 				41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
 				41E9117925010E6900E63D80 /* CustomViewController.m */,
+				2D7233F526034622004E39F6 /* IM */,
 				2D38F24025837EC800406DCC /* menu */,
 				419EE4D02508B989004F8984 /* Subscribe */,
 			);
@@ -568,6 +584,7 @@
 				41F8C3A624B5971E0039301B /* strip_archs.sh in Resources */,
 				2D38F24A25837EC800406DCC /* SelectedMenuItemCell.xib in Resources */,
 				419EE4DD2508BE36004F8984 /* SubDateCell.xib in Resources */,
+				2D7233FA26034622004E39F6 /* IMLoginVC.xib in Resources */,
 				410B433224AB5C2A00017FA6 /* StartMeetingVC.xib in Resources */,
 				41937CAF24B4611C00A06BF2 /* SVProgressHUD.bundle in Resources */,
 				414EF1ED251AE73F00F9D91A /* MeetingActionVC.xib in Resources */,
@@ -678,6 +695,7 @@
 				3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */,
 				41A1C98C24A302F9003369D3 /* MainViewController.m in Sources */,
 				419EE4F52508D3DB004F8984 /* NEFromLabelCell.m in Sources */,
+				2D7233F926034622004E39F6 /* IMLoginVC.m in Sources */,
 				9E6D55DC25B528F700A05CB2 /* MeetingMenuItemCell.m in Sources */,
 				419EE4F22508D2D1004F8984 /* NEFromCellFactory.m in Sources */,
 				419EE5132509C260004F8984 /* NEFormViewController.m in Sources */,

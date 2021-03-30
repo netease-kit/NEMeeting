@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuTypeMore = 2,
 };
 
-@interface StartMeetingVC ()<CheckBoxDelegate,MeetingMenuSelectVCDelegate>
+@interface StartMeetingVC ()<CheckBoxDelegate,MeetingMenuSelectVCDelegate,MeetingServiceListener>
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
 @property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (nonatomic, readonly) BOOL disableGallery;
 @property (nonatomic, readonly) BOOL disableCameraSwitch;
 @property (nonatomic, readonly) BOOL disableAudioModeSwitch;
+@property (nonatomic, readonly) BOOL disableRename;
+
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
@@ -57,6 +59,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
+    [[NEMeetingSDK getInstance].getMeetingService addListener:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -83,7 +86,10 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"仅显示会议ID长号",
                                               @"仅显示会议ID短号",
                                               @"关闭摄像头切换",
-                                              @"关闭音频模式切换"]];
+                                              @"关闭音频模式切换",
+                                              @"展示白板",//10
+                                              @"隐藏白板菜单按钮",
+                                              @"关闭会中改名"]];
     [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
@@ -115,6 +121,20 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noGallery = [self disableGallery];
         options.noSwitchCamera = [self disableCameraSwitch];
         options.noSwitchAudioMode = [self disableAudioModeSwitch];
+        options.noRename = [self disableRename];
+        
+        //白板相关设置
+        if ([self showWhiteboard]) {
+            //设置默认展示白板窗口
+            options.defaultWindowMode = NEMeetingWindowModeWhiteBoard;
+        }
+        //设置是否隐藏菜单栏白板创建按钮
+        options.noWhiteBoard = [self hideWhiteboardMenueButton];
+        
+        //不同场景 房间最大人数设置
+        NEMeetingScene *scene = [[NEMeetingScene alloc] init];
+        scene.roleTypes = @[[NEMeetingRole hostRole],[NEMeetingRole memberRole]];
+        options.scene = scene;
     }
     
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
@@ -154,6 +174,25 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
             weakSelf.meetingIdInput.text = meetingId;
         };
     }];
+}
+
+- (void)updateNickname {
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK getInstance].getSettingsService getHistoryMeetingItem:^(NSInteger resultCode, NSString* resultMsg, NSArray<NEHistoryMeetingItem *> * items) {
+        if (items && items.count > 0) {
+            NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
+            if ([items[0].meetingId isEqualToString: weakSelf.meetingIdInput.text]) {
+                weakSelf.nickInput.text = items[0].nickname;
+            }
+        }
+    }];
+}
+
+#pragma mark - MeetingServiceListener
+- (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
+    if (event.status == MEETING_STATUS_DISCONNECTING) {
+        [self updateNickname];
+    }
 }
 
 #pragma mark - Actions
@@ -267,6 +306,16 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (BOOL)disableGallery {
     return [_settingCheckBox getItemSelectedAtIndex:5];
+}
+- (BOOL)showWhiteboard {
+    return [_settingCheckBox getItemSelectedAtIndex:10];
+}
+- (BOOL)hideWhiteboardMenueButton {
+    return [_settingCheckBox getItemSelectedAtIndex:11];
+}
+
+- (BOOL)disableRename {
+    return [_settingCheckBox getItemSelectedAtIndex:12];
 }
 
 - (NEMeetingIdDisplayOption) meetingIdDisplayOption {

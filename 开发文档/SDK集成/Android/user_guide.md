@@ -37,7 +37,7 @@
     ```groovy
     dependencies {
       //声明SDK依赖，版本可根据实际需要修改
-      implementation 'com.netease.yunxin:meetinglib:1.3.1'
+      implementation 'com.netease.yunxin:meetinglib:1.7.0'
     }
     ```
     之后通过顶部菜单'Build -> Make Project'构建工程，触发依赖下载，完成后即可在代码中引入SDK中的类和方法。
@@ -162,7 +162,7 @@ NEMeetingSDK.getInstance().initialize(getApplication(), config, new NECallback<V
 
 - 初始化操作需要保证在**Application**类的**onCreate**方法中执行
 - 应用名称，该名称会显示在会议页面的顶部标题栏中，如果不设置，默认显示为<b>会议</b>
-- 视频会议在会议过程中，如果退到后台，会被系统杀死，因此需要开启前台服务。当前在会议开始之前开启前台，在回去结束后关闭前台服务。详细配置参考**NEForegroundServiceConfig**
+- 视频会议在会议过程中，如果退到后台，会被系统杀死，此外，高版本的Android系统使用共享屏幕时，也需要开启对应的前台服务，因此在初始化会议SDK时需要配置前台服务配置。当前在会议开始之前开启前台，在会议结束后关闭前台服务。详细配置参考**NEForegroundServiceConfig**
 
 --------------------
 
@@ -930,11 +930,14 @@ SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显
 | noAudio | 入会时关闭音频 | true |
 | noMinimize | 隐藏会议内“最小化”功能 | true |
 | noInvite | 隐藏会议内“邀请”功能 | false |
-| noChat | 隐藏会议内“聊天”功能 | true |
+| noChat | 隐藏会议内“聊天”功能 | false |
 | noGallery | 关闭会议中“画廊”模式功能 | false |
 | noSwitchCamera | 关闭会议中“切换摄像头”功能 | false |
 | noSwitchAudioMode | 关闭会议中“切换音频模式”功能 | false |
+| noWhiteBoard | 关闭会议中“白板”功能 | false |
+| noRename | 关闭会议中“改名”功能 | false |
 | showMeetingTime | 显示会议“持续时间” | false |
+| defaultWindowMode | 会议模式(普通、白板) | `NEWindowMode.normal` |
 | meetingIdDisplayOption | 会议内会议ID显示规则 | `NEMeetingIdDisplayOption.DISPLAY_ALL` |
 | fullToolbarMenuItems | 会议内工具栏菜单列表 | NULL |
 | fullMoreMenuItems | 会议内更多展开菜单列表 | NULL |

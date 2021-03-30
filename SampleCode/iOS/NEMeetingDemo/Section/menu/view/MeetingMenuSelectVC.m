@@ -47,7 +47,7 @@ static NSString * allCellIdentifier = @"allSelectedMenuItemCell";
     if (self.seletedItems) {
         [self.allSeletedItems addObjectsFromArray:self.seletedItems];
     }
-    self.allItems = @[[NEMenuItems mic],[NEMenuItems camera],[NEMenuItems switchShowType],[NEMenuItems participants],[NEMenuItems managerParticipants],[NEMenuItems invite],[NEMenuItems chat],[self addAudioManagerMenuItem],[self addSingleStateMenuItem],[self addCheckableMenuItem]];
+    self.allItems = @[[NEMenuItems mic],[NEMenuItems camera],[NEMenuItems switchShowType],[NEMenuItems participants],[NEMenuItems managerParticipants],[NEMenuItems invite],[NEMenuItems chat],[self addAudioManagerMenuItem],[self addSingleStateMenuItem],[self addCheckableMenuItem],[self addWhiteBoard]];
     [self.selectedCollectionView reloadData];
     [self.allItemCollectionView reloadData];
 }
@@ -93,6 +93,9 @@ static NSString * allCellIdentifier = @"allSelectedMenuItemCell";
     return item;
 }
 
+- (NEMeetingMenuItem *)addWhiteBoard {
+    return [NEMenuItems whiteboard];
+}
 - (void)done {
     if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedItems:)]) {
         [self.delegate didSelectedItems:[self.allSeletedItems copy]];

@@ -1,5 +1,18 @@
 # CHANGELOG
 
+# 2021-3-18 @ v1.7.0
+
+## Added
+* 支持会中改名，新增`NEMeetingOptions.noRename`选项配置该功能是否开启，默认为开启
+* 支持查询历史参会记录信息，通过`NESettingsService.getHistoryMeetingItem`接口可返回最近一次的参会信息
+* 新增会中白板功能
+  - 新增白板菜单项，控制开启白板共享和结束白板共享
+  - 新增`NEStartMeetingOptions.noWhiteBoard`选项配置白板功能是否开启，默认开启
+* 新增`NEStartMeetingOptions.defaultWindowMode`选项配置“会议视图模式”，支持普通和白板模式
+* 新增会中主持人可结束其他端共享（屏幕/白板）
+* 优化会中邀请页面，时间显示格式为24小时制
+* 支持会中聊天室文本消息长按复制
+
 
 # 2021-4-30 @ v1.7.2
 

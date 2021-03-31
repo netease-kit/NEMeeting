@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# 2021-4-30 @ v1.7.2
+
+## Added
+* 支持预约会议设置直播安全模式 
+- 新增`NEMeetingItemLive.liveWebAccessControlLevel`选项配置“直播安全模式”
+
 # 2021-3-18 @ v1.7.0
 
 ## Added

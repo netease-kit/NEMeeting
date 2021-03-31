@@ -302,6 +302,8 @@ item.subject = @"xxx预定的会议";        //会议主题
 item.startTime = startTimeS * 1000;          //会议开始时间，单位ms
 item.endTime = (startTimeS + 30*60) * 1000;  //会议结束时间，单位ms
 item.password = @"123456";            //入会密码，也可以不填
+item.live.enable = NO; //是否开启直播
+item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelToken;//设置直播安全模式
 NEMeetingItemSetting *setting = [[NEMeetingItemSetting alloc] init];
 setting.attendeeAudioOff = NO;        //入会时打开音频开关
 ```

@@ -123,12 +123,32 @@
     };
     [group3.rows addObject:autoMuteRow];
     
+    
+    NEFromRow *liveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
+    liveLevelRow.title = @"仅本企业员工可观看";
+    liveLevelRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        BOOL isUseAppToken =  [newValue boolValue];
+        if (isUseAppToken) {
+            weakSelf.item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelAppToken;
+        }else{
+            weakSelf.item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelToken;
+        }
+    };
+    liveLevelRow.value = @false;
+    
+
     if([[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]){
+        
         NEFromGroup *group4 = [[NEFromGroup alloc] init];
         NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
         liveRow.title = @"开启直播";
         liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
             weakSelf.item.live.enable = [newValue boolValue];
+            if (weakSelf.item.live.enable) {
+                [self insertRow:liveLevelRow below:row];
+            } else {
+                [weakSelf deleteRowWithTag:@"kMeetingLiveLevel"];
+            }
         };
         liveRow.value = @false;
         [group4.rows addObject:liveRow];

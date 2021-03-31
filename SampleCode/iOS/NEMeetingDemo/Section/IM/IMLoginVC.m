@@ -11,20 +11,6 @@
 #import <NIMSDK/NIMSDK.h>
 #import <CommonCrypto/CommonDigest.h>
 
-#ifdef ONLINE //线上环境
-NSString *const kIMAppKey = @"6f6a8e7a18d7b43adfd7f17ad3da3c8e";
-#else
-
-#if PRIVATE
-/// 私有化AppKey
-NSString *const kIMAppKey = @"3f5a254d6c8f4e8fdf0e80e635972f61";
-#else
-//测试环境
-NSString *const kIMAppKey = @"f596afcb743ed10b6c0e5bf7bcc6fc0a";
-#endif
-
-#endif
-
 @interface IMLoginVC ()
 
 @property (weak, nonatomic) IBOutlet UITextField *imAccidInput;

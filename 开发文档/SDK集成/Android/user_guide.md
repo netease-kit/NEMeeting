@@ -230,7 +230,10 @@ options.noVideo = true;                                      //入会时关闭�
 options.noAudio = true;                                      //入会时关闭音频，默认为true
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
-options.noMinimize = true;                              //入会是否允许最小化会议页面，默认为true
+options.noWhiteBoard = false;                                //入会隐藏白板入口，默认为false
+options.noMinimize = true;                                   //入会是否允许最小化会议页面，默认为true
+options.defaultWindowMode = true;                              //入会默认会议视图模式，默认为NEWindowMode.normal
+
 //options.fullToolbarMenuItems = configToolbarMenuItems();    //自定义【Toolbar】菜单
 //options.fullToolbarMenuItems = configMoreMenuItems();    //自定义【更多】菜单
 ```
@@ -282,9 +285,12 @@ params.password = "123456";                                 //会议密码
 NEJoinMeetingOptions options = new NEJoinMeetingOptions();   //会议选项
 options.noVideo = true;                                      //入会时关闭视频，默认为true
 options.noAudio = true;                                      //入会时关闭音频，默认为true
+options.noWhiteBoard = false;                                //入会隐藏白板入口，默认为false
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
 options.noMinimize = true;                              //入会是否允许最小化会议页面，默认为true
+options.defaultWindowMode = true;                              //入会默认会议视图模式，默认为NEWindowMode.normal
+
 //options.fullToolbarMenuItems = configToolbarMenuItems();    //自定义【Toolbar】菜单
 //options.fullToolbarMenuItems = configMoreMenuItems();    //自定义【更多】菜单
 ```
@@ -345,6 +351,10 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
                     }
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
                     setting.isAttendeeAudioOff = false; //是否使用入会时音频开关
+                     NEMeetingItemLive live = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemLive();
+                    live.setEnable(isLiveOn);
+                    live.setLiveWebAccessControlLevel(isLiveLevelOpen? NEMeetingLiveAuthLevel.appToken:NEMeetingLiveAuthLevel.token);
+                    neMeetingItem.setLive(live);
                     neMeetingItem.setSetting(setting);
 NEMeetingSDK.getInstance().getPreMeetingService().scheduleMeeting(neMeetingItem, new ToastCallback<NEMeetingItem>() {
                         @Override

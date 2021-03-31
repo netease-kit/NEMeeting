@@ -25,6 +25,7 @@ import com.netease.meetinglib.demo.viewmodel.ScheduleDetailViewModel;
 import com.netease.meetinglib.sdk.NEJoinMeetingParams;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingItemStatus;
+import com.netease.meetinglib.sdk.NEMeetingLiveAuthLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,11 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
         if (item.getLive() != null &&item.getLive().isEnable() && !TextUtils.isEmpty(item.getLive().liveUrl())) {
             dataList.add(new ScheduleMeetingDetailItem("直播地址", item.getLive().liveUrl(), "复制",
                                                        ScheduleMeetingDetailItem.COPY_LIVE_URL_ACTION));
+        }
+        if (item.getLive() != null &&item.getLive().isEnable() && item.getLive().getLiveWebAccessControlLevel() ==
+                                                                  NEMeetingLiveAuthLevel.appToken) {
+            dataList.add(new ScheduleMeetingDetailItem("直播模式", "", "仅本企业员工可观看",
+                                                       ScheduleMeetingDetailItem.COPY_LIVE_LEVEL_ACTION));
         }
         NEMeetingItemStatus status = item.getStatus();
         if (status == NEMeetingItemStatus.cancel || status == NEMeetingItemStatus.recycled) {

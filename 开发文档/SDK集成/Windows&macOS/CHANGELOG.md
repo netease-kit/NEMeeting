@@ -1,3 +1,34 @@
+# 2021-04-28 @ v1.8.0
+
+## Added
+
+* 创建会议增加云端录制配置参数:  `NEStartMeetingOption::noCloudRecord`
+* 会议设置服务新增白板查询接口:  `NEWhiteboardController::isWhiteboardEnabled`
+* 会议设置服务新增云端录制查询接口:  `NERecordController::isCloudRecordEnabled`
+* 编辑/预约会议新增参数:  `NEMeetingItem::cloudRecordOn`
+* 会话服务,会议信息新增sip号: `NEMeetingService::getCurrentMeetingInfo#NEMeetingInfo::sipId`
+* 会议设置服务,会议信息新增sip号: `NESettingsService::getHistoryMeetingItem#NEHistoryMeetingItem::sipId`
+* 初始化配置新增保活间隔设置: `NEMeetingSDKConfig::setKeepAliveInterval`
+* 共享时支持显示视频
+
+## Changed
+
+* G2 SDK升级到4.1.0
+* 相芯美颜SDK升级到7.3.0
+* 白板SDK升级到3.1.0
+* 会议直播视图增加共享屏幕视图
+* 共享时隐藏设置/取消设置焦点视频的入口
+* 优化共享时的性能
+
+## Fixed
+
+* 修复主持人全体静音，把自己也静音的问题
+* 修复共享ppt时，部分场景下对端看不到画面的问题
+* 修复windows下，分辨率超过1080P桌面共享对端看到模糊的问题
+* 修复主持人移交时多次提示的问题
+* 修复匿名入会时，入会中状态多次通知的问题
+* 修复断线重连，偶现崩溃问题
+
 # 2021-03-30 @ v1.7.2
 
 ## Added

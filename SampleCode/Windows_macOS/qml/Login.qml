@@ -40,14 +40,29 @@ Rectangle {
             CheckBox {
                 id: anon
                 text: qsTr('Anon')
+                Layout.topMargin: 20
+            }
+
+            CheckBox {
+                id: rename
+                visible: anon.checked
+                text: qsTr('Rename')
+                Layout.topMargin: 20
             }
         }
-        TextField {
-            id: textAccountId
-            placeholderText: !anon.checked ? qsTr('Your account ID') : qsTr('Meeting ID')
-            text: !anon.checked ? setting.value('sampleAccoundId', '') : setting.value('sampleAnonMeetingId', '')
-            selectByMouse: true
-            Layout.fillWidth: true
+        RowLayout {
+            TextField {
+                id: textAccountId
+                placeholderText: !anon.checked ? qsTr('Your account ID') : qsTr('Meeting ID')
+                text: !anon.checked ? setting.value('sampleAccoundId', '') : setting.value('sampleAnonMeetingId', '')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+            TextField {
+                id: textKeepAliveInterval
+                placeholderText: qsTr('KeepAliveInterval')
+                selectByMouse: true
+            }
         }
         TextField {
             id: textPassword
@@ -69,13 +84,14 @@ Rectangle {
                     setting.setValue('sampleAccoundToken', textPassword.text)
                     meetingManager.login(textAppKey.text,
                                          textAccountId.text,
-                                         textPassword.text)
+                                         textPassword.text,
+                                         textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
                 } else {
                     setting.setValue('sampleAnonAppkey', textAppKey.text)
                     setting.setValue('sampleAnonMeetingId', textAccountId.text)
                     setting.setValue('sampleAnonMeetingPwd', textPassword.text)
-                    meetingManager.initialize(textAppKey.text)
-                    meetingManager.invokeJoin(textAccountId.text, 'nickname', false, false, true, true, textPassword.text)
+                    meetingManager.initialize(textAppKey.text, textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                    meetingManager.invokeJoin(textAccountId.text, 'nickname', false, false, true, true, textPassword.text, rename.checked)
                 }
                 enabled = false
             }

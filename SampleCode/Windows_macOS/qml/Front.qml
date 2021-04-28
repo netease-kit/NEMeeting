@@ -9,6 +9,8 @@ Rectangle {
         meetingManager.isInitializd()
         checkAudio.checked = meetingManager.checkAudio()
         checkVideo.checked = meetingManager.checkVideo()
+        mainWindow.showMaximized()
+        meetingManager.getIsSupportRecord()
     }
 
     ToolButton {
@@ -24,7 +26,7 @@ Rectangle {
         anchors.centerIn: parent
         spacing: 30
         ColumnLayout {
-            Layout.preferredWidth: 330
+            Layout.preferredWidth: 500
             Layout.preferredHeight: 500
             Label {
                 text: qsTr('Schedule Meeting')
@@ -60,6 +62,17 @@ Rectangle {
                 id: muteCheckbox
                 text: qsTr('Automatically mute after members join')
             }
+            CheckBox {
+                id: idLiveSettingCheck
+                visible: meetingManager.getIsSupportLive()
+                text: qsTr("is open live")
+            }
+            CheckBox {
+                id: idLiveAccessCheck
+                text: qsTr("Only employees of company can watch")
+                visible: idLiveSettingCheck.checked
+            }
+
             Button {
                 id: btnSchedule
                 highlighted: true
@@ -70,14 +83,17 @@ Rectangle {
                                                    startTimestamp.text,
                                                    endTimestamp.text,
                                                    meetingPassword.text,
-                                                   muteCheckbox.checked)
+                                                   muteCheckbox.checked,
+                                                   idLiveSettingCheck.checked,
+                                                   idLiveAccessCheck.checked,
+                                                   idOpenRecord.checked)
                 }
             }
             ListView {
                 Component.onCompleted: {
                     Qt.callLater(function() { meetingManager.getMeetingList() })
                 }
-                Layout.preferredHeight: 240
+                Layout.preferredHeight: 280
                 Layout.fillWidth: true
                 spacing: 10
                 clip: true
@@ -85,7 +101,7 @@ Rectangle {
                     id: listModel
                 }
                 delegate: ItemDelegate {
-                    height: 240
+                    height: 280
                     width: parent.width
                     ColumnLayout {
                         width: parent.width
@@ -134,6 +150,27 @@ Rectangle {
                         }
 
                         RowLayout {
+                          //  Layout.fillWidth: true
+                            CheckBox {
+                                id: idLiveSettingCheckEdit
+                                visible: meetingManager.getIsSupportLive()
+                                text: qsTr("is open live")
+                                checked: model.enableLive
+                            }
+                            CheckBox {
+                                id: idLiveAccessCheckEdit
+                                text: qsTr("idLiveAccessCheckEdit")
+                                checked: model.liveAccess
+                            }
+                            CheckBox {
+                                id: idOpenRecordEdit
+                                text: qsTr("is open record")
+                                visible: meetingManager.isSupportRecord
+                                checked: model.recordEnable
+                            }
+                        }
+
+                        RowLayout {
                             TextField {
                                 id: topic2
                                 text: model.topic
@@ -163,7 +200,7 @@ Rectangle {
                                 onClicked: {
                                     meetingManager.invokeJoin(model.meetingId, textNickname.text,
                                                               checkAudio.checked, checkVideo.checked,
-                                                              checkChatroom.checked, checkInvitation.checked)
+                                                              checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, autorename.checked)
                                 }
                             }
                             Button {
@@ -179,7 +216,16 @@ Rectangle {
                                 Layout.preferredHeight: 30
                                 text: qsTr('Edit')
                                 onClicked: {
-                                    meetingManager.editMeeting(model.uniqueMeetingId, model.meetingId, topic2.text, startTimestamp2.text, endTimestamp2.text, password2.text, muteCheckbox2.checked)
+                                    meetingManager.editMeeting(model.uniqueMeetingId,
+                                                               model.meetingId,
+                                                               topic2.text,
+                                                               startTimestamp2.text,
+                                                               endTimestamp2.text,
+                                                               password2.text,
+                                                               muteCheckbox2.checked,
+                                                               idLiveSettingCheckEdit.checked,
+                                                               idLiveAccessCheckEdit.checked,
+                                                               idOpenRecordEdit.checked)
                                 }
                             }
                         }
@@ -251,6 +297,18 @@ Rectangle {
                     text: qsTr('Enable video')
                     onClicked: meetingManager.setCheckVideo(checkVideo.checked)
                 }
+
+                CheckBox {
+                    id: autoOpenWhiteboard
+                    checked: false
+                    text: qsTr('autoOpenWhiteboard')
+                }
+
+                CheckBox {
+                    id: autorename
+                    checked: true
+                    text: qsTr('rename')
+                }
             }
 
             RowLayout {
@@ -265,6 +323,12 @@ Rectangle {
                     id: checkInvitation
                     checked: true
                     text: qsTr('Enable invitation')
+                }
+
+                CheckBox {
+                    id: idOpenRecord
+                    text: qsTr("is Open record")
+                    visible: meetingManager.isSupportRecord
                 }
             }
 
@@ -339,7 +403,8 @@ Rectangle {
                     onClicked: {
                         meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
                                                    checkAudio.checked, checkVideo.checked,
-                                                   checkChatroom.checked, checkInvitation.checked, displayOption.currentIndex)
+                                                   checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, autorename.checked, displayOption.currentIndex,
+                                                   idOpenRecord.checked)
                     }
                 }
                 Button {
@@ -350,7 +415,7 @@ Rectangle {
                     onClicked: {
                         meetingManager.invokeJoin(textMeetingId.text, textNickname.text,
                                                   checkAudio.checked, checkVideo.checked,
-                                                  checkChatroom.checked, checkInvitation.checked, textpassword.text, displayOption.currentIndex)
+                                                  checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, textpassword.text, autorename.checked, displayOption.currentIndex)
                     }
                 }
                 Button {
@@ -377,6 +442,13 @@ Rectangle {
                     onClicked: {
                         toast.show('Current meeting status: ' + meetingManager.getMeetingStatus())
                     }
+                }
+                Button {
+                    id: getHistoryMeeting
+                    highlighted: true
+                    Layout.fillWidth: true
+                    text: qsTr('Get History Info')
+                    onClicked: meetingManager.getHistoryMeetingItem()
                 }
             }
         }
@@ -466,7 +538,10 @@ Rectangle {
             toast.show('Meeting item clicked, item title: ' + itemTitle)
         }
         onGetCurrentMeetingInfo: {
-            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked + ', duration: ' + duration)
+            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked + ', duration: ' + duration + ', sip: ' + sipId)
+        }
+        onGetHistoryMeetingInfo: {
+            toast.show('Get history meeting info, ID: ' + meetingId + ', meetingUniqueId: ' + meetingUniqueId + ', shortMeetingId: ' + shortMeetingId + ', subject: ' + subject + ', password: ' + password + ', nickname: ' + nickname + ', sip: ' + sipId)
         }
         onGetScheduledMeetingList: {
             listModel.clear()
@@ -475,7 +550,7 @@ Rectangle {
                 const meeting = meetingList[i]
                 listModel.append(meeting)
             }
-            meetingManager.getAccountInfo()
+            meetingManager.getAccountInfo()          
         }
 
         onDeviceStatusChanged :{

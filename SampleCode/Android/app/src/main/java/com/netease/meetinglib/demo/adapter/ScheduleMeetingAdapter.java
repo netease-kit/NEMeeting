@@ -118,6 +118,10 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
                 sbMeetingSwitch.setVisibility(View.VISIBLE);
                 sbMeetingSwitch.setChecked(data.isSwitchOn());
                 break;
+            case ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION:
+                sbMeetingSwitch.setVisibility(View.VISIBLE);
+//                sbMeetingSwitch.setChecked(data.isSwitchOn());
+                break;
         }
     }
 

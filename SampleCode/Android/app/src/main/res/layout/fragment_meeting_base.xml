@@ -235,6 +235,14 @@
                     android:text="关闭会中改名"
                     app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
                     app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
+            <CheckBox
+                android:id="@+id/noCloudRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="开启云录制"
+                app:layout_constraintLeft_toRightOf="@id/noRename"
+                app:layout_constraintBottom_toBottomOf="@id/noRename" />
 
             <CheckBox
                     android:id="@+id/noWhiteBoard"

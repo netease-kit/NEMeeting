@@ -1,5 +1,16 @@
 # CHANGELOG
 
+
+# 2021-5-01 @ v1.8.1
+
+## Added
+* 支持屏幕共享辅流
+* 支持会议云端录制功能开关
+    - 新增`NEMeetingItemSetting.cloudRecordOn`预约会议选项配置“云端录制”是否开启
+    - 新增`NEStartMeetingOptions.noCloudRecord`创建会议选项配置“云端录制”是否开启
+* 会议信息新增sipId字段
+    - 新增`NEMeetingInfo.sipId`字段
+    - 新增`NEHistoryMeetingItem.sipId`字段
 # 2021-4-30 @ v1.7.2
 
 ## Added

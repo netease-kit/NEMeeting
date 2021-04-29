@@ -45,7 +45,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
 
     private long startTime, endTime;
 
-    private boolean isAttendeeAudioOff, isUsePwd, isLiveOn,isLiveLevelOpen;
+    private boolean isAttendeeAudioOff, isUsePwd, isLiveOn,isLiveLevelOpen,isOpenRecord;
     private NESettingsService settingsService;
 
     public static ScheduleMeetingFragment newInstance() {
@@ -127,6 +127,9 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     case ScheduleMeetingItem.ENABLE_MEETING_LIVE_LEVEL_ACTION:
                         isLiveLevelOpen = enable;
                         break;
+                    case ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION:
+                        isOpenRecord = enable;
+                        break;
                 }
             }
         });
@@ -141,11 +144,15 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     }
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
                     setting.isAttendeeAudioOff = isAttendeeAudioOff;
+                    setting.cloudRecordOn = isOpenRecord;
                     neMeetingItem.setSetting(setting);
                     NEMeetingItemLive live = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemLive();
                     live.setEnable(isLiveOn);
                     live.setLiveWebAccessControlLevel(isLiveLevelOpen? NEMeetingLiveAuthLevel.appToken:NEMeetingLiveAuthLevel.token);
                     neMeetingItem.setLive(live);
+//                    NEMeetingItemRecord record = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemRecord();
+//                    record.setEnable(isOpenRecord);
+//                    neMeetingItem.setRecord(record);
                     mViewModel.scheduleMeeting(neMeetingItem,
                                                new ToastCallback<NEMeetingItem>(getActivity(), "scheduleMeeting") {
 
@@ -194,6 +201,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         if(settingsService.isMeetingLiveEnabled()){
             dataList.add(new ScheduleMeetingItem("开启直播", false, ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION));
         }
+        dataList.add(new ScheduleMeetingItem("开启录制", false, ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION));
         mAdapter.resetData(dataList);
     }
 

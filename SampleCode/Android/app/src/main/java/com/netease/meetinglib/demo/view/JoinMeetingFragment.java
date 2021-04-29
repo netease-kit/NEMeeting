@@ -6,10 +6,12 @@
 package com.netease.meetinglib.demo.view;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.viewmodel.JoinMeetingViewModel;
 import com.netease.meetinglib.sdk.NEJoinMeetingOptions;
@@ -24,6 +26,8 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         usePersonalMeetingId.setEnabled(false);
+        // 加入会议隐藏录制开关功能
+        (getView().findViewById(R.id.noCloudRecord)).setVisibility(View.GONE);
         mViewModel = ViewModelProviders.of(this).get(JoinMeetingViewModel.class);
     }
 

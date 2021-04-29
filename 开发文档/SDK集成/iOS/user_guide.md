@@ -306,6 +306,7 @@ item.live.enable = NO; //是否开启直播
 item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelToken;//设置直播安全模式
 NEMeetingItemSetting *setting = [[NEMeetingItemSetting alloc] init];
 setting.attendeeAudioOff = NO;        //入会时打开音频开关
+setting.cloudRecordOn = YES;        //是否开启云端录制
 ```
 
 2. 调用接口并进行回调处理，可根据错误码判断是否成功
@@ -769,6 +770,7 @@ SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显
 | noSwitchCamera | 关闭会议中“切换摄像头”功能 | NO |
 | noSwitchAudioMode | 关闭会议中“切换音频模式”功能 | NO |
 | noWhiteBoard | 关闭会议中“白板”功能 | NO |
+| noCloudRecord | 关闭会议“录制中”功能  | YES |
 | noRename | 关闭会议中“改名”功能 | NO |
 | showMeetingTime | 显示会议“持续时间” | NO |
 | defaultWindowMode | 会议模式(普通、白板) | `NEWindowMode.normal` |

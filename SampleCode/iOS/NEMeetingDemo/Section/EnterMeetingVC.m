@@ -170,6 +170,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
     menuSeletedVC.seletedItems = items;
     menuSeletedVC.delegate = self;
+    [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 
 - (IBAction)addMenuAction:(UIButton *)sender {

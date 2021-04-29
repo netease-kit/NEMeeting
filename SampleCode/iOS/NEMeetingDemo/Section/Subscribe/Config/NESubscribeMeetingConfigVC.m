@@ -136,10 +136,18 @@
     };
     liveLevelRow.value = @false;
     
-
+    
+    NEFromGroup *group4 = [[NEFromGroup alloc] init];
+    NEFromRow *openRecord = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingOpenRecord"];
+    openRecord.title = @"开启云端录制";
+    openRecord.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.item.settings.cloudRecordOn = [newValue boolValue];
+    };
+    [group4.rows addObject:openRecord];
+    
     if([[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]){
         
-        NEFromGroup *group4 = [[NEFromGroup alloc] init];
+        NEFromGroup *group5 = [[NEFromGroup alloc] init];
         NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
         liveRow.title = @"开启直播";
         liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
@@ -151,11 +159,11 @@
             }
         };
         liveRow.value = @false;
-        [group4.rows addObject:liveRow];
+        [group5.rows addObject:liveRow];
         
-        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4]];
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4,group5]];
     }else{
-        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3,group4]];
     }
 }
 

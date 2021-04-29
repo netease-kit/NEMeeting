@@ -89,7 +89,9 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"关闭音频模式切换",
                                               @"展示白板",//10
                                               @"隐藏白板菜单按钮",
-                                              @"关闭会中改名"]];
+                                              @"关闭会中改名",
+                                              @"开启云录制"
+    ]];
     [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
@@ -130,11 +132,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         }
         //设置是否隐藏菜单栏白板创建按钮
         options.noWhiteBoard = [self hideWhiteboardMenueButton];
-        
-        //不同场景 房间最大人数设置
-        NEMeetingScene *scene = [[NEMeetingScene alloc] init];
-        scene.roleTypes = @[[NEMeetingRole hostRole],[NEMeetingRole memberRole]];
-        options.scene = scene;
+        options.noCloudRecord = ![self openRecord];
     }
     
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
@@ -316,6 +314,10 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (BOOL)disableRename {
     return [_settingCheckBox getItemSelectedAtIndex:12];
+}
+
+- (BOOL)openRecord {
+    return [_settingCheckBox getItemSelectedAtIndex:13];
 }
 
 - (NEMeetingIdDisplayOption) meetingIdDisplayOption {

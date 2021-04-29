@@ -231,6 +231,7 @@ options.noAudio = true;                                      //入会时关闭�
 options.noInvite = false;                                    //入会隐藏"邀请"按钮，默认为false
 options.noChat = false;                                      //入会隐藏"聊天"按钮，默认为false
 options.noWhiteBoard = false;                                //入会隐藏白板入口，默认为false
+options.noCloudRecord = true;                                //入会隐藏"录制中"显示，默认为true
 options.noMinimize = true;                                   //入会是否允许最小化会议页面，默认为true
 options.defaultWindowMode = true;                              //入会默认会议视图模式，默认为NEWindowMode.normal
 
@@ -351,6 +352,7 @@ NEMeetingSDK.getInstance().getMeetingService().joinMeeting(getActivity(), params
                     }
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
                     setting.isAttendeeAudioOff = false; //是否使用入会时音频开关
+                    setting.cloudRecordOn = false; //是否开启云端录制
                      NEMeetingItemLive live = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemLive();
                     live.setEnable(isLiveOn);
                     live.setLiveWebAccessControlLevel(isLiveLevelOpen? NEMeetingLiveAuthLevel.appToken:NEMeetingLiveAuthLevel.token);
@@ -935,6 +937,7 @@ SDK提供了丰富的入会选项可供设置，用于自定义会议内的UI显
 | noSwitchCamera | 关闭会议中“切换摄像头”功能 | false |
 | noSwitchAudioMode | 关闭会议中“切换音频模式”功能 | false |
 | noWhiteBoard | 关闭会议中“白板”功能 | false |
+| noCloudRecord | 关闭会议“录制中”功能 | true |
 | noRename | 关闭会议中“改名”功能 | false |
 | showMeetingTime | 显示会议“持续时间” | false |
 | defaultWindowMode | 会议模式(普通、白板) | `NEWindowMode.normal` |

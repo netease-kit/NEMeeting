@@ -31,6 +31,7 @@ import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
 import com.netease.meetinglib.sdk.NESettingsService;
+import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEWindowMode;
 import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 
@@ -41,8 +42,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleKt;
 
 public abstract class MeetingCommonFragment extends CommonFragment {
 
@@ -55,6 +54,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             R.id.noInviteOptions, R.id.no_minimize, R.id.show_meeting_time,
             R.id.showLongMeetingIdOnly, R.id.showShortMeetingIdOnly, R.id.noGalleryOptions,
             R.id.noSwitchCamera, R.id.noSwitchAudioMode, R.id.noWhiteBoard, R.id.defaultWhiteBoard, R.id.noRename,
+            R.id.noCloudRecord
     };
 
     protected CheckBox usePersonalMeetingId;
@@ -150,6 +150,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noWhiteBoard = isChecked(11);
         options.defaultWindowMode = isChecked(12)? NEWindowMode.whiteBoard : NEWindowMode.normal;
         options.noRename = isCheckedById(R.id.noRename);
+        // 如果是创建会议判断是否需要录制
+        if (options instanceof NEStartMeetingOptions){
+            ((NEStartMeetingOptions) options).noCloudRecord = !isCheckedById(R.id.noCloudRecord);
+        }
         options.fullToolbarMenuItems = toolbarMenu;
         options.fullMoreMenuItems = moreMenu;
         options.injectedMoreMenuItems = injectedMoreMenuItems;

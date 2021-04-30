@@ -1,0 +1,21 @@
+<map id="nemeeting_sdk_interface_export.h" name="nemeeting_sdk_interface_export.h">
+<area shape="rect" id="node1" title="库导入导出定义头文件" alt="" coords="219,5,386,47"/>
+<area shape="rect" id="node2" href="$callback__interface_8h.html" title="通用回调头文件" alt="" coords="342,244,479,271"/>
+<area shape="rect" id="node4" href="$nemeeting__sdk__interface__include_8h.html" title="接口头文件" alt="" coords="454,468,621,509"/>
+<area shape="rect" id="node12" href="$exception__define_8h.html" title="异常头文件" alt="" coords="187,244,317,271"/>
+<area shape="rect" id="node13" href="$public__define_8h.html" title="公共对象定义头文件" alt="" coords="461,95,569,121"/>
+<area shape="rect" id="node3" href="$meeting__sdk_8h.html" title="SDK头文件" alt="" coords="169,319,276,345"/>
+<area shape="rect" id="node5" href="$service__define_8h.html" title="公共服务定义头文件" alt="" coords="657,319,772,345"/>
+<area shape="rect" id="node6" href="$account__service_8h.html" title="账号服务头文件" alt="" coords="334,393,461,420"/>
+<area shape="rect" id="node7" href="$auth__service_8h.html" title="登录服务头文件" alt="" coords="485,393,590,420"/>
+<area shape="rect" id="node8" href="$feedback__service_8h.html" title="反馈服务头文件" alt="" coords="614,393,746,420"/>
+<area shape="rect" id="node9" href="$meeting__service_8h.html" title="会议服务头文件" alt="" coords="990,393,1117,420"/>
+<area shape="rect" id="node10" href="$premeeting__service_8h.html" title="预约会议头文件" alt="" coords="771,393,915,420"/>
+<area shape="rect" id="node11" href="$setting__service_8h.html" title="配置服务头文件" alt="" coords="191,393,310,420"/>
+<area shape="rect" id="node14" href="$controller__define_8h.html" title="通用控制接口头文件" alt="" coords="582,169,709,196"/>
+<area shape="rect" id="node15" href="$error_8h.html" title="错误码头文件" alt="" coords="499,169,557,196"/>
+<area shape="rect" id="node16" href="$exception_8h.html" title="异常码头文件" alt="" coords="283,169,373,196"/>
+<area shape="rect" id="node17" href="$metting_8h.html" title="会议头文件" alt="" coords="1015,319,1091,345"/>
+<area shape="rect" id="node18" href="$sdk__init__config_8h.html" title="SDK初始化配置头文件" alt="" coords="43,244,162,271"/>
+<area shape="rect" id="node19" href="$settings_8h.html" title="配置信息头文件" alt="" coords="503,244,582,271"/>
+</map>

@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NetEaseMeeting-PC_API: error.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NetEaseMeeting-PC_API
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.20 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','搜索');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_066864215930fcb1de91ced207833729.html">nem_sdk_interface</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">error.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="error_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef NEM_SDK_INTERFACE_DEFINE_ERROR_H_</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define NEM_SDK_INTERFACE_DEFINE_ERROR_H_</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="public__define_8h.html">public_define.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;NNEM_SDK_INTERFACE_BEGIN_DECLS</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462c">   19</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462c">NEErrorCode</a></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0ae04ac7165f891a0792ba503b4978dd">   24</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0ae04ac7165f891a0792ba503b4978dd">ERROR_CODE_SUCCESS</a> = 0,</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cac12a7a1b028375ef5774590eb2c9bfaf">   29</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cac12a7a1b028375ef5774590eb2c9bfaf">ERROR_CODE_FAILED</a> = -1,</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca3cb3ffbe87eb6501097f385bf23a62c4">   34</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca3cb3ffbe87eb6501097f385bf23a62c4">MEETING_ERROR_FAILED_IM_LOGIN_ERROR</a> = -2,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cabe12166180008b01088af2abf489f49f">   39</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cabe12166180008b01088af2abf489f49f">MEETING_ERROR_NO_NETWORK</a> = -3,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462caa910c313e4c3da8b30e0f363d05da297">   44</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462caa910c313e4c3da8b30e0f363d05da297">MEETING_ERROR_FAILED_ALREADY_IN_MEETING</a> = -4,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca4c5e4d5bea3e3483a777bb6d20a5934c">   49</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca4c5e4d5bea3e3483a777bb6d20a5934c">MEETING_ERROR_FAILED_PARAM_ERROR</a> = -5,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0fc46176c6b08f5fefcfbe81ddb9c5cb">   54</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0fc46176c6b08f5fefcfbe81ddb9c5cb">MEETING_ERROR_ALREADY_INMEETING</a> = -6,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca5a2972681cacbb3bb5a50a86d7871435">   59</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca5a2972681cacbb3bb5a50a86d7871435">ERROR_CODE_NO_AUTH</a> = -7,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cacd7ea01199b36da4376bb691fbd25541">   65</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cacd7ea01199b36da4376bb691fbd25541">ERROR_CODE_MEETING_PASSWORD_ERROR</a> = -8,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462caa418ee204bfacc96b9a0bfcb28354661">   71</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462caa418ee204bfacc96b9a0bfcb28354661">ERROR_CODE_CANCELLED</a> = -9,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0271b02321fcda4e9ff070718e2b93ab">   76</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0271b02321fcda4e9ff070718e2b93ab">ERROR_CODE_UNEXPECTED</a> = -100000,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca716fb64be4387b1dd987dbea8eb50dd8">   81</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca716fb64be4387b1dd987dbea8eb50dd8">ERROR_CODE_NOT_IMPLEMENTED</a> = -100001,</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cafe1b28524be2dc615f6aa2d71fa67abf">   86</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462cafe1b28524be2dc615f6aa2d71fa67abf">ERROR_CODE_SDK_UNINITIALIZE</a> = -100002,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca30c2cbf5180dbc4e91e687747e885394">   91</a></span>&#160;    <a class="code" href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca30c2cbf5180dbc4e91e687747e885394">ERROR_CODE_SDK_SERVICE_NOTSUPPORT</a> = -100003,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;};</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;NNEM_SDK_INTERFACE_END_DECLS</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif //NEM_SDK_INTERFACE_DEFINE_ERROR_H_</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462cabe12166180008b01088af2abf489f49f"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462cabe12166180008b01088af2abf489f49f">MEETING_ERROR_NO_NETWORK</a></div><div class="ttdeci">@ MEETING_ERROR_NO_NETWORK</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00039">error.h:39</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462caa418ee204bfacc96b9a0bfcb28354661"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462caa418ee204bfacc96b9a0bfcb28354661">ERROR_CODE_CANCELLED</a></div><div class="ttdeci">@ ERROR_CODE_CANCELLED</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00071">error.h:71</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca4c5e4d5bea3e3483a777bb6d20a5934c"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca4c5e4d5bea3e3483a777bb6d20a5934c">MEETING_ERROR_FAILED_PARAM_ERROR</a></div><div class="ttdeci">@ MEETING_ERROR_FAILED_PARAM_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00049">error.h:49</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca0271b02321fcda4e9ff070718e2b93ab"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0271b02321fcda4e9ff070718e2b93ab">ERROR_CODE_UNEXPECTED</a></div><div class="ttdeci">@ ERROR_CODE_UNEXPECTED</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00076">error.h:76</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca0ae04ac7165f891a0792ba503b4978dd"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0ae04ac7165f891a0792ba503b4978dd">ERROR_CODE_SUCCESS</a></div><div class="ttdeci">@ ERROR_CODE_SUCCESS</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00024">error.h:24</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca0fc46176c6b08f5fefcfbe81ddb9c5cb"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca0fc46176c6b08f5fefcfbe81ddb9c5cb">MEETING_ERROR_ALREADY_INMEETING</a></div><div class="ttdeci">@ MEETING_ERROR_ALREADY_INMEETING</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00054">error.h:54</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca716fb64be4387b1dd987dbea8eb50dd8"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca716fb64be4387b1dd987dbea8eb50dd8">ERROR_CODE_NOT_IMPLEMENTED</a></div><div class="ttdeci">@ ERROR_CODE_NOT_IMPLEMENTED</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00081">error.h:81</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462c"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462c">NEErrorCode</a></div><div class="ttdeci">NEErrorCode</div><div class="ttdoc">错误枚举</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00019">error.h:20</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca5a2972681cacbb3bb5a50a86d7871435"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca5a2972681cacbb3bb5a50a86d7871435">ERROR_CODE_NO_AUTH</a></div><div class="ttdeci">@ ERROR_CODE_NO_AUTH</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00059">error.h:59</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca30c2cbf5180dbc4e91e687747e885394"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca30c2cbf5180dbc4e91e687747e885394">ERROR_CODE_SDK_SERVICE_NOTSUPPORT</a></div><div class="ttdeci">@ ERROR_CODE_SDK_SERVICE_NOTSUPPORT</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00091">error.h:91</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462cac12a7a1b028375ef5774590eb2c9bfaf"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462cac12a7a1b028375ef5774590eb2c9bfaf">ERROR_CODE_FAILED</a></div><div class="ttdeci">@ ERROR_CODE_FAILED</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00029">error.h:29</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462cafe1b28524be2dc615f6aa2d71fa67abf"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462cafe1b28524be2dc615f6aa2d71fa67abf">ERROR_CODE_SDK_UNINITIALIZE</a></div><div class="ttdeci">@ ERROR_CODE_SDK_UNINITIALIZE</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00086">error.h:86</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462cacd7ea01199b36da4376bb691fbd25541"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462cacd7ea01199b36da4376bb691fbd25541">ERROR_CODE_MEETING_PASSWORD_ERROR</a></div><div class="ttdeci">@ ERROR_CODE_MEETING_PASSWORD_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00065">error.h:65</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462ca3cb3ffbe87eb6501097f385bf23a62c4"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462ca3cb3ffbe87eb6501097f385bf23a62c4">MEETING_ERROR_FAILED_IM_LOGIN_ERROR</a></div><div class="ttdeci">@ MEETING_ERROR_FAILED_IM_LOGIN_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00034">error.h:34</a></div></div>
+<div class="ttc" id="aerror_8h_html_a5398493be508b19fda2e4d4bce52462caa910c313e4c3da8b30e0f363d05da297"><div class="ttname"><a href="error_8h.html#a5398493be508b19fda2e4d4bce52462caa910c313e4c3da8b30e0f363d05da297">MEETING_ERROR_FAILED_ALREADY_IN_MEETING</a></div><div class="ttdeci">@ MEETING_ERROR_FAILED_ALREADY_IN_MEETING</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00044">error.h:44</a></div></div>
+<div class="ttc" id="apublic__define_8h_html"><div class="ttname"><a href="public__define_8h.html">public_define.h</a></div><div class="ttdoc">公共对象定义头文件</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>

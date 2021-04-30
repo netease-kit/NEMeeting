@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NetEaseMeeting-PC_API: NESettingsService类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NetEaseMeeting-PC_API
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.20 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','搜索');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public 类型</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="class_n_e_settings_service-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">NESettingsService类 参考<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>配置服务  
+ <a href="class_n_e_settings_service.html#details">更多...</a></p>
+
+<p><code>#include &lt;<a class="el" href="setting__service_8h_source.html">setting_service.h</a>&gt;</code></p>
+<div class="dynheader">
+类 NESettingsService 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_n_e_settings_service__inherit__graph.png" border="0" usemap="#a_n_e_settings_service_inherit__map" alt="Inheritance graph"/></div>
+<map name="_n_e_settings_service_inherit__map" id="_n_e_settings_service_inherit__map">
+<area shape="rect" title="配置服务" alt="" coords="5,155,136,181"/>
+<area shape="rect" href="class_n_e_service.html" title="公共服务" alt="" coords="29,80,112,107"/>
+<area shape="rect" href="class_n_e_object.html" title="公共对象" alt="" coords="31,5,110,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+NESettingsService 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_n_e_settings_service__coll__graph.png" border="0" usemap="#a_n_e_settings_service_coll__map" alt="Collaboration graph"/></div>
+<map name="_n_e_settings_service_coll__map" id="_n_e_settings_service_coll__map">
+<area shape="rect" title="配置服务" alt="" coords="5,155,136,181"/>
+<area shape="rect" href="class_n_e_service.html" title="公共服务" alt="" coords="29,80,112,107"/>
+<area shape="rect" href="class_n_e_object.html" title="公共对象" alt="" coords="31,5,110,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public 类型</h2></td></tr>
+<tr class="memitem:aea4b7d870a5abcd0c6455517087dd5f1"><td class="memItemLeft" align="right" valign="top"><a id="aea4b7d870a5abcd0c6455517087dd5f1"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>NEShowSettingUIWndCallback</b> = NEEmptyCallback</td></tr>
+<tr class="separator:aea4b7d870a5abcd0c6455517087dd5f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace6da7661866d9b9752e6c0509bd530e"><td class="memItemLeft" align="right" valign="top"><a id="ace6da7661866d9b9752e6c0509bd530e"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>NEBoolCallback</b> = NECallback&lt; bool &gt;</td></tr>
+<tr class="separator:ace6da7661866d9b9752e6c0509bd530e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac51536657e1c17d7a7d9eac770f3d932"><td class="memItemLeft" align="right" valign="top"><a id="ac51536657e1c17d7a7d9eac770f3d932"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>NEIntCallback</b> = NECallback&lt; int &gt;</td></tr>
+<tr class="separator:ac51536657e1c17d7a7d9eac770f3d932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56401ca848c5ca2378232030e00f8cf2"><td class="memItemLeft" align="right" valign="top"><a id="a56401ca848c5ca2378232030e00f8cf2"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>NEHistoryMeetingCallback</b> = NECallback&lt; std::list&lt; <a class="el" href="metting_8h.html#a1b4f8b61e26e9bbd0fdd733d8fb657f4">NEHistoryMeetingItem</a> &gt; &gt;</td></tr>
+<tr class="separator:a56401ca848c5ca2378232030e00f8cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:aaab8a3e22ce45b17540ad2a9da119529"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_n_e_video_controller.html">NEVideoController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#aaab8a3e22ce45b17540ad2a9da119529">GetVideoController</a> () const =0</td></tr>
+<tr class="memdesc:aaab8a3e22ce45b17540ad2a9da119529"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取视频控制器  <a href="class_n_e_settings_service.html#aaab8a3e22ce45b17540ad2a9da119529">更多...</a><br /></td></tr>
+<tr class="separator:aaab8a3e22ce45b17540ad2a9da119529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a971fd440a1b8c7f9f3f5e98774e97eb7"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_n_e_audio_controller.html">NEAudioController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#a971fd440a1b8c7f9f3f5e98774e97eb7">GetAudioController</a> () const =0</td></tr>
+<tr class="memdesc:a971fd440a1b8c7f9f3f5e98774e97eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取音频控制器  <a href="class_n_e_settings_service.html#a971fd440a1b8c7f9f3f5e98774e97eb7">更多...</a><br /></td></tr>
+<tr class="separator:a971fd440a1b8c7f9f3f5e98774e97eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af25275a2551bb6bee93b7c969128320f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_n_e_other_controller.html">NEOtherController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#af25275a2551bb6bee93b7c969128320f">GetOtherController</a> () const =0</td></tr>
+<tr class="memdesc:af25275a2551bb6bee93b7c969128320f"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取其他控制器  <a href="class_n_e_settings_service.html#af25275a2551bb6bee93b7c969128320f">更多...</a><br /></td></tr>
+<tr class="separator:af25275a2551bb6bee93b7c969128320f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd55f223ca3d1b92acf579f7b2892e3f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_n_e_beauty_face_controller.html">NEBeautyFaceController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#acd55f223ca3d1b92acf579f7b2892e3f">GetBeautyFaceController</a> () const =0</td></tr>
+<tr class="memdesc:acd55f223ca3d1b92acf579f7b2892e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取美颜控制器  <a href="class_n_e_settings_service.html#acd55f223ca3d1b92acf579f7b2892e3f">更多...</a><br /></td></tr>
+<tr class="separator:acd55f223ca3d1b92acf579f7b2892e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fcf855bfb689f1a6a0cadd0d2bd9343"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_n_e_live_controller.html">NELiveController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#a5fcf855bfb689f1a6a0cadd0d2bd9343">GetLiveController</a> () const =0</td></tr>
+<tr class="memdesc:a5fcf855bfb689f1a6a0cadd0d2bd9343"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取直播控制器  <a href="class_n_e_settings_service.html#a5fcf855bfb689f1a6a0cadd0d2bd9343">更多...</a><br /></td></tr>
+<tr class="separator:a5fcf855bfb689f1a6a0cadd0d2bd9343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05666af6160f8ef9b60dba713fd98e5e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#a05666af6160f8ef9b60dba713fd98e5e">showSettingUIWnd</a> (const <a class="el" href="class_n_e_settings_u_i_wnd_config.html">NESettingsUIWndConfig</a> &amp;config, const NEShowSettingUIWndCallback &amp;cb)=0</td></tr>
+<tr class="memdesc:a05666af6160f8ef9b60dba713fd98e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">显示配置窗口  <a href="class_n_e_settings_service.html#a05666af6160f8ef9b60dba713fd98e5e">更多...</a><br /></td></tr>
+<tr class="separator:a05666af6160f8ef9b60dba713fd98e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a455696d0312021d39951d5cd35c651fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#a455696d0312021d39951d5cd35c651fe">setNESettingsChangeNotifyHandler</a> (<a class="el" href="class_n_e_settings_change_notify_handler.html">NESettingsChangeNotifyHandler</a> *handler)=0</td></tr>
+<tr class="memdesc:a455696d0312021d39951d5cd35c651fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置配置状态监听器, 用于接收状态变更通知  <a href="class_n_e_settings_service.html#a455696d0312021d39951d5cd35c651fe">更多...</a><br /></td></tr>
+<tr class="separator:a455696d0312021d39951d5cd35c651fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180a9b2c0b5ce8a5f0eb27f91e648b7b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_settings_service.html#a180a9b2c0b5ce8a5f0eb27f91e648b7b">getHistoryMeetingItem</a> (const NEHistoryMeetingCallback &amp;callback)=0</td></tr>
+<tr class="memdesc:a180a9b2c0b5ce8a5f0eb27f91e648b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取历史会议信息，当前仅会返回最近一次的会议记录，不支持漫游  <a href="class_n_e_settings_service.html#a180a9b2c0b5ce8a5f0eb27f91e648b7b">更多...</a><br /></td></tr>
+<tr class="separator:a180a9b2c0b5ce8a5f0eb27f91e648b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_n_e_service"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_n_e_service')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="class_n_e_service.html">NEService</a></td></tr>
+<tr class="memitem:a39edbaa5283b44e0ca4b5b3f7e5118ff inherit pub_methods_class_n_e_service"><td class="memItemLeft" align="right" valign="top"><a id="a39edbaa5283b44e0ca4b5b3f7e5118ff"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_service.html#a39edbaa5283b44e0ca4b5b3f7e5118ff">NEService</a> ()</td></tr>
+<tr class="memdesc:a39edbaa5283b44e0ca4b5b3f7e5118ff inherit pub_methods_class_n_e_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">构造函数 <br /></td></tr>
+<tr class="separator:a39edbaa5283b44e0ca4b5b3f7e5118ff inherit pub_methods_class_n_e_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68d614611401bd7085d6585e26a7a433 inherit pub_methods_class_n_e_service"><td class="memItemLeft" align="right" valign="top"><a id="a68d614611401bd7085d6585e26a7a433"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_service.html#a68d614611401bd7085d6585e26a7a433">~NEService</a> ()</td></tr>
+<tr class="memdesc:a68d614611401bd7085d6585e26a7a433 inherit pub_methods_class_n_e_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">析构函数 <br /></td></tr>
+<tr class="separator:a68d614611401bd7085d6585e26a7a433 inherit pub_methods_class_n_e_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_n_e_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_n_e_object')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="class_n_e_object.html">NEObject</a></td></tr>
+<tr class="memitem:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="memItemLeft" align="right" valign="top"><a id="a81708d4d415ccad85e5cebbaaf004ec2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_object.html#a81708d4d415ccad85e5cebbaaf004ec2">NEObject</a> ()</td></tr>
+<tr class="memdesc:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">构造函数 <br /></td></tr>
+<tr class="separator:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="memItemLeft" align="right" valign="top"><a id="a86ce4672e3aec43907f8943e5edc7c0d"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_object.html#a86ce4672e3aec43907f8943e5edc7c0d">~NEObject</a> ()</td></tr>
+<tr class="memdesc:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">析构函数 <br /></td></tr>
+<tr class="separator:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>配置服务 </p>
+
+<p class="definition">在文件 <a class="el" href="setting__service_8h_source.html">setting_service.h</a> 第 <a class="el" href="setting__service_8h_source.html#l00028">28</a> 行定义.</p>
+</div><h2 class="groupheader">成员函数说明</h2>
+<a id="a971fd440a1b8c7f9f3f5e98774e97eb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a971fd440a1b8c7f9f3f5e98774e97eb7">&#9670;&nbsp;</a></span>GetAudioController()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_n_e_audio_controller.html">NEAudioController</a>* NESettingsService::GetAudioController </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取音频控制器 </p>
+<dl class="section return"><dt>返回</dt><dd>NEAudioController* 音频控制器对象 </dd></dl>
+
+</div>
+</div>
+<a id="acd55f223ca3d1b92acf579f7b2892e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd55f223ca3d1b92acf579f7b2892e3f">&#9670;&nbsp;</a></span>GetBeautyFaceController()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_n_e_beauty_face_controller.html">NEBeautyFaceController</a>* NESettingsService::GetBeautyFaceController </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取美颜控制器 </p>
+<dl class="section return"><dt>返回</dt><dd>NEBeautyFaceController* 美颜控制器对象 </dd></dl>
+
+</div>
+</div>
+<a id="a180a9b2c0b5ce8a5f0eb27f91e648b7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a180a9b2c0b5ce8a5f0eb27f91e648b7b">&#9670;&nbsp;</a></span>getHistoryMeetingItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NESettingsService::getHistoryMeetingItem </td>
+          <td>(</td>
+          <td class="paramtype">const NEHistoryMeetingCallback &amp;&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取历史会议信息，当前仅会返回最近一次的会议记录，不支持漫游 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="a5fcf855bfb689f1a6a0cadd0d2bd9343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fcf855bfb689f1a6a0cadd0d2bd9343">&#9670;&nbsp;</a></span>GetLiveController()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_n_e_live_controller.html">NELiveController</a>* NESettingsService::GetLiveController </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取直播控制器 </p>
+<dl class="section return"><dt>返回</dt><dd>NELiveController* 直播控制器对象 </dd></dl>
+
+</div>
+</div>
+<a id="af25275a2551bb6bee93b7c969128320f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af25275a2551bb6bee93b7c969128320f">&#9670;&nbsp;</a></span>GetOtherController()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_n_e_other_controller.html">NEOtherController</a>* NESettingsService::GetOtherController </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取其他控制器 </p>
+<dl class="section return"><dt>返回</dt><dd>NEOtherController*其他控制器对象 </dd></dl>
+
+</div>
+</div>
+<a id="aaab8a3e22ce45b17540ad2a9da119529"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaab8a3e22ce45b17540ad2a9da119529">&#9670;&nbsp;</a></span>GetVideoController()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_n_e_video_controller.html">NEVideoController</a>* NESettingsService::GetVideoController </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取视频控制器 </p>
+<dl class="section return"><dt>返回</dt><dd>NEVideoController* 视频控制器对象 </dd></dl>
+
+</div>
+</div>
+<a id="a455696d0312021d39951d5cd35c651fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a455696d0312021d39951d5cd35c651fe">&#9670;&nbsp;</a></span>setNESettingsChangeNotifyHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NESettingsService::setNESettingsChangeNotifyHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_n_e_settings_change_notify_handler.html">NESettingsChangeNotifyHandler</a> *&#160;</td>
+          <td class="paramname"><em>handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>设置配置状态监听器, 用于接收状态变更通知 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handler</td><td>监听器 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="a05666af6160f8ef9b60dba713fd98e5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05666af6160f8ef9b60dba713fd98e5e">&#9670;&nbsp;</a></span>showSettingUIWnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NESettingsService::showSettingUIWnd </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_n_e_settings_u_i_wnd_config.html">NESettingsUIWndConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const NEShowSettingUIWndCallback &amp;&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>显示配置窗口 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>配置参数 </td></tr>
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li><a class="el" href="setting__service_8h_source.html">setting_service.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>

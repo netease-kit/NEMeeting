@@ -217,7 +217,9 @@ Request Body示例
     | type | String | 是 | 会议类型 1 随机号即时会议; 2 个人号即时会议; 3 随机号预约会议 |
     | password | String| 否 | 会议密码，无密码为空串|
     | settings | JsonObject| 否 | 会议设置|
-    | settings.attendeeAudioOff | Boolean| 否 | 加入会议后静音，默认不静音|
+    | settings.attendeeAudioOff | Boolean | 否 | 加入会议后静音，默认不静音|
+    | settings.scene.roleTypes.roleType | Integer | 否 | 场景角色，1：成员，2：主持人 |
+    | settings.scene.roleTypes.maxCount | Integer | 否 | 场景角色人数上限 |
     | subject | String | 是 | 会议主题 30字符以内|
     | startTime | Long| type=3: 是; type=1: 否| 预约开始时间，毫秒|
     | endTime | Long| type=3: 是; type=1: 否| 预约结束时间，毫秒|
@@ -227,7 +229,22 @@ Request Body示例
 {
   "host": "abcdefghijk",
   "type": 1,
-  "subject": "随机会议"
+  "subject": "随机会议",
+  "settings": {
+    "attendeeAudioOff": true,
+    "scene": {
+      "roleTypes": [
+        {
+          "roleType": 2,
+          "maxCount": 1
+        },
+        {
+          "roleType": 1,
+          "maxCount": 1
+        }
+      ]
+    }
+  }
 }
 ```
 

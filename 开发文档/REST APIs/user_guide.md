@@ -470,7 +470,136 @@ Content-Type: application/json;charset=utf-8
     "msg":"服务器内部错误"
 }
 ```
-    
+### 用会议唯一id结束会议
+
+1. 接口描述
+
+用会议唯一id结束会议
+
+2. 接口请求地址
+
+```
+POST https:/${domain}/v2/meeting/deleteByMeetingUniqueId HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+4. 输出参数
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| meetingUniqueId | Long | 会议唯一Id | 是 |
+| recycle | Boolean | 是否回收，默认不回收 | 否 |
+
+3. 输入参数
+```json
+{
+  "meetingUniqueId": 110119120
+}
+```
+
+4. 输出参数
+   无
+
+```    
+//成功结果示例
+"Content-Type": "application/json; charset=utf-8"
+{
+  "code": 200
+}
+
+//失败结果示例
+{
+    "code":501,
+    "msg":"服务器内部错误"
+}
+```
+### 用会议号结束会议
+
+1. 接口描述
+
+用会议号结束会议
+
+2. 接口请求地址
+
+```
+POST https:/${domain}/v2/meeting/deleteByMeetingId HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+4. 输出参数
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| meetingId | String | 会议号 | 是 |
+| recycle | Boolean | 是否回收，默认不回收 | 否 |
+
+3. 输入参数
+```json
+{
+  "meetingId": "1234567890"
+}
+```
+
+4. 输出参数
+   无
+
+```    
+//成功结果示例
+"Content-Type": "application/json; charset=utf-8"
+{
+  "code": 200
+}
+
+//失败结果示例
+{
+    "code":501,
+    "msg":"服务器内部错误"
+}
+```
+
+### 用会议短号结束会议
+
+1. 接口描述
+
+用会议短号结束会议
+
+2. 接口请求地址
+
+```
+POST https:/${domain}/v2/meeting/deleteByMeetingShortId HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+4. 输出参数
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| shortId | String | 会议短号 | 是 |
+| recycle | Boolean | 是否回收，默认不回收 | 否 |
+
+3. 输入参数
+```json
+{
+  "shortId": "10000"
+}
+```
+
+4. 输出参数
+   无
+
+```    
+//成功结果示例
+"Content-Type": "application/json; charset=utf-8"
+{
+  "code": 200
+}
+
+//失败结果示例
+{
+    "code":501,
+    "msg":"服务器内部错误"
+}
+```
 
 
 ## 错误码

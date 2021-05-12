@@ -1,0 +1,13 @@
+<map id="setting_service.h" name="setting_service.h">
+<area shape="rect" id="node1" title="配置服务头文件" alt="" coords="117,5,236,32"/>
+<area shape="rect" id="node2" href="$service__define_8h.html" title="公共服务定义头文件" alt="" coords="119,80,234,107"/>
+<area shape="rect" id="node10" href="$controller__define_8h.html" title="通用控制接口头文件" alt="" coords="389,155,516,181"/>
+<area shape="rect" id="node11" href="$settings_8h.html" title="配置信息头文件" alt="" coords="5,80,84,107"/>
+<area shape="rect" id="node3" href="$public__define_8h.html" title="公共对象定义头文件" alt="" coords="189,304,297,331"/>
+<area shape="rect" id="node6" href="$callback__interface_8h.html" title="通用回调头文件" alt="" coords="156,155,293,181"/>
+<area shape="rect" id="node4" href="$nemeeting__sdk__interface__export_8h.html" title="库导入导出定义头文件" alt="" coords="113,379,280,420"/>
+<area shape="rect" id="node5" href="$build__config_8h.html" title="编译配置头文件" alt="" coords="346,386,447,413"/>
+<area shape="rect" id="node7" title=" " alt="" coords="323,229,401,256"/>
+<area shape="rect" id="node8" title=" " alt="" coords="161,229,216,256"/>
+<area shape="rect" id="node9" href="$error_8h.html" title="错误码头文件" alt="" coords="241,229,299,256"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="NEPreMeetingService" name="NEPreMeetingService">
+<area shape="rect" id="node1" title="预约会议服务" alt="" coords="5,155,153,181"/>
+<area shape="rect" id="node2" href="$class_n_e_service.html" title="公共服务" alt="" coords="38,80,121,107"/>
+<area shape="rect" id="node3" href="$class_n_e_object.html" title="公共对象" alt="" coords="40,5,119,32"/>
+</map>

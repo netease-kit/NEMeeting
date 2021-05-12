@@ -1,0 +1,5 @@
+<map id="NEAuthService" name="NEAuthService">
+<area shape="rect" id="node1" title="登录服务" alt="" coords="5,155,115,181"/>
+<area shape="rect" id="node2" href="$class_n_e_service.html" title="公共服务" alt="" coords="19,80,101,107"/>
+<area shape="rect" id="node3" href="$class_n_e_object.html" title="公共对象" alt="" coords="21,5,99,32"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="NEMeetingOptions" name="NEMeetingOptions">
+<area shape="rect" id="node1" title="会议选项" alt="" coords="108,80,239,107"/>
+<area shape="rect" id="node3" href="$class_n_e_join_meeting_options.html" title="加入会议选项" alt="" coords="5,155,160,181"/>
+<area shape="rect" id="node4" href="$class_n_e_start_meeting_options.html" title="开始会议选项" alt="" coords="185,155,343,181"/>
+<area shape="rect" id="node2" href="$class_n_e_object.html" title="公共对象" alt="" coords="134,5,213,32"/>
+</map>

@@ -441,13 +441,14 @@ POST https://{host}/v2/meeting/cancel HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 
-4. 输出参数
+3. 输入参数
 
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | meetingUniqueId | Long | 会议唯一Id | 是 |
 
-3. 输入参数
+Request Body示例
+
 ```json
 {
   "meetingUniqueId": 110119120
@@ -483,14 +484,15 @@ POST https:/${domain}/v2/meeting/deleteByMeetingUniqueId HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 
-4. 输出参数
+3. 输入参数
 
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | meetingUniqueId | Long | 会议唯一Id | 是 |
 | recycle | Boolean | 是否回收，默认不回收 | 否 |
 
-3. 输入参数
+Request Body示例
+
 ```json
 {
   "meetingUniqueId": 110119120
@@ -526,14 +528,15 @@ POST https:/${domain}/v2/meeting/deleteByMeetingId HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 
-4. 输出参数
+3. 输入参数
 
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | meetingId | String | 会议号 | 是 |
 | recycle | Boolean | 是否回收，默认不回收 | 否 |
 
-3. 输入参数
+Request Body示例
+
 ```json
 {
   "meetingId": "1234567890"
@@ -570,14 +573,15 @@ POST https:/${domain}/v2/meeting/deleteByMeetingShortId HTTP/1.1
 Content-Type: application/json;charset=utf-8
 ```
 
-4. 输出参数
+3. 输入参数
 
 |请求体参数|类型|说明|必须|
 |:--- | :----- | :-------| :--- |
 | shortId | String | 会议短号 | 是 |
 | recycle | Boolean | 是否回收，默认不回收 | 否 |
 
-3. 输入参数
+Request Body示例
+
 ```json
 {
   "shortId": "10000"
@@ -601,6 +605,85 @@ Content-Type: application/json;charset=utf-8
 }
 ```
 
+### 会议录像列表
+
+1. 接口描述
+
+取消预约会议。
+
+2. 接口请求地址
+
+```
+POST https://{host}/v2/meeting/record/list HTTP/1.1
+Content-Type: application/json;charset=utf-8
+```
+
+3. 输入参数
+
+|请求体参数|类型|说明|必须|
+|:--- | :----- | :-------| :--- |
+| meetingUniqueId | Long | 会议唯一Id | 是 |
+
+Request Body示例
+
+```json
+{
+  "meetingUniqueId": 110119120
+}
+```
+
+4. 输出参数
+
+   `以下是公共响应参数的ret属性内包含的参数`
+
+   | 参数 | 类型 | 描述 |
+   | :------: | :------: | :------: |
+   | fileInfo | JsonObject | 录制文件信息 |
+   | accountId | String | 用户id |
+   | filename | String | 文件名 |
+   | md5 | String | 文件的md5值 |
+   | size | Long | 文件大小，单位为字符，可转为Long值 |
+   | type | String | 文件的类型（扩展名），包括：实时音频录制文件(aac)、白板录制文件(gz)、实时视频录制文件(mp4)、互动直播视频录制文件(flv) |
+   | url | String | 文件的下载地址 |
+   | mix | Integer | 是否为混合录制文件，1：混合录制文件；2：单人录制文件 |
+   | pieceIndex | Integer | 录制文件的切片索引，如果单通通话录制时长超过切片时长，则录制文件会被且被切割成多个文件 |
+
+```    
+//成功结果示例
+"Content-Type": "application/json; charset=utf-8"
+
+{
+    "code": 200,
+    "ret": [
+        {
+            "filename": "0-1234-0-mix.aac",
+            "md5": "xxxxxx",
+            "size": 12345667,
+            "type": "aac",
+            "url": "http://xiazai.vod.126.net/xiazai/0-1234-0-mix.aac",
+            "mix": 1,
+            "pieceIndex": 0
+        },
+        {
+            "filename": "0-1234-0-mix.mp4",
+            "md5": "xxxx",
+            "size": 12345677,
+            "type": "mp4",
+            "url": "http://xiazai.vod.126.net/xiazai/0-1234-0-mix.mp4",
+            "mix": 1,
+            "pieceIndex": 0
+        }
+    ],
+    "requestId": "mc_932241123450",
+    "costTime": "406ms"
+}
+
+//失败结果示例
+{
+    "code":501,
+    "msg":"服务器内部错误"
+}
+```
 
 ## 错误码
 | 错误码 | 说明 |

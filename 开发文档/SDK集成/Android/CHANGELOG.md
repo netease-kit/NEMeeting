@@ -1,5 +1,18 @@
 # CHANGELOG
 
+# 2021-5-30 @ v1.9.0
+## Added
+* SDK初始化时支持设置SDK日志路径与日志级别
+    - 通过`NEMeetingSDKConfig.loggerConfig`字段设置
+* 新增参会者用户信息类`NEInMeetingUserInfo`，包含用户Id与用户昵称
+* 会议信息`NEMeetingInfo`新增以下字段：
+    - 新增`NEMeetingInfo.userList`字段，可获取当前时刻会议中的参会者信息列表
+    - 新增`NEMeetingInfo.hostUserId`字段，代表当前时刻会议的主持人用户Id
+## Fixed
+* 修复屏幕共享分辨率选择不正确导致的画面模糊问题
+## Deprecated
+* 废弃`NEMeetingSDKConfig.enableDebugLog`，使用`NEMeetingSDKConfig.loggerConfig`代替
+* 废弃`NEMeetingSDKConfig.logSize`，使用`NEMeetingSDKConfig.loggerConfig`代替
 
 # 2021-5-01 @ v1.8.1
 
@@ -11,6 +24,7 @@
 * 会议信息新增sipId字段
     - 新增`NEMeetingInfo.sipId`字段
     - 新增`NEHistoryMeetingItem.sipId`字段
+
 # 2021-4-30 @ v1.7.2
 
 ## Added

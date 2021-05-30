@@ -34,6 +34,7 @@
 1. [NIM复用](开发文档/SDK进阶/NIM复用.md)
 2. [会议私有化部署](开发文档/SDK进阶/会议私有化部署.md)
 3. [自定义会议中菜单](开发文档/SDK进阶/自定义菜单.md)
+4. [iOS屏幕共享](开发文档/SDK进阶/iOS屏幕共享.md)
 
 ## API Doc文档
 1. [iOS SDK API](https://netease-kit.github.io/NEMeeting/ios/index.html)

@@ -38,7 +38,7 @@ static NSString * const prefixName = @"meetingdemo://";
 - (void)setupIMSDKPrivateAppKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-         [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
+        [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
     });
 }
 - (void)doSetupMeetingSdk {

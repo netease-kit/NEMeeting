@@ -8,15 +8,22 @@ package com.netease.meetinglib.demo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.netease.meetinglib.demo.utils.SPUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 public class AppSettingsActivity extends AppCompatActivity {
 
@@ -45,6 +52,17 @@ public class AppSettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             getPreferenceManager().setSharedPreferencesName(SPUtils.SP_FILE);
             setPreferencesFromResource(R.xml.app_settings, rootKey);
+            EditTextPreference numberPreference = findPreference("meeting-logger-level-config");
+
+            if (numberPreference != null) {
+                numberPreference.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            }
+                        });
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
 * 会议服务，当前会议信息新增属性： `NEMeetingService::getCurrentMeetingInfo`
    - 会议成员列表：`NEMeetingInfo::userList`
    - 会议唯一ID：`NEMeetingInfo::meetingUniqueId`
-   - 会议主题：`NEMeetingInfo::userList`
+   - 会议主题：`NEMeetingInfo::subject`
    - 会议密码：`NEMeetingInfo::password`
    - 会议开始时间：`NEMeetingInfo::startTime`
    - 会议预约的开始时间：`NEMeetingInfo::scheduleStartTime`

@@ -38,15 +38,23 @@ static NSString * const prefixName = @"meetingdemo://";
 - (void)setupIMSDKPrivateAppKey {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
+         [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
     });
 }
 - (void)doSetupMeetingSdk {
     NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
     config.appKey = kAppKey;
     config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
-    config.enableDebugLog = YES;
+//    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
+    config.broadcastAppGroup = @"group.com.netease.meetinglib.demo.NEMeetingDevDemo";
+    NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
+    //默认等级
+    loggerConfig.level = NELogLevelVerbose;
+    // Document路径
+    NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
+    config.loggerConfig = loggerConfig;
     #if PRIVATE
     /// 私有化AppKey
         config.useAssetServerConfig = YES;

@@ -1,0 +1,10 @@
+<map id="nem_sdk_interface::NEService" name="nem_sdk_interface::NEService">
+<area shape="rect" id="node1" title="公共服务" alt="" coords="192,169,331,211"/>
+<area shape="rect" id="node3" href="$classnem__sdk__interface_1_1_n_e_account_service.html" title="账户服务" alt="" coords="383,5,522,47"/>
+<area shape="rect" id="node4" href="$classnem__sdk__interface_1_1_n_e_auth_service.html" title="登录服务" alt="" coords="383,71,522,112"/>
+<area shape="rect" id="node5" href="$classnem__sdk__interface_1_1_n_e_feedback_service.html" title="反馈服务" alt="" coords="383,136,522,177"/>
+<area shape="rect" id="node6" href="$classnem__sdk__interface_1_1_n_e_meeting_service.html" title="会议服务" alt="" coords="383,201,522,243"/>
+<area shape="rect" id="node7" href="$classnem__sdk__interface_1_1_n_e_pre_meeting_service.html" title="预约会议服务" alt="" coords="379,267,527,308"/>
+<area shape="rect" id="node8" href="$classnem__sdk__interface_1_1_n_e_settings_service.html" title="配置服务" alt="" coords="383,332,522,373"/>
+<area shape="rect" id="node2" href="$classnem__sdk__interface_1_1_n_e_object.html" title="公共对象" alt="" coords="5,169,144,211"/>
+</map>

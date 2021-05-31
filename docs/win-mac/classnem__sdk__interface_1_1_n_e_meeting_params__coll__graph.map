@@ -1,0 +1,4 @@
+<map id="nem_sdk_interface::NEMeetingParams" name="nem_sdk_interface::NEMeetingParams">
+<area shape="rect" id="node1" title="菜单项当前的状态（即对应当前显示的名称），默认为1，1是itemTitle， 2是itemTitle2" alt="" coords="5,95,144,136"/>
+<area shape="rect" id="node2" href="$classnem__sdk__interface_1_1_n_e_object.html" title="公共对象" alt="" coords="5,5,144,47"/>
+</map>

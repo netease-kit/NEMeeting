@@ -1,0 +1,5 @@
+<map id="nem_sdk_interface::NEStartMeetingParams" name="nem_sdk_interface::NEStartMeetingParams">
+<area shape="rect" id="node1" title="开始会议参数" alt="" coords="5,184,164,225"/>
+<area shape="rect" id="node2" href="$classnem__sdk__interface_1_1_n_e_meeting_params.html" title="菜单项当前的状态（即对应当前显示的名称），默认为1，1是itemTitle， 2是itemTitle2" alt="" coords="15,95,154,136"/>
+<area shape="rect" id="node3" href="$classnem__sdk__interface_1_1_n_e_object.html" title="公共对象" alt="" coords="15,5,154,47"/>
+</map>

@@ -45,8 +45,15 @@ static NSString * const prefixName = @"meetingdemo://";
     NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
     config.appKey = kAppKey;
     config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
-    config.enableDebugLog = YES;
+//    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
+    NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
+    //默认等级
+    loggerConfig.level = NELogLevelVerbose;
+    // Document路径
+    NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
+    config.loggerConfig = loggerConfig;
     #if PRIVATE
     /// 私有化AppKey
         config.useAssetServerConfig = YES;

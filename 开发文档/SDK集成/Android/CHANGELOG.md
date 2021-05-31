@@ -100,7 +100,7 @@
 * 新增切换音频模式开关入会配置：
     - `NEMeetingOptions.noSwitchAudioMode`
 * 新增SIP拨号入会 
-  
+
 ## Changed
 
 * 废弃`com.netease.meetinglib.sdk.NEMeetingMenuItem`菜单类，使用`com.netease.meetinglib.sdk.menu.NEMeetingMenuItem`代替

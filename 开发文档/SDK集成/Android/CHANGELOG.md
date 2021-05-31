@@ -25,6 +25,7 @@
     - 新增`NEMeetingInfo.sipId`字段
     - 新增`NEHistoryMeetingItem.sipId`字段
 
+
 # 2021-4-30 @ v1.7.2
 
 ## Added

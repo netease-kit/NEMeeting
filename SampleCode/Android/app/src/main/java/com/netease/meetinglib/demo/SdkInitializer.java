@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 
 import com.netease.meetinglib.demo.nim.NIMInitializer;
 import com.netease.meetinglib.demo.utils.SPUtils;
+import com.netease.meetinglib.sdk.NELogLevel;
+import com.netease.meetinglib.sdk.NELoggerConfig;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
@@ -74,6 +76,19 @@ public class SdkInitializer {
         }
     }
 
+    public int getLoggerLevelConfig() {
+        int level = 0;
+        try {
+            level = Integer.parseInt(SPUtils.getInstance().getString("meeting-logger-level-config"));
+        } catch (NumberFormatException ignored) {
+        }
+        return level;
+    }
+
+    public String getLoggerPathConfig() {
+        return SPUtils.getInstance().getString("meeting-logger-path-config");
+    }
+    
     private void initializeSdk() {
         Log.i(TAG, "initializeSdk");
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
@@ -85,6 +100,10 @@ public class SdkInitializer {
         NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
         foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
         config.foregroundServiceConfig = foregroundServiceConfig;
+        NELoggerConfig loggerConfig = new NELoggerConfig();
+        loggerConfig.level =  NELogLevel.of(getLoggerLevelConfig());
+        loggerConfig.path = getLoggerPathConfig();
+        config.loggerConfig = loggerConfig;
         NEMeetingSDK.getInstance().initialize(context, config, new ToastCallback<Void>(context,"初始化"){
             @Override
             public void onResult(int resultCode, String resultMsg, Void resultData) {

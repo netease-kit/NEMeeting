@@ -18,5 +18,19 @@
         style="@style/MySwitchPreference"
         />
 
+    <EditTextPreference
+        app:key="meeting-logger-level-config"
+        app:title="自定义日志输出等级配置"
+        app:summary="重启应用后生效"
+        app:defaultValue="0"
+        style="@style/MyEditTextPreference"
+        />
 
+    <EditTextPreference
+        app:key="meeting-logger-path-config"
+        app:title="自定义日志路径配置"
+        app:summary="重启应用后生效"
+        app:defaultValue="/sdcard/Android/data/com.netease.meetinglib.demo/files/log/"
+        style="@style/MyEditTextPreference"
+        />
 </PreferenceScreen>

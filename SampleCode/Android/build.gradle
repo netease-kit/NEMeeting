@@ -3,9 +3,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {
-            url  "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
         mavenCentral()
     }
     dependencies {
@@ -20,9 +17,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url  "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
         mavenCentral()
     }
 }

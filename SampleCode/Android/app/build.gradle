@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
 
     //NEMeeting-SDK
-    implementation 'com.netease.yunxin:meetinglib:1.8.1'
+    implementation 'com.netease.yunxin:meetinglib:1.9.0'
 
     //NIM-SDK, 如果单独接入了云信NIM，或者需要依赖指定的NIM版本，则可根据需要进行依赖声明。
     //正常情况下不用声明

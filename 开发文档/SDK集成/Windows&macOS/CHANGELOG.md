@@ -1,3 +1,33 @@
+# 2021-05-27 @ v1.9.0
+
+## Added
+
+* 会议服务，当前会议信息新增属性： `NEMeetingService::getCurrentMeetingInfo`
+   - 会议成员列表：`NEMeetingInfo::userList`
+   - 会议唯一ID：`NEMeetingInfo::meetingUniqueId`
+   - 会议主题：`NEMeetingInfo::subject`
+   - 会议密码：`NEMeetingInfo::password`
+   - 会议开始时间：`NEMeetingInfo::startTime`
+   - 会议预约的开始时间：`NEMeetingInfo::scheduleStartTime`
+   - 会议预约的结束时间：`NEMeetingInfo::scheduleEndTime`
+* 初始化增加日志配置：`NEMeetingSDKConfig::getLoggerConfig`
+* 初始化支持设置运行权限：`NEMeetingSDKConfig::setRunAdmin`
+
+## Changed
+
+* mac G2 SDK升级到4.1.1
+* mac 相芯美颜SDK回退到7.2.0
+* 替换日志库为yx_alog
+* 更新接口文档
+
+## Fixed
+
+* 修复成员列表排序不对问题
+* 修复全体静音/取消程序卡顿问题
+* 修复共享时昵称显示的问题
+* 修复部分未翻译的问题
+* 修复部分场景下共享时视频窗口大小不正常的问题
+
 # 2021-04-29 @ v1.8.1
 
 ## Added

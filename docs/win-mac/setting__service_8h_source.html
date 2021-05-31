@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NetEaseMeeting-PC_API: setting_service.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NetEaseMeeting-PC_API
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.20 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','搜索');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_066864215930fcb1de91ced207833729.html">nem_sdk_interface</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">setting_service.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="setting__service_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef NEM_SDK_INTERFACE_INTERFACE_SETTING_SERVICE_H_</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define NEM_SDK_INTERFACE_INTERFACE_SETTING_SERVICE_H_</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="service__define_8h.html">service_define.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="controller__define_8h.html">controller_define.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="settings_8h.html">settings.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;NNEM_SDK_INTERFACE_BEGIN_DECLS</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_video_controller.html">NEVideoController</a>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_audio_controller.html">NEAudioController</a>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_other_controller.html">NEOtherController</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_beauty_face_controller.html">NEBeautyFaceController</a>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_live_controller.html">NELiveController</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_settings_change_notify_handler.html">NESettingsChangeNotifyHandler</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html">   28</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_settings_service.html">NESettingsService</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_service.html">NEService</a></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">using</span> NEShowSettingUIWndCallback = NEEmptyCallback;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">using</span> NEBoolCallback = NECallback&lt;bool&gt;;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">using</span> NEIntCallback = NECallback&lt;int&gt;;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">using</span> NEHistoryMeetingCallback = NECallback&lt;std::list&lt;NEHistoryMeetingItem&gt;&gt;;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#aaab8a3e22ce45b17540ad2a9da119529">   40</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_n_e_video_controller.html">NEVideoController</a>* <a class="code" href="class_n_e_settings_service.html#aaab8a3e22ce45b17540ad2a9da119529">GetVideoController</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#a971fd440a1b8c7f9f3f5e98774e97eb7">   46</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_n_e_audio_controller.html">NEAudioController</a>* <a class="code" href="class_n_e_settings_service.html#a971fd440a1b8c7f9f3f5e98774e97eb7">GetAudioController</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#af25275a2551bb6bee93b7c969128320f">   52</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_n_e_other_controller.html">NEOtherController</a>* <a class="code" href="class_n_e_settings_service.html#af25275a2551bb6bee93b7c969128320f">GetOtherController</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#acd55f223ca3d1b92acf579f7b2892e3f">   58</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_n_e_beauty_face_controller.html">NEBeautyFaceController</a>* <a class="code" href="class_n_e_settings_service.html#acd55f223ca3d1b92acf579f7b2892e3f">GetBeautyFaceController</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#a5fcf855bfb689f1a6a0cadd0d2bd9343">   64</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_n_e_live_controller.html">NELiveController</a>* <a class="code" href="class_n_e_settings_service.html#a5fcf855bfb689f1a6a0cadd0d2bd9343">GetLiveController</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#a05666af6160f8ef9b60dba713fd98e5e">   72</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_settings_service.html#a05666af6160f8ef9b60dba713fd98e5e">showSettingUIWnd</a>(<span class="keyword">const</span> <a class="code" href="class_n_e_settings_u_i_wnd_config.html">NESettingsUIWndConfig</a>&amp; config, <span class="keyword">const</span> NEShowSettingUIWndCallback&amp; cb) = 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#a455696d0312021d39951d5cd35c651fe">   79</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_settings_service.html#a455696d0312021d39951d5cd35c651fe">setNESettingsChangeNotifyHandler</a>(<a class="code" href="class_n_e_settings_change_notify_handler.html">NESettingsChangeNotifyHandler</a>* handler) = 0;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="class_n_e_settings_service.html#a180a9b2c0b5ce8a5f0eb27f91e648b7b">   86</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_settings_service.html#a180a9b2c0b5ce8a5f0eb27f91e648b7b">getHistoryMeetingItem</a>(<span class="keyword">const</span> NEHistoryMeetingCallback&amp; callback) = 0;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="class_n_e_video_controller.html">   92</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_video_controller.html">NEVideoController</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_controller.html">NEController</a></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="class_n_e_video_controller.html#aa5b15a18b679c3d62bf082a48d97c516">  101</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_video_controller.html#aa5b15a18b679c3d62bf082a48d97c516">setTurnOnMyVideoWhenJoinMeeting</a>(<span class="keywordtype">bool</span> bOn, <span class="keyword">const</span> NEEmptyCallback&amp; cb) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="class_n_e_video_controller.html#ac426ec75ea94f422b104e936f6b01f87">  108</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_video_controller.html#ac426ec75ea94f422b104e936f6b01f87">isTurnOnMyVideoWhenJoinMeetingEnabled</a>(<span class="keyword">const</span> NESettingsService::NEBoolCallback&amp; cb) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;};</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="class_n_e_audio_controller.html">  114</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_audio_controller.html">NEAudioController</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_controller.html">NEController</a></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="class_n_e_audio_controller.html#a889bf386f01f6ae6d9a1c17c17ee491d">  123</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_audio_controller.html#a889bf386f01f6ae6d9a1c17c17ee491d">setTurnOnMyAudioWhenJoinMeeting</a>(<span class="keywordtype">bool</span> bOn, <span class="keyword">const</span> NEEmptyCallback&amp; cb) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="class_n_e_audio_controller.html#a6f4c10691a9ef67e650fd4566076b468">  130</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_audio_controller.html#a6f4c10691a9ef67e650fd4566076b468">isTurnOnMyAudioWhenJoinMeetingEnabled</a>(<span class="keyword">const</span> NESettingsService::NEBoolCallback&amp; cb) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;};</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="class_n_e_other_controller.html">  136</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_other_controller.html">NEOtherController</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_controller.html">NEController</a></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;{</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="comment">//virtual void enableShowMyMeetingElapseTime(bool show, const NEEmptyCallback&amp; cb) const = 0;</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">//virtual void isShowMyMeetingElapseTimeEnabled(const NESettingsService::NEBoolCallback&amp; cb) const = 0;</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;};</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="class_n_e_settings_change_notify_handler.html">  158</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_settings_change_notify_handler.html">NESettingsChangeNotifyHandler</a> : <a class="code" href="class_n_e_object.html">NEObject</a></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;{</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="class_n_e_settings_change_notify_handler.html#ac2247868a322c2604b2fb27dd3e149a2">  166</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_settings_change_notify_handler.html#ac2247868a322c2604b2fb27dd3e149a2">OnAudioSettingsChange</a>(<span class="keywordtype">bool</span> status) = 0;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="class_n_e_settings_change_notify_handler.html#a637dadf349bd6fedebdd1d5dae0d5b72">  173</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_settings_change_notify_handler.html#a637dadf349bd6fedebdd1d5dae0d5b72">OnVideoSettingsChange</a>(<span class="keywordtype">bool</span> status) = 0;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="class_n_e_settings_change_notify_handler.html#acb43d025fcb5ccf827ee0063569384b8">  180</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_settings_change_notify_handler.html#acb43d025fcb5ccf827ee0063569384b8">OnOtherSettingsChange</a>(<span class="keywordtype">bool</span> status) = 0;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;};</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
+<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="class_n_e_beauty_face_controller.html">  186</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_beauty_face_controller.html">NEBeautyFaceController</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_controller.html">NEController</a></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;{</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="comment">//virtual bool enableBeautyFace(bool enable, const NESettingsService::NEBoolCallback&amp; cb) = 0;</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
+<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="class_n_e_beauty_face_controller.html#ad28ea7761a348dd776340eda7eadd99e">  206</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_n_e_beauty_face_controller.html#ad28ea7761a348dd776340eda7eadd99e">isBeautyFaceEnabled</a>(<span class="keyword">const</span> NESettingsService::NEBoolCallback&amp; cb) = 0;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="class_n_e_beauty_face_controller.html#a67bd3a9f0acbe217dd097d52fe236ee1">  216</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_n_e_beauty_face_controller.html#a67bd3a9f0acbe217dd097d52fe236ee1">getBeautyFaceValue</a>(<span class="keyword">const</span> NESettingsService::NEIntCallback&amp; cb) = 0;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="class_n_e_beauty_face_controller.html#ae9e78fd46ac4253371868a0f21e96d0d">  226</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_n_e_beauty_face_controller.html#ae9e78fd46ac4253371868a0f21e96d0d">setBeautyFaceValue</a>(<span class="keywordtype">int</span> value, <span class="keyword">const</span> NESettingsService::NEBoolCallback&amp; cb) = 0;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;};</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
+<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="class_n_e_live_controller.html">  232</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_live_controller.html">NELiveController</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_controller.html">NEController</a></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;{</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="class_n_e_live_controller.html#af33f68cce2d078e55135701fe4f09396">  242</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_n_e_live_controller.html#af33f68cce2d078e55135701fe4f09396">isLiveEnabled</a>(<span class="keyword">const</span> NESettingsService::NEBoolCallback&amp; cb) = 0;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;};</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;NNEM_SDK_INTERFACE_END_DECLS</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#endif // NEM_SDK_INTERFACE_INTERFACE_SETTING_SERVICE_H_</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclass_n_e_object_html"><div class="ttname"><a href="class_n_e_object.html">NEObject</a></div><div class="ttdoc">公共对象</div><div class="ttdef"><b>Definition:</b> <a href="public__define_8h_source.html#l00020">public_define.h:21</a></div></div>
+<div class="ttc" id="aclass_n_e_video_controller_html_aa5b15a18b679c3d62bf082a48d97c516"><div class="ttname"><a href="class_n_e_video_controller.html#aa5b15a18b679c3d62bf082a48d97c516">NEVideoController::setTurnOnMyVideoWhenJoinMeeting</a></div><div class="ttdeci">virtual void setTurnOnMyVideoWhenJoinMeeting(bool bOn, const NEEmptyCallback &amp;cb) const =0</div><div class="ttdoc">设置入会时本地视频开关</div></div>
+<div class="ttc" id="aclass_n_e_live_controller_html_af33f68cce2d078e55135701fe4f09396"><div class="ttname"><a href="class_n_e_live_controller.html#af33f68cce2d078e55135701fe4f09396">NELiveController::isLiveEnabled</a></div><div class="ttdeci">virtual bool isLiveEnabled(const NESettingsService::NEBoolCallback &amp;cb)=0</div><div class="ttdoc">查询直播开关状态</div></div>
+<div class="ttc" id="asettings_8h_html"><div class="ttname"><a href="settings_8h.html">settings.h</a></div><div class="ttdoc">配置信息头文件</div></div>
+<div class="ttc" id="aclass_n_e_settings_change_notify_handler_html_ac2247868a322c2604b2fb27dd3e149a2"><div class="ttname"><a href="class_n_e_settings_change_notify_handler.html#ac2247868a322c2604b2fb27dd3e149a2">NESettingsChangeNotifyHandler::OnAudioSettingsChange</a></div><div class="ttdeci">virtual void OnAudioSettingsChange(bool status)=0</div><div class="ttdoc">音频状态变更</div></div>
+<div class="ttc" id="aclass_n_e_settings_change_notify_handler_html_acb43d025fcb5ccf827ee0063569384b8"><div class="ttname"><a href="class_n_e_settings_change_notify_handler.html#acb43d025fcb5ccf827ee0063569384b8">NESettingsChangeNotifyHandler::OnOtherSettingsChange</a></div><div class="ttdeci">virtual void OnOtherSettingsChange(bool status)=0</div><div class="ttdoc">其他状态变更</div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_acd55f223ca3d1b92acf579f7b2892e3f"><div class="ttname"><a href="class_n_e_settings_service.html#acd55f223ca3d1b92acf579f7b2892e3f">NESettingsService::GetBeautyFaceController</a></div><div class="ttdeci">virtual NEBeautyFaceController * GetBeautyFaceController() const =0</div><div class="ttdoc">获取美颜控制器</div></div>
+<div class="ttc" id="aclass_n_e_beauty_face_controller_html_a67bd3a9f0acbe217dd097d52fe236ee1"><div class="ttname"><a href="class_n_e_beauty_face_controller.html#a67bd3a9f0acbe217dd097d52fe236ee1">NEBeautyFaceController::getBeautyFaceValue</a></div><div class="ttdeci">virtual bool getBeautyFaceValue(const NESettingsService::NEIntCallback &amp;cb)=0</div><div class="ttdoc">获取当前美颜参数</div></div>
+<div class="ttc" id="aclass_n_e_audio_controller_html_a889bf386f01f6ae6d9a1c17c17ee491d"><div class="ttname"><a href="class_n_e_audio_controller.html#a889bf386f01f6ae6d9a1c17c17ee491d">NEAudioController::setTurnOnMyAudioWhenJoinMeeting</a></div><div class="ttdeci">virtual void setTurnOnMyAudioWhenJoinMeeting(bool bOn, const NEEmptyCallback &amp;cb) const =0</div><div class="ttdoc">设置入会时本地音频开关</div></div>
+<div class="ttc" id="aclass_n_e_settings_change_notify_handler_html"><div class="ttname"><a href="class_n_e_settings_change_notify_handler.html">NESettingsChangeNotifyHandler</a></div><div class="ttdoc">配置状态监听器</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00158">setting_service.h:159</a></div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_a5fcf855bfb689f1a6a0cadd0d2bd9343"><div class="ttname"><a href="class_n_e_settings_service.html#a5fcf855bfb689f1a6a0cadd0d2bd9343">NESettingsService::GetLiveController</a></div><div class="ttdeci">virtual NELiveController * GetLiveController() const =0</div><div class="ttdoc">获取直播控制器</div></div>
+<div class="ttc" id="aclass_n_e_beauty_face_controller_html"><div class="ttname"><a href="class_n_e_beauty_face_controller.html">NEBeautyFaceController</a></div><div class="ttdoc">美颜控制器</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00186">setting_service.h:187</a></div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_a05666af6160f8ef9b60dba713fd98e5e"><div class="ttname"><a href="class_n_e_settings_service.html#a05666af6160f8ef9b60dba713fd98e5e">NESettingsService::showSettingUIWnd</a></div><div class="ttdeci">virtual void showSettingUIWnd(const NESettingsUIWndConfig &amp;config, const NEShowSettingUIWndCallback &amp;cb)=0</div><div class="ttdoc">显示配置窗口</div></div>
+<div class="ttc" id="aclass_n_e_service_html"><div class="ttname"><a href="class_n_e_service.html">NEService</a></div><div class="ttdoc">公共服务</div><div class="ttdef"><b>Definition:</b> <a href="service__define_8h_source.html#l00019">service_define.h:20</a></div></div>
+<div class="ttc" id="aclass_n_e_live_controller_html"><div class="ttname"><a href="class_n_e_live_controller.html">NELiveController</a></div><div class="ttdoc">直播控制器</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00232">setting_service.h:233</a></div></div>
+<div class="ttc" id="aservice__define_8h_html"><div class="ttname"><a href="service__define_8h.html">service_define.h</a></div><div class="ttdoc">公共服务定义头文件</div></div>
+<div class="ttc" id="aclass_n_e_video_controller_html"><div class="ttname"><a href="class_n_e_video_controller.html">NEVideoController</a></div><div class="ttdoc">视频控制器</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00092">setting_service.h:93</a></div></div>
+<div class="ttc" id="aclass_n_e_audio_controller_html_a6f4c10691a9ef67e650fd4566076b468"><div class="ttname"><a href="class_n_e_audio_controller.html#a6f4c10691a9ef67e650fd4566076b468">NEAudioController::isTurnOnMyAudioWhenJoinMeetingEnabled</a></div><div class="ttdeci">virtual void isTurnOnMyAudioWhenJoinMeetingEnabled(const NESettingsService::NEBoolCallback &amp;cb) const =0</div><div class="ttdoc">查询入会时的本地音频开关设置状态</div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_a180a9b2c0b5ce8a5f0eb27f91e648b7b"><div class="ttname"><a href="class_n_e_settings_service.html#a180a9b2c0b5ce8a5f0eb27f91e648b7b">NESettingsService::getHistoryMeetingItem</a></div><div class="ttdeci">virtual void getHistoryMeetingItem(const NEHistoryMeetingCallback &amp;callback)=0</div><div class="ttdoc">获取历史会议信息，当前仅会返回最近一次的会议记录，不支持漫游</div></div>
+<div class="ttc" id="aclass_n_e_settings_u_i_wnd_config_html"><div class="ttname"><a href="class_n_e_settings_u_i_wnd_config.html">NESettingsUIWndConfig</a></div><div class="ttdoc">配置窗口设置</div><div class="ttdef"><b>Definition:</b> <a href="settings_8h_source.html#l00019">settings.h:20</a></div></div>
+<div class="ttc" id="aclass_n_e_video_controller_html_ac426ec75ea94f422b104e936f6b01f87"><div class="ttname"><a href="class_n_e_video_controller.html#ac426ec75ea94f422b104e936f6b01f87">NEVideoController::isTurnOnMyVideoWhenJoinMeetingEnabled</a></div><div class="ttdeci">virtual void isTurnOnMyVideoWhenJoinMeetingEnabled(const NESettingsService::NEBoolCallback &amp;cb) const =0</div><div class="ttdoc">查询入会时的本地视频开关设置状态</div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_a971fd440a1b8c7f9f3f5e98774e97eb7"><div class="ttname"><a href="class_n_e_settings_service.html#a971fd440a1b8c7f9f3f5e98774e97eb7">NESettingsService::GetAudioController</a></div><div class="ttdeci">virtual NEAudioController * GetAudioController() const =0</div><div class="ttdoc">获取音频控制器</div></div>
+<div class="ttc" id="aclass_n_e_beauty_face_controller_html_ae9e78fd46ac4253371868a0f21e96d0d"><div class="ttname"><a href="class_n_e_beauty_face_controller.html#ae9e78fd46ac4253371868a0f21e96d0d">NEBeautyFaceController::setBeautyFaceValue</a></div><div class="ttdeci">virtual bool setBeautyFaceValue(int value, const NESettingsService::NEBoolCallback &amp;cb)=0</div><div class="ttdoc">设置美颜参数</div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html"><div class="ttname"><a href="class_n_e_settings_service.html">NESettingsService</a></div><div class="ttdoc">配置服务</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00028">setting_service.h:29</a></div></div>
+<div class="ttc" id="aclass_n_e_audio_controller_html"><div class="ttname"><a href="class_n_e_audio_controller.html">NEAudioController</a></div><div class="ttdoc">音频控制器</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00114">setting_service.h:115</a></div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_aaab8a3e22ce45b17540ad2a9da119529"><div class="ttname"><a href="class_n_e_settings_service.html#aaab8a3e22ce45b17540ad2a9da119529">NESettingsService::GetVideoController</a></div><div class="ttdeci">virtual NEVideoController * GetVideoController() const =0</div><div class="ttdoc">获取视频控制器</div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_af25275a2551bb6bee93b7c969128320f"><div class="ttname"><a href="class_n_e_settings_service.html#af25275a2551bb6bee93b7c969128320f">NESettingsService::GetOtherController</a></div><div class="ttdeci">virtual NEOtherController * GetOtherController() const =0</div><div class="ttdoc">获取其他控制器</div></div>
+<div class="ttc" id="aclass_n_e_beauty_face_controller_html_ad28ea7761a348dd776340eda7eadd99e"><div class="ttname"><a href="class_n_e_beauty_face_controller.html#ad28ea7761a348dd776340eda7eadd99e">NEBeautyFaceController::isBeautyFaceEnabled</a></div><div class="ttdeci">virtual bool isBeautyFaceEnabled(const NESettingsService::NEBoolCallback &amp;cb)=0</div><div class="ttdoc">美颜使能接口，控制美颜服务开关</div></div>
+<div class="ttc" id="aclass_n_e_other_controller_html"><div class="ttname"><a href="class_n_e_other_controller.html">NEOtherController</a></div><div class="ttdoc">其他控制器</div><div class="ttdef"><b>Definition:</b> <a href="setting__service_8h_source.html#l00136">setting_service.h:137</a></div></div>
+<div class="ttc" id="aclass_n_e_settings_service_html_a455696d0312021d39951d5cd35c651fe"><div class="ttname"><a href="class_n_e_settings_service.html#a455696d0312021d39951d5cd35c651fe">NESettingsService::setNESettingsChangeNotifyHandler</a></div><div class="ttdeci">virtual void setNESettingsChangeNotifyHandler(NESettingsChangeNotifyHandler *handler)=0</div><div class="ttdoc">设置配置状态监听器, 用于接收状态变更通知</div></div>
+<div class="ttc" id="acontroller__define_8h_html"><div class="ttname"><a href="controller__define_8h.html">controller_define.h</a></div><div class="ttdoc">通用控制接口头文件</div></div>
+<div class="ttc" id="aclass_n_e_controller_html"><div class="ttname"><a href="class_n_e_controller.html">NEController</a></div><div class="ttdoc">通用控制接口基类</div><div class="ttdef"><b>Definition:</b> <a href="controller__define_8h_source.html#l00019">controller_define.h:20</a></div></div>
+<div class="ttc" id="aclass_n_e_settings_change_notify_handler_html_a637dadf349bd6fedebdd1d5dae0d5b72"><div class="ttname"><a href="class_n_e_settings_change_notify_handler.html#a637dadf349bd6fedebdd1d5dae0d5b72">NESettingsChangeNotifyHandler::OnVideoSettingsChange</a></div><div class="ttdeci">virtual void OnVideoSettingsChange(bool status)=0</div><div class="ttdoc">视频状态变更</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NetEaseMeeting-PC_API: NEAuthListener类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NetEaseMeeting-PC_API
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.20 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','搜索');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="class_n_e_auth_listener-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">NEAuthListener类 参考<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>监听登录状态变更通知  
+ <a href="class_n_e_auth_listener.html#details">更多...</a></p>
+
+<p><code>#include &lt;<a class="el" href="auth__service_8h_source.html">auth_service.h</a>&gt;</code></p>
+<div class="dynheader">
+类 NEAuthListener 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_n_e_auth_listener__inherit__graph.png" border="0" usemap="#a_n_e_auth_listener_inherit__map" alt="Inheritance graph"/></div>
+<map name="_n_e_auth_listener_inherit__map" id="_n_e_auth_listener_inherit__map">
+<area shape="rect" title="监听登录状态变更通知" alt="" coords="5,80,119,107"/>
+<area shape="rect" href="class_n_e_object.html" title="公共对象" alt="" coords="23,5,101,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+NEAuthListener 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_n_e_auth_listener__coll__graph.png" border="0" usemap="#a_n_e_auth_listener_coll__map" alt="Collaboration graph"/></div>
+<map name="_n_e_auth_listener_coll__map" id="_n_e_auth_listener_coll__map">
+<area shape="rect" title="监听登录状态变更通知" alt="" coords="5,80,119,107"/>
+<area shape="rect" href="class_n_e_object.html" title="公共对象" alt="" coords="23,5,101,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:ada0b15297c7e2d098f28383f140eed8c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_auth_listener.html#ada0b15297c7e2d098f28383f140eed8c">onKickOut</a> ()=0</td></tr>
+<tr class="memdesc:ada0b15297c7e2d098f28383f140eed8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">被踢出，登录状态变更为未登录，原因为当前登录账号已在其他设备上重新登录  <a href="class_n_e_auth_listener.html#ada0b15297c7e2d098f28383f140eed8c">更多...</a><br /></td></tr>
+<tr class="separator:ada0b15297c7e2d098f28383f140eed8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcc152dc157ca7b9e9c5ef966f862289"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_auth_listener.html#afcc152dc157ca7b9e9c5ef966f862289">onAuthInfoExpired</a> ()=0</td></tr>
+<tr class="memdesc:afcc152dc157ca7b9e9c5ef966f862289"><td class="mdescLeft">&#160;</td><td class="mdescRight">账号信息过期通知，原因为用户修改了密码，应用层随后应该重新登录  <a href="class_n_e_auth_listener.html#afcc152dc157ca7b9e9c5ef966f862289">更多...</a><br /></td></tr>
+<tr class="separator:afcc152dc157ca7b9e9c5ef966f862289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_n_e_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_n_e_object')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="class_n_e_object.html">NEObject</a></td></tr>
+<tr class="memitem:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="memItemLeft" align="right" valign="top"><a id="a81708d4d415ccad85e5cebbaaf004ec2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_object.html#a81708d4d415ccad85e5cebbaaf004ec2">NEObject</a> ()</td></tr>
+<tr class="memdesc:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">构造函数 <br /></td></tr>
+<tr class="separator:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="memItemLeft" align="right" valign="top"><a id="a86ce4672e3aec43907f8943e5edc7c0d"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_object.html#a86ce4672e3aec43907f8943e5edc7c0d">~NEObject</a> ()</td></tr>
+<tr class="memdesc:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">析构函数 <br /></td></tr>
+<tr class="separator:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>监听登录状态变更通知 </p>
+<dl class="section see"><dt>参见</dt><dd>NEMeetingSDK::addAuthListener(NEAuthListener) </dd>
+<dd>
+NEMeetingSDK::removeAuthListener(NEAuthListener) </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="auth__service_8h_source.html">auth_service.h</a> 第 <a class="el" href="auth__service_8h_source.html#l00021">21</a> 行定义.</p>
+</div><h2 class="groupheader">成员函数说明</h2>
+<a id="afcc152dc157ca7b9e9c5ef966f862289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc152dc157ca7b9e9c5ef966f862289">&#9670;&nbsp;</a></span>onAuthInfoExpired()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NEAuthListener::onAuthInfoExpired </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>账号信息过期通知，原因为用户修改了密码，应用层随后应该重新登录 </p>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="ada0b15297c7e2d098f28383f140eed8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada0b15297c7e2d098f28383f140eed8c">&#9670;&nbsp;</a></span>onKickOut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NEAuthListener::onKickOut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>被踢出，登录状态变更为未登录，原因为当前登录账号已在其他设备上重新登录 </p>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li><a class="el" href="auth__service_8h_source.html">auth_service.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>

@@ -19,6 +19,8 @@
 | 2021-02-05 | 1.6.0 | 修复部分已知bug |
 | 2021-03-17 | 1.7.0 | 增加会中改名入口 <br> 创建，加入会议增加 *noRename* 字段（是否使用会中改名）<br> 新增*defaultWindowMode*选项配置“会议视图模式”，支持普通和白板模式 |
 | 2021-03-30 | 1.7.2 | 增加成员进出事件监听*peerJoin* *peerLeave* <br> 网络事件监听*networkQuality*<br> 国际化配置*setLocale* *useLocale* |
+| 2021-04-29 | 1.8.1 | 共享时支持视频显示 <br> 增加额外会议信息 <br> 增加会议创建配置
+
 ## 快速接入
 
 #### 开发环境准备
@@ -120,6 +122,7 @@
       moreBarList: [], // 更多区按钮自定义排列
       noRename: false, // 是否开启会中改名，默认为false（开启）
       defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
+      noCloudRecord: false, // 开启会议录制，false（默认） 录制 true 不录制
     }
     neWebMeeting.actions.create(obj, callback)
     ```
@@ -195,6 +198,7 @@
     // isLocked 会议是否锁定
     // shortMeetingId 短号
     // password 会议密码，没有则为空
+    // sipId 会议sipId
     ```
 
 12. 设置组件的宽高
@@ -259,6 +263,7 @@
       console.log('成员离开', uid);
     })
     ```
+    
 
 18. 网络情况通知[参考](https://dev.yunxin.163.com/docs/product/%E9%9F%B3%E8%A7%86%E9%A2%91%E9%80%9A%E8%AF%9D2.0/%E8%BF%9B%E9%98%B6%E5%8A%9F%E8%83%BD/%E4%BD%93%E9%AA%8C%E6%8F%90%E5%8D%87/%E9%80%9A%E8%AF%9D%E4%B8%AD%E8%B4%A8%E9%87%8F%E7%9B%91%E6%B5%8B?#%E4%B8%8A%E4%B8%8B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%B4%A8%E9%87%8F%E5%90%8C%E6%AD%A5)
 
@@ -276,10 +281,27 @@
 
     ```js
         const enLocale = {
-            //
+            // 相关配置项
         }
         neWebMeeting.actions.setLocale('en', enLocale);
         neWebMeeting.actions.useLocale('en');
+    ```
+
+20. 获取会议历史信息
+
+    ```js
+        neWebMeeting.actions.getHistoryMeetingItem(() => {
+          console.log('上次会议信息', data);
+          // 数据格式同会议信息
+        })
+    ```
+
+21. 获取服务器配置信息
+
+    ```js
+        neWebMeeting.acitons.NESettingsService
+        // isWhiteboardEnabled  白板是否开启      boolean
+        // isCloudRecordEnabled 云端录制是否开启   boolean
     ```
 
 #### 自定义按钮详细介绍
@@ -386,8 +408,10 @@
     * 配置按钮icon时**仅限**使用url网络资源进行配置
     * icon资源尺寸
 
-            mdpi 24px * 24px
-            xhdpi 48px * 48px
+        ```
+        mdpi 24px * 24px
+        xhdpi 48px * 48px
+        ```
 
     * 配置异常时请参考返回的报错信息进行处理（即加入创建时的callback）
     * 未配置成功时，不会影响整体已有按钮配置
@@ -438,3 +462,5 @@
 * v1.3.1更新的初始化配置，不会影响现有的appkey和meetingServerDomain的配置，如果在login传入则优先使用login配置
 
 * 国际化默认配置为**zh**，如果替换的**zh**下的配置，会造成配置丢失，请谨慎操作
+
+* 如使用1.8.1版本sdk，其他端也请同样使用1.8.1及1.8.1以上的sdk，如未替换，会造成兼容性问题

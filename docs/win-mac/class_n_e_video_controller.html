@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NetEaseMeeting-PC_API: NEVideoController类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NetEaseMeeting-PC_API
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.20 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','搜索');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="class_n_e_video_controller-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">NEVideoController类 参考<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>视频控制器  
+ <a href="class_n_e_video_controller.html#details">更多...</a></p>
+
+<p><code>#include &lt;<a class="el" href="setting__service_8h_source.html">setting_service.h</a>&gt;</code></p>
+<div class="dynheader">
+类 NEVideoController 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_n_e_video_controller__inherit__graph.png" border="0" usemap="#a_n_e_video_controller_inherit__map" alt="Inheritance graph"/></div>
+<map name="_n_e_video_controller_inherit__map" id="_n_e_video_controller_inherit__map">
+<area shape="rect" title="视频控制器" alt="" coords="5,155,133,181"/>
+<area shape="rect" href="class_n_e_controller.html" title="通用控制接口基类" alt="" coords="22,80,117,107"/>
+<area shape="rect" href="class_n_e_object.html" title="公共对象" alt="" coords="30,5,109,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+NEVideoController 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_n_e_video_controller__coll__graph.png" border="0" usemap="#a_n_e_video_controller_coll__map" alt="Collaboration graph"/></div>
+<map name="_n_e_video_controller_coll__map" id="_n_e_video_controller_coll__map">
+<area shape="rect" title="视频控制器" alt="" coords="5,155,133,181"/>
+<area shape="rect" href="class_n_e_controller.html" title="通用控制接口基类" alt="" coords="22,80,117,107"/>
+<area shape="rect" href="class_n_e_object.html" title="公共对象" alt="" coords="30,5,109,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:aa5b15a18b679c3d62bf082a48d97c516"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_video_controller.html#aa5b15a18b679c3d62bf082a48d97c516">setTurnOnMyVideoWhenJoinMeeting</a> (bool bOn, const NEEmptyCallback &amp;cb) const =0</td></tr>
+<tr class="memdesc:aa5b15a18b679c3d62bf082a48d97c516"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置入会时本地视频开关  <a href="class_n_e_video_controller.html#aa5b15a18b679c3d62bf082a48d97c516">更多...</a><br /></td></tr>
+<tr class="separator:aa5b15a18b679c3d62bf082a48d97c516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac426ec75ea94f422b104e936f6b01f87"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_video_controller.html#ac426ec75ea94f422b104e936f6b01f87">isTurnOnMyVideoWhenJoinMeetingEnabled</a> (const NESettingsService::NEBoolCallback &amp;cb) const =0</td></tr>
+<tr class="memdesc:ac426ec75ea94f422b104e936f6b01f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">查询入会时的本地视频开关设置状态  <a href="class_n_e_video_controller.html#ac426ec75ea94f422b104e936f6b01f87">更多...</a><br /></td></tr>
+<tr class="separator:ac426ec75ea94f422b104e936f6b01f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_n_e_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_n_e_controller')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="class_n_e_controller.html">NEController</a></td></tr>
+<tr class="memitem:a8c7831e6a2d0055c6acdb8b3fbdafefe inherit pub_methods_class_n_e_controller"><td class="memItemLeft" align="right" valign="top"><a id="a8c7831e6a2d0055c6acdb8b3fbdafefe"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_controller.html#a8c7831e6a2d0055c6acdb8b3fbdafefe">NEController</a> ()</td></tr>
+<tr class="memdesc:a8c7831e6a2d0055c6acdb8b3fbdafefe inherit pub_methods_class_n_e_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">构造函数 <br /></td></tr>
+<tr class="separator:a8c7831e6a2d0055c6acdb8b3fbdafefe inherit pub_methods_class_n_e_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab14371af45fdb2ee4f7120ce14e7cb1 inherit pub_methods_class_n_e_controller"><td class="memItemLeft" align="right" valign="top"><a id="aab14371af45fdb2ee4f7120ce14e7cb1"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_controller.html#aab14371af45fdb2ee4f7120ce14e7cb1">~NEController</a> ()</td></tr>
+<tr class="memdesc:aab14371af45fdb2ee4f7120ce14e7cb1 inherit pub_methods_class_n_e_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">析构函数 <br /></td></tr>
+<tr class="separator:aab14371af45fdb2ee4f7120ce14e7cb1 inherit pub_methods_class_n_e_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_n_e_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_n_e_object')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="class_n_e_object.html">NEObject</a></td></tr>
+<tr class="memitem:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="memItemLeft" align="right" valign="top"><a id="a81708d4d415ccad85e5cebbaaf004ec2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_object.html#a81708d4d415ccad85e5cebbaaf004ec2">NEObject</a> ()</td></tr>
+<tr class="memdesc:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">构造函数 <br /></td></tr>
+<tr class="separator:a81708d4d415ccad85e5cebbaaf004ec2 inherit pub_methods_class_n_e_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="memItemLeft" align="right" valign="top"><a id="a86ce4672e3aec43907f8943e5edc7c0d"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_n_e_object.html#a86ce4672e3aec43907f8943e5edc7c0d">~NEObject</a> ()</td></tr>
+<tr class="memdesc:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">析构函数 <br /></td></tr>
+<tr class="separator:a86ce4672e3aec43907f8943e5edc7c0d inherit pub_methods_class_n_e_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>视频控制器 </p>
+
+<p class="definition">在文件 <a class="el" href="setting__service_8h_source.html">setting_service.h</a> 第 <a class="el" href="setting__service_8h_source.html#l00092">92</a> 行定义.</p>
+</div><h2 class="groupheader">成员函数说明</h2>
+<a id="ac426ec75ea94f422b104e936f6b01f87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac426ec75ea94f422b104e936f6b01f87">&#9670;&nbsp;</a></span>isTurnOnMyVideoWhenJoinMeetingEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NEVideoController::isTurnOnMyVideoWhenJoinMeetingEnabled </td>
+          <td>(</td>
+          <td class="paramtype">const NESettingsService::NEBoolCallback &amp;&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>查询入会时的本地视频开关设置状态 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="aa5b15a18b679c3d62bf082a48d97c516"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b15a18b679c3d62bf082a48d97c516">&#9670;&nbsp;</a></span>setTurnOnMyVideoWhenJoinMeeting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void NEVideoController::setTurnOnMyVideoWhenJoinMeeting </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bOn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const NEEmptyCallback &amp;&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>设置入会时本地视频开关 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bOn</td><td>true-入会时打开视频，false-入会时关闭视频 </td></tr>
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li><a class="el" href="setting__service_8h_source.html">setting_service.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>

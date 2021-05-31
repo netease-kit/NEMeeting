@@ -1,0 +1,9 @@
+<map id="NEController" name="NEController">
+<area shape="rect" id="node1" title="通用控制接口基类" alt="" coords="132,107,227,133"/>
+<area shape="rect" id="node3" href="$class_n_e_audio_controller.html" title="音频控制器" alt="" coords="293,5,421,32"/>
+<area shape="rect" id="node4" href="$class_n_e_beauty_face_controller.html" title="美颜控制器" alt="" coords="275,56,440,83"/>
+<area shape="rect" id="node5" href="$class_n_e_live_controller.html" title="直播控制器" alt="" coords="299,107,416,133"/>
+<area shape="rect" id="node6" href="$class_n_e_other_controller.html" title="其他控制器" alt="" coords="294,157,421,184"/>
+<area shape="rect" id="node7" href="$class_n_e_video_controller.html" title="视频控制器" alt="" coords="293,208,421,235"/>
+<area shape="rect" id="node2" href="$class_n_e_object.html" title="公共对象" alt="" coords="5,107,84,133"/>
+</map>

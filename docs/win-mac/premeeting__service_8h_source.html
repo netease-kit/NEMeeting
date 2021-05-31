@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NetEaseMeeting-PC_API: premeeting_service.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NetEaseMeeting-PC_API
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.20 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','搜索');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_066864215930fcb1de91ced207833729.html">nem_sdk_interface</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">premeeting_service.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="premeeting__service_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef NEM_SDK_INTERFACE_INTERFACE_PREMEETING_SERVICE_H_</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define NEM_SDK_INTERFACE_INTERFACE_PREMEETING_SERVICE_H_</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="service__define_8h.html">service_define.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;NNEM_SDK_INTERFACE_BEGIN_DECLS</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="class_n_e_schedule_meeting_status_listener.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_n_e_schedule_meeting_status_listener.html">NEScheduleMeetingStatusListener</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_object.html">NEObject</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_n_e_schedule_meeting_status_listener.html#a9fcfe546d7c063dc1e08282d7c2ce8ab">   28</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_schedule_meeting_status_listener.html#a9fcfe546d7c063dc1e08282d7c2ce8ab">onScheduleMeetingStatusChanged</a>(uint64_t uniqueMeetingId, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; meetingStatus) = 0;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;};</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html">   34</a></span>&#160;<span class="keyword">class </span>NEM_SDK_INTERFACE_EXPORT <a class="code" href="class_n_e_pre_meeting_service.html">NEPreMeetingService</a> : <span class="keyword">public</span> <a class="code" href="class_n_e_service.html">NEService</a></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">using</span> NEScheduleMeetingItemCallback = NECallback&lt;NEMeetingItem&gt;;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">using</span> NEOperateScheduleMeetingCallback = NEEmptyCallback;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">using</span> NEGetMeetingListCallback = NECallback&lt;std::list&lt;NEMeetingItem&gt;&amp;&gt;;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#a358c2ae1751f0532045ddbd22c194938">   45</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="structtag_n_e_meeting_item.html">NEMeetingItem</a> <a class="code" href="class_n_e_pre_meeting_service.html#a358c2ae1751f0532045ddbd22c194938">createScheduleMeetingItem</a>() = 0;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#a84f2b3e58d8b68f1120d9369e93ff78d">   53</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#a84f2b3e58d8b68f1120d9369e93ff78d">scheduleMeeting</a>(<span class="keyword">const</span> <a class="code" href="structtag_n_e_meeting_item.html">NEMeetingItem</a>&amp; item, <span class="keyword">const</span> NEScheduleMeetingItemCallback&amp; callback) = 0;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#a421620b9de6559721fbb8bd4e1a1159c">   61</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#a421620b9de6559721fbb8bd4e1a1159c">cancelMeeting</a>(<span class="keyword">const</span> int64_t &amp;meetingUniqueId, <span class="keyword">const</span> NEOperateScheduleMeetingCallback&amp; callback) = 0;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#a0332ea178488bb57d0eda85dc4283ae0">   69</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#a0332ea178488bb57d0eda85dc4283ae0">editMeeting</a>(<span class="keyword">const</span> <a class="code" href="structtag_n_e_meeting_item.html">NEMeetingItem</a>&amp; item, <span class="keyword">const</span> NEOperateScheduleMeetingCallback&amp; callback) = 0;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#aad8592ff4bd700a486ea9a9c09d54e4c">   77</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#aad8592ff4bd700a486ea9a9c09d54e4c">getMeetingItemById</a>(<span class="keyword">const</span> int64_t &amp;meetingUniqueId, <span class="keyword">const</span> NEScheduleMeetingItemCallback&amp; callback) = 0;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#a1631e0a9ded246258ea16c1ff28bab89">   85</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#a1631e0a9ded246258ea16c1ff28bab89">getMeetingList</a>(std::list&lt;NEMeetingItemStatus&gt; status,<span class="keyword">const</span> NEGetMeetingListCallback&amp; callback) = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#ab9e4fd9fd09a9c857472c6e02e351ee4">   92</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#ab9e4fd9fd09a9c857472c6e02e351ee4">registerScheduleMeetingStatusListener</a>(<a class="code" href="class_n_e_schedule_meeting_status_listener.html">NEScheduleMeetingStatusListener</a>* listener) = 0;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_n_e_pre_meeting_service.html#a8f48671ae290794e55eb09f6d3d408e0">   99</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_n_e_pre_meeting_service.html#a8f48671ae290794e55eb09f6d3d408e0">unRegisterScheduleMeetingStatusListener</a>(<a class="code" href="class_n_e_schedule_meeting_status_listener.html">NEScheduleMeetingStatusListener</a>* listener) = 0;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;};</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;NNEM_SDK_INTERFACE_END_DECLS</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif // NEM_SDK_INTERFACE_INTERFACE_PREMEETING_SERVICE_H_</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclass_n_e_object_html"><div class="ttname"><a href="class_n_e_object.html">NEObject</a></div><div class="ttdoc">公共对象</div><div class="ttdef"><b>Definition:</b> <a href="public__define_8h_source.html#l00020">public_define.h:21</a></div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_a421620b9de6559721fbb8bd4e1a1159c"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#a421620b9de6559721fbb8bd4e1a1159c">NEPreMeetingService::cancelMeeting</a></div><div class="ttdeci">virtual void cancelMeeting(const int64_t &amp;meetingUniqueId, const NEOperateScheduleMeetingCallback &amp;callback)=0</div><div class="ttdoc">取消已预约的会议</div></div>
+<div class="ttc" id="aclass_n_e_schedule_meeting_status_listener_html_a9fcfe546d7c063dc1e08282d7c2ce8ab"><div class="ttname"><a href="class_n_e_schedule_meeting_status_listener.html#a9fcfe546d7c063dc1e08282d7c2ce8ab">NEScheduleMeetingStatusListener::onScheduleMeetingStatusChanged</a></div><div class="ttdeci">virtual void onScheduleMeetingStatusChanged(uint64_t uniqueMeetingId, const int &amp;meetingStatus)=0</div><div class="ttdoc">监听预约会议状态变更通知</div></div>
+<div class="ttc" id="astructtag_n_e_meeting_item_html"><div class="ttname"><a href="structtag_n_e_meeting_item.html">tagNEMeetingItem</a></div><div class="ttdoc">预约会议的信息</div><div class="ttdef"><b>Definition:</b> <a href="metting_8h_source.html#l00655">metting.h:656</a></div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_ab9e4fd9fd09a9c857472c6e02e351ee4"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#ab9e4fd9fd09a9c857472c6e02e351ee4">NEPreMeetingService::registerScheduleMeetingStatusListener</a></div><div class="ttdeci">virtual void registerScheduleMeetingStatusListener(NEScheduleMeetingStatusListener *listener)=0</div><div class="ttdoc">注册预约会议状态变更监听器</div></div>
+<div class="ttc" id="aclass_n_e_service_html"><div class="ttname"><a href="class_n_e_service.html">NEService</a></div><div class="ttdoc">公共服务</div><div class="ttdef"><b>Definition:</b> <a href="service__define_8h_source.html#l00019">service_define.h:20</a></div></div>
+<div class="ttc" id="aservice__define_8h_html"><div class="ttname"><a href="service__define_8h.html">service_define.h</a></div><div class="ttdoc">公共服务定义头文件</div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_aad8592ff4bd700a486ea9a9c09d54e4c"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#aad8592ff4bd700a486ea9a9c09d54e4c">NEPreMeetingService::getMeetingItemById</a></div><div class="ttdeci">virtual void getMeetingItemById(const int64_t &amp;meetingUniqueId, const NEScheduleMeetingItemCallback &amp;callback)=0</div><div class="ttdoc">查询预约会议信息</div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_a8f48671ae290794e55eb09f6d3d408e0"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#a8f48671ae290794e55eb09f6d3d408e0">NEPreMeetingService::unRegisterScheduleMeetingStatusListener</a></div><div class="ttdeci">virtual void unRegisterScheduleMeetingStatusListener(NEScheduleMeetingStatusListener *listener)=0</div><div class="ttdoc">反注册预约会议状态变更监听器</div></div>
+<div class="ttc" id="aclass_n_e_schedule_meeting_status_listener_html"><div class="ttname"><a href="class_n_e_schedule_meeting_status_listener.html">NEScheduleMeetingStatusListener</a></div><div class="ttdoc">监听预约会议状态变更通知</div><div class="ttdef"><b>Definition:</b> <a href="premeeting__service_8h_source.html#l00020">premeeting_service.h:21</a></div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_a84f2b3e58d8b68f1120d9369e93ff78d"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#a84f2b3e58d8b68f1120d9369e93ff78d">NEPreMeetingService::scheduleMeeting</a></div><div class="ttdeci">virtual void scheduleMeeting(const NEMeetingItem &amp;item, const NEScheduleMeetingItemCallback &amp;callback)=0</div><div class="ttdoc">预约会议</div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html"><div class="ttname"><a href="class_n_e_pre_meeting_service.html">NEPreMeetingService</a></div><div class="ttdoc">预约会议服务</div><div class="ttdef"><b>Definition:</b> <a href="premeeting__service_8h_source.html#l00034">premeeting_service.h:35</a></div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_a1631e0a9ded246258ea16c1ff28bab89"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#a1631e0a9ded246258ea16c1ff28bab89">NEPreMeetingService::getMeetingList</a></div><div class="ttdeci">virtual void getMeetingList(std::list&lt; NEMeetingItemStatus &gt; status, const NEGetMeetingListCallback &amp;callback)=0</div><div class="ttdoc">查询特定状态下的会议列表，目前仅仅支持查询待开始、进行中及已结束，后续将支持已取消和已回收状态。</div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_a358c2ae1751f0532045ddbd22c194938"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#a358c2ae1751f0532045ddbd22c194938">NEPreMeetingService::createScheduleMeetingItem</a></div><div class="ttdeci">virtual NEMeetingItem createScheduleMeetingItem()=0</div><div class="ttdoc">预约会议</div></div>
+<div class="ttc" id="aclass_n_e_pre_meeting_service_html_a0332ea178488bb57d0eda85dc4283ae0"><div class="ttname"><a href="class_n_e_pre_meeting_service.html#a0332ea178488bb57d0eda85dc4283ae0">NEPreMeetingService::editMeeting</a></div><div class="ttdeci">virtual void editMeeting(const NEMeetingItem &amp;item, const NEOperateScheduleMeetingCallback &amp;callback)=0</div><div class="ttdoc">编辑会议</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>

@@ -804,6 +804,8 @@ public enum MsgTypeEnum {
     MEETING_CANCEL(2, "会议取消且会议号回收"),
     MEETING_ROOM_END(3, "会议房间结束"),
     MEETING_RECYCLE(4, "会议回收且会议号回收"),
+    MEETING_JOIN(5, "成员加入会议"),
+    MEETING_LEAVE(6, "成员离开会议"),
     MEETING_RECORDING(7, "会议录制"),
 }
 ```
@@ -816,6 +818,12 @@ public enum MsgTypeEnum {
 ###### 会议房间开始/结束
 会议房间开始是指为一场还存在的会议打开一个音视频房间</br>
 会议房间结束是指一场会议的音视频房间已经关闭
+
+###### 成员加入会议
+成员加入到音视频房间
+
+###### 成员离开会议
+成员离开了音视频房间
 
 ###### 会议录制
 开启会议录制功能，当会议结束或者超过固定会议长度时（默认2小时），会生成会议录像视频。
@@ -850,6 +858,50 @@ public enum MsgTypeEnum {
     "reserveStartTime": 1600782488572,
     "reserveEndTime": 1600782488572,
     "time": 1600782498147
+  }
+}
+```
+
+###### 成员加入会议抄送
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
+| accountId | String | 用户id | 是 |
+| deviceId | String | 用户设备号 | 是 |
+| roomUid | Long | 音视频房间成员uid | 是 |
+
+###### 成员加入会议抄送示例
+```json
+{
+  "msgType": 5,
+  "msgBody": {
+    "accountId": "146558916040335360",
+    "deviceId": "95876217-bd4d-4d40-abd2-01ae2b56ae9c",
+    "roomUid": 162123717474551,
+    "meetingId": "1122334455",
+    "meetingUniqueId": 112211,
+    "time": 1605857677012
+  }
+}
+```
+
+###### 成员离开会议抄送
+|消息体属性|类型|说明|必须|
+|:--- | :-------| :--- | :--- |
+| accountId | String | 用户id | 是 |
+| deviceId | String | 用户设备号 | 是 |
+| roomUid | Long | 音视频房间成员uid | 是 |
+
+###### 成员离开会议抄送示例
+```json
+{
+  "msgType": 6,
+  "msgBody": {
+    "accountId": "146558916040335360",
+    "deviceId": "95876217-bd4d-4d40-abd2-01ae2b56ae9c",
+    "roomUid": 162123717474551,
+    "meetingId": "1122334455",
+    "meetingUniqueId": 112211,
+    "time": 1605857677012
   }
 }
 ```

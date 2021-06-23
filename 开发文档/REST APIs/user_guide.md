@@ -845,6 +845,7 @@ public enum MsgTypeEnum {
 | reserveStartTime | Long | 预约开始时间，毫秒 | 否 |
 | reserveEndTime | Long | 预约结束时间，毫秒 | 否 |
 | roomCreateTime | Long | 房间开始时间，毫秒 | 否 |
+| reason | Integer | 会议结束/回收原因，1.主持人结束，2.全员退出，3.超过单次会议时间，4.服务端api结束 | 否 |
 
 ###### 会议抄送示例
 ```json
@@ -857,7 +858,8 @@ public enum MsgTypeEnum {
     "subject": "DEMO",
     "reserveStartTime": 1600782488572,
     "reserveEndTime": 1600782488572,
-    "time": 1600782498147
+    "time": 1600782498147,
+    "reason": 1
   }
 }
 ```

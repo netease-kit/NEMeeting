@@ -21,6 +21,7 @@
 | 2021-03-30 | 1.7.2 | 增加成员进出事件监听*peerJoin* *peerLeave* <br> 网络事件监听*networkQuality*<br> 国际化配置*setLocale* *useLocale* |
 | 2021-04-29 | 1.8.1 | 共享时支持视频显示 <br> 增加额外会议信息 <br> 增加会议创建配置 |
 | 2021-06-02 | 1.9.1 | 修复已知bug |
+| 2021-07-08 | 1.10.0 | 增加创建会议额外配置*scene* <br> 增加创会入会时自定义*memberTag* <br> 增加日志方法*uploadLog* *downLog* |
 
 ## 快速接入
 
@@ -28,7 +29,7 @@
 
 | 名称 | 要求 |
 | :------ | :------ |
-| Chrome | 72以上 |
+| Chrome | 74以上 |
 | Safari | 12以上 |
 | Node | 8以上 |
 | IE | 不支持 |
@@ -39,7 +40,7 @@
 1. 将代码加入到页面head中（将文件路径替换为真实存在路径）
 
     ```js
-    <script src="./NeWebMeeting_V1.6.0.js"></script>
+    <script src="./NeWebMeeting_V1.10.0.js"></script>
     ```
 
 2. 页面添加dom
@@ -62,7 +63,7 @@
 
     ```js
     const config = {
-        appKey: '', //云信服务appkey
+        appKey: '', //网易会议appkey
         meetingServerDomain: '' //会议服务器地址，支持私有化部署
         NIMconf: {// 选填，仅限于私有化配置时使用
             // IM私有化配置项
@@ -124,6 +125,16 @@
       noRename: false, // 是否开启会中改名，默认为false（开启）
       defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
       noCloudRecord: false, // 开启会议录制，false（默认） 录制 true 不录制
+      memberTag: '', // 成员自定义tag
+      scene: { // 会议场景参数
+        roleTypes: [
+            {
+                roleType: 1, // number 1 普通参会者 2 主持人
+                maxCount: 5, // number  场景角色上线
+                accountIds: [], // Array<string> 场景角色限制哪些账号可以入会
+            }
+        ]
+      }
     }
     neWebMeeting.actions.create(obj, callback)
     ```
@@ -140,12 +151,13 @@
       audio: 1,  // 1开启2关闭（匿名加入房间需要）
       password: '', // 加入预约会议时可使用
       meetingIdDisplayOptions: 0, // 0 都展示 1 展示长号，2 展示短号 默认为 0
-      appkey: '', //云信服务appkey（匿名加入房间需要，初始化传入则暂不需要）
+      appkey: '', //网易会议appkey（匿名加入房间需要，初始化传入则暂不需要）
       meetingServerDomain: '', //会议服务器地址，支持私有化部署, 为空则默认为云信线上服务器（匿名加入房间需要，初始化传入则暂不需要）
       toolBarList: [], // 主区按钮自定义设置
       moreBarList: [], // 更多区按钮自定义排列
       noRename: false, // 是否开启会中改名，默认为false（开启）
       defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
+      memberTag: '', // 成员自定义tag
     }
     neWebMeeting.actions.join(obj, callback)
     ```
@@ -186,6 +198,7 @@
             nickName:"txntm7o", // 入会名称
             stream: MediaStream, // 视频流
             video:2, // 视频状态
+            memberTag: '', // 成员自定义tag
         }
     }
     ```
@@ -304,6 +317,64 @@
         // isWhiteboardEnabled  白板是否开启      boolean
         // isCloudRecordEnabled 云端录制是否开启   boolean
     ```
+
+22. 日志相关
+
+    * 日志仅在本端保存24小时
+
+    * 日志上报，start字段请上传该场会议开始时间，便于问题排查
+
+    * 需要人员排查时请提供该场会议的meetingId
+
+        * 日志上传
+
+        ```js
+            type LogNames = 'meetingLog'|'rtcLog'
+            neWebMeeting,actions.uploadLog(
+                logNames: Array<LogNames>, 
+                // 日志类型 
+                // meetingLog 会议日志
+                // rtcLog 音视频日志
+                start: number, // 开始日志时间戳 默认 0
+                end: number, // 结束日志时间戳 默认 当前时间戳
+            ).then((res: Array<string>) => {
+                console.log(res);
+                // res 上传路径以及文件名
+            })
+
+            // 例子
+            // 上传全部日志
+            neWebMeeting,actions.uploadLog(['meetingLog', 'rtcLog']) 
+            // 上传某一日志
+            neWebMeeting,actions.uploadLog(['rtcLog'])
+            // 上传某一时间段日志，如最近一小时
+            neWebMeeting.actions.uploadLog(['meetingLog', 'rtcLog'], Date.now() - 3600000, Date.now())
+
+        ```
+
+        * 日志下载
+    
+        ```js
+            type LogNames = 'meetingLog'|'rtcLog'
+            // 执行后直接触发下载
+            neWebMeeting,actions.downloadLog(
+                logNames: Array<LogNames>, 
+                // 日志类型 
+                // meetingLog 会议日志
+                // rtcLog 音视频日志
+                start: number, // 开始日志时间戳 默认 0
+                end: number, // 结束日志时间戳 默认 当前时间戳
+            )
+
+            // 例子
+            // 下载全部日志
+            neWebMeeting,actions.downloadLog(['meetingLog', 'rtcLog']) 
+            // 下载某一日志
+            neWebMeeting,actions.downloadLog(['rtcLog'])
+            // 下载某一时间段日志，如最近一小时
+            neWebMeeting.actions.downloadLog(['meetingLog', 'rtcLog'], Date.now() - 3600000, Date.now())
+
+        ```
 
 #### 自定义按钮详细介绍
 
@@ -453,11 +524,13 @@
 * 支持esmodule形式引入，如使用，请参考以下方式使用
 
     ```js
-    import { actions } from './NeWebMeeting_V1.6.0.js'
+    import { actions } from './NeWebMeeting_V1.10.0.js'
     aciotns.init();
     // or
-    import neWebMeeting from './NeWebMeeting_V1.6.0.js'
+    import neWebMeeting from './NeWebMeeting_V1.10.0.js'
     neWebMeeting.init();
+
+    // 需要安装@babel/plugin-transform-modules-umd并进行配置
     ```
 
 * v1.3.1更新的初始化配置，不会影响现有的appkey和meetingServerDomain的配置，如果在login传入则优先使用login配置
@@ -465,3 +538,5 @@
 * 国际化默认配置为**zh**，如果替换的**zh**下的配置，会造成配置丢失，请谨慎操作
 
 * 如使用1.8.1版本sdk，其他端也请同样使用1.8.1及1.8.1以上的sdk，如未替换，会造成兼容性问题
+
+* 在使用新版sdk屏幕共享功能时，请将浏览器升级至最新（至少Chrome74以上），不然会产生黑屏问题

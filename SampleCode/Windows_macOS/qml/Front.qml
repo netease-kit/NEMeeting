@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.2
 import NetEase.Meeting.RunningStatus 1.0
 import NetEase.Meeting.MeetingStatus 1.0
 
@@ -9,8 +10,22 @@ Rectangle {
         meetingManager.isInitializd()
         checkAudio.checked = meetingManager.checkAudio()
         checkVideo.checked = meetingManager.checkVideo()
-        mainWindow.showMaximized()
-        meetingManager.getIsSupportRecord()
+        mainWindow.width = 1088
+        mainWindow.height = 680
+        Qt.callLater(function() {
+            meetingManager.getIsSupportRecord()
+            liveTimer.start()
+        })
+    }
+
+    Timer {
+        id: liveTimer
+        repeat: false
+        running: false
+        interval: 500
+        onTriggered: {
+             meetingManager.getIsSupportLive()
+        }
     }
 
     ToolButton {
@@ -64,7 +79,7 @@ Rectangle {
             }
             CheckBox {
                 id: idLiveSettingCheck
-                visible: meetingManager.getIsSupportLive()
+                visible: meetingManager.isSupportLive
                 text: qsTr("is open live")
             }
             CheckBox {
@@ -83,6 +98,7 @@ Rectangle {
                                                    startTimestamp.text,
                                                    endTimestamp.text,
                                                    meetingPassword.text,
+                                                   textScene.text,
                                                    muteCheckbox.checked,
                                                    idLiveSettingCheck.checked,
                                                    idLiveAccessCheck.checked,
@@ -153,7 +169,7 @@ Rectangle {
                           //  Layout.fillWidth: true
                             CheckBox {
                                 id: idLiveSettingCheckEdit
-                                visible: meetingManager.getIsSupportLive()
+                                visible: meetingManager.isSupportLive
                                 text: qsTr("is open live")
                                 checked: model.enableLive
                             }
@@ -198,7 +214,7 @@ Rectangle {
                                 Layout.preferredHeight: 30
                                 text: qsTr('Join')
                                 onClicked: {
-                                    meetingManager.invokeJoin(model.meetingId, textNickname.text,
+                                    meetingManager.invokeJoin(model.meetingId, textNickname.text, textTag.text,
                                                               checkAudio.checked, checkVideo.checked,
                                                               checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, autorename.checked)
                                 }
@@ -222,6 +238,7 @@ Rectangle {
                                                                startTimestamp2.text,
                                                                endTimestamp2.text,
                                                                password2.text,
+                                                               textScene.text,
                                                                muteCheckbox2.checked,
                                                                idLiveSettingCheckEdit.checked,
                                                                idLiveAccessCheckEdit.checked,
@@ -257,6 +274,20 @@ Rectangle {
             TextField {
                 id: textpassword
                 placeholderText: qsTr('meeting password')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+
+            TextField {
+                id: textTag
+                placeholderText: qsTr('user tag')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+
+            TextField {
+                id: textScene
+                placeholderText: qsTr('scene setting')
                 selectByMouse: true
                 Layout.fillWidth: true
             }
@@ -401,7 +432,8 @@ Rectangle {
                     text: qsTr('Create')
                     Layout.fillWidth: true
                     onClicked: {
-                        meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
+
+                        meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,textTag.text, textScene.text,
                                                    checkAudio.checked, checkVideo.checked,
                                                    checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, autorename.checked, displayOption.currentIndex,
                                                    idOpenRecord.checked)
@@ -413,7 +445,7 @@ Rectangle {
                     text: qsTr('Join')
                     Layout.fillWidth: true
                     onClicked: {
-                        meetingManager.invokeJoin(textMeetingId.text, textNickname.text,
+                        meetingManager.invokeJoin(textMeetingId.text, textNickname.text,textTag.text,
                                                   checkAudio.checked, checkVideo.checked,
                                                   checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, textpassword.text, autorename.checked, displayOption.currentIndex)
                     }
@@ -450,6 +482,127 @@ Rectangle {
                     text: qsTr('Get History Info')
                     onClicked: meetingManager.getHistoryMeetingItem()
                 }
+            }
+        }
+    }
+
+    Dialog {
+        id: meetinginfo
+        standardButtons: StandardButton.Save | StandardButton.Cancel
+
+        property int meetingUniqueId: 0
+        property string meetingId: ""
+        property string shortMeetingId: ""
+        property string subject: ""
+        property string password: ""
+        property bool isHost: false
+        property bool isLocked: false
+        property string scheduleStartTime: ""
+        property string scheduleEndTime: ""
+        property string startTime: ""
+        property string sipId: ""
+        property int duration: 0
+        property string hostUserId: ""
+
+        contentItem: Rectangle {
+            implicitHeight: 600
+            implicitWidth: 500
+
+            ColumnLayout {
+                id: col
+                anchors.left: parent.left
+                anchors.top: parent.top
+                implicitHeight: 300
+                spacing: 0
+
+                Button {
+                    text: qsTr('exit')
+                    onClicked: meetinginfo.close()
+                }
+
+                Label {
+                    text: "meetingUniqueId: " + meetinginfo.meetingUniqueId
+                }
+
+                Label {
+                    text: "meetingId: " + meetinginfo.meetingId
+                }
+
+                Label {
+                    text: "shortMeetingId: " + meetinginfo.shortMeetingId
+                }
+
+                Label {
+                    text: "subject: " + meetinginfo.subject
+                }
+
+                Label {
+                    text: "password: " + meetinginfo.password
+                }
+
+                Label {
+                    text: "isHost: " + meetinginfo.isHost
+                }
+
+                Label {
+                    text: "isLocked: " + meetinginfo.isLocked
+                }
+
+                Label {
+                    text: "scheduleStartTime: " + meetinginfo.scheduleStartTime
+                }
+
+                Label {
+                    text: "scheduleEndTime: " + meetinginfo.scheduleEndTime
+                }
+
+                Label {
+                    text: "startTime: " + meetinginfo.startTime
+                }
+
+                Label {
+                    text: "sipId: " + meetinginfo.sipId
+                }
+
+                Label {
+                    text: "duration: " + meetinginfo.duration
+                }
+
+                Label {
+                    text: "hostUserId: " + meetinginfo.hostUserId
+                }
+
+                Label {
+                    text: "user list: "
+                }
+
+            }
+
+            ListView {
+                anchors.top: col.bottom
+                anchors.left: col.left
+                width: parent.width
+                height: 300
+                model: ListModel {
+                    id: listUserModel
+                }
+                delegate: Rectangle {
+                    height: 20
+                    RowLayout{
+                        Label {
+                            text: "userId: " + model.userId
+                        }
+
+                        Label {
+                            text: "userName: " + model.userName
+                        }
+
+                        Label {
+                            text: "tag: " + model.tag
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -538,7 +691,30 @@ Rectangle {
             toast.show('Meeting item clicked, item title: ' + itemTitle)
         }
         onGetCurrentMeetingInfo: {
-            toast.show('Get current meeting info, ID: ' + meetingId + ', is host: ' + isHost + ', is locked: ' + isLocked + ', duration: ' + duration + ', sip: ' + sipId)
+            meetinginfo.meetingUniqueId = meetingBaseInfo.meetingUniqueId
+            meetinginfo.meetingId = meetingBaseInfo.meetingId
+            meetinginfo.shortMeetingId = meetingBaseInfo.shortMeetingId
+            meetinginfo.subject = meetingBaseInfo.subject
+            meetinginfo.password = meetingBaseInfo.password
+            meetinginfo.isHost = meetingBaseInfo.isHost
+            meetinginfo.isLocked = meetingBaseInfo.isLocked
+            meetinginfo.scheduleStartTime = meetingBaseInfo.scheduleStartTime
+            meetinginfo.scheduleEndTime = meetingBaseInfo.scheduleEndTime
+            meetinginfo.startTime = meetingBaseInfo.startTime
+            meetinginfo.sipId = meetingBaseInfo.sipId
+            meetinginfo.duration = meetingBaseInfo.duration
+            meetinginfo.hostUserId = meetingBaseInfo.hostUserId
+
+            listUserModel.clear()
+            for (let i = 0; i < meetingUserList.length; i++) {
+                const user = meetingUserList[i]
+                listUserModel.append(user)
+                console.log("userid", user.userId)
+                console.log("userName", user.userName)
+                console.log("tag", user.tag)
+            }
+
+            meetinginfo.open()
         }
         onGetHistoryMeetingInfo: {
             toast.show('Get history meeting info, ID: ' + meetingId + ', meetingUniqueId: ' + meetingUniqueId + ', shortMeetingId: ' + shortMeetingId + ', subject: ' + subject + ', password: ' + password + ', nickname: ' + nickname + ', sip: ' + sipId)

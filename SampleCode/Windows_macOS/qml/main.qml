@@ -7,8 +7,8 @@ import QtGraphicalEffects 1.0
 Window {
     id: mainWindow
     visible: true
-    width: 900
-    height: 600
+    width: 1088
+    height: 680
     title: qsTr("NetEase Meeting SDK Sample")
 
     Component.onCompleted: {
@@ -29,8 +29,15 @@ Window {
     Connections {
         target: mainWindow
         onClosing: {
+            if (pageLoader.source.toString() !== 'qrc:/qml/Login.qml') {
+                close.accepted = false
+                meetingManager.unInitialize()
+                pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Login.qml'))
+                return
+            }
+
             meetingManager.unInitialize()
-            close.accepted = false
+            close.accepted = true
         }
     }
 }

@@ -12,13 +12,13 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#a32022458a69ce812e898210317043fe4"><param name="Name" value="nem_sdk_interface"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#acc8b5298dec5027ccf43e3cb9dcca8d8"><param name="Name" value="ApplicationName"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#acc8b5298dec5027ccf43e3cb9dcca8d8"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a511c54d05a4cf280041acc73c840a673"><param name="Name" value="ApplicationName"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a511c54d05a4cf280041acc73c840a673"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#acc8b5298dec5027ccf43e3cb9dcca8d8"><param name="Name" value="ApplicationName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#acc8b5298dec5027ccf43e3cb9dcca8d8"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#a7328a07f46550e029c47134fbdf2bbf2a8d3f2d50e33f3c103fba930b357e6202"><param name="Name" value="ERROR_CODE_CANCELLED"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#a7328a07f46550e029c47134fbdf2bbf2a8b6cb71f1df2ed76ecbe17c17bdd2bb7"><param name="Name" value="ERROR_CODE_FAILED"></OBJECT>
@@ -37,13 +37,13 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a557d8d776ceb85e5d38cf2bebf87768d"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a4edeecd78a32f087f117773b5dbefdc0"><param name="Name" value="ExceptionMessage"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a4edeecd78a32f087f117773b5dbefdc0"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#aed0d9ed7165cd8dd3d26980fcab51f57"><param name="Name" value="ExceptionMessage"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#aed0d9ed7165cd8dd3d26980fcab51f57"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a4edeecd78a32f087f117773b5dbefdc0"><param name="Name" value="ExceptionMessage"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a4edeecd78a32f087f117773b5dbefdc0"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a051477938bc13344e8702a1ebc9932d7"><param name="Name" value="GetAudioController"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a39b9d2231a9eea33086fcbbd35894f21"><param name="Name" value="GetBeautyFaceController"></OBJECT>
@@ -63,13 +63,13 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a11be7c960a0fc301a832340e3227146d"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#af2bdae9c86e8c63334f2330b9367ca1d"><param name="Name" value="LoggerPath"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#af2bdae9c86e8c63334f2330b9367ca1d"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a54fbaea50ea38a04352e65c1332539da"><param name="Name" value="LoggerPath"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a54fbaea50ea38a04352e65c1332539da"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#af2bdae9c86e8c63334f2330b9367ca1d"><param name="Name" value="LoggerPath"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#af2bdae9c86e8c63334f2330b9367ca1d"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#aa84eb9f8d0b7e4bde5b68cefaca8c930a9d5b7d0e31891b76b078e28b0f50394b"><param name="Name" value="MEETING_CANCEL"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7a0c6fc6fd623a2debfd0acc591b4be430"><param name="Name" value="MEETING_DISCONNECTING_AUTH_INFO_EXPIRED"></OBJECT>
@@ -211,13 +211,13 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#a304ef9ad9b43be6b943b7eb89c6dd074"><param name="Name" value="nem_sdk_interface"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a793a0eadd50fe72ac28e4cb164bb02ab"><param name="Name" value="NEMeetingOptions"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a097b40e84b1d9120963e159444b8c5f1"><param name="Name" value="NEMeetingParams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a4967d7259ea608cd80dee82ffafa3152"><param name="Name" value="NEMeetingParams"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a097b40e84b1d9120963e159444b8c5f1"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a4967d7259ea608cd80dee82ffafa3152"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a209b5082693f17760de4309183a9a35f"><param name="Name" value="NEMeetingParams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#afb0337db96af1fc318b78996714a485b"><param name="Name" value="NEMeetingParams"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a209b5082693f17760de4309183a9a35f"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#afb0337db96af1fc318b78996714a485b"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#a220fea69f6b71183d640b0c1cf321f10"><param name="Name" value="NEMeetingRoleConfiguration"></OBJECT>
   <UL>
@@ -280,13 +280,13 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a1065f504ea2bb041f4bb7287794c0ba4"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#af5154212ebbef9089c364cae61318c83"><param name="Name" value="SDKPath"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#af5154212ebbef9089c364cae61318c83"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#afe35a382908fee921f1de9118340259b"><param name="Name" value="SDKPath"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#afe35a382908fee921f1de9118340259b"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#af5154212ebbef9089c364cae61318c83"><param name="Name" value="SDKPath"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#af5154212ebbef9089c364cae61318c83"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a11d55f160a0d19437b8d55e0292e7b47"><param name="Name" value="SettingChangType_Audio"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a866d3344315a6cc6d1b109aa60e27781"><param name="Name" value="SettingChangType_Other"></OBJECT>
@@ -342,7 +342,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html#aaf9e9b59dbee7b1724123634bdddad37"><param name="Name" value="enable"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a7dc97ef28f77213d4c996ef3f87067c9"><param name="Name" value="enableLive"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#abf54aa01d244a0300da2d8c45efec3c5"><param name="Name" value="endTime"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html#a7f1d0d42d6c081d1310d4b5dc23a8f45"><param name="Name" value="feedback"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html#adc44572dc5d6442ff410c9e17928bf01"><param name="Name" value="feedback"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aec93632b8f3f27e5c80bc38e96d826c2"><param name="Name" value="full_more_menu_items_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a842abcd8c34bd8d7a33417882b5dda14"><param name="Name" value="full_toolbar_menu_items_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a299bea771506fd149fe14a32893818e5"><param name="Name" value="getAccountInfo"></OBJECT>
@@ -487,20 +487,20 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_service.html#a225478f1e4e5953249361a1437874d1b"><param name="Name" value="leaveMeeting"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#aefdfb95bab62dd9c4c70c90c016b6b91"><param name="Name" value="liveUrl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a9854704863cf28b0b09cf12350120b53"><param name="Name" value="liveWebAccessControlLevel"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a9b6cc29a1c34de6c359767a03d8e4d35"><param name="Name" value="login"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a9b6cc29a1c34de6c359767a03d8e4d35"><param name="Name" value="nem_sdk_interface::NEAuthService"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a7c91be1a28f68f2edd222182e9da11f3"><param name="Name" value="login"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a7c91be1a28f68f2edd222182e9da11f3"><param name="Name" value="nem_sdk_interface::NEAuthService"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a9b6cc29a1c34de6c359767a03d8e4d35"><param name="Name" value="login"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a9b6cc29a1c34de6c359767a03d8e4d35"><param name="Name" value="nem_sdk_interface::NEAuthService"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a42a6c4471fedb9e0b2a3d98ea7aba847"><param name="Name" value="loginAnonymous"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_account_info.html#a836fb941e73a2af2b47336ac93b90a60"><param name="Name" value="loginType"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#af9187c998ead4568f8378cc6d9dafbe6"><param name="Name" value="loginWithNEMeeting"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a3a560c8c530e493aa8fd2d289e26237c"><param name="Name" value="loginWithSSOToken"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a66aecf37eea31d59fa81d47d305521e0"><param name="Name" value="logout"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#ae8eea39f255d775cbbdad2c0c2c16074"><param name="Name" value="maxCount"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a0c8680311354bc8df726f83f891f2a7e"><param name="Name" value="maxCount"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#ae7da6646216184c644dba74754400fd2"><param name="Name" value="meetingId"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#ae7da6646216184c644dba74754400fd2"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
@@ -729,15 +729,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a93b6040727586219fad5595776dc38c7"><param name="Name" value="ExceptionCode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
-  <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a557d8d776ceb85e5d38cf2bebf87768d"><param name="Name" value="ExceptionCode"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a4edeecd78a32f087f117773b5dbefdc0"><param name="Name" value="ExceptionMessage"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a93b6040727586219fad5595776dc38c7"><param name="Name" value="ExceptionCode"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   <UL>
@@ -745,11 +741,15 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a2b1695b39381c9356290ec52e69f5d11"><param name="Name" value="NEException"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a4edeecd78a32f087f117773b5dbefdc0"><param name="Name" value="ExceptionMessage"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a2ec3678ff232750235afc4e646d83f14"><param name="Name" value="NEException"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html"><param name="Name" value="nem_sdk_interface::NEException"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_exception.html#a2b1695b39381c9356290ec52e69f5d11"><param name="Name" value="NEException"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html"><param name="Name" value="nem_sdk_interface::NEFeedbackService"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html"><param name="Name" value="nem_sdk_interface::NEFeedbackService"></OBJECT>
@@ -762,17 +762,13 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html"><param name="Name" value="nem_sdk_interface::NEFeedbackService"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html#a7f1d0d42d6c081d1310d4b5dc23a8f45"><param name="Name" value="feedback"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_feedback_service.html#adc44572dc5d6442ff410c9e17928bf01"><param name="Name" value="feedback"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_options.html"><param name="Name" value="nem_sdk_interface::NEJoinMeetingOptions"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEJoinMeetingParams"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEJoinMeetingParams"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html#ac928f14b38fcc08cec063a597c3d17d2"><param name="Name" value="password"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEJoinMeetingParams"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html#acbc39b0365991e177a7351527cfafe2b"><param name="Name" value="roleType"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_live_controller.html"><param name="Name" value="nem_sdk_interface::NELiveController"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_live_controller.html"><param name="Name" value="nem_sdk_interface::NELiveController"></OBJECT>
@@ -782,19 +778,19 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a7472f16e01186158e00c4178c869fdea"><param name="Name" value="LoggerLevel"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
-  <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a11be7c960a0fc301a832340e3227146d"><param name="Name" value="LoggerLevel"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a54fbaea50ea38a04352e65c1332539da"><param name="Name" value="LoggerPath"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a7472f16e01186158e00c4178c869fdea"><param name="Name" value="LoggerLevel"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#af2bdae9c86e8c63334f2330b9367ca1d"><param name="Name" value="LoggerPath"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html#a54fbaea50ea38a04352e65c1332539da"><param name="Name" value="LoggerPath"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_logger_config.html"><param name="Name" value="nem_sdk_interface::NELoggerConfig"></OBJECT>
   <UL>
@@ -803,11 +799,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#acc8b5298dec5027ccf43e3cb9dcca8d8"><param name="Name" value="ApplicationName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a511c54d05a4cf280041acc73c840a673"><param name="Name" value="ApplicationName"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a511c54d05a4cf280041acc73c840a673"><param name="Name" value="ApplicationName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#acc8b5298dec5027ccf43e3cb9dcca8d8"><param name="Name" value="ApplicationName"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <UL>
@@ -823,11 +819,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a8ba6edb3c8de0a287556809355892f25"><param name="Name" value="ProductName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a1065f504ea2bb041f4bb7287794c0ba4"><param name="Name" value="ProductName"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a1065f504ea2bb041f4bb7287794c0ba4"><param name="Name" value="ProductName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html#a8ba6edb3c8de0a287556809355892f25"><param name="Name" value="ProductName"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_m_app_info.html"><param name="Name" value="nem_sdk_interface::NEMAppInfo"></OBJECT>
   <UL>
@@ -910,11 +906,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a209b5082693f17760de4309183a9a35f"><param name="Name" value="NEMeetingParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#afb0337db96af1fc318b78996714a485b"><param name="Name" value="NEMeetingParams"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a097b40e84b1d9120963e159444b8c5f1"><param name="Name" value="NEMeetingParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a4967d7259ea608cd80dee82ffafa3152"><param name="Name" value="NEMeetingParams"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   <UL>
@@ -927,6 +923,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#ab48be60bc73a918517f519afc185241b"><param name="Name" value="roleType"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a97330ded5319b52675863dfecf1487b5"><param name="Name" value="tag"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDK"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDK"></OBJECT>
@@ -1008,7 +1008,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDKConfig"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDKConfig"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html#a95561756ea2ae151846b5ec225e5b790"><param name="Name" value="NEMeetingSDKConfig"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html#a38a8bc94f4f2594012e439fdeb7d4bfd"><param name="Name" value="NEMeetingSDKConfig"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDKConfig"></OBJECT>
   <UL>
@@ -1016,7 +1016,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDKConfig"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html#a38a8bc94f4f2594012e439fdeb7d4bfd"><param name="Name" value="NEMeetingSDKConfig"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html#a95561756ea2ae151846b5ec225e5b790"><param name="Name" value="NEMeetingSDKConfig"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k_config.html"><param name="Name" value="nem_sdk_interface::NEMeetingSDKConfig"></OBJECT>
   <UL>
@@ -1302,11 +1302,11 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html#a47f798c73760d482f38c9823b14a6bb2"><param name="Name" value="noCloudRecord"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html"><param name="Name" value="nem_sdk_interface::NEStartMeetingOptions"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html#ab9a3762fb13977ffa20ab534cd2afd8d"><param name="Name" value="scene"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEStartMeetingParams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html"><param name="Name" value="nem_sdk_interface::NEStartMeetingParams"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#ae50f0dbb5ac89ea283fe42ecebea8e55"><param name="Name" value="scene"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html"><param name="Name" value="nem_sdk_interface::NEVideoController"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html"><param name="Name" value="nem_sdk_interface::NEVideoController"></OBJECT>
   <UL>
@@ -1384,6 +1384,10 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_history_meeting_item.html#a2d1bf228cc5a3e940d1848420e03a649"><param name="Name" value="subject"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html"><param name="Name" value="nem_sdk_interface::tagNEInMeetingUserInfo"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html"><param name="Name" value="nem_sdk_interface::tagNEInMeetingUserInfo"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#abbc97a7b225b694c9351143ba6b5d507"><param name="Name" value="tag"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html"><param name="Name" value="nem_sdk_interface::tagNEInMeetingUserInfo"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#a89575a71e2da72bf2f1e7b8efe4a6996"><param name="Name" value="userId"></OBJECT>
@@ -1584,11 +1588,15 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html"><param name="Name" value="nem_sdk_interface::tagNEMeetingRoleConfiguration"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html"><param name="Name" value="nem_sdk_interface::tagNEMeetingRoleConfiguration"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#ae8eea39f255d775cbbdad2c0c2c16074"><param name="Name" value="maxCount"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a0c8680311354bc8df726f83f891f2a7e"><param name="Name" value="maxCount"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html"><param name="Name" value="nem_sdk_interface::tagNEMeetingRoleConfiguration"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a537e45fc6e60d22530a81021c8c41614"><param name="Name" value="roleType"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html"><param name="Name" value="nem_sdk_interface::tagNEMeetingRoleConfiguration"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a358685d00e1b3a5d679871c0bd37856b"><param name="Name" value="userList"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_scene.html"><param name="Name" value="nem_sdk_interface::tagNEMeetingScene"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_scene.html"><param name="Name" value="nem_sdk_interface::tagNEMeetingScene"></OBJECT>
@@ -1999,10 +2007,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a90a27748f49ac126b15460739173dacc"><param name="Name" value="querySDKVersion"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_pre_meeting_service.html#aefd12c562778712293f1f2218aa40312"><param name="Name" value="registerScheduleMeetingStatusListener"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#a5b5d3dca57f19b989272108fc0185895"><param name="Name" value="removeAuthListener"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html#acbc39b0365991e177a7351527cfafe2b"><param name="Name" value="roleType"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_join_meeting_params.html#acbc39b0365991e177a7351527cfafe2b"><param name="Name" value="nem_sdk_interface::NEJoinMeetingParams"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#ab48be60bc73a918517f519afc185241b"><param name="Name" value="roleType"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#ab48be60bc73a918517f519afc185241b"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
@@ -2012,9 +2016,9 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a537e45fc6e60d22530a81021c8c41614"><param name="Name" value="nem_sdk_interface::tagNEMeetingRoleConfiguration"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_scene.html#a5347de030021b40ee0ac39c49422f6c7"><param name="Name" value="roleTypes"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html#ab9a3762fb13977ffa20ab534cd2afd8d"><param name="Name" value="scene"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#ae50f0dbb5ac89ea283fe42ecebea8e55"><param name="Name" value="scene"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html#ab9a3762fb13977ffa20ab534cd2afd8d"><param name="Name" value="nem_sdk_interface::NEStartMeetingOptions"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#ae50f0dbb5ac89ea283fe42ecebea8e55"><param name="Name" value="nem_sdk_interface::NEStartMeetingParams"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#add984e5f3382896a51c3a15f468dbc99"><param name="Name" value="scene"></OBJECT>
   <UL>
@@ -2084,6 +2088,14 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_service.html#a11a7d3bd31628684e40eb043ee0f1780"><param name="Name" value="subscribeAllRemoteAudioStreams"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_service.html#adbcf6a27ce591ac897a97935fc4456ba"><param name="Name" value="subscribeRemoteAudioStream"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_service.html#acbf10783097d507b8cec240ac8856632"><param name="Name" value="subscribeRemoteAudioStreams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a97330ded5319b52675863dfecf1487b5"><param name="Name" value="tag"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_params.html#a97330ded5319b52675863dfecf1487b5"><param name="Name" value="nem_sdk_interface::NEMeetingParams"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#abbc97a7b225b694c9351143ba6b5d507"><param name="Name" value="tag"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#abbc97a7b225b694c9351143ba6b5d507"><param name="Name" value="nem_sdk_interface::tagNEInMeetingUserInfo"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html#a3c78e03bb488c33e69765349efb25e70"><param name="Name" value="title"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_auth_service.html#aed7910cc84499eb5a5beda06e61ef158"><param name="Name" value="tryAutoLogin"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ad4afe6a32cfe87df0328e6b4a8f91827"><param name="Name" value="unInitialize"></OBJECT>
@@ -2092,6 +2104,13 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html#a5fdb2ef21101b8b8477cc5c5e9c7c964"><param name="Name" value="useMeetingChatRoomAsLiveChatRoom"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#a89575a71e2da72bf2f1e7b8efe4a6996"><param name="Name" value="userId"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a12643549677a1e5122f02b70322bbe42"><param name="Name" value="userList"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a12643549677a1e5122f02b70322bbe42"><param name="Name" value="nem_sdk_interface::tagNEMeetingInfo"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a358685d00e1b3a5d679871c0bd37856b"><param name="Name" value="userList"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_role_configuration.html#a358685d00e1b3a5d679871c0bd37856b"><param name="Name" value="nem_sdk_interface::tagNEMeetingRoleConfiguration"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#ad6e3d249f3eb80828768ea021ea536ad"><param name="Name" value="userName"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_account_info.html#aee86cfff2eb461227b5883cfaee5dbf2"><param name="Name" value="username"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html#aee1dac256a406186c2a5e6c4bf93bebf"><param name="Name" value="webSite"></OBJECT>

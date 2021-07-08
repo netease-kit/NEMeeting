@@ -83,9 +83,9 @@ Public 类型</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public 成员函数</h2></td></tr>
-<tr class="memitem:a7f1d0d42d6c081d1310d4b5dc23a8f45"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_feedback_service.html#a7f1d0d42d6c081d1310d4b5dc23a8f45">feedback</a> (const int &amp;type, const std::string &amp;path, const <a class="el" href="classnem__sdk__interface_1_1_n_e_feedback_service.html#aca3e340dd86148358e5a084bd51ea40e">NEFeedbackCallback</a> &amp;cb)=0</td></tr>
-<tr class="memdesc:a7f1d0d42d6c081d1310d4b5dc23a8f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">反馈接口  <a href="classnem__sdk__interface_1_1_n_e_feedback_service.html#a7f1d0d42d6c081d1310d4b5dc23a8f45">更多...</a><br /></td></tr>
-<tr class="separator:a7f1d0d42d6c081d1310d4b5dc23a8f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc44572dc5d6442ff410c9e17928bf01"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_feedback_service.html#adc44572dc5d6442ff410c9e17928bf01">feedback</a> (const int &amp;type, const std::string &amp;path, bool needAudioDump, const <a class="el" href="classnem__sdk__interface_1_1_n_e_feedback_service.html#aca3e340dd86148358e5a084bd51ea40e">NEFeedbackCallback</a> &amp;cb)=0</td></tr>
+<tr class="memdesc:adc44572dc5d6442ff410c9e17928bf01"><td class="mdescLeft">&#160;</td><td class="mdescRight">反馈接口  <a href="classnem__sdk__interface_1_1_n_e_feedback_service.html#adc44572dc5d6442ff410c9e17928bf01">更多...</a><br /></td></tr>
+<tr class="separator:adc44572dc5d6442ff410c9e17928bf01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a004b6443d69f6e95668a5a31779afc05"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_feedback_service.html#a004b6443d69f6e95668a5a31779afc05">addListener</a> (<a class="el" href="classnem__sdk__interface_1_1_feedback_service_listener.html">FeedbackServiceListener</a> *listener)=0</td></tr>
 <tr class="memdesc:a004b6443d69f6e95668a5a31779afc05"><td class="mdescLeft">&#160;</td><td class="mdescRight">添加反馈监听，接收反馈状态  <a href="classnem__sdk__interface_1_1_n_e_feedback_service.html#a004b6443d69f6e95668a5a31779afc05">更多...</a><br /></td></tr>
 <tr class="separator:a004b6443d69f6e95668a5a31779afc05"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,8 +161,8 @@ Public 成员函数</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f1d0d42d6c081d1310d4b5dc23a8f45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f1d0d42d6c081d1310d4b5dc23a8f45">&#9670;&nbsp;</a></span>feedback()</h2>
+<a id="adc44572dc5d6442ff410c9e17928bf01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc44572dc5d6442ff410c9e17928bf01">&#9670;&nbsp;</a></span>feedback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,6 +181,12 @@ Public 成员函数</h2></td></tr>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>needAudioDump</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -204,8 +210,9 @@ Public 成员函数</h2></td></tr>
 <p>反馈接口 </p>
 <dl class="params"><dt>参数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">type</td><td>0是日志类型，2是崩溃类型 </td></tr>
+    <tr><td class="paramname">type</td><td>反馈类型，仅负责透传 </td></tr>
     <tr><td class="paramname">path</td><td>文件路径 </td></tr>
+    <tr><td class="paramname">needAudioDump</td><td>是否需要音频Dump </td></tr>
     <tr><td class="paramname">cb</td><td>回调 </td></tr>
   </table>
   </dd>

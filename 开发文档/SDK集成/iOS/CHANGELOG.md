@@ -1,4 +1,12 @@
 # CHANGELOG
+‰
+# 2021-7-9 @ v1.10.0
+## Added
+* 创建和加入会议可设置成员标签，对应字段为：`NEMeetingParams.tag`
+* 会议中的成员信息类可获取到入会时设置的成员标签，对应字段为：`NEInMeetingUserInfo.tag`
+* 预约会议和创建会议时，可配置允许入会的成员账号列表以及数量：
+  - 创建会议时使用`NEStartMeetingParams.scene`字段配置
+  - 预约会议时使用`NEMeetingItemSetting.scene`字段配置
 
 # 2021-5-30 @ v1.9.0
 ## Added

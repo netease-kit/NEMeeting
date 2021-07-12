@@ -1,3 +1,16 @@
+# 2021-07-08 @ v1.10.0
+
+## Added
+
+* 创建会议增加会议场景参数，支持传入受邀用户列表: `NEStartMeetingParams::scene`
+* 预约/编辑会议增加会议场景参数，支持传入受邀用户列表：`NEMeetingItemSetting::scene`
+* 创建/加入会议增加自定义标签参数：`NEMeetingParams::tag`
+* 会议服务，当前会议成员信息增加自定义标签参数：`NEMeetingService::getCurrentMeetingInfo#NEInMeetingUserInfo::tag`
+
+## Changed
+
+## Fixed
+
 # 2021-05-27 @ v1.9.0
 
 ## Added

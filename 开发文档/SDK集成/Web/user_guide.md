@@ -330,7 +330,7 @@
 
         ```js
             type LogNames = 'meetingLog'|'rtcLog'
-            neWebMeeting,actions.uploadLog(
+            neWebMeeting.actions.uploadLog(
                 logNames: Array<LogNames>, 
                 // 日志类型 
                 // meetingLog 会议日志
@@ -344,9 +344,9 @@
 
             // 例子
             // 上传全部日志
-            neWebMeeting,actions.uploadLog(['meetingLog', 'rtcLog']) 
+            neWebMeeting.actions.uploadLog(['meetingLog', 'rtcLog']) 
             // 上传某一日志
-            neWebMeeting,actions.uploadLog(['rtcLog'])
+            neWebMeeting.actions.uploadLog(['rtcLog'])
             // 上传某一时间段日志，如最近一小时
             neWebMeeting.actions.uploadLog(['meetingLog', 'rtcLog'], Date.now() - 3600000, Date.now())
 
@@ -357,7 +357,7 @@
         ```js
             type LogNames = 'meetingLog'|'rtcLog'
             // 执行后直接触发下载
-            neWebMeeting,actions.downloadLog(
+            neWebMeeting.actions.downloadLog(
                 logNames: Array<LogNames>, 
                 // 日志类型 
                 // meetingLog 会议日志
@@ -368,9 +368,9 @@
 
             // 例子
             // 下载全部日志
-            neWebMeeting,actions.downloadLog(['meetingLog', 'rtcLog']) 
+            neWebMeeting.actions.downloadLog(['meetingLog', 'rtcLog']) 
             // 下载某一日志
-            neWebMeeting,actions.downloadLog(['rtcLog'])
+            neWebMeeting.actions.downloadLog(['rtcLog'])
             // 下载某一时间段日志，如最近一小时
             neWebMeeting.actions.downloadLog(['meetingLog', 'rtcLog'], Date.now() - 3600000, Date.now())
 

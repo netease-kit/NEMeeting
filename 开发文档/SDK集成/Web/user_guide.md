@@ -21,7 +21,8 @@
 | 2021-03-30 | 1.7.2 | 增加成员进出事件监听*peerJoin* *peerLeave* <br> 网络事件监听*networkQuality*<br> 国际化配置*setLocale* *useLocale* |
 | 2021-04-29 | 1.8.1 | 共享时支持视频显示 <br> 增加额外会议信息 <br> 增加会议创建配置 |
 | 2021-06-02 | 1.9.1 | 修复已知bug |
-| 2021-07-08 | 1.10.0 | 增加创建会议额外配置*scene* <br> 增加创会入会时自定义*memberTag* <br> 增加日志方法*uploadLog* *downLog* |
+| 2021-07-08 | 1.12.0 | 增加创建会议额外配置*scene* <br> 增加创会入会时自定义*memberTag* <br> 增加日志方法*uploadLog* *downLog* |
+| 2021-07-20 | 1.12.0 | 升级音视频SDK |
 
 ## 快速接入
 
@@ -40,7 +41,7 @@
 1. 将代码加入到页面head中（将文件路径替换为真实存在路径）
 
     ```js
-    <script src="./NeWebMeeting_V1.10.0.js"></script>
+    <script src="./NeWebMeeting_V1.12.0.js"></script>
     ```
 
 2. 页面添加dom
@@ -524,10 +525,10 @@
 * 支持esmodule形式引入，如使用，请参考以下方式使用
 
     ```js
-    import { actions } from './NeWebMeeting_V1.10.0.js'
+    import { actions } from './NeWebMeeting_V1.12.0.js'
     aciotns.init();
     // or
-    import neWebMeeting from './NeWebMeeting_V1.10.0.js'
+    import neWebMeeting from './NeWebMeeting_V1.12.0.js'
     neWebMeeting.init();
 
     // 需要安装@babel/plugin-transform-modules-umd并进行配置

@@ -66,7 +66,9 @@ public:
 
     Q_PROPERTY(QString personalMeetingId READ personalMeetingId WRITE setPersonalMeetingId NOTIFY personalMeetingIdChanged)
     Q_PROPERTY(bool isSupportRecord READ isSupportRecord WRITE setIsSupportRecord NOTIFY isSupportRecordChanged)
+    Q_PROPERTY(bool isSupportLive READ isSupportLive WRITE setIsSupportLive NOTIFY isSupportLiveChanged)
 
+    Q_INVOKABLE void initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin);
     Q_INVOKABLE void initialize(const QString& strAppkey, int keepAliveInterval);
     Q_INVOKABLE void unInitialize();
     Q_INVOKABLE bool isInitializd();
@@ -79,6 +81,7 @@ public:
                                      qint64 startTime,
                                      qint64 endTime,
                                      const QString& password,
+                                     const QString& textScene,
                                      bool attendeeAudioOff,
                                      bool enableLive = false,
                                      bool needLiveAuthentication = false,
@@ -90,6 +93,7 @@ public:
                                  qint64 startTime,
                                  qint64 endTime,
                                  const QString& password,
+                                 const QString& textScene,
                                  bool attendeeAudioOff,
                                  bool enableLive = false,
                                  bool needLiveAuthentication = false,
@@ -97,6 +101,8 @@ public:
     Q_INVOKABLE void getMeetingList();
     Q_INVOKABLE void invokeStart(const QString& meetingId,
                                  const QString& nickname,
+                                 const QString& tag,
+                                 const QString& textScene,
                                  bool audio,
                                  bool video,
                                  bool enableChatroom = true,
@@ -107,6 +113,7 @@ public:
                                  bool enableRecord = false);
     Q_INVOKABLE void invokeJoin(const QString& meetingId,
                                 const QString& nickname,
+                                const QString& tag,
                                 bool audio,
                                 bool video,
                                 bool enableChatroom = true,
@@ -122,7 +129,7 @@ public:
 
     Q_INVOKABLE void subcribeAudio(const QString& accoundIdList, bool subcribe, int type);
 
-    Q_INVOKABLE bool getIsSupportLive();
+    Q_INVOKABLE void getIsSupportLive();
     Q_INVOKABLE void getIsSupportRecord();
 
     // override virtual functions
@@ -141,6 +148,9 @@ public:
     bool isSupportRecord() const;
     void setIsSupportRecord(bool isSupportRecord);
 
+    bool isSupportLive() const;
+    void setIsSupportLive(bool isSupportLive);
+
 private:
     void pushSubmenus(std::vector<NEMeetingMenuItem>& items_list, int MenuIdIndex);
 
@@ -154,8 +164,14 @@ signals:
     void startSignal(int errorCode, const QString& errorMessage);
     void joinSignal(int errorCode, const QString& errorMessage);
     void leaveSignal(int errorCode, const QString& errorMessage);
-    void getCurrentMeetingInfo(const QString& meetingId, bool isHost, bool isLocked, qint64 duration, const QString& sipId);
-    void getHistoryMeetingInfo(qint64 meetingUniqueId, const QString& meetingId, const QString& shortMeetingId, const QString& subject, const QString& password, const QString& nickname, const QString& sipId);
+    void getCurrentMeetingInfo(const QJsonObject& meetingBaseInfo, const QJsonArray& meetingUserList);
+    void getHistoryMeetingInfo(qint64 meetingUniqueId,
+                               const QString& meetingId,
+                               const QString& shortMeetingId,
+                               const QString& subject,
+                               const QString& password,
+                               const QString& nickname,
+                               const QString& sipId);
     void meetingStatusChanged(int meetingStatus, int extCode);
     void meetingInjectedMenuItemClicked(int itemIndex, const QString& itemGuid, const QString& itemTitle, const QString& itemImagePath);
     void personalMeetingIdChanged();
@@ -165,6 +181,7 @@ signals:
     void getScheduledMeetingList(int errorCode, const QJsonArray& meetingList);
     void deviceStatusChanged(int type, bool status);
     void isSupportRecordChanged();
+    void isSupportLiveChanged();
 
 public slots:
     void onGetMeetingListUI();
@@ -180,8 +197,13 @@ public slots:
 
 private:
     std::atomic_bool m_initialized;
+    std::atomic_bool m_initSuc;
     QString m_personalMeetingId;
     bool m_bSupportRecord = false;
+    bool m_bSupportLive = false;
+    QString m_strSdkLogPath;
+    int m_sdkLogLevel = NEINFO;
+    bool m_bRunAdmin = true;
 };
 
 #endif  // NEMEETINGMANAGER_H

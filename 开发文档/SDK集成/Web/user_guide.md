@@ -531,10 +531,10 @@
 * 支持esmodule形式引入，如使用，请参考以下方式使用
 
     ```js
-    import { actions } from './NeWebMeeting_V1.10.0.js'
+    import { actions } from './NeWebMeeting_V1.12.2.js'
     aciotns.init();
     // or
-    import neWebMeeting from './NeWebMeeting_V1.10.0.js'
+    import neWebMeeting from './NeWebMeeting_V1.12.2.js'
     neWebMeeting.init();
 
     // 需要安装@babel/plugin-transform-modules-umd并进行配置

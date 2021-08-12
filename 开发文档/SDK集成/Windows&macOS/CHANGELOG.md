@@ -1,3 +1,24 @@
+# 2021-08-12 @ v2.0.0
+
+## Added
+
+- 即刻会议增加入会密码`NEMeetingParams::password`
+- 接口支持结束会议 `NEMeetingService::leaveMeeting`
+- 增加入会超时配置以及入会的部分具体错误信息 `NEMeetingOptions::joinTimeout`
+
+## Changed
+
+- G2 SDK 升级到 4.3.8
+- 重构 native，改名为 roomkit
+- 优化 IPC 反初始化的逻辑
+- 优化创建/加入会议聊天室开关
+
+## Fixed
+
+- 修复参会者列表共享白板图标显示问题
+- 修复直播“仅本企业观看”显示问题
+- 修复匿名入会，昵称设置无效问题
+
 # 2021-07-08 @ v1.10.0
 
 ## Added

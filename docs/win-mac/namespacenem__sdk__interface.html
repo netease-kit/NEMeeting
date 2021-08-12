@@ -278,7 +278,14 @@ $(function() {
 &#160;&#160;<a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7a079704db745288b72bb0f0abe387f910">MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST</a> = 4
 , <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7a0c6fc6fd623a2debfd0acc591b4be430">MEETING_DISCONNECTING_AUTH_INFO_EXPIRED</a> = 5
 , <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7aa8f30cb387f1de0d4fe0958daa2d684b">MEETING_DISCONNECTING_BY_SERVER</a> = 6
-, <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7aedb91daa3d043bd1b8934339ad814b05">MEETING_WAITING_VERIFY_PASSWORD</a> = 20
+, <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7ac25d2d80881b6d1d94584a72fead9c48">MEETING_DISCONNECTING_BY_MEETINGNOTEXIST</a> = 7
+, <br />
+&#160;&#160;<a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7a02fc5563170a96cc30ad5c54cfaef44d">MEETING_DISCONNECTING_BY_SYNCDATAERROR</a> = 8
+, <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7ae1d8ebbf08391186e456f182da4993f0">MEETING_DISCONNECTING_BY_RTCINITERROR</a> = 9
+, <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7ac573797b57692fb2605d52f99e316dba">MEETING_DISCONNECTING_BY_JOINCHANNELERROR</a> = 10
+, <a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7a7bd0773b83040b15954553bb2bdfcdd8">MEETING_DISCONNECTING_BY_TIMEOUT</a> = 11
+, <br />
+&#160;&#160;<a class="el" href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7aedb91daa3d043bd1b8934339ad814b05">MEETING_WAITING_VERIFY_PASSWORD</a> = 20
 <br />
  }</td></tr>
 <tr class="memdesc:a588a288d8a42c5ed94e83a06253b4db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">会议连接端口时的状态码  <a href="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7">更多...</a><br /></td></tr>
@@ -597,6 +604,16 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 <tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7aa8f30cb387f1de0d4fe0958daa2d684b"></a>MEETING_DISCONNECTING_BY_SERVER&#160;</td><td class="fielddoc"><p>当前正在从会议中断开，原因为与服务器断开连接 </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7ac25d2d80881b6d1d94584a72fead9c48"></a>MEETING_DISCONNECTING_BY_MEETINGNOTEXIST&#160;</td><td class="fielddoc"><p>当前正在从会议中断开，原因为会议不存在 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7a02fc5563170a96cc30ad5c54cfaef44d"></a>MEETING_DISCONNECTING_BY_SYNCDATAERROR&#160;</td><td class="fielddoc"><p>当前正在从会议中断开，原因为同步会议信息失败 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7ae1d8ebbf08391186e456f182da4993f0"></a>MEETING_DISCONNECTING_BY_RTCINITERROR&#160;</td><td class="fielddoc"><p>当前正在从会议中断开，原因为rtc模块初始化失败 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7ac573797b57692fb2605d52f99e316dba"></a>MEETING_DISCONNECTING_BY_JOINCHANNELERROR&#160;</td><td class="fielddoc"><p>当前正在从会议中断开，原因为加入频道失败 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7a7bd0773b83040b15954553bb2bdfcdd8"></a>MEETING_DISCONNECTING_BY_TIMEOUT&#160;</td><td class="fielddoc"><p>当前正在从会议中断开，原因为入会超时 </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a588a288d8a42c5ed94e83a06253b4db7aedb91daa3d043bd1b8934339ad814b05"></a>MEETING_WAITING_VERIFY_PASSWORD&#160;</td><td class="fielddoc"><p>正在等待验证会议密码 </p><dl class="section since"><dt>自从</dt><dd>1.2.1 </dd></dl>
 </td></tr>
 </table>
@@ -701,7 +718,7 @@ template&lt;class... TResultParam&gt; </div>
 <tr><td class="fieldname"><a id="a7bc406d9e69cc6f14591eb2f07ee0687a14790c1fa0aa40475661709e59670101"></a>kLoginTypeSSOToken&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00755">755</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00797">797</a> 行定义.</p>
 
 </div>
 </div>
@@ -758,7 +775,7 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00123">123</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00148">148</a> 行定义.</p>
 
 </div>
 </div>
@@ -782,7 +799,7 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00322">322</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00347">347</a> 行定义.</p>
 
 </div>
 </div>
@@ -859,7 +876,7 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00205">205</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00230">230</a> 行定义.</p>
 
 </div>
 </div>
@@ -885,7 +902,7 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00184">184</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00209">209</a> 行定义.</p>
 
 </div>
 </div>
@@ -909,7 +926,7 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00169">169</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00194">194</a> 行定义.</p>
 
 </div>
 </div>
@@ -935,7 +952,7 @@ template&lt;class... TResultParam&gt; </div>
 </td></tr>
 </table>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00159">159</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00184">184</a> 行定义.</p>
 
 </div>
 </div>
@@ -979,7 +996,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"视频"菜单ID，使用该ID的菜单可添加至Toolbar菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00387">387</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00412">412</a> 行定义.</p>
 
 </div>
 </div>
@@ -996,7 +1013,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"聊天"菜单ID，使用该ID的菜单可添加至Toolbar菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00417">417</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00442">442</a> 行定义.</p>
 
 </div>
 </div>
@@ -1014,7 +1031,7 @@ template&lt;class... TResultParam&gt; </div>
 <dl class="section attention"><dt>注意</dt><dd>开发者自定义的注入菜单ID应该大于等于该值，小于该值的菜单为SDK内置菜单 </dd></dl>
 <dl class="section warning"><dt>警告</dt><dd>SDK内置的菜单点击时不会触发回调，只有自定义菜单才会回调。代替NEM_MORE_MENU_USER_INDEX </dd></dl>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00375">375</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00400">400</a> 行定义.</p>
 
 </div>
 </div>
@@ -1031,7 +1048,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"邀请"菜单ID，使用该ID的菜单可添加至Toolbar/"更多"菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00411">411</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00436">436</a> 行定义.</p>
 
 </div>
 </div>
@@ -1048,7 +1065,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"管理参会者"菜单ID，使用该ID的菜单可添加至Toolbar菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00405">405</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00430">430</a> 行定义.</p>
 
 </div>
 </div>
@@ -1065,7 +1082,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"音频"菜单ID，使用该ID的菜单可添加至Toolbar菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00381">381</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00406">406</a> 行定义.</p>
 
 </div>
 </div>
@@ -1082,7 +1099,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"参会者"菜单ID，使用该ID的菜单可添加至Toolbar/菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00399">399</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00424">424</a> 行定义.</p>
 
 </div>
 </div>
@@ -1099,7 +1116,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"共享屏幕"菜单ID，使用该ID的菜单可添加至Toolbar/"更多"菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00393">393</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00418">418</a> 行定义.</p>
 
 </div>
 </div>
@@ -1116,7 +1133,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"视图"菜单ID，使用该ID的菜单可添加至Toolbar/"更多"菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00423">423</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00448">448</a> 行定义.</p>
 
 </div>
 </div>
@@ -1133,7 +1150,7 @@ template&lt;class... TResultParam&gt; </div>
 </div><div class="memdoc">
 <p>内置"白板"菜单ID，使用该ID的菜单可添加至Toolbar/"更多"菜单列表中的任意位置。 开发者可以使用该菜单ID获取内置菜单 </p>
 
-<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00429">429</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="metting_8h_source.html">metting.h</a> 第 <a class="el" href="metting_8h_source.html#l00454">454</a> 行定义.</p>
 
 </div>
 </div>

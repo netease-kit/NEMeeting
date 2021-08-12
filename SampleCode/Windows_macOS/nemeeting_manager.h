@@ -45,12 +45,18 @@ public:
     Q_ENUM(Status)
     enum ExtStatus {
         MEETING_DISCONNECTING_BY_SELF = 0,
-        MEETING_DISCONNECTING_REMOVED_BY_HOST,
-        MEETING_DISCONNECTING_CLOSED_BY_HOST,
-        MEETING_DISCONNECTING_LOGIN_ON_OTHER_DEVICE,
-        MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST,
-        MEETING_DISCONNECTING_BY_SERVER,
-        MEETING_WAITING_VERIFY_PASSWORD
+        MEETING_DISCONNECTING_REMOVED_BY_HOST = 1,
+        MEETING_DISCONNECTING_CLOSED_BY_HOST = 2,
+        MEETING_DISCONNECTING_LOGIN_ON_OTHER_DEVICE = 3,
+        MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST = 4,
+        MEETING_DISCONNECTING_AUTH_INFO_EXPIRED = 5,
+        MEETING_DISCONNECTING_BY_SERVER = 6,
+        MEETING_DISCONNECTING_BY_ROOMNOTEXIST = 7,
+        MEETING_DISCONNECTING_BY_SYNCDATAERROR = 8,
+        MEETING_DISCONNECTING_BY_RTCINITERROR = 9,
+        MEETING_DISCONNECTING_BY_JOINCHANNELERROR = 10,
+        MEETING_DISCONNECTING_BY_TIMEOUT = 11,
+        MEETING_WAITING_VERIFY_PASSWORD = 20
     };
     Q_ENUM(ExtStatus)
 };
@@ -103,6 +109,8 @@ public:
                                  const QString& nickname,
                                  const QString& tag,
                                  const QString& textScene,
+                                 const QString& password,
+                                 int timeOut,
                                  bool audio,
                                  bool video,
                                  bool enableChatroom = true,
@@ -114,6 +122,7 @@ public:
     Q_INVOKABLE void invokeJoin(const QString& meetingId,
                                 const QString& nickname,
                                 const QString& tag,
+                                int timeOut,
                                 bool audio,
                                 bool video,
                                 bool enableChatroom = true,
@@ -164,6 +173,7 @@ signals:
     void startSignal(int errorCode, const QString& errorMessage);
     void joinSignal(int errorCode, const QString& errorMessage);
     void leaveSignal(int errorCode, const QString& errorMessage);
+    void finishSignal(int errorCode, const QString& errorMessage);
     void getCurrentMeetingInfo(const QJsonObject& meetingBaseInfo, const QJsonArray& meetingUserList);
     void getHistoryMeetingInfo(qint64 meetingUniqueId,
                                const QString& meetingId,

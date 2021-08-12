@@ -1,11 +1,13 @@
-﻿import QtQuick 2.0
+﻿import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Qt.labs.settings 1.0
 import NetEase.Meeting.MeetingStatus 1.0
+import NetEase.Meeting.RunningStatus 1.0
 
 Rectangle {
     Component.onCompleted: {
+
     }
 
     Settings {
@@ -21,7 +23,7 @@ Rectangle {
 
     Dialog {
         id: meetinginfo
-        standardButtons: StandardButton.Save | StandardButton.Cancel
+        standardButtons: Dialog.Save | Dialog.Cancel
 
         property int meetingUniqueId: 0
         property string meetingId: ""
@@ -108,7 +110,6 @@ Rectangle {
                 Label {
                     text: "user list: "
                 }
-
             }
 
             ListView {
@@ -121,7 +122,7 @@ Rectangle {
                 }
                 delegate: Rectangle {
                     height: 20
-                    RowLayout{
+                    RowLayout {
                         Label {
                             text: "userId: " + model.userId
                         }
@@ -135,11 +136,9 @@ Rectangle {
                         }
                     }
                 }
-
             }
         }
     }
-
 
     ColumnLayout {
         anchors.centerIn: parent
@@ -148,13 +147,16 @@ Rectangle {
             Layout.preferredHeight: 58
             Layout.preferredWidth: 220
             source: 'qrc:/images/logo.png'
+            mipmap: true
         }
         RowLayout {
             TextField {
                 implicitWidth: 300
                 id: textAppKey
                 placeholderText: qsTr('Your application key')
-                text: !anon.checked ? setting.value('sampleAppkey', '') : setting.value('sampleAnonAppkey', '')
+                text: !anon.checked ? setting.value('sampleAppkey',
+                                                    '') : setting.value(
+                                          'sampleAnonAppkey', '')
                 selectByMouse: true
                 Layout.fillWidth: true
                 Layout.topMargin: 20
@@ -175,8 +177,11 @@ Rectangle {
         RowLayout {
             TextField {
                 id: textAccountId
-                placeholderText: !anon.checked ? qsTr('Your account ID') : qsTr('Meeting ID')
-                text: !anon.checked ? setting.value('sampleAccoundId', '') : setting.value('sampleAnonMeetingId', '')
+                placeholderText: !anon.checked ? qsTr('Your account ID') : qsTr(
+                                                     'Meeting ID')
+                text: !anon.checked ? setting.value('sampleAccoundId',
+                                                    '') : setting.value(
+                                          'sampleAnonMeetingId', '')
                 selectByMouse: true
                 Layout.fillWidth: true
             }
@@ -186,12 +191,25 @@ Rectangle {
                 selectByMouse: true
             }
         }
-        TextField {
-            id: textPassword
-            placeholderText: !anon.checked ? qsTr('Your password') : qsTr('Password')
-            text: !anon.checked ? setting.value('sampleAccoundToken', '') : setting.value('sampleAnonMeetingPwd', '')
-            selectByMouse: true
-            Layout.fillWidth: true
+        RowLayout {
+            TextField {
+                id: textPassword
+                placeholderText: !anon.checked ? qsTr('Your password') : qsTr(
+                                                     'Password')
+                text: !anon.checked ? setting.value('sampleAccoundToken',
+                                                    '') : setting.value(
+                                          'sampleAnonMeetingPwd', '')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+            TextField {
+                id: textTimeout
+                placeholderText: qsTr('enter meeting timeout(ms)')
+                text: 45 * 1000
+                visible: anon.checked
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
         }
 
         RowLayout {
@@ -217,7 +235,7 @@ Rectangle {
         RowLayout {
             TextField {
                 id: logPath
-                placeholderText:qsTr('SDK Log path')
+                placeholderText: qsTr('SDK Log path')
                 selectByMouse: true
                 Layout.fillWidth: true
             }
@@ -234,15 +252,40 @@ Rectangle {
                 visible: Qt.platform.os === 'windows'
             }
         }
-        Button {
-            id: btnSubmit
-            highlighted: true
-            text: !anon.checked ? qsTr('Login') : qsTr('Join')
-            Layout.fillWidth: true
-            enabled: textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0)
-            onClicked: {
-                enabled = false
-                loginTime.start()
+        RowLayout {
+            Button {
+                id: btnSubmit
+                highlighted: true
+                text: !anon.checked ? qsTr('Login') : qsTr('Join')
+                Layout.fillWidth: true
+                enabled: textAppKey.text.length > 0
+                         && (!anon.checked ? (textAccountId.text.length > 0
+                                              && textPassword.text.length
+                                              > 0) : textAccountId.text.length > 0)
+                onClicked: {
+                    enabled = false
+                    loginTime.start()
+                }
+            }
+
+            Button {
+                id: btnLeave
+                highlighted: true
+                visible: anon.checked
+                text: qsTr('Leave')
+                Layout.fillWidth: true
+                enabled: false
+                onClicked: meetingManager.leaveMeeting(false)
+            }
+
+            Button {
+                id: btnFinish
+                highlighted: true
+                visible: anon.checked
+                text: qsTr('Finish')
+                Layout.fillWidth: true
+                enabled: false
+                onClicked: meetingManager.leaveMeeting(true)
             }
         }
     }
@@ -256,25 +299,43 @@ Rectangle {
                 setting.setValue('sampleAppkey', textAppKey.text)
                 setting.setValue('sampleAccoundId', textAccountId.text)
                 setting.setValue('sampleAccoundToken', textPassword.text)
-                meetingManager.initializeParam(logPath.text, logLevel.currentIndex, runAdmin.checked)
-                meetingManager.login(textAppKey.text,
-                                     textAccountId.text,
-                                     textPassword.text,
-                                     textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                meetingManager.initializeParam(logPath.text,
+                                               logLevel.currentIndex,
+                                               runAdmin.checked)
+                meetingManager.login(
+                            textAppKey.text, textAccountId.text,
+                            textPassword.text,
+                            textKeepAliveInterval.text.toString().trim(
+                                ).length === 0 ? 13566 : parseInt(
+                                                     textKeepAliveInterval.text))
             } else {
                 setting.setValue('sampleAnonAppkey', textAppKey.text)
                 setting.setValue('sampleAnonMeetingId', textAccountId.text)
                 setting.setValue('sampleAnonMeetingPwd', textPassword.text)
-                meetingManager.initializeParam(logPath.text, logLevel.currentIndex, runAdmin.checked)
-                meetingManager.initialize(textAppKey.text, textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
-                meetingManager.invokeJoin(textAccountId.text, 'nickname', textTag.text, false, false, true, true, textPassword.text, rename.checked)
+                meetingManager.initializeParam(logPath.text,
+                                               logLevel.currentIndex,
+                                               runAdmin.checked)
+                meetingManager.initialize(
+                            textAppKey.text,
+                            textKeepAliveInterval.text.toString().trim(
+                                ).length === 0 ? 13566 : parseInt(
+                                                     textKeepAliveInterval.text))
+                meetingManager.invokeJoin(textAccountId.text, 'nicknameAnon',
+                                          textTag.text, textTimeout.text,
+                                          false, false, true, true,
+                                          textPassword.text, rename.checked)
             }
         }
     }
     Connections {
         target: meetingManager
         onLoginSignal: {
-            btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0) })
+            btnSubmit.enabled = Qt.binding(function () {
+                return textAppKey.text.length > 0
+                        && (!anon.checked ? (textAccountId.text.length > 0
+                                             && textPassword.text.length
+                                             > 0) : textAccountId.text.length > 0)
+            })
             if (errorCode === MeetingStatus.ERROR_CODE_SUCCESS)
                 pageLoader.setSource(Qt.resolvedUrl('qrc:/qml/Front.qml'))
             else
@@ -282,10 +343,18 @@ Rectangle {
         }
 
         onJoinSignal: {
-            btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0) })
+            btnSubmit.enabled = Qt.binding(function () {
+                return textAppKey.text.length > 0
+                        && (!anon.checked ? (textAccountId.text.length > 0
+                                             && textPassword.text.length
+                                             > 0) : textAccountId.text.length > 0)
+            })
             switch (errorCode) {
             case MeetingStatus.ERROR_CODE_SUCCESS:
                 toast.show(qsTr("Join successfull"))
+                btnLeave.enabled = true
+                btnFinish.enabled = true
+                btnSubmit.enabled = false
                 break
             case MeetingStatus.MEETING_ERROR_LOCKED_BY_HOST:
                 toast.show(qsTr('The meeting is locked'))
@@ -300,7 +369,56 @@ Rectangle {
                 toast.show(qsTr('Failed to join meeting'))
                 break
             default:
-                toast.show(errorCode + '(' + errorMessage + ')')              
+                toast.show(errorCode + '(' + errorMessage + ')')
+                break
+            }
+        }
+
+        onLeaveSignal: {
+            toast.show('Leave meeting signal: ' + errorCode + ", " + errorMessage)
+        }
+        onFinishSignal: {
+            toast.show('Finsh meeting signal: ' + errorCode + ", " + errorMessage)
+        }
+        onMeetingStatusChanged: {
+            switch (meetingStatus) {
+            case RunningStatus.MEETING_STATUS_CONNECTING:
+                break
+            case RunningStatus.MEETING_STATUS_IDLE:
+            case RunningStatus.MEETING_STATUS_DISCONNECTING:
+                if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SELF)
+                    toast.show(qsTr('You have left the meeting'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_NORMAL)
+                    toast.show(qsTr('Your have been left this meeting'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_HOST)
+                    toast.show(qsTr('This meeting has been ended'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_KICKOUT)
+                    toast.show(qsTr('You have been removed from meeting by host'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_MULTI_SPOT)
+                    toast.show(qsTr('You have been kickout by other client'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST)
+                    toast.show(qsTr('You have finish this meeting'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_AUTH_INFO_EXPIRED)
+                    toast.show(qsTr('Disconnected by auth info expored'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SERVER)
+                    toast.show(qsTr('You have been discconected from server'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_ROOMNOTEXIST)
+                    toast.show(qsTr('The meeting does not exist'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SYNCDATAERROR)
+                    toast.show(qsTr(
+                                   'Failed to synchronize meeting information'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_RTCINITERROR)
+                    toast.show(qsTr('The RTC module fails to be initialized'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_JOINCHANNELERROR)
+                    toast.show(qsTr('Failed to join the channel of RTC'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_TIMEOUT)
+                    toast.show(qsTr('Meeting timeout'))
+                else if (extCode === RunningStatus.MEETING_WAITING_VERIFY_PASSWORD)
+                    toast.show(qsTr('need meeting password'))
+
+                btnSubmit.enabled = true
+                btnLeave.enabled = false
+                btnFinish.enabled = false
                 break
             }
         }
@@ -321,7 +439,7 @@ Rectangle {
             meetinginfo.hostUserId = meetingBaseInfo.hostUserId
 
             listUserModel.clear()
-            for (let i = 0; i < meetingUserList.length; i++) {
+            for (var i = 0; i < meetingUserList.length; i++) {
                 const user = meetingUserList[i]
                 listUserModel.append(user)
                 console.log("userid", user.userId)
@@ -339,7 +457,12 @@ Rectangle {
         function onInitializeSignal(errorCode, errorMessage) {
             if (MeetingStatus.ERROR_CODE_SUCCESS !== errorCode) {
                 toast.show(errorCode + '(' + errorMessage + ')')
-                btnSubmit.enabled = Qt.binding(function() { return textAppKey.text.length > 0 && (!anon.checked ? (textAccountId.text.length > 0 && textPassword.text.length > 0) : textAccountId.text.length > 0) })
+                btnSubmit.enabled = Qt.binding(function () {
+                    return textAppKey.text.length > 0
+                            && (!anon.checked ? (textAccountId.text.length > 0
+                                                 && textPassword.text.length
+                                                 > 0) : textAccountId.text.length > 0)
+                })
             }
         }
     }

@@ -1,20 +1,72 @@
 // Copyright (c) 2014-2020 NetEase, Inc.
 // All right reserved.
 
+#include <QDateTime>
+#include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
-
+#include <QStandardPaths>
+#include <fstream>
 #include "nemeeting_manager.h"
+
+QString appDataDir;
+QString strLogPath = QDateTime::currentDateTime().toString("yyyy-MM-dd").append("-log.txt");
+
+void messageHandler(QtMsgType, const QMessageLogContext& context, const QString& message) {
+    if (context.file && !message.isEmpty()) {
+        std::string strFileTmp = context.file;
+        const char* ptr = strrchr(strFileTmp.c_str(), '/');
+        if (nullptr != ptr) {
+            char fn[512] = {0};
+            sprintf(fn, "%s", ptr + 1);
+            strFileTmp = fn;
+        }
+        const char* ptrTmp = strrchr(strFileTmp.c_str(), '\\');
+        if (nullptr != ptrTmp) {
+            char fn[512] = {0};
+            sprintf(fn, "%s", ptrTmp + 1);
+            strFileTmp = fn;
+        }
+        std::string strLog;
+        strLog.append("[");
+        strLog.append(strFileTmp);
+        strLog.append(":");
+        strLog.append(std::to_string(context.line));
+        strLog.append("] ");
+        strLog.append(message.toStdString());
+        std::string messageLog =
+            qPrintable(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss").append(": ").append(QString::fromStdString(strLog)));
+        std::ofstream output;
+        output.open(qPrintable(appDataDir + strLogPath), std::ios::out | std::ios::app);
+        output << messageLog << "\n";
+    }
+}
 
 int main(int argc, char* argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QGuiApplication::setOrganizationName("NetEase");
     QGuiApplication::setOrganizationDomain("yunxin.163.com");
     QGuiApplication::setApplicationName("MeetingSample");
     QGuiApplication::setApplicationDisplayName("NetEase Meeting");
+
+    appDataDir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    appDataDir.append("/Netease/MeetingSample/App/");
+    QDir logDir = appDataDir;
+    if (!logDir.exists(appDataDir))
+        logDir.mkpath(appDataDir);
+
+    if (QFile::exists(appDataDir + strLogPath)) {
+        std::ofstream output;
+        output.open(qPrintable(appDataDir + strLogPath), std::ios::out | std::ios::app);
+        output << "\n";
+        output << "\n";
+        std::string messageLog =
+            qPrintable(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss").append(": ======================================"));
+        output << messageLog << "\n";
+    }
+    qInstallMessageHandler(messageHandler);
 
     QGuiApplication app(argc, argv);
 

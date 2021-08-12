@@ -21,7 +21,7 @@ void NEMeetingManager::initializeParam(const QString& strSdkLogPath, int sdkLogL
     m_bRunAdmin = bRunAdmin;
 }
 
-void NEMeetingManager::initialize(const QString& strAppkey, int keepAliveInterval) {
+void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]]int keepAliveInterval) {
     if (m_initialized) {
         emit initializeSignal(0, "");
         return;
@@ -89,7 +89,7 @@ void NEMeetingManager::initialize(const QString& strAppkey, int keepAliveInterva
                 settingsService->setNESettingsChangeNotifyHandler(this);
             }
 
-            NEMeetingSDK::getInstance()->querySDKVersion([](NEErrorCode errorCode, const std::string& errorMessage, const std::string& version) {
+            NEMeetingSDK::getInstance()->querySDKVersion([]([[maybe_unused]]NEErrorCode errorCode, [[maybe_unused]]const std::string& errorMessage, const std::string& version) {
                 qInfo() << "sdk version: " << QString::fromStdString(version);
             });
             m_initialized = true;
@@ -214,8 +214,7 @@ void NEMeetingManager::scheduleMeeting(const QString& meetingSubject,
         item.liveWebAccessControlLevel = needLiveAuthentication ? LIVE_ACCESS_APP_TOKEN : LIVE_ACCESS_TOKEN;
         item.setting.cloudRecordOn = enableRecord;
 
-        if(!textScene.isEmpty()) {
-
+        if (!textScene.isEmpty()) {
             QJsonParseError err;
             QJsonDocument doc = QJsonDocument::fromJson(textScene.toUtf8(), &err);
             if (err.error != QJsonParseError::NoError) {
@@ -296,7 +295,7 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
         item.liveWebAccessControlLevel = needLiveAuthentication ? LIVE_ACCESS_APP_TOKEN : LIVE_ACCESS_TOKEN;
         item.setting.cloudRecordOn = enableRecord;
 
-        if(!textScene.isEmpty()) {
+        if (!textScene.isEmpty()) {
             QJsonParseError err;
             QJsonDocument doc = QJsonDocument::fromJson(textScene.toUtf8(), &err);
             if (err.error != QJsonParseError::NoError) {
@@ -380,6 +379,8 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
                                    const QString& nickname,
                                    const QString& tag,
                                    const QString& textScene,
+                                   const QString& password,
+                                   int timeOut,
                                    bool audio,
                                    bool video,
                                    bool enableChatroom /* = true*/,
@@ -400,8 +401,9 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
         params.meetingId = byteMeetingId.data();
         params.displayName = byteNickname.data();
         params.tag = tag.toStdString();
+        params.password = password.toStdString();
 
-        if(!textScene.isEmpty()) {
+        if (!textScene.isEmpty()) {
             QJsonParseError err;
             QJsonDocument doc = QJsonDocument::fromJson(textScene.toUtf8(), &err);
             if (err.error != QJsonParseError::NoError) {
@@ -420,7 +422,7 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
 
                 QJsonArray users = obj["userList"].toArray();
 
-                for (auto user : users) {
+                for (const auto& user : qAsConst(users)) {
                     std::string userId = user.toString().toStdString();
                     config.userList.push_back(userId);
                 }
@@ -441,6 +443,7 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
 
         options.noCloudRecord = !enableRecord;
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
+        options.joinTimeout = timeOut;
         // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
         ipcMeetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Start meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
@@ -452,6 +455,7 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
 void NEMeetingManager::invokeJoin(const QString& meetingId,
                                   const QString& nickname,
                                   const QString& tag,
+                                  int timeOut,
                                   bool audio,
                                   bool video,
                                   bool enableChatroom /* = true*/,
@@ -478,7 +482,7 @@ void NEMeetingManager::invokeJoin(const QString& meetingId,
         params.meetingId = byteMeetingId.data();
         params.displayName = byteNickname.data();
         params.password = password.toUtf8().data();
-        params.tag = tag.toStdString();
+        params.tag = tag.toUtf8().data();
 
         NEJoinMeetingOptions options;
         options.noAudio = !audio;
@@ -491,6 +495,7 @@ void NEMeetingManager::invokeJoin(const QString& meetingId,
         }
 
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
+        options.joinTimeout = timeOut;
         // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
         ipcMeetingService->joinMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Join meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
@@ -503,8 +508,12 @@ void NEMeetingManager::leaveMeeting(bool finish) {
     auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
     if (ipcMeetingService) {
         ipcMeetingService->leaveMeeting(finish, [=](NEErrorCode errorCode, const std::string& errorMessage) {
+            qInfo() << "Leave meeting finish: " << finish;
             qInfo() << "Leave meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
-            emit leaveSignal(errorCode, QString::fromStdString(errorMessage));
+            if (finish)
+                emit finishSignal(errorCode, QString::fromStdString(errorMessage));
+            else
+                emit leaveSignal(errorCode, QString::fromStdString(errorMessage));
         });
     }
 }
@@ -539,7 +548,7 @@ void NEMeetingManager::getMeetingInfo() {
                 obj["hostUserId"] = QString::fromStdString(meetingInfo.hostUserId);
 
                 QJsonArray users;
-                for (auto user : meetingInfo.userList) {
+                for (const auto& user : qAsConst(meetingInfo.userList)) {
                     QJsonObject userObj;
                     userObj["userId"] = QString::fromStdString(user.userId);
                     userObj["userName"] = QString::fromStdString(user.userName);

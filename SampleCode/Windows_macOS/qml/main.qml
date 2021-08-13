@@ -8,7 +8,7 @@ Window {
     id: mainWindow
     visible: true
     width: 1088
-    height: 680
+    height: 720
     title: qsTr("NetEase Meeting SDK Sample")
 
     Component.onCompleted: {

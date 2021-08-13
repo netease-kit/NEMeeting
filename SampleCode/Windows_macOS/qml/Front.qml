@@ -11,8 +11,8 @@ Rectangle {
         checkAudio.checked = meetingManager.checkAudio()
         checkVideo.checked = meetingManager.checkVideo()
         mainWindow.width = 1088
-        mainWindow.height = 680
-        Qt.callLater(function() {
+        mainWindow.height = 720
+        Qt.callLater(function () {
             meetingManager.getIsSupportRecord()
             liveTimer.start()
         })
@@ -24,7 +24,7 @@ Rectangle {
         running: false
         interval: 500
         onTriggered: {
-             meetingManager.getIsSupportLive()
+            meetingManager.getIsSupportLive()
         }
     }
 
@@ -107,7 +107,9 @@ Rectangle {
             }
             ListView {
                 Component.onCompleted: {
-                    Qt.callLater(function() { meetingManager.getMeetingList() })
+                    Qt.callLater(function () {
+                        meetingManager.getMeetingList()
+                    })
                 }
                 Layout.preferredHeight: 280
                 Layout.fillWidth: true
@@ -153,7 +155,6 @@ Rectangle {
                                 id: password2
                                 text: model.password
                             }
-
                         }
 
                         RowLayout {
@@ -166,7 +167,7 @@ Rectangle {
                         }
 
                         RowLayout {
-                          //  Layout.fillWidth: true
+                            //  Layout.fillWidth: true
                             CheckBox {
                                 id: idLiveSettingCheckEdit
                                 visible: meetingManager.isSupportLive
@@ -214,9 +215,16 @@ Rectangle {
                                 Layout.preferredHeight: 30
                                 text: qsTr('Join')
                                 onClicked: {
-                                    meetingManager.invokeJoin(model.meetingId, textNickname.text, textTag.text,
-                                                              checkAudio.checked, checkVideo.checked,
-                                                              checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, autorename.checked)
+                                    meetingManager.invokeJoin(
+                                                model.meetingId,
+                                                textNickname.text,
+                                                textTag.text, textTimeout.text,
+                                                checkAudio.checked,
+                                                checkVideo.checked,
+                                                checkChatroom.checked,
+                                                checkInvitation.checked,
+                                                autoOpenWhiteboard.checked,
+                                                autorename.checked)
                                 }
                             }
                             Button {
@@ -224,7 +232,8 @@ Rectangle {
                                 Layout.preferredHeight: 30
                                 text: qsTr('Cancel')
                                 onClicked: {
-                                    meetingManager.cancelMeeting(model.uniqueMeetingId)
+                                    meetingManager.cancelMeeting(
+                                                model.uniqueMeetingId)
                                 }
                             }
                             Button {
@@ -232,17 +241,16 @@ Rectangle {
                                 Layout.preferredHeight: 30
                                 text: qsTr('Edit')
                                 onClicked: {
-                                    meetingManager.editMeeting(model.uniqueMeetingId,
-                                                               model.meetingId,
-                                                               topic2.text,
-                                                               startTimestamp2.text,
-                                                               endTimestamp2.text,
-                                                               password2.text,
-                                                               textScene.text,
-                                                               muteCheckbox2.checked,
-                                                               idLiveSettingCheckEdit.checked,
-                                                               idLiveAccessCheckEdit.checked,
-                                                               idOpenRecordEdit.checked)
+                                    meetingManager.editMeeting(
+                                                model.uniqueMeetingId,
+                                                model.meetingId, topic2.text,
+                                                startTimestamp2.text,
+                                                endTimestamp2.text,
+                                                password2.text, textScene.text,
+                                                muteCheckbox2.checked,
+                                                idLiveSettingCheckEdit.checked,
+                                                idLiveAccessCheckEdit.checked,
+                                                idOpenRecordEdit.checked)
                                 }
                             }
                         }
@@ -271,11 +279,21 @@ Rectangle {
                 Layout.fillWidth: true
             }
 
-            TextField {
-                id: textpassword
-                placeholderText: qsTr('meeting password')
-                selectByMouse: true
-                Layout.fillWidth: true
+            RowLayout {
+                TextField {
+                    id: textpassword
+                    placeholderText: qsTr('meeting password')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
+
+                TextField {
+                    id: textTimeout
+                    placeholderText: qsTr('enter meeting timeout(ms)')
+                    text: 45 * 1000
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
             }
 
             TextField {
@@ -306,9 +324,15 @@ Rectangle {
                     }
                 }
                 Component.onCompleted: {
-                    displayModel.append({ name: 'Display Short Only' })
-                    displayModel.append({ name: 'Display Long Only' })
-                    displayModel.append({ name: 'Display All' })
+                    displayModel.append({
+                                            "name": 'Display Short Only'
+                                        })
+                    displayModel.append({
+                                            "name": 'Display Long Only'
+                                        })
+                    displayModel.append({
+                                            "name": 'Display All'
+                                        })
                     displayOption.currentIndex = 0
                 }
             }
@@ -365,7 +389,8 @@ Rectangle {
 
             CheckBox {
                 id: checkBox
-                text: qsTr('Personal meeting ID: %1').arg(meetingManager.personalMeetingId)
+                text: qsTr('Personal meeting ID: %1').arg(
+                          meetingManager.personalMeetingId)
                 Layout.alignment: Qt.AlignHCenter
             }
 
@@ -396,7 +421,7 @@ Rectangle {
                         text: qsTr('all')
                         onCheckedChanged: {
                             if (checked) {
-                                accoundList.text = '';
+                                accoundList.text = ''
                             }
                         }
                     }
@@ -408,7 +433,9 @@ Rectangle {
                         text: qsTr('Subscribe Audio')
                         Layout.fillWidth: true
                         onClicked: {
-                            meetingManager.subcribeAudio(accoundList.text, true, single.checked ? 0 : (multiple.checked ? 1 : 2))
+                            meetingManager.subcribeAudio(
+                                        accoundList.text, true,
+                                        single.checked ? 0 : (multiple.checked ? 1 : 2))
                         }
                     }
                     Button {
@@ -417,7 +444,9 @@ Rectangle {
                         text: qsTr('UnSubscribe Audio')
                         Layout.fillWidth: true
                         onClicked: {
-                            meetingManager.subcribeAudio(accoundList.text, false, single.checked ? 0 : (multiple.checked ? 1 : 2))
+                            meetingManager.subcribeAudio(
+                                        accoundList.text, false,
+                                        single.checked ? 0 : (multiple.checked ? 1 : 2))
                         }
                     }
                 }
@@ -432,11 +461,15 @@ Rectangle {
                     text: qsTr('Create')
                     Layout.fillWidth: true
                     onClicked: {
-
-                        meetingManager.invokeStart(checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,textTag.text, textScene.text,
-                                                   checkAudio.checked, checkVideo.checked,
-                                                   checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, autorename.checked, displayOption.currentIndex,
-                                                   idOpenRecord.checked)
+                        btnCreate.enabled = false
+                        meetingManager.invokeStart(
+                                    checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
+                                    textTag.text, textScene.text,
+                                    textpassword.text, textTimeout.text,
+                                    checkAudio.checked, checkVideo.checked,
+                                    checkChatroom.checked, checkInvitation.checked,
+                                    autoOpenWhiteboard.checked, autorename.checked,
+                                    displayOption.currentIndex, idOpenRecord.checked)
                     }
                 }
                 Button {
@@ -445,9 +478,19 @@ Rectangle {
                     text: qsTr('Join')
                     Layout.fillWidth: true
                     onClicked: {
-                        meetingManager.invokeJoin(textMeetingId.text, textNickname.text,textTag.text,
-                                                  checkAudio.checked, checkVideo.checked,
-                                                  checkChatroom.checked, checkInvitation.checked, autoOpenWhiteboard.checked, textpassword.text, autorename.checked, displayOption.currentIndex)
+                        btnJoin.enabled = false
+                        meetingManager.invokeJoin(textMeetingId.text,
+                                                  textNickname.text,
+                                                  textTag.text,
+                                                  textTimeout.text,
+                                                  checkAudio.checked,
+                                                  checkVideo.checked,
+                                                  checkChatroom.checked,
+                                                  checkInvitation.checked,
+                                                  autoOpenWhiteboard.checked,
+                                                  textpassword.text,
+                                                  autorename.checked,
+                                                  displayOption.currentIndex)
                     }
                 }
                 Button {
@@ -456,8 +499,20 @@ Rectangle {
                     text: qsTr('Leave')
                     Layout.fillWidth: true
                     enabled: false
+                    onClicked: meetingManager.leaveMeeting(false)
+                }
+                Button {
+                    id: btnFinish
+                    highlighted: true
+                    text: qsTr('Finish')
+                    Layout.fillWidth: true
+                    enabled: false
                     onClicked: meetingManager.leaveMeeting(true)
                 }
+            }
+            RowLayout {
+                Layout.topMargin: 20
+                Layout.alignment: Qt.AlignHCenter
                 Button {
                     id: btnGet
                     highlighted: true
@@ -472,7 +527,8 @@ Rectangle {
                     Layout.fillWidth: true
                     text: qsTr('Get Status')
                     onClicked: {
-                        toast.show('Current meeting status: ' + meetingManager.getMeetingStatus())
+                        toast.show('Current meeting status: ' + meetingManager.getMeetingStatus(
+                                       ))
                     }
                 }
                 Button {
@@ -488,7 +544,7 @@ Rectangle {
 
     Dialog {
         id: meetinginfo
-        standardButtons: StandardButton.Save | StandardButton.Cancel
+        standardButtons: Dialog.Save | Dialog.Cancel
 
         property int meetingUniqueId: 0
         property string meetingId: ""
@@ -575,7 +631,6 @@ Rectangle {
                 Label {
                     text: "user list: "
                 }
-
             }
 
             ListView {
@@ -588,7 +643,7 @@ Rectangle {
                 }
                 delegate: Rectangle {
                     height: 20
-                    RowLayout{
+                    RowLayout {
                         Label {
                             text: "userId: " + model.userId
                         }
@@ -602,7 +657,6 @@ Rectangle {
                         }
                     }
                 }
-
             }
         }
     }
@@ -614,6 +668,7 @@ Rectangle {
             case MeetingStatus.ERROR_CODE_SUCCESS:
                 toast.show(qsTr('Create successfull'))
                 btnLeave.enabled = true
+                btnFinish.enabled = true
                 btnGet.enabled = true
                 btnCreate.enabled = false
                 btnJoin.enabled = false
@@ -629,12 +684,16 @@ Rectangle {
                 toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
+            if (MeetingStatus.ERROR_CODE_SUCCESS !== errorCode) {
+                btnCreate.enabled = true
+            }
         }
         onJoinSignal: {
             switch (errorCode) {
             case MeetingStatus.ERROR_CODE_SUCCESS:
                 toast.show(qsTr("Join successfull"))
                 btnLeave.enabled = true
+                btnFinish.enabled = true
                 btnGet.enabled = true
                 btnCreate.enabled = false
                 btnJoin.enabled = false
@@ -656,14 +715,21 @@ Rectangle {
                 toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
+            if (MeetingStatus.ERROR_CODE_SUCCESS !== errorCode) {
+                btnJoin.enabled = true
+            }
         }
         onLeaveSignal: {
             toast.show('Leave meeting signal: ' + errorCode + ", " + errorMessage)
         }
+        onFinishSignal: {
+            toast.show('Finsh meeting signal: ' + errorCode + ", " + errorMessage)
+        }
         onMeetingStatusChanged: {
             switch (meetingStatus) {
             case RunningStatus.MEETING_STATUS_CONNECTING:
-                break;
+                break
+            case RunningStatus.MEETING_STATUS_IDLE:
             case RunningStatus.MEETING_STATUS_DISCONNECTING:
                 if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SELF)
                     toast.show(qsTr('You have left the meeting'))
@@ -673,16 +739,33 @@ Rectangle {
                     toast.show(qsTr('This meeting has been ended'))
                 else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_KICKOUT)
                     toast.show(qsTr('You have been removed from meeting by host'))
-                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SERVER)
-                    toast.show(qsTr('You have been discconected from server'))
                 else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_MULTI_SPOT)
                     toast.show(qsTr('You have been kickout by other client'))
                 else if (extCode === RunningStatus.MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST)
                     toast.show(qsTr('You have finish this meeting'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_AUTH_INFO_EXPIRED)
+                    toast.show(qsTr('Disconnected by auth info expored'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SERVER)
+                    toast.show(qsTr('You have been discconected from server'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_ROOMNOTEXIST)
+                    toast.show(qsTr('The meeting does not exist'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_SYNCDATAERROR)
+                    toast.show(qsTr(
+                                   'Failed to synchronize meeting information'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_RTCINITERROR)
+                    toast.show(qsTr('The RTC module fails to be initialized'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_JOINCHANNELERROR)
+                    toast.show(qsTr('Failed to join the channel of RTC'))
+                else if (extCode === RunningStatus.MEETING_DISCONNECTING_BY_TIMEOUT)
+                    toast.show(qsTr('Meeting timeout'))
+                else if (extCode === RunningStatus.MEETING_WAITING_VERIFY_PASSWORD)
+                    toast.show(qsTr('need meeting password'))
+
                 btnGet.enabled = false
                 btnCreate.enabled = true
                 btnJoin.enabled = true
                 btnLeave.enabled = false
+                btnFinish.enabled = false
                 subscribeAudio.enabled = false
                 break
             }
@@ -706,7 +789,7 @@ Rectangle {
             meetinginfo.hostUserId = meetingBaseInfo.hostUserId
 
             listUserModel.clear()
-            for (let i = 0; i < meetingUserList.length; i++) {
+            for (var i = 0; i < meetingUserList.length; i++) {
                 const user = meetingUserList[i]
                 listUserModel.append(user)
                 console.log("userid", user.userId)
@@ -717,26 +800,28 @@ Rectangle {
             meetinginfo.open()
         }
         onGetHistoryMeetingInfo: {
-            toast.show('Get history meeting info, ID: ' + meetingId + ', meetingUniqueId: ' + meetingUniqueId + ', shortMeetingId: ' + shortMeetingId + ', subject: ' + subject + ', password: ' + password + ', nickname: ' + nickname + ', sip: ' + sipId)
+            toast.show('Get history meeting info, ID: ' + meetingId
+                       + ', meetingUniqueId: ' + meetingUniqueId
+                       + ', shortMeetingId: ' + shortMeetingId + ', subject: ' + subject
+                       + ', password: ' + password + ', nickname: ' + nickname + ', sip: ' + sipId)
         }
         onGetScheduledMeetingList: {
             listModel.clear()
-            let datetimeFlag = 0;
-            for (let i = 0; i < meetingList.length; i++) {
+            let datetimeFlag = 0
+            for (var i = 0; i < meetingList.length; i++) {
                 const meeting = meetingList[i]
                 listModel.append(meeting)
             }
-            meetingManager.getAccountInfo()          
+            meetingManager.getAccountInfo()
         }
 
-        onDeviceStatusChanged :{
-            if(type === 1){
+        onDeviceStatusChanged: {
+            if (type === 1) {
                 checkAudio.checked = status
-                toast.show('audio device status is '+ status);
-            }
-            else if(type === 2){
-                checkVideo.checked = status;
-                toast.show('video device status is '+ status);
+                toast.show('audio device status is ' + status)
+            } else if (type === 2) {
+                checkVideo.checked = status
+                toast.show('video device status is ' + status)
             }
         }
 
@@ -779,8 +864,7 @@ Rectangle {
     }
 
     function prettyConferenceId(conferenceId) {
-        return conferenceId.substring(0, 3) + "-" +
-                conferenceId.substring(3, 6) + "-" +
-                conferenceId.substring(6)
+        return conferenceId.substring(0, 3) + "-" + conferenceId.substring(
+                    3, 6) + "-" + conferenceId.substring(6)
     }
 }

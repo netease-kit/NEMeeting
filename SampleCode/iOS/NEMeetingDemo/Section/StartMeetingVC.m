@@ -11,13 +11,16 @@
 #import "MeetingMenuSelectVC.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <NEMeetingSDK/NEMeetingSDK.h>
+#import "SceneSettingsViewController.h"
+#import <YYModel/YYModel.h>
+#import "MeetingConfigRepository.h"
 
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuTypeToolbar = 1,
     MeetingMenuTypeMore = 2,
 };
 
-@interface StartMeetingVC ()<CheckBoxDelegate,MeetingMenuSelectVCDelegate,MeetingServiceListener>
+@interface StartMeetingVC ()<CheckBoxDelegate,MeetingMenuSelectVCDelegate,MeetingServiceListener, SceneSettingsDelegate>
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
 @property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
@@ -26,8 +29,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
+@property (weak, nonatomic) IBOutlet UITextField *tagInput;
+@property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 
 @property (nonatomic, copy) NSString *meetingId;
+@property (nonatomic, copy) NSString *sceneJsonString;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoinMeeting;
 @property (nonatomic, readonly) BOOL openMicWhenJoinMeeting;
@@ -92,7 +98,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"关闭会中改名",
                                               @"开启云录制"
     ]];
-    [_settingCheckBox setItemSelected:YES index:2];
+//    [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
 - (void)didSelectedItems:(NSArray<NEMeetingMenuItem *> *)menuItems {
@@ -104,11 +110,28 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     [self showSeletedItemResult:menuItems];
 }
 
+- (IBAction)doCloseMeeting:(id)sender {
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK.getInstance getMeetingService] leaveCurrentMeeting:YES callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        }
+    }];
+}
+
 #pragma mark - Function
 - (void)doStartMeeting {
     NEStartMeetingParams *params = [[NEStartMeetingParams alloc] init];
     params.displayName = _nickInput.text;
     params.meetingId = self.meetingId ? : _meetingIdInput.text;
+    if (_passwordInput.text.length > 0) {
+        params.password = _passwordInput.text;
+    }
+    params.tag = _tagInput.text;
+    if (_sceneJsonString) {
+//        NEMeetingScene* tmp = [NEMeetingScene yy_modelWithJSON: _sceneJsonString];
+        params.scene = [NEMeetingScene yy_modelWithJSON: _sceneJsonString];
+    }
     NEStartMeetingOptions *options = nil;
     if (![self useDefaultConfig]) {
         options = [[NEStartMeetingOptions alloc] init];
@@ -124,6 +147,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noSwitchCamera = [self disableCameraSwitch];
         options.noSwitchAudioMode = [self disableAudioModeSwitch];
         options.noRename = [self disableRename];
+        options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
         
         //白板相关设置
         if ([self showWhiteboard]) {
@@ -335,6 +359,21 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (BOOL)disableAudioModeSwitch {
     return [_settingCheckBox getItemSelectedAtIndex:9];
+}
+
+- (IBAction)sceneSettings:(id)sender {
+    SceneSettingsViewController *view = [[SceneSettingsViewController alloc] init];
+    view.delegate = self;
+    [self presentViewController:view animated:YES completion:nil];
+}
+
+- (void)didSceneSettingsConfirm:(NSString *)settings {
+    self.sceneJsonString = settings;
+//    NEMeetingScene* xx;
+//    if (settings) {
+//        //info = [NEMeetingInfo yy_modelWithDictionary:res.data];
+//        * xx = [NEMeetingScene yy_modelWithJSON: settings];
+//    }
 }
 
 @end

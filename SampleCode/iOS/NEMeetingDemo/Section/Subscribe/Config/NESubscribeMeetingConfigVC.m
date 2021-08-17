@@ -8,8 +8,10 @@
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
 #import "NEFromDatePicker.h"
+#import "SceneSettingsViewController.h"
+#import <YYModel/YYModel.h>
 
-@interface NESubscribeMeetingConfigVC ()
+@interface NESubscribeMeetingConfigVC () <SceneSettingsDelegate>
 
 @property (nonatomic, strong) UIButton *sureBtn;
 
@@ -18,6 +20,8 @@
 @property (nonatomic, readonly) NEPreMeetingService *preMeetingService;
 
 @property (nonatomic, copy) NSString *password;
+
+@property (nonatomic, copy) NSString *sceneJsonString;
 
 @end
 
@@ -121,7 +125,12 @@
     autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         weakSelf.item.settings.attendeeAudioOff = [newValue boolValue];
     };
-    [group3.rows addObject:autoMuteRow];
+    NEFromRow *sceneSettingsRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kScene"];
+    sceneSettingsRow.title = @"入会人员配置";
+    sceneSettingsRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        [weakSelf doSceneSettings];
+    };
+    [group3.rows addObjectsFromArray:@[autoMuteRow, sceneSettingsRow]];
     
     
     NEFromRow *liveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
@@ -242,6 +251,20 @@
 
 - (NEPreMeetingService *)preMeetingService {
     return [[NEMeetingSDK getInstance] getPreMeetingService];
+}
+
+- (void)doSceneSettings {
+    SceneSettingsViewController *view = [[SceneSettingsViewController alloc] init];
+    view.sceneJsonString = self.sceneJsonString;
+    view.delegate = self;
+    [self presentViewController:view animated:YES completion:nil];
+}
+
+- (void)didSceneSettingsConfirm:(NSString *)settings {
+    self.sceneJsonString = settings;
+    if (settings) {
+        self.item.settings.scene = [NEMeetingScene yy_modelWithJSON: settings];
+    }
 }
 
 @end

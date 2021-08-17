@@ -10,6 +10,7 @@
 #import "SystemAuthHelper.h"
 #import "LoginInfoManager.h"
 #import "BaseViewController.h"
+#import "IMLoginVC.h"
 #import <NIMSDK/NIMSDK.h>
 #import "NSString+Demo.h"
 
@@ -41,9 +42,12 @@ static NSString * const prefixName = @"meetingdemo://";
         [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
     });
 }
-- (void)doSetupMeetingSdk {
+- (void)doSetupMeetingSdk {    
     NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
-    config.appKey = kAppKey;
+    config.appKey = ServerConfig.current.appKey;
+    config.extras = @{
+        @"serverUrl": ServerConfig.current.sdkServerUrl
+    };
     config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
 //    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";

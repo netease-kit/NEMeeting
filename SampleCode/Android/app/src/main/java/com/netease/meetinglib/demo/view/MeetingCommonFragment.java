@@ -20,10 +20,12 @@ import android.widget.Toast;
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
+import com.netease.meetinglib.demo.data.MeetingConfigRepository;
 import com.netease.meetinglib.demo.menu.InjectMenuArrangeActivity;
 import com.netease.meetinglib.demo.menu.InjectMenuContainer;
 import com.netease.meetinglib.demo.utils.AlertDialogUtil;
 import com.netease.meetinglib.sdk.NEHistoryMeetingItem;
+import com.netease.meetinglib.sdk.NEMeetingCode;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingIdDisplayOption;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
@@ -102,6 +104,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(0, R.id.firstEditor, labels);
         addEditorArray(1, R.id.secondEditor, labels);
         addEditorArray(2, R.id.thirdEditor, labels);
+        addEditorArray(3, R.id.fourthEditor, labels);
         injectedMenuIdEdx = view.findViewById(R.id.injectedMenuIdEdx);
         injectedMenuTitleEdx = view.findViewById(R.id.injectedMenuTitleEdx);
         view.findViewById(R.id.addInjectedMenuItem).setOnClickListener(v -> addInjectedMenuItem());
@@ -140,6 +143,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
             options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
         }
+        options.joinTimeout = MeetingConfigRepository.INSTANCE.getJoinTimeout();
         options.noChat = isChecked(2);
         options.noInvite = isChecked(3);
         options.noMinimize = isChecked(4);
@@ -224,7 +228,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             clear();
             // 增加会议断开连接提示。
             getActivity().runOnUiThread(() -> Toast.makeText(getActivity(),
-                    "会议已断开连接", Toast.LENGTH_SHORT).show());
+                    "会议已断开连接: " + stringifyDisconnectReason(event.arg), Toast.LENGTH_SHORT).show());
             if (AlertDialogUtil.getAlertDialog() != null) {
                 AlertDialogUtil.getAlertDialog().dismiss();
             }
@@ -250,5 +254,22 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     public void onDestroy() {
         super.onDestroy();
         NEMeetingSDK.getInstance().getMeetingService().removeMeetingStatusListener(listener);
+    }
+
+    static String stringifyDisconnectReason(int reason) {
+        switch (reason) {
+            case NEMeetingCode.MEETING_DISCONNECTING_BY_SELF: return "leave_by_self";
+            case NEMeetingCode.MEETING_DISCONNECTING_REMOVED_BY_HOST: return "remove_by_host";
+            case NEMeetingCode.MEETING_DISCONNECTING_CLOSED_BY_HOST: return "close_by_host";
+            case NEMeetingCode.MEETING_DISCONNECTING_LOGIN_ON_OTHER_DEVICE: return "login_on_other_device";
+            case NEMeetingCode.MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST: return "close_by_self";
+            case NEMeetingCode.MEETING_DISCONNECTING_AUTH_INFO_EXPIRED: return "auth_info_expired";
+            case NEMeetingCode.MEETING_DISCONNECTING_NOT_EXIST: return "meeting_not_exist";
+            case NEMeetingCode.MEETING_DISCONNECTING_SYNC_DATA_ERROR: return "sync_data_error";
+            case NEMeetingCode.MEETING_DISCONNECTING_RTC_INIT_ERROR: return "rtc_init_error";
+            case NEMeetingCode.MEETING_DISCONNECTING_JOIN_CHANNEL_ERROR: return "join_channel_error";
+            case NEMeetingCode.MEETING_DISCONNECTING_JOIN_TIMEOUT: return "join_timeout";
+        }
+        return "unknown";
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="ServerConfigTypes">
+        <item>线上</item>
+        <item>测试</item>
+        <item>QA</item>
+        <item>私有</item>
+    </string-array>
+
+    <string-array name="ServerConfigValues">
+        <item>online</item>
+        <item>test</item>
+        <item>qa</item>
+        <item>private</item>
+    </string-array>
+
+</resources>

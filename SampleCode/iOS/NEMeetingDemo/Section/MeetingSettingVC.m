@@ -6,10 +6,13 @@
 //
 
 #import "MeetingSettingVC.h"
+#import "MeetingConfigRepository.h"
+#import "Config.h"
 
 NSString * const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";
 NSString * const kSettingsJoinMeetingOpenVideo = @"kSettingsJoinMeetingOpenVideo";
 NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio";
+NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 
 @interface MeetingSettingVC ()
 
@@ -34,11 +37,14 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
 }
 
 - (XLFormDescriptor *)setupForm {
+    __weak typeof(self) weakSelf = self;
     XLFormDescriptor *form = [XLFormDescriptor formDescriptorWithTitle:@"会议设置"];
+    
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
+    section.title = @"入会配置";
     [form addFormSection:section];
     
-    __weak typeof(self) weakSelf = self;
+    
     XLFormRowDescriptor *row0 = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsShowMeetingTime
                                                                       rowType:XLFormRowDescriptorTypeBooleanSwitch
                                                                         title:@"显示会议持续时间"];
@@ -77,6 +83,21 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
         weakSelf.openCustomServerUrl = [newValue boolValue];
     };
     [section addFormRow:row3];
+    
+    XLFormRowDescriptor *joinTimeoutItem = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingTimeout
+        rowType:XLFormRowDescriptorTypeInteger
+        title:@"入会超时时间(毫秒)"];
+    joinTimeoutItem.height = 60.0;
+    joinTimeoutItem.value = @([[MeetingConfigRepository getInstance] joinMeetingTimeout]);
+    joinTimeoutItem.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        NSInteger value = 0;
+        if (newValue && (NSNull *)newValue != [NSNull null]) {
+            value = [newValue integerValue];
+        }
+        [MeetingConfigRepository getInstance].joinMeetingTimeout = value;
+    };
+    [section addFormRow:joinTimeoutItem];
+    
     return form;
 }
 

@@ -9,6 +9,7 @@
 #import "CheckBox.h"
 #import "MeetingSettingVC.h"
 #import "MeetingMenuSelectVC.h"
+#import "MeetingConfigRepository.h"
 
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (weak, nonatomic) IBOutlet UITextField *passworkInput;
+@property (weak, nonatomic) IBOutlet UITextField *tagInput;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoin;
@@ -88,10 +90,18 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"显示白板窗口",
                                               @"隐藏白板菜单按钮",
                                               @"关闭会中改名"]];
-    [_settingCheckBox setItemSelected:YES index:2];
-
     _settingCheckBox.delegate = self;
 }
+
+- (IBAction)onLeaveCurrentMeeting:(id)sender {
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK.getInstance getMeetingService] leaveCurrentMeeting:NO callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        }
+    }];
+}
+
 
 #pragma mark - Action
 - (IBAction)onEnterMeetingAction:(id)sender {
@@ -99,6 +109,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     params.meetingId =  _meetingIdInput.text;
     params.displayName = _nickInput.text;
     params.password = _passworkInput.text;
+    params.tag = _tagInput.text;
     
     NEJoinMeetingOptions *options = nil;
     if (![self useDefaultConfig]) {
@@ -116,6 +127,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noSwitchAudioMode = [self disableAudioModeSwitch];
         options.noWhiteBoard = [self hideWhiteboardMenu];
         options.noRename = [self disableRename];
+        options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
         //白板相关设置
         if ([self showWhiteboard]) {
             //设置默认展示白板窗口

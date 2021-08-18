@@ -5,6 +5,10 @@
 
 package com.netease.meetinglib.demo.view;
 
+import android.content.Intent;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 import com.manu.mdatepicker.MDatePickerDialog;
 import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.ToastCallback;
@@ -20,6 +24,7 @@ import com.netease.meetinglib.sdk.NEMeetingItemLive;
 import com.netease.meetinglib.sdk.NEMeetingItemSetting;
 import com.netease.meetinglib.sdk.NEMeetingLiveAuthLevel;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
+import com.netease.meetinglib.sdk.NEMeetingScene;
 import com.netease.meetinglib.sdk.NESettingsService;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +38,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.json.JSONObject;
+
 public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBinding> {
 
     private static final String TAG = ScheduleMeetingFragment.class.getSimpleName();
@@ -44,6 +51,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
     private ScheduleViewModel mViewModel;
 
     private long startTime, endTime;
+    private JSONObject jsonScene;
 
     private boolean isAttendeeAudioOff, isUsePwd, isLiveOn,isLiveLevelOpen,isOpenRecord;
     private NESettingsService settingsService;
@@ -145,6 +153,9 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
                     setting.isAttendeeAudioOff = isAttendeeAudioOff;
                     setting.cloudRecordOn = isOpenRecord;
+                    if (jsonScene != null){
+                        setting.scene = NEMeetingScene.fromJson(jsonScene);
+                    }
                     neMeetingItem.setSetting(setting);
                     NEMeetingItemLive live = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemLive();
                     live.setEnable(isLiveOn);
@@ -203,6 +214,17 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         }
         dataList.add(new ScheduleMeetingItem("开启录制", false, ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION));
         mAdapter.resetData(dataList);
+
+        Intent intent = getActivity().getIntent();
+        String strScene = intent.getStringExtra("scene");
+        if (!TextUtils.isEmpty(strScene)) {
+            try {
+                jsonScene = new JSONObject(strScene);
+            }catch (Exception e){
+                Toast.makeText(this.getContext(),"sence params is error",Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     @Override

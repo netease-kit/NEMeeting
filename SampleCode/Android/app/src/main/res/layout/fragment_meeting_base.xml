@@ -114,7 +114,7 @@
                     android:text="入会时打开摄像头"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/thirdEditor" />
+                    app:layout_constraintTop_toBottomOf="@id/fourthEditor" />
 
             <CheckBox
                     android:id="@+id/audioOption"
@@ -295,6 +295,16 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/secondEditor" />
 
+            <EditText
+                android:id="@+id/fourthEditor"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:hint="个人TAG"
+                app:layout_constraintTop_toBottomOf="@id/thirdEditor" />
 
             <TextView
                     android:id="@+id/title"

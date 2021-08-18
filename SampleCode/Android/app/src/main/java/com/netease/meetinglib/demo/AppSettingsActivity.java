@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -53,15 +54,9 @@ public class AppSettingsActivity extends AppCompatActivity {
             getPreferenceManager().setSharedPreferencesName(SPUtils.SP_FILE);
             setPreferencesFromResource(R.xml.app_settings, rootKey);
             EditTextPreference numberPreference = findPreference("meeting-logger-level-config");
-
             if (numberPreference != null) {
                 numberPreference.setOnBindEditTextListener(
-                        new EditTextPreference.OnBindEditTextListener() {
-                            @Override
-                            public void onBindEditText(@NonNull EditText editText) {
-                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                            }
-                        });
+                        editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
             }
         }
     }

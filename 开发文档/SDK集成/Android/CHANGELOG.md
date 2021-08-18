@@ -1,4 +1,12 @@
 # CHANGELOG
+# 2021-8-16 @ v2.0.0
+## Added
+* 创建即刻会议时可设置会议密码：`NEMeetingParams.password`
+* 创建/加入会议时可设置连接超时时间，超时会自动离开：`NEMeetingOptions.joinTimeout`
+* 新增离开会议接口：`NEMeetingService.leaveCurrentMeeting`
+* 支持更细粒度的会议退出码，详情请查看 `NEMeetingCode`
+## Changed
+* 创建会议时，如果设置了`NEMeetingOptions.noChat`为`true`，将不再会创建聊天室
 
 # 2021-7-9 @ v1.10.0
 ## Added

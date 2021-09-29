@@ -128,6 +128,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noWhiteBoard = [self hideWhiteboardMenu];
         options.noRename = [self disableRename];
         options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
+        options.audioAINSEnabled = [[[NEMeetingSDK getInstance] getSettingsService] isAudioAINSEnabled];
         //白板相关设置
         if ([self showWhiteboard]) {
             //设置默认展示白板窗口

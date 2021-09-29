@@ -90,5 +90,11 @@ static NSString * const prefixName = @"meetingdemo://";
     return NO;
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application {
+    
+    [[[NEMeetingSDK getInstance] getMeetingService] stopBroadcastExtension];
+
+}
+
 
 @end

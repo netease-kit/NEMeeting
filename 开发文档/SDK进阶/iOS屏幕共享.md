@@ -39,6 +39,58 @@
 
 ### 步骤三 在 Extension 进程中采集并发送数据
 
+在 Extension 进程中采集并发送数据，根据当前依赖的 SDK 版本不同而不同。
+
+### NEMeetingSDK 版本为 2.0.6 及以上(包含 2.0.6)
+
+1. 在项目的 `Podfile` 文件中添加 `pod 'NEScreenShareBroadcaster', '0.2.0'` ，并执行 `pod install`， 引入 `NEScreenShareBroadcaster` framework 依赖 。该 framework 封装了数据的采集与发送，供 Extension 进程调用。
+
+2. 在 `SampleHandle.m` 中 使用 步骤一 中创建的 App Group 初始化 `NEScreenShareBroadcaster`，并设置相关参数，同时需要处理停止直播的请求。代码如下(具体实现时可原样Copy，只需修改 kAppGroup 的部分即可)：
+
+- `SampleHandler.h`文件：
+
+```objc
+#import <ReplayKit/ReplayKit.h>
+#import <NEScreenShareBroadcaster/NEScreenShareBroadcaster.h>
+
+@interface SampleHandler : NEScreenShareSampleHandler
+
+@end
+```
+
+- `SampleHandler.m`文件：
+
+```objc
+#import "SampleHandler.h"
+
+static NSString *kAppGroup = @"<Your_App_Group>";
+
+@implementation SampleHandler
+
+- (void)setupWithOptions:(NEScreenShareBroadcasterOptions *)options {
+    options.appGroup = kAppGroup;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat screenWidth = screenRect.size.width * scale;
+    CGFloat screenHeight = screenRect.size.height * scale;
+    options.targetFrameSize = CGSizeMake(0, 0);
+}
+
+#pragma mark - NEScreenShareBroadcasterDelegate
+- (void)onHostRequestFinishBroadcast {
+    NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
+                                         code:0
+                                     userInfo:@{
+                                         NSLocalizedFailureReasonErrorKey:NSLocalizedString(@"屏幕共享已结束。", nil)
+                                     }];
+    [self finishBroadcastWithError:error];
+}
+
+@end
+```
+
+#### NEMeetingSDK 版本为 2.0.6 以下
+
 1. 在项目的 `Podfile` 文件中添加 `pod 'NEScreenShareBroadcaster', '0.0.7'` ，并执行 `pod install`， 引入 `NEScreenShareBroadcaster` framework 依赖 。该 framework 封装了数据的采集与发送，供 Extension 进程调用。
 
 2. 在 `SampleHandle.m` 中 使用 步骤一 中创建的 App Group 初始化 `NEScreenShareBroadcaster`，并设置相关参数；同时将 `SampleHandle` 中的对应方法转发至 `NEScreenShareBroadcaster`。代码如下(具体实现时可原样Copy，只需修改 kAppGroup 的部分即可)：
@@ -152,6 +204,25 @@ config.broadcastAppGroup = @"<Your_App_Group>"; // 指定 App Group
     }
 }];
 ```
+### 步骤五 处理宿主进程异常退出
+
+当处于会议中并开启了屏幕共享时，如果宿主进程因为某种原因意外退出，则需要手动停止直播扩展进程；可监听进程退出事件并调用相应方法停止直播进程；
+
+```objc
+@implementation AppDelegate
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    
+    [[[NEMeetingSDK getInstance] getMeetingService] stopBroadcastExtension];
+
+}
+
+@end
+```
+
+> 注意：在正常结束/退出会议不需要开发者手动停止直播进程。
+
+
 
 完成以上几步之后，即可开启会议，通过共享菜单体验。
 
@@ -159,4 +230,24 @@ config.broadcastAppGroup = @"<Your_App_Group>"; // 指定 App Group
 ## 注意事项
 
 - 主进程与 Extension 进程必须使用相同的 App Group 才能共享成功
-- iOS 系统对 Extension 进程有 50M 内存大小的限制，超过该限制会导致 Extension 进程被强制终止，共享结束。超过720P的共享分辨率很容易导致内存超出限制，因此 SDK 建议共享分辨率设置为720P以下
+- iOS 系统对 Extension 进程有 50M 内存大小的限制，超过该限制会导致 Extension 进程被强制终止，共享结束。在低性能设备上，建议在初始化 `NEScreenShareBroadcaster` 时适当降低屏幕共享的分辨率。示例代码如下(等比例缩放分辨率至1080P)：
+
+```objc
+@implementation SampleHandler
+
+- (void)setupWithOptions:(NEScreenShareBroadcasterOptions *)options {
+    options.appGroup = kAppGroup;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat screenWidth = screenRect.size.width * scale;
+    CGFloat screenHeight = screenRect.size.height * scale;
+    int maxWidth = 1080, maxHeight = 1920;
+    if (maxWidth / screenWidth > maxHeight / screenHeight) {
+        options.targetFrameSize = CGSizeMake(0, maxHeight); // 根据高度缩放
+    } else {
+        options.targetFrameSize = CGSizeMake(maxWidth, 0); // 根据宽度来缩放
+    }
+}
+
+@end
+```

@@ -12,6 +12,7 @@
 NSString * const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";
 NSString * const kSettingsJoinMeetingOpenVideo = @"kSettingsJoinMeetingOpenVideo";
 NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio";
+NSString * const kSettingsAudioAINS = @"kSettingsAudioAINS";
 NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 
 @interface MeetingSettingVC ()
@@ -20,6 +21,7 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 @property (nonatomic, assign) BOOL openVideoWhenJoin;
 @property (nonatomic, assign) BOOL openAudioWhenJoin;
 @property (nonatomic, assign) BOOL openCustomServerUrl;
+@property (nonatomic, assign) BOOL audioAINSEnabled;
 
 
 @end
@@ -98,6 +100,16 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
     };
     [section addFormRow:joinTimeoutItem];
     
+    XLFormRowDescriptor *audioAINS = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsAudioAINS
+                                                                      rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                                        title:@"语音智能降噪"];
+    audioAINS.height = 60.0;
+    audioAINS.value = @(self.audioAINSEnabled);
+    audioAINS.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        weakSelf.audioAINSEnabled = [newValue boolValue];
+    };
+    [section addFormRow:audioAINS];
+    
     return form;
 }
 
@@ -132,6 +144,14 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 
 - (void)setOpenCustomServerUrl:(BOOL)openCustomServerUrl {
     [[NSUserDefaults standardUserDefaults] setBool:openCustomServerUrl forKey:@"openCustomServerUrl"];
+}
+
+- (BOOL)audioAINSEnabled {
+    return [[NEMeetingSDK getInstance].getSettingsService isAudioAINSEnabled];
+}
+
+- (void)setAudioAINSEnabled:(BOOL)enable {
+    [[NEMeetingSDK getInstance].getSettingsService enableAudioAINS:enable];
 }
 
 @end

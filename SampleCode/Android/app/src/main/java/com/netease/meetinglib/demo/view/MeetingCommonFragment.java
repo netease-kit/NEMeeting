@@ -30,6 +30,7 @@ import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingIdDisplayOption;
 import com.netease.meetinglib.sdk.NEMeetingOptions;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
+import com.netease.meetinglib.sdk.NEMeetingService;
 import com.netease.meetinglib.sdk.NEMeetingStatus;
 import com.netease.meetinglib.sdk.NEMeetingStatusListener;
 import com.netease.meetinglib.sdk.NESettingsService;
@@ -154,6 +155,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noWhiteBoard = isChecked(11);
         options.defaultWindowMode = isChecked(12)? NEWindowMode.whiteBoard : NEWindowMode.normal;
         options.noRename = isCheckedById(R.id.noRename);
+        options.audioAINSEnabled = NEMeetingSDK.getInstance().getSettingsService().isAudioAINSEnabled();
         // 如果是创建会议判断是否需要录制
         if (options instanceof NEStartMeetingOptions){
             ((NEStartMeetingOptions) options).noCloudRecord = !isCheckedById(R.id.noCloudRecord);

@@ -36,6 +36,7 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
         private final static String ENABLE_SHOW_MEETING_TIME = "enable_show_meeting_time";
         private final static String ENABLE_VIDEO = "enable_video";
         private final static String ENABLE_AUDIO = "enable_audio";
+        private final static String ENABLE_AUDIO_AINS = "enable_audio_ains";
         private final static String JOIN_TIMEOUT = "join_timeout_millis";
 
         @Nullable
@@ -75,6 +76,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                         value = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();break;
                     case ENABLE_AUDIO:
                         value = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();break;
+                    case ENABLE_AUDIO_AINS:
+                        value = settingsService.isAudioAINSEnabled();break;
                 }
             }
             Log.i(TAG, "getBoolean: " + key + '=' + value);
@@ -93,6 +96,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                         settingsService.setTurnOnMyVideoWhenJoinMeeting(value);break;
                     case ENABLE_AUDIO:
                         settingsService.setTurnOnMyAudioWhenJoinMeeting(value);break;
+                    case ENABLE_AUDIO_AINS:
+                        settingsService.enableAudioAINS(value);break;
                 }
             }
         }

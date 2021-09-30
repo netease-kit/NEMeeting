@@ -1,4 +1,13 @@
 # CHANGELOG
+
+# 2021-9-28 @ v2.0.6
+## Added
+* 新增会议语音智能降噪，入会前可进行设置，默认开启：`NEMeetingOptions.audioAINSEnabled`
+* 新增静音时说话检测
+* 优化音量大小UI展示
+* 优化屏幕共享，分辨率最大支持1080P，[点击查看升级指引](../../SDK进阶/iOS屏幕共享.md)
+* 支持进程异常退出时结束扩展进程：`NEMeetingService.stopBroadcastExtension`
+
 # 2021-8-16 @ v2.0.0
 ## Added
 * 创建即刻会议时可设置会议密码：`NEMeetingParams.password`

@@ -30,5 +30,10 @@
             app:defaultValue="45000"
             style="@style/MyEditTextPreference" />
 
+    <SwitchPreferenceCompat
+            app:key="enable_audio_ains"
+            app:title="语音智能降噪"
+            style="@style/MySwitchPreference"
+            />
 
 </PreferenceScreen>

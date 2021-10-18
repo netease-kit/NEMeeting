@@ -333,7 +333,7 @@ Request Body示例
     | meetingKey| String| 会议唯一key, 可用于获取直播参数|
     | meetingId | String| 会议号 |
     | shortId| String| 会议短号|
-    | meetingUniqueId | String| 会议唯一id|
+    | meetingUniqueId | Long | 会议唯一id|
     | sipCid | String| sip会议号|
 
 ### 查询会议（meetingUniqueId）
@@ -350,7 +350,7 @@ Request Body示例
 
     | 参数 | 类型 | 必选 | 描述 |
     | :------: | :------: | :------: | :------: |
-    | meetingUniqueId | String | 是 | 会议唯一id（meetingUniqueId） |
+    | meetingUniqueId | Long | 是 | 会议唯一id（meetingUniqueId） |
 
 Request Body示例
 ```json
@@ -609,7 +609,7 @@ Request Body示例
 
 1. 接口描述
 
-取消预约会议。
+获取会议录像列表。
 
 2. 接口请求地址
 
@@ -684,6 +684,57 @@ Request Body示例
     "msg":"服务器内部错误"
 }
 ```
+
+### 查询可用的会议列表
+
+1. 接口描述  
+   查询可用的会议列表。
+
+2. 接口请求地址
+    ```
+    POST https://{host}/v2/meeting/list HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+   | 参数 | 类型 | 必选 | 描述 |
+   | :------: | :------: | :------: | :------: |
+   | meetingUniqueId | Long | 否 | 会议唯一id（meetingUniqueId） |
+   | meetingId | String | 否 | 会议号 |
+   | minStartTime | Long | 否 | 最小会议开始时间 |
+   | maxStartTime | Long | 否 | 最大会议开始时间 |
+   | statusList | List<Integer> | 否 | 状态列表，会议状态，1.未开始，2.进行中 |
+   | pageIndex | int | 是 | 分页页码，从0开始 |
+   | pageSize | int | 是 | 分页大小，1-100，最大100 |
+
+Request Body示例
+```json
+{
+  "pageIndex": 0,
+  "pageSize": 20
+}
+```
+
+4. 输出参数
+
+   `以下是公共响应参数的ret属性内包含的参数`
+
+   | 参数 | 类型 | 描述 |
+   | :------: | :------: | :------: |
+   | pageIndex | int | 分页页码，从0开始 |
+   | pageSize | int | 分页大小，1-100，最大100 |
+   | totalNum | long | 总数量 |
+   | totalPages | int | 总页数 |
+   | meetingUniqueId | Long | 会议唯一id |
+   | meetingId   | String | 随机会议码,9位数字；个人会议码，10位数字   |
+   | subject | String | 预约会议主题 |
+   | startTime | Long | 预约开始时间，毫秒 |
+   | endTime | Long | 预约结束时间，毫秒，-1无限期 |
+   | password | String | 会议密码，无密码为空串 |
+   | settings | JsonObject | 会议设置 |
+   | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
+   | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
+   | shortId | String | 会议短号   |
 
 ## 错误码
 | 错误码 | 说明 |

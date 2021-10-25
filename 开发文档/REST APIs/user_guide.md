@@ -704,6 +704,7 @@ Request Body示例
    | minStartTime | Long | 否 | 最小会议开始时间 |
    | maxStartTime | Long | 否 | 最大会议开始时间 |
    | statusList | List<Integer> | 否 | 状态列表，会议状态，1.未开始，2.进行中 |
+   | type | String | 是 | 会议类型 1 随机号即时会议; 2 个人号即时会议; 3 随机号预约会议 |
    | pageIndex | int | 是 | 分页页码，从0开始 |
    | pageSize | int | 是 | 分页大小，1-100，最大100 |
 

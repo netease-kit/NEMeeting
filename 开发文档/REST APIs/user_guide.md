@@ -701,12 +701,12 @@ Request Body示例
    | :------: | :------: | :------: | :------: |
    | meetingUniqueId | Long | 否 | 会议唯一id（meetingUniqueId） |
    | meetingId | String | 否 | 会议号 |
-   | minStartTime | Long | 否 | 最小会议开始时间 |
-   | maxStartTime | Long | 否 | 最大会议开始时间 |
+   | minStartTime | Long | 否 | 最小会议开始时间，毫秒 |
+   | maxStartTime | Long | 否 | 最大会议开始时间，毫秒 |
    | statusList | List<Integer> | 否 | 状态列表，会议状态，1.未开始，2.进行中 |
-   | type | String | 是 | 会议类型 1 随机号即时会议; 2 个人号即时会议; 3 随机号预约会议 |
-   | pageIndex | int | 是 | 分页页码，从0开始 |
-   | pageSize | int | 是 | 分页大小，1-100，最大100 |
+   | type | String | 否 | 会议类型 1 随机号即时会议; 2 个人号即时会议; 3 随机号预约会议 |
+   | pageIndex | int | 否 | 分页页码，从0开始，默认0 |
+   | pageSize | int | 否 | 分页大小，1-100，最大100，默认20 |
 
 Request Body示例
 ```json

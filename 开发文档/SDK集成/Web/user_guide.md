@@ -25,6 +25,7 @@
 | 2021-07-20 | 1.12.0 | 升级音视频SDK |
 | 2021-08-12 | 1.12.2 | 调整主讲人切换间隔 <br> 修复已知bug |
 | 2021-09-09 | 2.0.4 | 订阅接口支持promise <br> 修复已知bug |
+| 2021-10-28 | 2.0.10 | 增加获取会议人员布局位置接口 <br> 增加主持人离会提示是否移交权限 <br> 修复已知bug |
 
 ## 快速接入
 
@@ -384,6 +385,31 @@
 
         ```
 
+23. 获取会议人员布局位置信息
+    * 主动获取
+        ```js
+            neWebMeeting.acitons.layout(): Layout
+            type Layout = {
+                canvas: { // 画布数据
+                    height: number;
+                    width: number;
+                },
+                users: Array<LayoutUser> // 每个成员布局数据
+            }
+            type LayoutUser = {
+                uid: number,
+                x: number,
+                y: number,
+                width: number,
+                height: number,
+            }
+        ```
+    * 监听布局变化
+        ```js
+        neWebMeeting.actions.on('layoutChange', function(layout) {
+            // todo
+        })
+        ```
 #### 自定义按钮详细介绍
 
 1. <span id="custom-introduction">自定义组件的基本结构</span>

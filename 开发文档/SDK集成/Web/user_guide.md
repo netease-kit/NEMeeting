@@ -402,6 +402,7 @@
                 y: number,
                 width: number,
                 height: number,
+                isScreen?: boolean // 是否为共享屏幕
             }
         ```
     * 监听布局变化

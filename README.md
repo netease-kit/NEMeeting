@@ -1,7 +1,9 @@
 # 网易会议（NEMeeting）文档说明
 [![android Status](https://github.com/netease-im/NEMeeting/workflows/android/badge.svg)](https://github.com/netease-im/NEMeeting/actions) [![ios Status](https://github.com/netease-im/NEMeeting/workflows/ios/badge.svg)](https://github.com/netease-im/NEMeeting/actions)
 
-本仓库用以说明 网易会议（NEMeeting）的产品使用、SDK集成、服务端API及示例项目（Sample code）
+本仓库用以说明 网易会议（NEMeeting）的产品使用、SDK集成、服务端API及示例项目（Sample code）。
+
+> *商务咨询请点击 [这里](https://netease.im/) 咨询*
 
 ## 更新日志
 1. [iOS SDK 更新日志](开发文档/SDK集成/iOS/CHANGELOG.md)

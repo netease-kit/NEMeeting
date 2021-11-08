@@ -4,6 +4,24 @@ package com.netease.meetinglib.demo.viewmodel;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.util.Log;
+
+import com.netease.meetinglib.demo.SdkAuthenticator;
+import com.netease.meetinglib.demo.SdkInitializer;
+import com.netease.meetinglib.demo.data.MeetingDataRepository;
+import com.netease.meetinglib.demo.log.LogUtil;
+import com.netease.meetinglib.sdk.NECallback;
+import com.netease.meetinglib.sdk.NEMeetingInfo;
+import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
+import com.netease.meetinglib.sdk.NEMeetingSDK;
+import com.netease.meetinglib.sdk.NEMeetingService;
+import com.netease.meetinglib.sdk.NEMeetingStatus;
+import com.netease.meetinglib.sdk.NEMeetingStatusListener;
+import com.netease.meetinglib.sdk.control.NEControlListener;
+import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -11,18 +29,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.netease.meetinglib.demo.SdkAuthenticator;
-import com.netease.meetinglib.demo.SdkInitializer;
-import com.netease.meetinglib.demo.data.MeetingDataRepository;
-import com.netease.meetinglib.sdk.NEMeetingInfo;
-import com.netease.meetinglib.sdk.NEMeetingOnInjectedMenuItemClickListener;
-import com.netease.meetinglib.sdk.NEMeetingService;
-import com.netease.meetinglib.sdk.NEMeetingStatus;
-import com.netease.meetinglib.sdk.NEMeetingStatusListener;
-import com.netease.meetinglib.sdk.control.NEControlListener;
-import com.netease.meetinglib.sdk.control.NEControlMenuItemClickListener;
-
 public class MainViewModel extends ViewModel implements NEMeetingStatusListener, SdkInitializer.InitializeListener, SdkAuthenticator.AuthStateChangeListener {
+
+    private static final String TAG = "MainViewModel";
 
     private static final int MSG_ACTIVE = 1;
 
@@ -33,16 +42,19 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     private MutableLiveData<String> meetingTimeLiveData = new MutableLiveData<String>() {
         @Override
         protected void onActive() {
+            LogUtil.log(TAG, "meeting time livedata on active");
             super.onActive();
             handler.sendEmptyMessage(MSG_ACTIVE);
         }
 
         @Override
         protected void onInactive() {
+            LogUtil.log(TAG, "meeting time livedata on inactive");
             handler.removeMessages(MSG_ACTIVE);
         }
     };
     private MutableLiveData<NEMeetingInfo> meetingInfoLiveData = new MutableLiveData<>();
+    private long durationInitialTimestamp;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -77,6 +89,10 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
         mRepository.setOnInjectedMenuItemClickListener(listener);
     }
 
+    public void setOnControllerInjectedMenuItemClickListener(NEMeetingOnInjectedMenuItemClickListener listener) {
+        mRepository.setOnControllerInjectedMenuItemClickListener(listener);
+    }
+
     public void setOnControlCustomMenuItemClickListener(NEControlMenuItemClickListener listener) {
         mRepository.setOnControlCustomMenuItemClickListener(listener);
     }
@@ -102,21 +118,33 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     }
 
     @Override
-    public void onInitialized(int total) {
+    public void onInitialized(int initializeIndex) {
         getMeetingService().addMeetingStatusListener(this);
+        NEMeetingStatus status = getMeetingService().getMeetingStatus();
+        if (status != null) {
+            reactToMeetingStatus(status);
+        }
     }
 
     @Override
     public void onMeetingStatusChanged(Event event) {
-        Boolean value = event.status == NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED || event.status == NEMeetingStatus.MEETING_STATUS_INMEETING;
+        reactToMeetingStatus(event.status);
+    }
+
+    private void reactToMeetingStatus(NEMeetingStatus status) {
+        LogUtil.log(TAG, "onMeetingStatusChanged: " + status + "==" + minimizedLiveData.getValue());
+        Boolean value = status == NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED || status == NEMeetingStatus.MEETING_STATUS_INMEETING;
         if (minimizedLiveData.getValue() != value) {
             minimizedLiveData.setValue(value);
         }
-        if (event.status == NEMeetingStatus.MEETING_STATUS_DISCONNECTING) {
+        LogUtil.log(TAG, "onMeetingStatusChanged: " + minimizedLiveData.getValue());
+        if (status == NEMeetingStatus.MEETING_STATUS_DISCONNECTING) {
             meetingInfoLiveData.setValue(null);
-        } else if (event.status == NEMeetingStatus.MEETING_STATUS_INMEETING){
+        } else if (minimizedLiveData.getValue()){
             getMeetingService().getCurrentMeetingInfo((code, msg, info) -> {
+                Log.i(TAG, "current meeting info: " + info + " current: " + System.currentTimeMillis() + " offset: " + (System.currentTimeMillis() - info.startTime));
                 meetingInfoLiveData.setValue(info);
+                durationInitialTimestamp = SystemClock.elapsedRealtime();
             });
         }
     }
@@ -124,7 +152,7 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     private void calculateElapsedTime() {
         NEMeetingInfo info = meetingInfoLiveData.getValue();
         if (info != null) {
-            long duration = (System.currentTimeMillis() - info.startTime) / 1000;
+            long duration = (info.duration + SystemClock.elapsedRealtime() - durationInitialTimestamp) / 1000;
             long hours = duration / 3600;
             long minutes = (duration % 3600) / 60;
             long seconds = duration % 60;
@@ -136,5 +164,34 @@ public class MainViewModel extends ViewModel implements NEMeetingStatusListener,
     @Override
     public void onAuthStateChanged(int state) {
         stateLiveData.setValue(state);
+    }
+
+    /**
+     * 订阅会议内某一音频流
+     *
+     * @param accountId 订阅或者取消订阅的id
+     * @param subscribe true：订阅， false：取消订阅
+     */
+    public void subscribeRemoteAudioStream(String accountId, boolean subscribe, NECallback<Void> callback) {
+        mRepository.subscribeRemoteAudioStream(accountId, subscribe, callback);
+    }
+
+    /**
+     * 批量订阅会议内音频流
+     *
+     * @param accountIds 订阅或者取消订阅的id列表
+     * @param subscribe  true：订阅， false：取消订阅
+     */
+    public void subscribeRemoteAudioStreams(List<String> accountIds, boolean subscribe, NECallback<List<String>> callback) {
+        mRepository.subscribeRemoteAudioStreams(accountIds, subscribe, callback);
+    }
+
+    /**
+     * 订阅会议内全部音频流
+     *
+     * @param subscribe true：订阅， false：取消订阅
+     */
+    public void subscribeAllRemoteAudioStreams(boolean subscribe, NECallback<Void> callback) {
+        mRepository.subscribeAllRemoteAudioStreams(subscribe, callback);
     }
 }

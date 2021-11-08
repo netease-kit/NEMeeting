@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
+@property (weak, nonatomic) IBOutlet UITextField *accountIdInput;
+@property (weak, nonatomic) IBOutlet UITextField *accountTokenInput;
+@property (weak, nonatomic) IBOutlet UIButton *loginWithSDKBtn;
+
 @end
 
 @implementation LoginViewController
@@ -27,7 +31,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNotications];
-    [self doAutoLogin];
 }
 
 - (void)initNotications {
@@ -37,21 +40,11 @@
                                                object:nil];
 }
 
-- (void)doAutoLogin {
-    BOOL infoValid = [[LoginInfoManager shareInstance] infoValid];
-    if (!_autoLogin || !infoValid) {
-        return;
-    }
-    _accountInput.text = [LoginInfoManager shareInstance].account;
-    _passwordInput.text = [LoginInfoManager shareInstance].password;
-    [_loginBtn sendActionsForControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)doLogin:(NSString *)account
-       password:(NSString *)password {
+- (void)doLogin:(NSString *)accountId
+       accountToken:(NSString *)accountToken {
     WEAK_SELF(weakSelf);
-    [[NEMeetingSDK getInstance] login:account
-                                token:password
+    [[NEMeetingSDK getInstance] login:accountId
+                                token:accountToken
                              callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];
         if (resultCode != ERROR_CODE_SUCCESS) {
@@ -79,9 +72,19 @@
             [weakSelf showErrorCode:error.code msg:@"HTTP登录请求失败"];
         } else {
             [weakSelf doLogin:accountId
-                     password:accountToken];
+                     accountToken:accountToken];
         }
     }];
+}
+
+- (IBAction)onLoginWithSDKTokenAction:(id)sender {
+    NSString *accountId = _accountIdInput.text;
+    NSString *accountToken = _accountTokenInput.text;
+    
+    WEAK_SELF(weakSelf);
+    [SVProgressHUD showWithStatus:@"登录中"];
+    [self doLogin:accountId
+            accountToken:accountToken];
 }
 
 - (void)onCleanLoginInfoAction:(NSNotification *)note {

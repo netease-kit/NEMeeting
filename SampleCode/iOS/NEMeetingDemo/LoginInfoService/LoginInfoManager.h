@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * _Nonnull const kNEMeetingLoginInfoCleanNotication;
+extern NSString * _Nonnull const kNEMeetingDidGetSSOToken;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -10,7 +10,9 @@ public class ScheduleMeetingDetailItem {
     private int clickAction;
 
     public static final int COPY_MEETING_ID_ACTION = 1;
+    public static final int COPY_LIVE_URL_ACTION = 2;
     public static final int COPY_PASSWORD_ACTION = 4;
+    public static final int COPY_LIVE_LEVEL_ACTION = 5;
 
     public ScheduleMeetingDetailItem(String start, String description, String end, int clickAction) {
         this.start = start;

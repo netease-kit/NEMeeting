@@ -1,0 +1,6 @@
+<map id="nem_sdk_interface::NEMeetingOptions" name="nem_sdk_interface::NEMeetingOptions">
+<area shape="rect" id="node1" title="会议选项" alt="" coords="104,95,243,136"/>
+<area shape="rect" id="node3" href="$classnem__sdk__interface_1_1_n_e_join_meeting_options.html" title="加入会议选项" alt="" coords="5,184,160,225"/>
+<area shape="rect" id="node4" href="$classnem__sdk__interface_1_1_n_e_start_meeting_options.html" title="开始会议选项" alt="" coords="185,184,343,225"/>
+<area shape="rect" id="node2" href="$classnem__sdk__interface_1_1_n_e_object.html" title="公共对象" alt="" coords="104,5,243,47"/>
+</map>

@@ -7,8 +7,11 @@
 
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
+#import "NEFromDatePicker.h"
+#import "SceneSettingsViewController.h"
+#import <YYModel/YYModel.h>
 
-@interface NESubscribeMeetingConfigVC ()
+@interface NESubscribeMeetingConfigVC () <SceneSettingsDelegate>
 
 @property (nonatomic, strong) UIButton *sureBtn;
 
@@ -17,6 +20,8 @@
 @property (nonatomic, readonly) NEPreMeetingService *preMeetingService;
 
 @property (nonatomic, copy) NSString *password;
+
+@property (nonatomic, copy) NSString *sceneJsonString;
 
 @end
 
@@ -35,6 +40,11 @@
     _sureBtn.top = self.view.height - 42.0 - _sureBtn.height;
     _sureBtn.centerX = self.view.width/2;
     _sureBtn.layer.cornerRadius = _sureBtn.height/2;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [NEFromDatePickerBar dismiss];
 }
 
 - (void)setupUI {
@@ -115,9 +125,55 @@
     autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         weakSelf.item.settings.attendeeAudioOff = [newValue boolValue];
     };
-    [group3.rows addObject:autoMuteRow];
+    NEFromRow *sceneSettingsRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kScene"];
+    sceneSettingsRow.title = @"入会人员配置";
+    sceneSettingsRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        [weakSelf doSceneSettings];
+    };
+    [group3.rows addObjectsFromArray:@[autoMuteRow, sceneSettingsRow]];
     
-    self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3]];
+    
+    NEFromRow *liveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
+    liveLevelRow.title = @"仅本企业员工可观看";
+    liveLevelRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        BOOL isUseAppToken =  [newValue boolValue];
+        if (isUseAppToken) {
+            weakSelf.item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelAppToken;
+        }else{
+            weakSelf.item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelToken;
+        }
+    };
+    liveLevelRow.value = @false;
+    
+    
+    NEFromGroup *group4 = [[NEFromGroup alloc] init];
+    NEFromRow *openRecord = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingOpenRecord"];
+    openRecord.title = @"开启云端录制";
+    openRecord.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.item.settings.cloudRecordOn = [newValue boolValue];
+    };
+    [group4.rows addObject:openRecord];
+    
+    if([[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]){
+        
+        NEFromGroup *group5 = [[NEFromGroup alloc] init];
+        NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
+        liveRow.title = @"开启直播";
+        liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.item.live.enable = [newValue boolValue];
+            if (weakSelf.item.live.enable) {
+                [self insertRow:liveLevelRow below:row];
+            } else {
+                [weakSelf deleteRowWithTag:@"kMeetingLiveLevel"];
+            }
+        };
+        liveRow.value = @false;
+        [group5.rows addObject:liveRow];
+        
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4,group5]];
+    }else{
+        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3,group4]];
+    }
 }
 
 - (void)insertPassworkRowBelow:(NEFromRow *)row {
@@ -195,6 +251,20 @@
 
 - (NEPreMeetingService *)preMeetingService {
     return [[NEMeetingSDK getInstance] getPreMeetingService];
+}
+
+- (void)doSceneSettings {
+    SceneSettingsViewController *view = [[SceneSettingsViewController alloc] init];
+    view.sceneJsonString = self.sceneJsonString;
+    view.delegate = self;
+    [self presentViewController:view animated:YES completion:nil];
+}
+
+- (void)didSceneSettingsConfirm:(NSString *)settings {
+    self.sceneJsonString = settings;
+    if (settings) {
+        self.item.settings.scene = [NEMeetingScene yy_modelWithJSON: settings];
+    }
 }
 
 @end

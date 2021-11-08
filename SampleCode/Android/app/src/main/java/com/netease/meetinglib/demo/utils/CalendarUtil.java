@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarUtil {
+    private static MDatePickerDialog dialog;
 
     public static DatePickerDialog showDatePickerDialog(Context context, int mYear, int mMonth, int mDay, OnDateSetListener onDateSetListener) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(context,
@@ -28,7 +29,7 @@ public class CalendarUtil {
     }
 
     public static void showDatePickerDialog(Context context, MDatePickerDialog.OnDateResultListener onDateResultListener) {
-        MDatePickerDialog dialog = new MDatePickerDialog.Builder(context)
+         dialog = new MDatePickerDialog.Builder(context)
                 //附加设置(非必须,有默认值)
                 .setCanceledTouchOutside(true)
                 .setGravity(Gravity.BOTTOM)
@@ -38,6 +39,12 @@ public class CalendarUtil {
                 .setOnDateResultListener(onDateResultListener)
                 .build();
         dialog.show();
+    }
+
+    public static void closeOptionsMenu() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 
     public interface OnDateSetListener {

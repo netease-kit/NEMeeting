@@ -49,6 +49,7 @@
             [self setNeedsLayout];
         }
     }
+    self.switchView.hidden = row.hideRightItem;
     self.switchView.on = [row.value boolValue];
 }
 

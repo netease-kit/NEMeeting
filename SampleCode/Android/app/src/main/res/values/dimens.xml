@@ -10,4 +10,22 @@
     <dimen name="default_padding">10dp</dimen>
 
     <dimen name="meeting_minimized_layout_size">100dp</dimen>
+    <dimen name="dp_size_6">6dp</dimen>
+    <dimen name="dp_size_13">13dp</dimen>
+    <dimen name="dp_size_44">44dp</dimen>
+    <dimen name="dp_size_10">10dp</dimen>
+    <dimen name="dp_size_20">20dp</dimen>
+    <dimen name="dp_size_23">23dp</dimen>
+    <dimen name="dp_size_29">29dp</dimen>
+    <dimen name="dp_size_16">16dp</dimen>
+    <dimen name="dp_size_14">14dp</dimen>
+    <dimen name="dp_size_15">15dp</dimen>
+    <dimen name="dp_size_21">21dp</dimen>
+    <dimen name="dp_size_22">22dp</dimen>
+    <dimen name="dp_size_34">34dp</dimen>
+
+    <dimen name="sp_size_14">14sp</dimen>
+    <dimen name="sp_size_17">17sp</dimen>
+    <dimen name="sp_size_18">18sp</dimen>
+    <dimen name="dp_size_80">80dp</dimen>
 </resources>

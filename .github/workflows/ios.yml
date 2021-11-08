@@ -1,0 +1,34 @@
+
+name: ios
+
+on:
+  push:
+    branches: 
+      - main
+      - develop
+      - release/*
+  pull_request:
+    branches: 
+      - main
+      - develop
+      - release/*
+
+jobs:
+  build:
+    name: Build iOS
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./SampleCode/iOS
+
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Install Dependencies
+        run: |
+          pod repo update
+          pod install
+        
+      - name: Build
+        run: xcodebuild -workspace NEMeetingDemo.xcworkspace -scheme NEMeetingDemo -configuration debug CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED="NO"

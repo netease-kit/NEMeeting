@@ -13,7 +13,8 @@
 #import "SubscribeMeetingListVC.h"
 #import "NESubscribeMeetingConfigVC.h"
 #import "MeetingActionVC.h"
-
+#import "NEMeetingLoginViewController.h"
+#import "MainViewController.h"
 @interface MeetingControlVC ()<NEAuthListener, NEControlListener>
 
 @property (weak, nonatomic) IBOutlet UIView *subscribeListContainer;
@@ -48,10 +49,10 @@
     [self.subscribeListContainer addSubview:self.subscribeListVC.view];
 }
 
-- (void)popToLoginVC {
+- (void)popToMainVC {
     __block UIViewController *targetVC = nil;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[LoginViewController class]]) {
+        if ([obj isKindOfClass:[MainViewController class]]) {
             targetVC = obj;
             *stop = YES;
         }
@@ -61,9 +62,9 @@
     }
 }
 
-- (void)doBeKicked {
+- (void)doBeKickedWithInfo:(NSString *)info {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [window makeToast:@"您已在其他设备登录" duration:2 position:CSToastPositionCenter];
+    [window makeToast:info duration:2 position:CSToastPositionCenter];
     [self doLogout];
 }
 
@@ -74,7 +75,7 @@
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         }
         [[LoginInfoManager shareInstance] cleanLoginInfo];
-        [weakSelf popToLoginVC];
+        [weakSelf popToMainVC];
     }];
 }
 
@@ -102,7 +103,11 @@
 
 #pragma mark - <MeetingServiceListener>
 - (void)onKickOut {
-    [self doBeKicked];
+    [self doBeKickedWithInfo:@"您已在其他设备登录"];
+}
+
+- (void)onAuthInfoExpired {
+    [self doBeKickedWithInfo:@"登录状态已过期，请重新登录"];
 }
 
 #pragma mark - <>
@@ -136,6 +141,44 @@
                                                       duration:2
                                                       position:CSToastPositionCenter];
     }
+}
+
+- (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
+                    meetingInfo:(NEMeetingInfo *)meetingInfo
+                stateController:(NEMenuStateController)stateController {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        stateController(NO,nil);
+    }];
+    UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        stateController(YES,nil);
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:ignoreAction];
+    [alert addAction:okAction];
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+    if (!preVC) {
+        preVC = keyWindow.rootViewController;
+    }
+    [preVC presentViewController:alert animated:YES completion:nil];
+    
+}
+
+- (void)onUnbind:(int)unBindType {
+    NSString *msg = [NSString stringWithFormat:@"电视与遥控器解绑，原因:%d", unBindType];
+    [[UIApplication sharedApplication].keyWindow makeToast:msg
+                                                  duration:2
+                                                  position:CSToastPositionCenter];
+}
+
+- (void)onTCProtocolUpgrade:(NETCProtocolUpgrade *)tcProtocolUpgrade {
+    NSString *msg = [NSString stringWithFormat:@"遥控器与电视协议版本不同，遥控器的协议版本：%@，电视的协议版本：%@，是否兼容：%hhd", tcProtocolUpgrade.controllerProtocolVersion, tcProtocolUpgrade.tvProtocolVersion, tcProtocolUpgrade.isCompatible];
+    [[UIApplication sharedApplication].keyWindow makeToast:msg
+                                                  duration:2
+                                                  position:CSToastPositionCenter];
 }
 
 #pragma mark - Getter

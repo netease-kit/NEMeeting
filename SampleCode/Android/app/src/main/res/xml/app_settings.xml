@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <ListPreference
+            app:key="server_type"
+            app:title="服务器环境"
+            app:allowDividerAbove="true"
+            app:entries="@array/ServerConfigTypes"
+            app:entryValues="@array/ServerConfigValues"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            />
+
+    <EditTextPreference
+            app:key="custom_app_server_url"
+            app:title="自定义应用服务地址"
+            app:allowDividerAbove="true"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            />
+
+    <EditTextPreference
+            app:key="custom_sdk_server_url"
+            app:title="自定义组件服务地址"
+            app:allowDividerAbove="true"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            />
+
+    <EditTextPreference
+            app:key="custom_app_key"
+            app:title="自定义AppKey"
+            app:allowDividerAbove="true"
+            app:useSimpleSummaryProvider="true"
+            style="@style/MyEditTextPreference"
+            />
+
+    <SwitchPreferenceCompat
+        app:key="meeting-reuse-nim"
+        app:title="NIM复用"
+        app:summary="重启应用后生效"
+        style="@style/MySwitchPreference"
+        />
+
+    <SwitchPreferenceCompat
+        app:key="use-asset-server-config"
+        app:title="读取私有化服务器配置"
+        app:summary="重启应用后生效"
+        style="@style/MySwitchPreference"
+        />
+
+    <EditTextPreference
+        app:key="meeting-logger-level-config"
+        app:title="自定义日志输出等级配置"
+        app:summary="重启应用后生效"
+        app:defaultValue="0"
+        app:allowDividerAbove="true"
+        style="@style/MyEditTextPreference"
+        />
+
+    <EditTextPreference
+        app:key="meeting-logger-path-config"
+        app:title="自定义日志路径配置"
+        app:summary="重启应用后生效"
+        app:defaultValue="/sdcard/Android/data/com.netease.meetinglib.demo/files/log/"
+        app:allowDividerAbove="true"
+        style="@style/MyEditTextPreference"
+        />
+</PreferenceScreen>

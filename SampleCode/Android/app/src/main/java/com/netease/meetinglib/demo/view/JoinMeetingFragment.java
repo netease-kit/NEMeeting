@@ -5,11 +5,15 @@
 
 package com.netease.meetinglib.demo.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.viewmodel.JoinMeetingViewModel;
 import com.netease.meetinglib.sdk.NEJoinMeetingOptions;
@@ -19,17 +23,31 @@ import com.netease.meetinglib.sdk.NEJoinMeetingParams;
 public class JoinMeetingFragment extends MeetingCommonFragment {
     private static final String TAG = JoinMeetingFragment.class.getSimpleName();
     private JoinMeetingViewModel mViewModel;
+    private String tag;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         usePersonalMeetingId.setEnabled(false);
+        // 加入会议隐藏录制开关功能
+        (getView().findViewById(R.id.noCloudRecord)).setVisibility(View.GONE);
         mViewModel = ViewModelProviders.of(this).get(JoinMeetingViewModel.class);
+        initData();
+    }
+
+    /**
+     * 初始化数据，为了方便测试，可通过ADB传递参数进行验证
+     * 当前支持传入tag
+     * tag:String类型
+     */
+    private void initData(){
+        Intent intent = getActivity().getIntent();
+        tag = intent.getStringExtra("tag");
     }
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号", "昵称", "100", "tittle","请输入密码"};
+        return new String[]{"会议号", "昵称", "请输入密码","个人TAG"};
     }
 
     @Override
@@ -38,11 +56,17 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
     }
 
     @Override
-    protected void performAction(String first, String second,String third) {
+    protected void performAction(String first, String second,String third,String fourth) {
         NEJoinMeetingParams params = new NEJoinMeetingParams();
         params.meetingId = first;
         params.displayName = second;
         params.password = third;
+        if (!TextUtils.isEmpty(tag)){
+            params.tag = tag;
+        }
+        if (!TextUtils.isEmpty(fourth)){
+            params.tag = fourth;
+        }
         NEJoinMeetingOptions options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
         showDialogProgress("正在加入会议...");
         mViewModel.joinMeeting(params, options, new MeetingCallback());

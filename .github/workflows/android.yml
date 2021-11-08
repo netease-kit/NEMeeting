@@ -3,13 +3,13 @@ name: android
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build_android:
-    name: Build Android（Mobile）APK
+    name: Build Android（Mobile）
     runs-on: macos-latest
     defaults:
       run:

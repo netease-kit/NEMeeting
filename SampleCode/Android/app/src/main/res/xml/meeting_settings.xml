@@ -22,5 +22,18 @@
         style="@style/MySwitchPreference"
         />
 
+    <EditTextPreference
+            app:key="join_timeout_millis"
+            app:title="入会超时时间(毫秒)"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true"
+            app:defaultValue="45000"
+            style="@style/MyEditTextPreference" />
+
+    <SwitchPreferenceCompat
+            app:key="enable_audio_ains"
+            app:title="语音智能降噪"
+            style="@style/MySwitchPreference"
+            />
 
 </PreferenceScreen>

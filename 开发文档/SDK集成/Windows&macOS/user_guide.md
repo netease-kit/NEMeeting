@@ -4,26 +4,21 @@
 
 ## 变更记录
 
-| 日期 | 版本 | 变更内容 |
-| :------: | :------: | :------- |
-| 2020-07-10  | 1.0.0 | 首次正式发布 |
-| 2020-08-31 | 1.1.0 | 新增如下接口：<br />`NEMeetingSDK#isInitialized`查询SDK初始化状态<br />     `NEMeetingService#getMeetingStatus`查询当前会议状态<br />     会议设置服务NESettingService用于保存和查询用户的相关会议选项 |
-| 2020-09-04 | 1.2.0 | 新增如下接口：<br />`NEMeetingService#getCurrentMeetingInfo` 获取当前会议信息<br />    `NEMeetingOptions#noInvite` 配置会议中是否显示"邀请"按钮<br />    `NEMeetingOptions#noChat` 配置会议中是否显示"聊天"按钮<br />    `NEMeetingOptions#injectedMoreMenuItems` <br />    "更多"菜单中的自定义注入菜单项<br />    `MeetingServiceListener增加onInjectedMenuItemClick:meetingInfo:`<br />    自定义菜单按钮点击事件回调 |
-| 2020-09-18 | 1.2.3 | 新增如下接口：<br />`NEJoinMeetingParams#passwork` 新增密码入会字段<br />`NEMeetingStatus#MEETING_STATUS_WAITING` 新增会议等待状态<br />`NEMeetingCode#MEETING_WAITING_VERIFY_PASSWORD` 会议等待状态类型<br />`NEMeetingInfo#password、subject、startTime、endTime`会议信息字段<br />`NEMeetingSDK#getPreMeetingService` 会议预约服务<br />`NEPreMeetingService#scheduleMeeting:callback:`预定会议<br />`NEPreMeetingService#cancelMeeting:callback:`取消已预定的会议<br />`NEPreMeetingService#getMeetingList:callback:`查询特定状态会议列表<br />`NEPreMeetingService#registerScheduleMeetingStatusListener:`注册预约会议事件回调<br />`NEScheduleMeetingListener#onScheduleMeetingStatusChanged`会议状态回调 |
+[点击查看变更记录](CHANGELOG.md)
 
 ## 环境要求
 
 | 名称 | 要求 |
 | :------ | :------ |
-| IDE | Visual Studio 2017 or Qt5 or Xcode 11.3.1 以上 |
+| IDE | Visual Studio 2019 or Qt5 or Xcode 11.3.1 以上 |
 | OS | Windows 7 以上 or macOS 10.13 以上 |
 
 ## 业务开发
 
 #### SDK 引入
 
- - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/1600959152/NEMeeting_SDK_Windows_v1.2.5.zip)
- - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/1600959319/NEMeeting_SDK_macOS_v1.2.5.zip)
+ - [点击此处下载 Windows C++ SDK](http://yx-web.nos.netease.com/package/NEMeeting_SDK_Windows_v2.0.6.zip)
+ - [点击此处下载 macOS C++ SDK](http://yx-web.nos.netease.com/package/NEMeeting_SDK_macOS_v2.0.6.zip)
 
 **1）Windows 开发环境配置**
 
@@ -87,6 +82,8 @@ macx {
 NEMeetingSDKConfig config;
 QString displayName = QObject::tr("NetEase Meeting");
 QByteArray byteDisplayName = displayName.toUtf8();
+// 设置你的 AppKey
+config.setAppKey("Your application key");
 // 设置程序启动后的显示名称，如 “网易会议”，在加入会议时会提示“正在进入网易会议...”
 config.getAppInfo()->ProductName(byteDisplayName.data());
 // 设置您的组织名
@@ -114,14 +111,38 @@ auto flag = NEMeetingSDK::getInstance()->isInitialized();
 auto authService = NEMeetingSDK::getInstance()->getAuthService();
 if (authService)
 {
-    // 指定您登录到 SDK 中所使用的 App key
-    QByteArray byteAppKey = appKey.toUtf8();
     // 指定您登录到 SDK 所使用的账户
     QByteArray byteAccountId = accountId.toUtf8();
     // 指定您登录到 SDK 使用的密码
     QByteArray byteAccountToken = accountToken.toUtf8();
     // 执行登录操作
-    authService->login(byteAppKey.data(), byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
+    authService->login(byteAccountId.data(), byteAccountToken.data(), [this](NEErrorCode errorCode, const std::string& errorMessage) {
+        ...
+    });
+}
+```
+
+使用网易会议账号登录
+
+```C++
+auto authService = NEMeetingSDK::getInstance()->getAuthService();
+if (authService)
+{
+    // 指定网易会议的用户名及密码，您可以通过 RESTful API 来注册网易会议账号
+    authService->loginWithNEMeeting(username.toStdString(), password.toStdString(), [=](NEErrorCode errorCode, const std::string& errorMessage) {
+        ...
+    });
+}
+```
+
+使用 SSO Token 登录
+
+```C++
+auto authService = NEMeetingSDK::getInstance()->getAuthService();
+if (authService)
+{
+    // 通过网易会议服务器换回的 SSO token
+    authService->loginWithSSOToken(ssoToken.toStdString(), [=](NEErrorCode errorCode, const std::string& errorMessage) {
         ...
     });
 }
@@ -132,13 +153,74 @@ if (authService)
 登录成功后，您可以获取个人所拥有的个人会议 ID、创建或者加入一个会议
 
 ```C++
-// 获取个人会议 ID
-auto accountService = NEMeetingSDK::getInstance()->getAccountService();
-if (accountService)
+// 获取用户信息
+auto ipcAuthService = NEMeetingSDK::getInstance()->getAuthService();
+if (ipcAuthService)
 {
-    accountService->getPersonalMeetingId([this](NEErrorCode errorCode, const std::string& errorMessage, const std::string& personalMeetingId) {
-        // personalMeetingId 为登录后为您账户分配的固定会议 ID
+    ipcAuthService->getAccountInfo([=](NEErrorCode errorCode, const std::string& errorMessage, const AccountInfo& authInfo) {
+        // errorCode 错误码，errorMessage authInfo 用户信息
     });
+}
+```
+
+```C++
+// 入会前获取视频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto videoController = ipcSettingService->GetVideoController();
+    if (videoController)
+    {
+        videoController->isTurnOnMyVideoWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+            // errorCode 错误码，errorMessage 错误信息，bOn 视频开关状态 
+        });
+    }
+}
+```
+
+```C++
+// 入会前设置视频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto videoController = ipcSettingService->GetVideoController();
+    if (videoController)
+    {
+        videoController->setTurnOnMyVideoWhenJoinMeeting(checkVideo, [this, checkVideo](NEErrorCode errorCode, const std::string& errorMessage){
+            // errorCode 错误码，errorMessage 错误信息，checkVideo 视频开关状态
+        });
+    }
+}
+```
+
+```C++
+// 入会前获取音频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto AudioController = ipcSettingService->GetAudioController();
+    if (AudioController)
+    {
+        //std::promise<bool> promise;
+        AudioController->isTurnOnMyAudioWhenJoinMeetingEnabled([this](NEErrorCode errorCode, const std::string& errorMessage, const bool& bOn){
+            // errorCode 错误码，errorMessage 错误信息，bOn 音频开关状态 
+        });
+    }
+}
+```
+
+```C++
+// 入会前设置音频开关状态
+auto ipcSettingService = NEMeetingSDK::getInstance()->getSettingsService();
+if (ipcSettingService)
+{
+    auto audioController = ipcSettingService->GetAudioController();
+    if (audioController)
+    {
+        audioController->setTurnOnMyAudioWhenJoinMeeting(checkAudio, [this, checkAudio](NEErrorCode errorCode, const std::string& errorMessage){
+            // errorCode 错误码，errorMessage checkAudio 音频开关状态
+        });
+    }
 }
 ```
 
@@ -161,6 +243,9 @@ if (meetingService)
     options.noVideo = !video;
     options.noChat = !enableChatroom;
     options.noInvite = !enableInvitation;
+	options.noWhiteboard = !noWhiteboard;
+	options.noRename = !noRename;
+	options.defaultWindowMode = NORMAL_MODE;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)
@@ -169,7 +254,7 @@ if (meetingService)
         item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
         item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
         item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
-        options.injected_more_menu_items_.push_back(item);
+        options.full_more_menu_items_.push_back(item);
     }
     meetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // ... 创建会议后的回调函数
@@ -197,6 +282,9 @@ if (meetingService)
     options.noVideo = !video;
     options.noChat = !enableChatroom;
     options.noInvite = !enableInvitation;
+	options.noWhiteboard = !noWhiteboard;
+	options.noRename = !noRename;
+	options.defaultWindowMode = NORMAL_MODE;
     // 通过 options 设置自定义菜单
     auto applicationPath = qApp->applicationDirPath();
     for (auto i = 0; i < 3; i++)
@@ -205,7 +293,7 @@ if (meetingService)
         item.itemId = NEM_MORE_MENU_USER_INDEX + i + 1;
         item.itemTitle = QString(QStringLiteral("Submenu") + QString::number(i + 1)).toStdString();
         item.itemImage = QString(applicationPath + "/submenu_icon.png").toStdString();
-        options.injected_more_menu_items_.push_back(item);
+        options.full_more_menu_items_.push_back(item);
     }
     meetingService->joinMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         // 加入会议的回调，可通过返回值判断是否成功
@@ -213,9 +301,55 @@ if (meetingService)
 }
 ```
 
+```C++
+// 订阅/取消订阅单个用户音频示例
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    // 用户Id
+    std::string strAccoundId;
+    bool subcribe = true; true订阅/false取消订阅
+    ipcMeetingService->subscribeRemoteAudioStream(strAccoundId, subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            // 可通过返回值判断是否成功
+        });
+    });
+}
+```
+
+```C++
+// 订阅/取消订阅多个用户音频示例
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    // 用户Id列表
+    std::vector<std::string> strAccoundIdList;
+    bool subcribe = true; true订阅/false取消订阅
+    ipcMeetingService->subscribeRemoteAudioStreams(strAccoundIdList, subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            // 可通过返回值判断是否成功
+        });
+    });
+}
+```
+
+```C++
+// 订阅/取消订阅全部用户音频示例
+auto meetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (meetingService)
+{
+    bool subcribe = true; true订阅/false取消订阅
+    ipcMeetingService->subscribeAllRemoteAudioStreams(subcribe,
+                                                      [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            // 可通过返回值判断是否成功
+        });
+    });
+}
+```
+
 在加入或者创建会议前后，您可能需要关注议的创建/加入进度以及会议中状态的变更通知，如需关注这些信息，您需要先继承 `NEMeetingStatusListener`，然后实现 `onMeetingStatusChanged` 通知，并将该子类注册到监听队列中。示例代码如下：
 
-```
+```C++
 // 继承子类并覆写 
 
 class NEMeetingSDKManager : public NEMeetingStatusListener
@@ -247,11 +381,23 @@ if (meetingService)
 
 同时您可以通过接口获取当前会议的状态，会议状态请见 `meeting.h` 头文件中的 NEMeetingStatus 枚举：
 
-```
+```C++
 auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
 if (ipcMeetingService)
 {
     auto status = ipcMeetingService->getMeetingStatus();
+}
+```
+
+通过 leaveMeeting 接口您可以从会议中离开当前会议
+
+```C++
+auto ipcMeetingService = NEMeetingSDK::getInstance()->getMeetingService();
+if (ipcMeetingService)
+{
+    ipcMeetingService->leaveMeeting(finish, [=](NEErrorCode errorCode, const std::string& errorMessage) {
+        // 离开会议后的回调，如果您需要反初始化 SDK，需要在该回调中抛出一个离开任务到 UI 线程来执行反初始化操作
+    });
 }
 ```
 

@@ -22,12 +22,15 @@ import androidx.viewbinding.ViewBinding;
 
 
 import com.netease.meetinglib.demo.R;
+import com.netease.meetinglib.demo.log.LogUtil;
 import com.netease.meetinglib.demo.utils.StatusBarUtil;
 import com.netease.meetinglib.demo.widget.LoadingDialog;
 
 public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActivity {
     protected VB binding;
     private LoadingDialog dialog;
+
+    final String logTag = getClass().getSimpleName() + '@' + hashCode();
 
     protected abstract void initView();
 
@@ -55,6 +58,37 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
         setContentView(view);
         initView();
         initData();
+        LogUtil.log(logTag, "onCreate");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogUtil.log(logTag, "onNewIntent");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.log(logTag, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtil.log(logTag, "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtil.log(logTag, "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtil.log(logTag, "onDestroy");
     }
 
     protected View getContentView() {

@@ -132,6 +132,10 @@
       memberTag: '', // 成员自定义tag
       attendeeVideoOff: 0, // 成员入会后全体关闭视频，且不允许自主打开，默认允许打开
       attendeeAudioOff: 0, // 成员入会后全体静音，且不允许自主打开，默认允许打开
+      showMaxCount: false, // 是否显示会议应进最大人数,需配合extraData字段设置
+      showSubject: false, // 是否显示会议主题
+      showMemberTag: false, // 是否显示成员标签
+      extraData: '', // 扩展字段，格式为json字符串，如果showMaxCount字段设置为true，且该字段传{maxCount: 100}，会议应进最大人数为100
       scene: { // 会议场景参数
         roleTypes: [
             {
@@ -164,6 +168,9 @@
       noRename: false, // 是否开启会中改名，默认为false（开启）
       defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
       memberTag: '', // 成员自定义tag
+      showMaxCount: false, // 是否显示会议应进最大人数
+      showSubject: false, // 是否显示会议主题
+      showMemberTag: false, // 是否显示成员标签
     }
     neWebMeeting.actions.join(obj, callback)
     ```

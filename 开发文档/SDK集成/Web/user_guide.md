@@ -26,6 +26,7 @@
 | 2021-08-12 | 1.12.2 | 调整主讲人切换间隔 <br> 修复已知bug |
 | 2021-09-09 | 2.0.4 | 订阅接口支持promise <br> 修复已知bug |
 | 2021-10-28 | 2.0.10 | 增加获取会议人员布局位置接口 <br> 增加主持人离会提示是否移交权限 <br> 修复已知bug |
+| 2021-11-08 | 2.0.12 | 增加角色标签显示 <br> 支持一键开启全体摄像头 <br> 支持创建会议时关闭音视频 <br> 添加聊天室 <br> 修复已知bug |
 
 ## 快速接入
 
@@ -116,7 +117,6 @@
     ```
 
 6. 创建房间
-
     ```js
     const obj = {
       nickName: '', //人员昵称
@@ -130,6 +130,12 @@
       defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
       noCloudRecord: false, // 开启会议录制，false（默认） 录制 true 不录制
       memberTag: '', // 成员自定义tag
+      attendeeVideoOff: 0, // 成员入会后全体关闭视频，且不允许自主打开，默认允许打开
+      attendeeAudioOff: 0, // 成员入会后全体静音，且不允许自主打开，默认允许打开
+      showMaxCount: false, // 是否显示会议应进最大人数,需配合extraData字段设置
+      showSubject: false, // 是否显示会议主题
+      showMemberTag: false, // 是否显示成员标签
+      extraData: '', // 扩展字段，格式为json字符串，如果showMaxCount字段设置为true，且该字段传{maxCount: 100}，会议应进最大人数为100
       scene: { // 会议场景参数
         roleTypes: [
             {
@@ -162,6 +168,9 @@
       noRename: false, // 是否开启会中改名，默认为false（开启）
       defaultWindowMode: 1, // 入会时模式，1 常规（默认）， 2白板
       memberTag: '', // 成员自定义tag
+      showMaxCount: false, // 是否显示会议应进最大人数
+      showSubject: false, // 是否显示会议主题
+      showMemberTag: false, // 是否显示成员标签
     }
     neWebMeeting.actions.join(obj, callback)
     ```
@@ -495,7 +504,7 @@
 
     | 配置字段 | 内容(id, type) | 能否在更多区域配置 |
     | :-: | :- | :- |
-    | 预置按钮唯一值（id） | 音频(0, multiple) <br> 视频(1, multiple) <br> 屏幕共享(2, multiple) <br> 参会者列表(3, single) <br> 画廊切换(5, multiple) <br> 邀请(20, single) <br> 聊天（21, 尚未开放)<br> 白板（22，multiple） | false <br> false <br> true <br> false <br> true <br> false <br> false <br> true|
+    | 预置按钮唯一值（id） | 音频(0, multiple) <br> 视频(1, multiple) <br> 屏幕共享(2, multiple) <br> 参会者列表(3, single) <br> 画廊切换(5, multiple) <br> 邀请(20, single) <br> 聊天（21, single)<br> 白板（22，multiple） | false <br> false <br> true <br> false <br> true <br> false <br> false <br> true|
     | 按钮可见性（visibility）| 0总是可见(默认) <br> 1主持人可见 <br> 2非主持人可见 <br> | -- |
 
     预置按钮无法设置状态，只能根据预先设置的状态调整文案与icon

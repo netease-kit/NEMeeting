@@ -217,12 +217,21 @@ Request Body示例
     | type | String | 是 | 会议类型 1 随机号即时会议; 2 个人号即时会议; 3 随机号预约会议 |
     | password | String| 否 | 会议密码，无密码为空串|
     | settings | JsonObject| 否 | 会议设置|
-    | settings.attendeeAudioOff | Boolean | 否 | 加入会议后静音，默认不静音|
+    | settings.controls | JsonArray | 否 | 会议控制 |
     | settings.scene.roleTypes.roleType | Integer | 否 | 场景角色，1：成员，2：主持人 |
     | settings.scene.roleTypes.maxCount | Integer | 否 | 场景角色人数上限 |
     | subject | String | 是 | 会议主题 30字符以内|
     | startTime | Long| type=3: 是; type=1: 否| 预约开始时间，毫秒|
     | endTime | Long| type=3: 是; type=1: 否| 预约结束时间，毫秒|
+
+   `controls结构`
+
+    | 参数 | 类型 | 必选 | 描述 |
+    | :------: | :------: | :------: | :------: |
+    | type | String | 是 | 控制类型，audio音频，video视频 |
+    | state | Integer | 否 | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
+    | attendeeOff | Integer | 否 | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
+    | allowSelfOn | Boolean | 否 | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
 
 Request Body示例
 ```json
@@ -231,7 +240,6 @@ Request Body示例
   "type": 1,
   "subject": "随机会议",
   "settings": {
-    "attendeeAudioOff": true,
     "scene": {
       "roleTypes": [
         {
@@ -243,7 +251,17 @@ Request Body示例
           "maxCount": 1
         }
       ]
-    }
+    },
+    "controls": [
+      {
+        "type": "audio",
+        "attendeeOff": 1
+      },
+      {
+        "type": "video",
+        "attendeeOff": 2
+      }
+    ]
   }
 }
 ```
@@ -261,9 +279,19 @@ Request Body示例
     | endTime | Long | 预约结束时间，毫秒，-1无限期 |
     | password | String | 会议密码，无密码为空串 |
     | settings | JsonObject | 会议设置 |
-    | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     | shortId | String | 会议短号   |
+   | settings.controls | JsonArray | 会议控制 |
+   
+    `controls结构`
+   
+   | 参数 | 类型 | 描述 |
+   | :------: | :------: | :------: |
+   | type | String | 控制类型，audio音频，video视频 |
+   | state | Integer | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
+   | attendeeOff | Integer | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
+   | allowSelfOn | Boolean | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
+
 
 ### 匿名入会获取会议信息
 
@@ -372,11 +400,18 @@ Request Body示例
     | endTime | Long | 预约结束时间，毫秒，-1无限期 |
     | password | String | 会议密码，无密码为空串 |
     | settings | JsonObject | 会议设置 |
-    | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     | shortId | String | 会议短号   |
     | valid | Boolean | 会议是否可用，true：可用，false：不可用   |
-    
+
+   `controls结构`
+
+   | 参数 | 类型 | 描述 |
+   | :------: | :------: | :------: |
+   | type | String | 控制类型，audio音频，video视频 |
+   | state | Integer | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
+   | attendeeOff | Integer | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
+   | allowSelfOn | Boolean | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
 
 ### 修改会议
 
@@ -401,7 +436,15 @@ Content-Type: application/json;charset=utf-8
 | endTime | Long | 预约结束时间，毫秒，-1无限期 | 否 |
 | password | String | 会议密码，密码置空传空串 | 否 |
 | settings | JsonObject | 会议设置，设置有修改要传json里全部参数 | 否 |
-| attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 | 否 |
+
+`controls结构`
+
+| 参数 | 类型 | 必选 | 描述 |
+| :------: | :------: | :------: | :------: |
+| type | String | 是 | 控制类型，audio音频，video视频 |
+| state | Integer | 否 | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
+| attendeeOff | Integer | 否 | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
+| allowSelfOn | Boolean | 否 | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
 
 Request Body示例
 ```json
@@ -733,9 +776,17 @@ Request Body示例
    | endTime | Long | 预约结束时间，毫秒，-1无限期 |
    | password | String | 会议密码，无密码为空串 |
    | settings | JsonObject | 会议设置 |
-   | settings.attendeeAudioOff | Boolean | 加入会议后静音，默认不静音 |
    | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
    | shortId | String | 会议短号   |
+
+   `controls结构`
+
+   | 参数 | 类型 | 描述 |
+   | :------: | :------: | :------: |
+   | type | String | 控制类型，audio音频，video视频 |
+   | state | Integer | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
+   | attendeeOff | Integer | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
+   | allowSelfOn | Boolean | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
 
 ## 错误码
 | 错误码 | 说明 |

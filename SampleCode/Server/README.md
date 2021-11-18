@@ -1,6 +1,6 @@
-##NEMeeting Java SDK Tutorial
+## NEMeeting Java SDK Tutorial
 
-此项目代码是java服务端sdk源码，封装了创建会议、查询会议等接口，实例代码如下：
+此项目代码是java服务端sdk源码，封装了创建会议、查询会议等接口，示例代码如下：
 
 ```java
 // 目前endpoint 为：https://meeting-api.netease.im

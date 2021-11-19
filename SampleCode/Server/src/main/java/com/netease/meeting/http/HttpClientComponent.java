@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -19,11 +20,13 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.nio.charset.CodingErrorAction;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author HJ
@@ -34,7 +37,7 @@ public class HttpClientComponent implements ServiceClient {
     private final CloseableHttpClient httpClient;
     private final Gson gson = new GsonBuilder().create();
 
-    public HttpClientComponent(ClientConfig config) {
+    public HttpClientComponent(final ClientConfig config) {
         // default connection config
         ConnectionConfig defaultConnectionConfig = ConnectionConfig.custom()
                 .setMalformedInputAction(CodingErrorAction.IGNORE)
@@ -54,6 +57,13 @@ public class HttpClientComponent implements ServiceClient {
                 .disableAutomaticRetries()
                 .setDefaultConnectionConfig(defaultConnectionConfig)
                 .setMaxConnTotal(config.getMaxConnections())
+                .evictIdleConnections(config.getIdleConnectionTime(), TimeUnit.MILLISECONDS)
+                .setRetryHandler(new HttpRequestRetryHandler() {
+                    @Override
+                    public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
+                        return executionCount <= config.getMaxRetryTime();
+                    }
+                })
                 .build();
     }
 
@@ -75,7 +85,6 @@ public class HttpClientComponent implements ServiceClient {
                 String httpDesc = response.getStatusLine().getReasonPhrase();
                 throw new NETMeetingException(String.valueOf(statusCode), "connect error. " + httpDesc);
             }
-            EntityUtils.consumeQuietly(response.getEntity());
             if (log.isDebugEnabled()) {
                 log.debug("url: " + httpPost.getURI() + ", httpCode: " + statusCode + ",  responseBody: " + responseBody + ", rt: {}" + (System.nanoTime() - watch) / 1000 / 1000);
             }

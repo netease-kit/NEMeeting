@@ -3,7 +3,7 @@
 此项目代码是java服务端sdk源码，封装了创建会议、查询会议等所有暴露给用户的接口，通过NEMeetingClient实例来调用相关接口，一个工程中可以有一个或多个NEMeetingClient，并根据需要修改ClientConfig的默认配置项，该配置项配置了http线程池的大小、超时时间等关键参数，也可以采用默认参数。  
 
 ### 引入SDK
-maven项目pom.xml中加入相应依赖即可，在<dependencies>中加入如下内容：
+maven项目pom.xml中加入相应依赖即可，在&lt;dependencies&gt;中加入如下内容：
 
 ```java
 <dependency>

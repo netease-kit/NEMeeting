@@ -69,9 +69,10 @@
     ```js
     const config = {
         appKey: '', //网易会议appkey
-        meetingServerDomain: '' //会议服务器地址，支持私有化部署
-        NIMconf: {// 选填，仅限于私有化配置时使用
-            // IM私有化配置项
+        meetingServerDomain: '', //会议服务器地址，支持私有化部署
+        imPrivateConf: {// 选填，IM SDK私有化配置仅限于私有化配置时使用
+        },
+        neRtcServerAddresses: { // 选填，G2 SDK私有化配置仅私有化配置使用
         }
     }
     neWebMeeting.actions.init(800, 800, config)//宽，高，配置项 宽高单位是px，建议比例4：3

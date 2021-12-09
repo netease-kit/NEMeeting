@@ -83,6 +83,12 @@ Public 成员函数</h2></td></tr>
 <tr class="memitem:a7c3cfa30cba096469be2962ae7affd11"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7c3cfa30cba096469be2962ae7affd11">isTurnOnMyAudioWhenJoinMeetingEnabled</a> (const <a class="el" href="classnem__sdk__interface_1_1_n_e_settings_service.html#af9e3ce5ca31aabf12b2f944f38179b16">NESettingsService::NEBoolCallback</a> &amp;cb) const =0</td></tr>
 <tr class="memdesc:a7c3cfa30cba096469be2962ae7affd11"><td class="mdescLeft">&#160;</td><td class="mdescRight">查询入会时的本地音频开关设置状态  <a href="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7c3cfa30cba096469be2962ae7affd11">更多...</a><br /></td></tr>
 <tr class="separator:a7c3cfa30cba096469be2962ae7affd11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abadb676c24ca5160943fb95a1929efbe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_audio_controller.html#abadb676c24ca5160943fb95a1929efbe">setTurnOnMyAudioAINSWhenInMeeting</a> (bool bOn, const <a class="el" href="namespacenem__sdk__interface.html#a1651522b555b313a6bc85f585169a5d0">NEEmptyCallback</a> &amp;cb) const =0</td></tr>
+<tr class="memdesc:abadb676c24ca5160943fb95a1929efbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置会中本地音频AI降噪  <a href="classnem__sdk__interface_1_1_n_e_audio_controller.html#abadb676c24ca5160943fb95a1929efbe">更多...</a><br /></td></tr>
+<tr class="separator:abadb676c24ca5160943fb95a1929efbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dae0c341171f44aca0e1d4d3fc3856b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_audio_controller.html#a4dae0c341171f44aca0e1d4d3fc3856b">isTurnOnMyAudioAINSWhenInMeetingEnabled</a> (const <a class="el" href="classnem__sdk__interface_1_1_n_e_settings_service.html#af9e3ce5ca31aabf12b2f944f38179b16">NESettingsService::NEBoolCallback</a> &amp;cb) const =0</td></tr>
+<tr class="memdesc:a4dae0c341171f44aca0e1d4d3fc3856b"><td class="mdescLeft">&#160;</td><td class="mdescRight">查询会中本地音频AI降噪设置状态  <a href="classnem__sdk__interface_1_1_n_e_audio_controller.html#a4dae0c341171f44aca0e1d4d3fc3856b">更多...</a><br /></td></tr>
+<tr class="separator:a4dae0c341171f44aca0e1d4d3fc3856b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnem__sdk__interface_1_1_n_e_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnem__sdk__interface_1_1_n_e_controller')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="classnem__sdk__interface_1_1_n_e_controller.html">nem_sdk_interface::NEController</a></td></tr>
 <tr class="memitem:a7de5a6c9c14b6950a743cfbe2c9001b5 inherit pub_methods_classnem__sdk__interface_1_1_n_e_controller"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_controller.html#a7de5a6c9c14b6950a743cfbe2c9001b5">NEController</a> ()</td></tr>
 <tr class="memdesc:a7de5a6c9c14b6950a743cfbe2c9001b5 inherit pub_methods_classnem__sdk__interface_1_1_n_e_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">构造函数  <a href="classnem__sdk__interface_1_1_n_e_controller.html#a7de5a6c9c14b6950a743cfbe2c9001b5">更多...</a><br /></td></tr>
@@ -103,6 +109,41 @@ Public 成员函数</h2></td></tr>
 
 <p class="definition">在文件 <a class="el" href="setting__service_8h_source.html">setting_service.h</a> 第 <a class="el" href="setting__service_8h_source.html#l00129">129</a> 行定义.</p>
 </div><h2 class="groupheader">成员函数说明</h2>
+<a id="a4dae0c341171f44aca0e1d4d3fc3856b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dae0c341171f44aca0e1d4d3fc3856b">&#9670;&nbsp;</a></span>isTurnOnMyAudioAINSWhenInMeetingEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void nem_sdk_interface::NEAudioController::isTurnOnMyAudioAINSWhenInMeetingEnabled </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classnem__sdk__interface_1_1_n_e_settings_service.html#af9e3ce5ca31aabf12b2f944f38179b16">NESettingsService::NEBoolCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>查询会中本地音频AI降噪设置状态 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
 <a id="a7c3cfa30cba096469be2962ae7affd11"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c3cfa30cba096469be2962ae7affd11">&#9670;&nbsp;</a></span>isTurnOnMyAudioWhenJoinMeetingEnabled()</h2>
 
@@ -130,6 +171,52 @@ Public 成员函数</h2></td></tr>
 <p>查询入会时的本地音频开关设置状态 </p>
 <dl class="params"><dt>参数</dt><dd>
   <table class="params">
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="abadb676c24ca5160943fb95a1929efbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abadb676c24ca5160943fb95a1929efbe">&#9670;&nbsp;</a></span>setTurnOnMyAudioAINSWhenInMeeting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void nem_sdk_interface::NEAudioController::setTurnOnMyAudioAINSWhenInMeeting </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bOn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacenem__sdk__interface.html#a1651522b555b313a6bc85f585169a5d0">NEEmptyCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>设置会中本地音频AI降噪 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bOn</td><td>true-打开音频AI降噪，false-关闭音频AI降噪 </td></tr>
     <tr><td class="paramname">cb</td><td>回调 </td></tr>
   </table>
   </dd>

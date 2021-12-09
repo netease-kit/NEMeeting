@@ -1,3 +1,19 @@
+# 2021-12-09 @ v2.2.0
+
+## Added
+
+- 会议组件增加G2私有化支持
+- 会议组件增加SIP开关`NEMeetingOptions::bNoSip`
+- 会议组件增加AI降噪开关`NEMeetingOptions::bAudioAINSEnabled`
+
+## Changed
+
+## Fixed
+
+- 修复组件IM私有化无效问题
+- 修复windows下PPT幻灯片播放，出现共享者ppt小窗没有到底层，遮挡住ppt放映画面问题
+- 修复加入会议时未开启白板，但会议中有共享白板功能的问题
+
 # 2021-09-28 @ v2.0.6
 
 ## Added

@@ -69,7 +69,7 @@
     ```js
     const config = {
         appKey: '', //网易会议appkey
-        meetingServerDomain: '' //会议服务器地址，支持私有化部署
+        meetingServerDomain: '', //会议服务器地址，支持私有化部署
         imPrivateConf: {// 选填，IM SDK私有化配置仅限于私有化配置时使用
         },
         neRtcServerAddresses: { // 选填，G2 SDK私有化配置仅私有化配置使用

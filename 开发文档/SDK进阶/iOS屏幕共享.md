@@ -45,6 +45,13 @@
 
 1. 在项目的 `Podfile` 文件中添加 `pod 'NEScreenShareBroadcaster', '0.2.0'` ，并执行 `pod install`， 引入 `NEScreenShareBroadcaster` framework 依赖 。该 framework 封装了数据的采集与发送，供 Extension 进程调用。
 
+```ruby
+target 'BroadcasterExtension' do
+  use_frameworks!
+  pod 'NEScreenShareBroadcaster', '0.2.0'
+end
+```
+
 2. 在 `SampleHandle.m` 中 使用 步骤一 中创建的 App Group 初始化 `NEScreenShareBroadcaster`，并设置相关参数，同时需要处理停止直播的请求。代码如下(具体实现时可原样Copy，只需修改 kAppGroup 的部分即可)：
 
 - `SampleHandler.h`文件：

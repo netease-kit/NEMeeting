@@ -53,8 +53,6 @@ public class HttpClientComponent implements ServiceClient {
                 .setDefaultRequestConfig(requestConfig)
                 .setUserAgent(VersionInfoUtil.getUserAgent())
                 .disableContentCompression()
-                // 快速失败，有用户自行重试
-                .disableAutomaticRetries()
                 .setDefaultConnectionConfig(defaultConnectionConfig)
                 .setMaxConnTotal(config.getMaxConnections())
                 .evictIdleConnections(config.getIdleConnectionTime(), TimeUnit.MILLISECONDS)

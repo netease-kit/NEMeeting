@@ -11,7 +11,7 @@
 3. [Windows&macOS SDK API 更新日志](开发文档/SDK集成/Windows&macOS/CHANGELOG.md)
 4. [Web SDK API 更新日志](开发文档/SDK集成/Web/CHANGELOG.md)
 5. [Android TV SDK API 更新日志](开发文档/SDK集成/TV/CHANGELOG.md)
-6. [服务端 SDK 更新日志](SampleCode/Server/CHANGELOG.md)
+6. [服务端 SDK 更新日志](开发文档/SDK集成/Server/CHANGELOG.md)
 
 ## 使用手册
 1. [iOS SDK API使用手册](开发文档/SDK集成/iOS/user_guide.md)
@@ -19,7 +19,7 @@
 3. [Windows&macOS SDK API使用手册](开发文档/SDK集成/Windows&macOS/user_guide.md)
 4. [Web SDK API使用手册](开发文档/SDK集成/Web/user_guide.md)
 5. [Android TV SDK API使用手册](开发文档/SDK集成/TV/user_guide.md)
-6. [服务端 SDK 使用手册](SampleCode/Server/README.md)
+6. [服务端 SDK API使用手册](开发文档/SDK集成/Server/user_guide.md)
 
 ## 服务端 APIs
 1. [REST APIs](开发文档/REST%20APIs/user_guide.md)

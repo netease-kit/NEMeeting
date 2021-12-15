@@ -12,7 +12,7 @@ maven项目pom.xml中加入相应依赖即可，在&lt;dependencies&gt;中加入
     <version>最新版本号</version>
 </dependency>
 ```  
-最新版本号见【[变更日志](../../开发文档/SDK集成/Server/CHANGELOG.md)】
+最新版本号见【[变更日志](CHANGELOG.md)】
 
 ### 初始化NEMeetingClient  
 NEMeetingClient支持并发使用，一个工程中可以有一个或多个NEMeetingClient，该实例内聚合了一个http连接池，可以通过[ClientConfig](#ClientConfig)自定义配置最大连接数、超时时间等关键参数，也可以采用默认参数。

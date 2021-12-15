@@ -12,7 +12,6 @@ import com.netease.meeting.dto.request.GetUsableMeetingListRequest;
 import com.netease.meeting.dto.response.*;
 import org.junit.Test;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,9 +22,8 @@ import java.util.List;
  **/
 public class MeetingServiceTest {
 
-    @Resource
     private NEMeetingClient neMeetingClient = NEMeetingClientBuilder.build("", "", "");
-    @Resource
+
     private final Gson gson = new GsonBuilder().create();
 
     @Test

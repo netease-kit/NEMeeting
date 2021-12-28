@@ -1,3 +1,45 @@
+# 2021-12-28 @ v2.3.0
+
+## Added
+
+- 增加主持人视频会控功能
+- 设置界面支持是否自动调节麦克风音量
+- 设置界面支持设置通话音质
+- 设置界面支持设置分辨率
+- 增加主持人视频会控功能
+- 创建会议/加入会议增加是否显示tag字段：`NEMeetingOptions#showMemberTag`
+- 创建会议增加拓展字段：`NEStartMeetingParams#extraData`
+- 预约会议/编辑会议增加拓展字段：`NEMeetingItem#extraData`
+- 获取当前会议信息增加拓展字段：`NEMeetingInfo#extraData`
+- 创建会议增加会议控制配置字段：`NEStartMeetingParams#controls`
+- 预约/编辑会议增加会议控制配置字段：`NEMeetingItem#NEMeetingItemSetting#controls`
+- 设置服务增加设置自动调节的开关接口：`NEAudioController::setMyAudioVolumeAutoAdjust`
+- 设置服务增加获取自动调节的开关接口：`NEAudioController::isMyAudioVolumeAutoAdjust`
+- 设置服务增加自动调节状态变更通知接口：`NESettingsChangeNotifyHandler::OnAudioVolumeAutoAdjustSettingsChange`
+- 增加设置通话音质的接口：`NEAudioController::setMyAudioQuality`
+- 增加获取通话音质接口：`NEAudioController::getMyAudioQuality`
+- 增加通话音质变更通知接口：`NESettingsChangeNotifyHandler::OnAudioQualitySettingsChange`
+- 增加设置回声消除的开关接口：`NEAudioController::setMyAudioEchoCancellation`
+- 增加获取回声消除的开关接口：`NEAudioController::isMyAudioEchoCancellation`
+- 增加回声消除状态变更通知接口：`NESettingsChangeNotifyHandler::OnAudioEchoCancellationSettingsChange`
+- 增加设置启用立体音的开关接口：`NEAudioController::setMyAudioEnableStereo`
+- 增加获取启用立体音的开关接口：`NEAudioController::isMyAudioEnableStereo`
+- 增加启用立体音状态变更通知接口：`NESettingsChangeNotifyHandler::OnAudioEnableStereoSettingsChange`
+- 增加设置远端分辨率的接口：`NEVideoController::setRemoteVideoResolution`
+- 增加获取远端分辨率的接口：`NEVideoController::getRemoteVideoResolution`
+- 增加远端分辨率变更通知接口：`NESettingsChangeNotifyHandler::OnRemoteVideoResolutionSettingsChange`
+- 增加设置本地分辨率的接口：`NEVideoController::setMyVideoResolution`
+- 增加获取本地分辨率的接口：`NEVideoController::getMyVideoResolution`
+- 增加本地分辨率变更通知接口：`NESettingsChangeNotifyHandler::OnMyVideoResolutionSettingsChange`
+
+## Changed
+
+## Fixed
+
+- 修复主持人断网，参会者加入会议，主持人联网，主持人看到参会者不在会议中问题
+- 修复参会者举手，主持人断网重新入会，管理参会者上方无举手图标问题
+- 修复windows下PowerPoint共享ppt时，出现画面闪烁问题
+
 # 2021-12-09 @ v2.2.0
 
 ## Added

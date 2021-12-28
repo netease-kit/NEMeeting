@@ -91,13 +91,39 @@ settings.h 的引用(Include)关系图:</div>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 枚举</h2></td></tr>
-<tr class="memitem:aa501e41fc5b939266bb612c954c17ab9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9">nem_sdk_interface::SettingChangType</a> { <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a11d55f160a0d19437b8d55e0292e7b47">nem_sdk_interface::SettingChangType_Audio</a> = 0
+<tr class="memitem:aa501e41fc5b939266bb612c954c17ab9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9">nem_sdk_interface::SettingChangType</a> { <br />
+&#160;&#160;<a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a11d55f160a0d19437b8d55e0292e7b47">nem_sdk_interface::SettingChangType_Audio</a> = 0
 , <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a8d4c3d10738ae7c4bda075e3ddca4382">nem_sdk_interface::SettingChangType_Video</a> = 1
 , <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a5c4b0437b7215eceedc3e409923b640d">nem_sdk_interface::SettingChangType_AudioAINS</a> = 2
-, <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a866d3344315a6cc6d1b109aa60e27781">nem_sdk_interface::SettingChangType_Other</a> = 10
+, <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9abd33faffd66a159e6fc02c8b35264874">nem_sdk_interface::SettingChangType_AudioVolumeAutoAdjust</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a2566b2494e902a170e0f5491fc000588">nem_sdk_interface::SettingChangType_AudioQuality</a> = 4
+, <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a2b058ad2079956cba7795b618abc81b9">nem_sdk_interface::SettingChangType_AudioEchoCancellation</a> = 5
+, <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a9013e25b357edd0766980a444fd33bfa">nem_sdk_interface::SettingChangType_AudioEnableStereo</a> = 6
+, <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9add05bcdd496575cb9b54b7ed0cd2f665">nem_sdk_interface::SettingChangType_RemoteVideoResolution</a> = 7
+, <br />
+&#160;&#160;<a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a7e334ffa5d9fe44a9fcd9fd814d35b83">nem_sdk_interface::SettingChangType_MyVideoResolution</a> = 8
+, <a class="el" href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a866d3344315a6cc6d1b109aa60e27781">nem_sdk_interface::SettingChangType_Other</a> = 100
+<br />
  }</td></tr>
 <tr class="memdesc:aa501e41fc5b939266bb612c954c17ab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">配置变更类型  <a href="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9">更多...</a><br /></td></tr>
 <tr class="separator:aa501e41fc5b939266bb612c954c17ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af345decf7aa07c546067660703ee66c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9">nem_sdk_interface::AudioQuality</a> { <a class="el" href="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9aaac0acf1ce022cf204e2ac0dbe448634">nem_sdk_interface::AudioQuality_Talk</a> = 0
+, <a class="el" href="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9ab93f69e24f0bb5b38522925d5e89cfef">nem_sdk_interface::AudioQuality_Music</a> = 1
+ }</td></tr>
+<tr class="memdesc:af345decf7aa07c546067660703ee66c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">配置通话音质类型  <a href="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9">更多...</a><br /></td></tr>
+<tr class="separator:af345decf7aa07c546067660703ee66c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2675cb3e058acb583bb2456c9dfacb92"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92">nem_sdk_interface::RemoteVideoResolution</a> { <a class="el" href="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92ae04ef58a9d4b8c1c56f97eb7ec769f88">nem_sdk_interface::RemoteVideoResolution_Default</a> = 0
+, <a class="el" href="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92af467699c853554ed50277440e156c76d">nem_sdk_interface::RemoteVideoResolution_HD</a> = 1
+ }</td></tr>
+<tr class="memdesc:a2675cb3e058acb583bb2456c9dfacb92"><td class="mdescLeft">&#160;</td><td class="mdescRight">配置远端视频分辨率  <a href="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92">更多...</a><br /></td></tr>
+<tr class="separator:a2675cb3e058acb583bb2456c9dfacb92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb0ccc48e9d0db84e8a6885a7771f31"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31">nem_sdk_interface::LocalVideoResolution</a> { <a class="el" href="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31a92cb725dbbf19c4c04a19958b3a38dc4">nem_sdk_interface::LocalVideoResolution_480P</a> = 0
+, <a class="el" href="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31a7878282e1986cdce8bbf153d03337be0">nem_sdk_interface::LocalVideoResolution_720P</a> = 1
+, <a class="el" href="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31a6fb9204e697b0e8ba605502a01df7abf">nem_sdk_interface::LocalVideoResolution_1080P</a> = 2
+ }</td></tr>
+<tr class="memdesc:abeb0ccc48e9d0db84e8a6885a7771f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">配置本端视频分辨率  <a href="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31">更多...</a><br /></td></tr>
+<tr class="separator:abeb0ccc48e9d0db84e8a6885a7771f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
 <div class="textblock"><p>配置信息头文件 </p>

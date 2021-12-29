@@ -13,7 +13,7 @@
 3. [Windows&macOS SDK API 更新日志](https://github.com/netease-kit/documents/blob/main/%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6/%E4%BC%9A%E8%AE%AE%E7%BB%84%E4%BB%B6/%E4%BA%A7%E5%93%81%E5%8A%A8%E6%80%81/CHANGELOG_macOS%26Windows.md)
 4. [Web SDK API 更新日志](https://github.com/netease-kit/documents/blob/main/%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6/%E4%BC%9A%E8%AE%AE%E7%BB%84%E4%BB%B6/%E4%BA%A7%E5%93%81%E5%8A%A8%E6%80%81/CHANGELOG_Web.md)
 5. [Android TV SDK API 更新日志](https://github.com/netease-kit/documents/blob/main/%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6/%E4%BC%9A%E8%AE%AE%E7%BB%84%E4%BB%B6/%E4%BA%A7%E5%93%81%E5%8A%A8%E6%80%81/CHANGELOG_TV.md)
-6. [服务端 SDK 更新日志](ttps://github.com/netease-kit/documents/blob/main/%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6/%E4%BC%9A%E8%AE%AE%E7%BB%84%E4%BB%B6/%E4%BA%A7%E5%93%81%E5%8A%A8%E6%80%81/CHANGELOG_Server.md)
+6. [服务端 SDK 更新日志](https://github.com/netease-kit/documents/blob/main/%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6/%E4%BC%9A%E8%AE%AE%E7%BB%84%E4%BB%B6/%E4%BA%A7%E5%93%81%E5%8A%A8%E6%80%81/CHANGELOG_Server.md)
 
 ## 使用手册
 1. [iOS SDK API使用手册](https://github.com/netease-kit/documents/blob/main/%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6/%E4%BC%9A%E8%AE%AE%E7%BB%84%E4%BB%B6/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90/%E9%9B%86%E6%88%90%E5%88%B0%E9%A1%B9%E7%9B%AE_iOS.md)

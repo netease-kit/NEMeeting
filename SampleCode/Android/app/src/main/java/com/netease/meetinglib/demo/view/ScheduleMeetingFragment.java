@@ -18,6 +18,9 @@ import com.netease.meetinglib.demo.data.ScheduleMeetingItem;
 import com.netease.meetinglib.demo.databinding.FragmentScheduleBinding;
 import com.netease.meetinglib.demo.utils.CalendarUtil;
 import com.netease.meetinglib.demo.viewmodel.ScheduleViewModel;
+import com.netease.meetinglib.sdk.NEMeetingAttendeeOffType;
+import com.netease.meetinglib.sdk.NEMeetingAudioControl;
+import com.netease.meetinglib.sdk.NEMeetingControl;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingItem;
 import com.netease.meetinglib.sdk.NEMeetingItemLive;
@@ -25,6 +28,7 @@ import com.netease.meetinglib.sdk.NEMeetingItemSetting;
 import com.netease.meetinglib.sdk.NEMeetingLiveAuthLevel;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingScene;
+import com.netease.meetinglib.sdk.NEMeetingVideoControl;
 import com.netease.meetinglib.sdk.NESettingsService;
 
 import java.text.SimpleDateFormat;
@@ -53,7 +57,10 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
     private long startTime, endTime;
     private JSONObject jsonScene;
 
-    private boolean isAttendeeAudioOff, isUsePwd, isLiveOn,isLiveLevelOpen,isOpenRecord;
+    private Boolean isAttendeeAudioOff, isAllowAttendeeAudioSelfOn;
+    private Boolean isAttendeeVideoOff, isAllowAttendeeVideoSelfOn;
+
+    private boolean isUsePwd, isLiveOn,isLiveLevelOpen,isOpenRecord;
     private NESettingsService settingsService;
 
     public static ScheduleMeetingFragment newInstance() {
@@ -68,7 +75,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
     @Override
     protected void initView() {
         mViewModel = ViewModelProviders.of(this).get(ScheduleViewModel.class);
-        mAdapter = new ScheduleMeetingAdapter(getActivity(), new ArrayList<>(), mViewModel.passWord, mViewModel.tittle);
+        mAdapter = new ScheduleMeetingAdapter(getActivity(), new ArrayList<>(), mViewModel.passWord, mViewModel.tittle, mViewModel.extraData);
         binding.rvScheduleMeeting.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mAdapter.setHasStableIds(true);
@@ -120,8 +127,17 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     case ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION:
                         isUsePwd = enable;
                         break;
-                    case ScheduleMeetingItem.ENABLE_MEETING_MUTE_ACTION:
+                    case ScheduleMeetingItem.SET_AUDIO_MUTE_ACTION:
                         isAttendeeAudioOff = enable;
+                        break;
+                    case ScheduleMeetingItem.SET_VIDEO_MUTE_ACTION:
+                        isAttendeeVideoOff = enable;
+                        break;
+                    case ScheduleMeetingItem.SET_ALLOW_AUDIO_ON_ACTION:
+                        isAllowAttendeeAudioSelfOn = enable;
+                        break;
+                    case ScheduleMeetingItem.SET_ALLOW_VIDEO_ON_ACTION:
+                        isAllowAttendeeVideoSelfOn = enable;
                         break;
                     case ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION:
                         isLiveOn = enable;
@@ -150,8 +166,32 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     if (isUsePwd) {
                         neMeetingItem.setPassword(mViewModel.passWord.getValue());
                     }
+                    neMeetingItem.setExtraData(mViewModel.extraData.getValue());
                     NEMeetingItemSetting setting = new NEMeetingItemSetting();
-                    setting.isAttendeeAudioOff = isAttendeeAudioOff;
+                    List<NEMeetingControl> controls = null;
+                    if (isAttendeeAudioOff == Boolean.TRUE) {
+                        controls = new ArrayList<>();
+                        NEMeetingAudioControl control = new NEMeetingAudioControl();
+                        controls.add(control);
+                        control.setAttendeeOff(isAllowAttendeeAudioSelfOn ?
+                                NEMeetingAttendeeOffType.OffAllowSelfOn :
+                                NEMeetingAttendeeOffType.OffNotAllowSelfOn
+                        );
+                    }
+                    if (isAttendeeVideoOff == Boolean.TRUE) {
+                        if (controls == null) {
+                            controls = new ArrayList<>();
+                        }
+                        NEMeetingVideoControl control = new NEMeetingVideoControl();
+                        controls.add(control);
+                        control.setAttendeeOff(isAllowAttendeeVideoSelfOn ?
+                                NEMeetingAttendeeOffType.OffAllowSelfOn :
+                                NEMeetingAttendeeOffType.OffNotAllowSelfOn
+                        );
+                    }
+                    if (controls != null) {
+                        setting.controls = controls;
+                    }
                     setting.cloudRecordOn = isOpenRecord;
                     if (jsonScene != null){
                         setting.scene = NEMeetingScene.fromJson(jsonScene);
@@ -161,9 +201,6 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     live.setEnable(isLiveOn);
                     live.setLiveWebAccessControlLevel(isLiveLevelOpen? NEMeetingLiveAuthLevel.appToken:NEMeetingLiveAuthLevel.token);
                     neMeetingItem.setLive(live);
-//                    NEMeetingItemRecord record = NEMeetingSDK.getInstance().getPreMeetingService().createMeetingItemRecord();
-//                    record.setEnable(isOpenRecord);
-//                    neMeetingItem.setRecord(record);
                     mViewModel.scheduleMeeting(neMeetingItem,
                                                new ToastCallback<NEMeetingItem>(getActivity(), "scheduleMeeting") {
 
@@ -180,19 +217,6 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
             }
         });
         binding.btnStartScheduleMeeting.setOnClickListener(view -> {
-            //            String pwd = mViewModel.passWord.getValue();
-            //            if (TextUtils.isEmpty(mViewModel.tittle.getValue())) {
-            //                Toast.makeText(getActivity(), "请输入正确的会议主题", Toast.LENGTH_SHORT).show();
-            //                return;
-            //            }
-            //            if (startTime == 0 || endTime == 0 || startTime >= endTime || endTime - startTime > 1000 * 60 * 60 * 24) {
-            //                Toast.makeText(getActivity(), "请输入合法时间", Toast.LENGTH_SHORT).show();
-            //                return;
-            //            }
-            //            if (isUsePwd && (pwd == null || pwd.length() != 6)) {
-            //                Toast.makeText(getActivity(), "请输入正确的6位密码", Toast.LENGTH_SHORT).show();
-            //                return;
-            //            }
             mViewModel.createScheduleMeetingItem();
         });
     }
@@ -206,13 +230,19 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         dataList.add(new ScheduleMeetingItem("开始时间", "请选择开始入会时间", ScheduleMeetingItem.SET_START_TIME_ACTION));
         dataList.add(new ScheduleMeetingItem("结束时间", "请选择会议结束时间", ScheduleMeetingItem.SET_END_TIME_ACTION));
         dataList.add(new ScheduleMeetingItem("会议密码", false, ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION));
-        dataList.add(
-                new ScheduleMeetingItem("自动静音", "参会者加入会议时自动静音", false, ScheduleMeetingItem.ENABLE_MEETING_MUTE_ACTION));
+
+        dataList.add(new ScheduleMeetingItem("自动静音", "参会者加入会议时自动静音", false, ScheduleMeetingItem.SET_AUDIO_MUTE_ACTION));
+        dataList.add(new ScheduleMeetingItem("允许自行解除静音", "参会者被自动静音后可自行打开", true, ScheduleMeetingItem.SET_ALLOW_AUDIO_ON_ACTION));
+
+        dataList.add(new ScheduleMeetingItem("自动关闭视频", "参会者加入会议时自动关闭视频", false, ScheduleMeetingItem.SET_VIDEO_MUTE_ACTION));
+        dataList.add(new ScheduleMeetingItem("允许自行打开视频", "参会者被自动关闭视频后可自行打开", true, ScheduleMeetingItem.SET_ALLOW_VIDEO_ON_ACTION));
+
         settingsService = NEMeetingSDK.getInstance().getSettingsService();
         if(settingsService.isMeetingLiveEnabled()){
             dataList.add(new ScheduleMeetingItem("开启直播", false, ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION));
         }
         dataList.add(new ScheduleMeetingItem("开启录制", false, ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION));
+        dataList.add(new ScheduleMeetingItem("扩展字段", ScheduleMeetingItem.SET_EXTRA_DATA_ACTION));
         mAdapter.resetData(dataList);
 
         Intent intent = getActivity().getIntent();

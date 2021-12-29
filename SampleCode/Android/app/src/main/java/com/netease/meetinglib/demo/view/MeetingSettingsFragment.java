@@ -27,7 +27,7 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         getPreferenceManager().setPreferenceDataStore(new DataStore());
         setPreferencesFromResource(R.xml.meeting_settings, rootKey);
-        ((EditTextPreference) findPreference("join_timeout_millis"))
+        ((EditTextPreference) findPreference(DataStore.JOIN_TIMEOUT))
                 .setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
     }
 
@@ -38,6 +38,7 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
         private final static String ENABLE_AUDIO = "enable_audio";
         private final static String ENABLE_AUDIO_AINS = "enable_audio_ains";
         private final static String JOIN_TIMEOUT = "join_timeout_millis";
+        private final static String AUDIO_PROFILE = "audioProfile";
 
         @Nullable
         @Override
@@ -45,6 +46,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
             switch (key) {
                 case JOIN_TIMEOUT:
                     return String.valueOf(MeetingConfigRepository.INSTANCE.getJoinTimeout());
+                case AUDIO_PROFILE:
+                    return MeetingConfigRepository.INSTANCE.getAudioProfile();
             }
             return super.getString(key, defValue);
         }
@@ -58,6 +61,9 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case AUDIO_PROFILE:
+                    MeetingConfigRepository.INSTANCE.setAudioProfile(value);
                     break;
                 default:
                     super.putString(key, value);

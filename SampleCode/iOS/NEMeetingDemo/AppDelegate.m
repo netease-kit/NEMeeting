@@ -24,11 +24,6 @@ static NSString * const prefixName = @"meetingdemo://";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self doSetupMeetingSdk];
-#if PRIVATE
-/// 私有化AppKey
-    [self setupIMSDKPrivateAppKey];
-#endif
-    [SystemAuthHelper requestAuthority];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     return YES;
 }
@@ -36,18 +31,10 @@ static NSString * const prefixName = @"meetingdemo://";
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
-- (void)setupIMSDKPrivateAppKey {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
-    });
-}
-- (void)doSetupMeetingSdk {    
+
+- (void)doSetupMeetingSdk {
     NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
-    config.extras = @{
-        @"serverUrl": ServerConfig.current.sdkServerUrl
-    };
     config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
 //    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
@@ -58,12 +45,7 @@ static NSString * const prefixName = @"meetingdemo://";
     NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
     config.loggerConfig = loggerConfig;
-    #if PRIVATE
-    /// 私有化AppKey
-        config.useAssetServerConfig = YES;
-    #else
-        config.useAssetServerConfig = NO;
-    #endif
+    config.useAssetServerConfig = [ServerConfig.serverType isEqual: @"private"];
     
     [SVProgressHUD showWithStatus:@"初始化..."];
     [[NEMeetingSDK getInstance] initialize:config

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,10 +37,13 @@ import com.netease.meetinglib.sdk.NEMeetingStatusListener;
 import com.netease.meetinglib.sdk.NESettingsService;
 import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEWindowMode;
+import com.netease.meetinglib.sdk.media.NEAudioProfile;
 import com.netease.meetinglib.sdk.menu.NEMeetingMenuItem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -57,7 +61,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             R.id.noInviteOptions, R.id.no_minimize, R.id.show_meeting_time,
             R.id.showLongMeetingIdOnly, R.id.showShortMeetingIdOnly, R.id.noGalleryOptions,
             R.id.noSwitchCamera, R.id.noSwitchAudioMode, R.id.noWhiteBoard, R.id.defaultWhiteBoard, R.id.noRename,
-            R.id.noCloudRecord
+            R.id.noCloudRecord, R.id.showMemberTag,R.id.audioOffAllowSelfOn, R.id.audioOffNotAllowSelfOn,
+            R.id.videoOffAllowSelfOn, R.id.videoOffNotAllowSelfOn
     };
 
     protected CheckBox usePersonalMeetingId;
@@ -106,6 +111,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(1, R.id.secondEditor, labels);
         addEditorArray(2, R.id.thirdEditor, labels);
         addEditorArray(3, R.id.fourthEditor, labels);
+        addEditorArray(4, R.id.fifthEditor, labels);
         injectedMenuIdEdx = view.findViewById(R.id.injectedMenuIdEdx);
         injectedMenuTitleEdx = view.findViewById(R.id.injectedMenuTitleEdx);
         view.findViewById(R.id.addInjectedMenuItem).setOnClickListener(v -> addInjectedMenuItem());
@@ -131,6 +137,26 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         if (NEMeetingSDK.getInstance().getMeetingService() != null) {
             NEMeetingSDK.getInstance().getMeetingService().addMeetingStatusListener(listener);
         }
+        groupCheckBoxesById(R.id.audioOffAllowSelfOn, R.id.audioOffNotAllowSelfOn);
+        groupCheckBoxesById(R.id.videoOffAllowSelfOn, R.id.videoOffNotAllowSelfOn);
+    }
+
+    void groupCheckBoxesById(int... checkBoxIds) {
+        Set<CheckBox> checkBoxes = new HashSet<>();
+        for (int index = 0; index < checkBoxIds.length; index++) {
+            checkBoxes.add(getView().findViewById(checkBoxIds[index]));
+        }
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    for (CheckBox box : checkBoxes) {
+                        if (box != checkBox) {
+                            box.setChecked(false);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public NEMeetingOptions getMeetingOptions(NEMeetingOptions options) {
@@ -153,9 +179,19 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noSwitchCamera = isChecked(9);
         options.noSwitchAudioMode = isChecked(10);
         options.noWhiteBoard = isChecked(11);
+        options.noSip = isCheckedById(R.id.noSip);
         options.defaultWindowMode = isChecked(12)? NEWindowMode.whiteBoard : NEWindowMode.normal;
         options.noRename = isCheckedById(R.id.noRename);
+        options.showMemberTag = isCheckedById(R.id.showMemberTag);
         options.audioAINSEnabled = NEMeetingSDK.getInstance().getSettingsService().isAudioAINSEnabled();
+        if (MeetingConfigRepository.INSTANCE.isMusicAudioMode()) {
+            options.audioProfile = NEAudioProfile.createMusicAudioProfile();
+        } else if (MeetingConfigRepository.INSTANCE.isSpeechAudioMode()) {
+            options.audioProfile = NEAudioProfile.createSpeechAudioProfile();
+        }
+        if (options.audioProfile != null) {
+            options.audioProfile.enableAINS = options.audioAINSEnabled;
+        }
         // 如果是创建会议判断是否需要录制
         if (options instanceof NEStartMeetingOptions){
             ((NEStartMeetingOptions) options).noCloudRecord = !isCheckedById(R.id.noCloudRecord);

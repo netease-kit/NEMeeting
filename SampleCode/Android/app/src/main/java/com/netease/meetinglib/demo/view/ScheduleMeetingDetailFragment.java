@@ -14,28 +14,32 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.ToastCallback;
 import com.netease.meetinglib.demo.adapter.ScheduleMeetingDetailAdapter;
 import com.netease.meetinglib.demo.base.BaseFragment;
 import com.netease.meetinglib.demo.data.MeetingItem;
 import com.netease.meetinglib.demo.data.ScheduleMeetingDetailItem;
-import com.netease.meetinglib.demo.databinding.FragmentScheduleDatailBinding;
+import com.netease.meetinglib.demo.databinding.FragmentScheduleDetailBinding;
 import com.netease.meetinglib.demo.viewmodel.ScheduleDetailViewModel;
 import com.netease.meetinglib.sdk.NEJoinMeetingParams;
+import com.netease.meetinglib.sdk.NEMeetingAttendeeOffType;
+import com.netease.meetinglib.sdk.NEMeetingAudioControl;
+import com.netease.meetinglib.sdk.NEMeetingControl;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingItemStatus;
 import com.netease.meetinglib.sdk.NEMeetingLiveAuthLevel;
+import com.netease.meetinglib.sdk.NEMeetingVideoControl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-
-public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentScheduleDatailBinding> {
+public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentScheduleDetailBinding> {
 
     private static final String TAG = ScheduleMeetingDetailFragment.class.getSimpleName();
 
@@ -54,8 +58,8 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
     }
 
     @Override
-    protected FragmentScheduleDatailBinding getViewBinding() {
-        return FragmentScheduleDatailBinding.inflate(getLayoutInflater());
+    protected FragmentScheduleDetailBinding getViewBinding() {
+        return FragmentScheduleDetailBinding.inflate(getLayoutInflater());
     }
 
     @Override
@@ -134,6 +138,39 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
             dataList.add(new ScheduleMeetingDetailItem("会议密码", item.getPassword(), "复制",
                                                        ScheduleMeetingDetailItem.COPY_PASSWORD_ACTION));
         }
+
+        {
+            NEMeetingAudioControl control = item.getSetting() != null ? item.getSetting().getCurrentAudioControl() : null;
+            if (control != null) {
+                {
+                    ScheduleMeetingDetailItem item = new ScheduleMeetingDetailItem("自动静音", "", "", 0);
+                    item.setOn(control.getAttendeeOff() != NEMeetingAttendeeOffType.None);
+                    dataList.add(item);
+                }
+                {
+                    ScheduleMeetingDetailItem item = new ScheduleMeetingDetailItem("允许自行解除静音", "", "", 0);
+                    item.setOn(control.getAttendeeOff() == NEMeetingAttendeeOffType.OffAllowSelfOn);
+                    dataList.add(item);
+                }
+            }
+        }
+
+        {
+            NEMeetingVideoControl control = item.getSetting() != null ? item.getSetting().getCurrentVideoControl() : null;
+            if (control != null) {
+                {
+                    ScheduleMeetingDetailItem item = new ScheduleMeetingDetailItem("自动关闭视频", "", "", 0);
+                    item.setOn(control.getAttendeeOff() != NEMeetingAttendeeOffType.None);
+                    dataList.add(item);
+                }
+                {
+                    ScheduleMeetingDetailItem item = new ScheduleMeetingDetailItem("允许自行打开视频", "", "", 0);
+                    item.setOn(control.getAttendeeOff() == NEMeetingAttendeeOffType.OffAllowSelfOn);
+                    dataList.add(item);
+                }
+            }
+        }
+
         if (item.getLive() != null &&item.getLive().isEnable() && !TextUtils.isEmpty(item.getLive().liveUrl())) {
             dataList.add(new ScheduleMeetingDetailItem("直播地址", item.getLive().liveUrl(), "复制",
                                                        ScheduleMeetingDetailItem.COPY_LIVE_URL_ACTION));
@@ -142,6 +179,9 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
                                                                   NEMeetingLiveAuthLevel.appToken) {
             dataList.add(new ScheduleMeetingDetailItem("直播模式", "", "仅本企业员工可观看",
                                                        ScheduleMeetingDetailItem.COPY_LIVE_LEVEL_ACTION));
+        }
+        if (item.getExtraData() != null) {
+            dataList.add(new ScheduleMeetingDetailItem("扩展字段", item.getExtraData(), "", 0));
         }
         NEMeetingItemStatus status = item.getStatus();
         if (status == NEMeetingItemStatus.cancel || status == NEMeetingItemStatus.recycled) {

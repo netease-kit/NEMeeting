@@ -12,11 +12,24 @@ NSString * const kMeetingConfigJoinTimeout = @"MeetingConfig_joinTimeout";
 
 @implementation MeetingConfigRepository
 
++ (NSDictionary<NSString *,NSString *> *) audioProfiles {
+    static NSDictionary *profiles;
+    if (profiles == nil) {
+        profiles = @{
+            @"default": @"默认",
+            @"speech": @"语音",
+            @"music": @"音乐",
+        };
+    }
+    return profiles;
+}
+
 + (instancetype)getInstance {
     static id instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[MeetingConfigRepository alloc] init];
+        [[NSUserDefaults standardUserDefaults] registerDefaults: @{@"audioProfile": @"default"}];
     });
     return instance;
 }
@@ -28,6 +41,22 @@ NSString * const kMeetingConfigJoinTimeout = @"MeetingConfig_joinTimeout";
 
 - (void)setJoinMeetingTimeout:(NSInteger)joinMeetingTimeout {
     [[NSUserDefaults standardUserDefaults] setInteger:joinMeetingTimeout forKey:kMeetingConfigJoinTimeout];
+}
+
+- (void) setAudioProfile:(NSString *)audioProfile {
+    [[NSUserDefaults standardUserDefaults] setValue:audioProfile forKey: @"audioProfile"];
+}
+
+- (NSString *)audioProfile {
+   return [[NSUserDefaults standardUserDefaults] stringForKey: @"audioProfile"];
+}
+
+- (BOOL)useMusicAudioProfile {
+    return [self.audioProfile isEqualToString: @"music"];
+}
+
+- (BOOL)useSpeechAudioProfile {
+    return [self.audioProfile isEqualToString: @"speech"];
 }
 
 

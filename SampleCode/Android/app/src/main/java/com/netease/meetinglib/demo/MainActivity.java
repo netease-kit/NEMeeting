@@ -166,7 +166,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                                             NEMenuClickInfo clickInfo,
                                             NEMeetingInfo meetingInfo, NEMenuStateController stateController) {
             Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
-            if(clickInfo.getItemId()==102){
+            if (clickInfo.getItemId() == 100) {
+                MeetingSettingsActivity.start(context);
+            } else if(clickInfo.getItemId()==102){
                 handleAudioManager(context);
             }else{
                 AlertDialogUtil.setAlertDialog(new AlertDialog.Builder(context)

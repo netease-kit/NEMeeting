@@ -23,6 +23,14 @@
 
 @property (nonatomic, copy) NSString *sceneJsonString;
 
+@property (nonatomic, assign) BOOL muteAllAudio;
+
+@property (nonatomic, assign) BOOL allowAudioSelfOn;
+
+@property (nonatomic, assign) BOOL muteAllVideo;
+
+@property (nonatomic, assign) BOOL allowVideoSelfOn;
+
 @end
 
 @implementation NESubscribeMeetingConfigVC
@@ -53,6 +61,8 @@
 }
 
 - (void)setupItem {
+    _allowAudioSelfOn = YES;
+    _allowVideoSelfOn = YES;
     _item = [[NEMeetingSDK getInstance].getPreMeetingService createScheduleMeetingItem];
     uint64_t startTimeS = [[NSDate date] timeIntervalSince1970];
     startTimeS = (startTimeS - startTimeS%(30*60) + 30*60);
@@ -119,18 +129,12 @@
     [group2.rows addObject:meetingKeyRow];
     
     NEFromGroup *group3 = [[NEFromGroup alloc] init];
-    NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMute"];
-    autoMuteRow.title = @"自动静音";
-    autoMuteRow.subTitle = @"参会者加入会议时自动静音";
-    autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-        weakSelf.item.settings.attendeeAudioOff = [newValue boolValue];
-    };
     NEFromRow *sceneSettingsRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kScene"];
     sceneSettingsRow.title = @"入会人员配置";
     sceneSettingsRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         [weakSelf doSceneSettings];
     };
-    [group3.rows addObjectsFromArray:@[autoMuteRow, sceneSettingsRow]];
+    [group3.rows addObjectsFromArray:@[sceneSettingsRow]];
     
     
     NEFromRow *liveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
@@ -173,6 +177,64 @@
         self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4,group5]];
     }else{
         self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3,group4]];
+    }
+    
+    NEFromGroup *extraDataGroup = [[NEFromGroup alloc] init];
+    NEFromRow *extraDataGroupRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingExtraData"];
+    extraDataGroupRow.title = @"扩展字段";
+    extraDataGroupRow.value = _item.extraData;
+    extraDataGroupRow.config = @{
+        @"placeholder" : @"自定义扩展字段",
+        @"disableCopy" : @(YES),
+        @"textAlignment" : @(NSTextAlignmentRight),
+        @"clearButtonMode" : @(UITextFieldViewModeWhileEditing),
+    };
+    extraDataGroupRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.item.extraData = newValue;
+    };
+    [extraDataGroup.rows addObject:extraDataGroupRow];
+    [self.groups addObject: extraDataGroup];
+    
+    {
+        NEFromGroup *group = [[NEFromGroup alloc] init];
+        NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMute"];
+        autoMuteRow.title = @"自动静音";
+        autoMuteRow.subTitle = @"参会者加入会议时自动静音";
+        autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.muteAllAudio = [newValue boolValue];
+        };
+        
+        NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAudioAllowSelfOn"];
+        allowSelfOnRow.title = @"允许自行解除静音";
+        allowSelfOnRow.subTitle = @"允许参会者自行解除静音";
+        allowSelfOnRow.value = @(YES);
+        allowSelfOnRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.allowAudioSelfOn = [newValue boolValue];
+        };
+        
+        [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
+        [self.groups addObject: group];
+    }
+    
+    {
+        NEFromGroup *group = [[NEFromGroup alloc] init];
+        NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMuteVideo"];
+        autoMuteRow.title = @"自动关闭视频";
+        autoMuteRow.subTitle = @"参会者加入会议时自动关闭视频";
+        autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.muteAllVideo = [newValue boolValue];
+        };
+        
+        NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingVideoAllowSelfOn"];
+        allowSelfOnRow.title = @"允许自行打开视频";
+        allowSelfOnRow.subTitle = @"允许参会者自行打开视频";
+        allowSelfOnRow.value = @(YES);
+        allowSelfOnRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+            weakSelf.allowVideoSelfOn = [newValue boolValue];
+        };
+        
+        [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
+        [self.groups addObject: group];
     }
 }
 
@@ -224,6 +286,22 @@
 
 #pragma mark - Action
 - (void)onSubscribeMeetingAction:(UIButton *)sender {
+    if (self.muteAllAudio || self.muteAllVideo) {
+        NSMutableArray* controls = [[NSMutableArray alloc]init];
+        if (_muteAllAudio) {
+            NEMeetingControl *control = [NEMeetingControl createAudioControl];
+            control.attendeeOff = _allowAudioSelfOn ? AttendeeOffTypeOffAllowSelfOn : AttendeeOffTypeOffNotAllowSelfOn;
+            [controls addObject: control];
+        }
+        if (_muteAllVideo) {
+            NEMeetingControl *control = [NEMeetingControl createVideoControl];
+            control.attendeeOff = _allowVideoSelfOn ? AttendeeOffTypeOffAllowSelfOn : AttendeeOffTypeOffNotAllowSelfOn;
+            [controls addObject: control];
+        }
+        _item.settings.controls = controls;
+    }
+    
+    
     __weak typeof(self) weakSelf = self;
     [self.preMeetingService scheduleMeeting:_item callback:^(NSInteger resultCode, NSString * _Nonnull resultMsg, NEMeetingItem * _Nonnull item) {
         if (resultCode == ERROR_CODE_SUCCESS) {

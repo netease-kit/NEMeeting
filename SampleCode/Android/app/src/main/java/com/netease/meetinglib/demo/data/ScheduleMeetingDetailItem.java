@@ -6,6 +6,7 @@ public class ScheduleMeetingDetailItem {
     private String start;
     private String description;
     private String end;
+    private Boolean on;
 
     private int clickAction;
 
@@ -51,5 +52,13 @@ public class ScheduleMeetingDetailItem {
 
     public void setClickAction(int clickAction) {
         this.clickAction = clickAction;
+    }
+
+    public Boolean getOn() {
+        return on;
+    }
+
+    public void setOn(Boolean on) {
+        this.on = on;
     }
 }

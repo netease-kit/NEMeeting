@@ -82,7 +82,7 @@
                     android:text="自定义工具栏菜单"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/noRename" />
+                    app:layout_constraintTop_toBottomOf="@+id/videoOffNotAllowSelfOn" />
 
             <Button
                     android:id="@+id/configMoreMenus"
@@ -114,7 +114,7 @@
                     android:text="入会时打开摄像头"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/fourthEditor" />
+                    app:layout_constraintTop_toBottomOf="@id/fifthEditor" />
 
             <CheckBox
                     android:id="@+id/audioOption"
@@ -245,6 +245,15 @@
                 app:layout_constraintBottom_toBottomOf="@id/noRename" />
 
             <CheckBox
+                    android:id="@+id/noSip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="关闭Sip功能"
+                    app:layout_constraintLeft_toRightOf="@id/noCloudRecord"
+                    app:layout_constraintBottom_toBottomOf="@id/noRename" />
+
+            <CheckBox
                     android:id="@+id/noWhiteBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -262,6 +271,52 @@
                     android:text="默认开白板"
                     app:layout_constraintLeft_toRightOf="@id/noWhiteBoard"
                     app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+
+            <CheckBox
+                    android:id="@+id/showMemberTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="显示成员标签"
+                    app:layout_constraintLeft_toLeftOf="@id/noRename"
+                    app:layout_constraintTop_toBottomOf="@id/noRename" />
+
+            <CheckBox
+                    android:id="@+id/audioOffAllowSelfOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="自动静音(可自行解除)"
+                    app:layout_constraintLeft_toLeftOf="@id/noRename"
+                    app:layout_constraintTop_toBottomOf="@id/showMemberTag" />
+
+            <CheckBox
+                    android:id="@+id/audioOffNotAllowSelfOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="自动静音(不可自行解除)"
+                    app:layout_constraintLeft_toLeftOf="@id/noRename"
+                    app:layout_constraintTop_toBottomOf="@id/audioOffAllowSelfOn"
+                     />
+
+            <CheckBox
+                    android:id="@+id/videoOffAllowSelfOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="自动关闭视频(可自行解除)"
+                    app:layout_constraintLeft_toLeftOf="@id/noRename"
+                    app:layout_constraintTop_toBottomOf="@id/audioOffNotAllowSelfOn" />
+
+            <CheckBox
+                    android:id="@+id/videoOffNotAllowSelfOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="自动关闭视频(不可自行解除)"
+                    app:layout_constraintLeft_toLeftOf="@id/noRename"
+                    app:layout_constraintTop_toBottomOf="@id/videoOffAllowSelfOn" />
 
             <EditText
                     android:id="@+id/firstEditor"
@@ -305,6 +360,17 @@
                 app:layout_constraintRight_toRightOf="parent"
                 tools:hint="个人TAG"
                 app:layout_constraintTop_toBottomOf="@id/thirdEditor" />
+
+            <EditText
+                    android:id="@+id/fifthEditor"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:hint="扩展字段"
+                    app:layout_constraintTop_toBottomOf="@id/fourthEditor" />
 
             <TextView
                     android:id="@+id/title"

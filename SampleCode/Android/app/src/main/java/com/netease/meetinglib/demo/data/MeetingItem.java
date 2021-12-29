@@ -73,6 +73,8 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     private NEMeetingItemLive live;
     
     private boolean isGroupFirst;
+
+    private String extraData;
     
     public NEMeetingItemStatus getStatus() {
         return status;
@@ -193,6 +195,13 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
         return setting;
     }
 
+    public String getExtraData() {
+        return extraData;
+    }
+
+    public void setExtraData(String extraData) {
+        this.extraData = extraData;
+    }
 
     @Override
     public int compareTo(MeetingItem meetingItem) {

@@ -13,16 +13,24 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.netease.meetinglib.demo.R;
 import com.netease.meetinglib.demo.viewmodel.StartMeetingViewModel;
 import com.netease.meetinglib.sdk.NEAccountService;
+import com.netease.meetinglib.sdk.NEMeetingAttendeeOffType;
+import com.netease.meetinglib.sdk.NEMeetingAudioControl;
+import com.netease.meetinglib.sdk.NEMeetingControl;
 import com.netease.meetinglib.sdk.NEMeetingError;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingScene;
+import com.netease.meetinglib.sdk.NEMeetingVideoControl;
 import com.netease.meetinglib.sdk.NEStartMeetingOptions;
 import com.netease.meetinglib.sdk.NEStartMeetingParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class StartMeetingFragment extends MeetingCommonFragment {
@@ -67,7 +75,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "请输入密码","个人TAG"};
+        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "请输入密码","个人TAG", "扩展字段"};
     }
 
     @Override
@@ -92,6 +100,25 @@ public class StartMeetingFragment extends MeetingCommonFragment {
         if (jsonScene != null){
             params.scene = NEMeetingScene.fromJson(jsonScene);
         }
+        String extraData = getEditorText(4);
+        if (!TextUtils.isEmpty(extraData)) {
+            params.extraData = extraData;
+        }
+        List<NEMeetingControl> controls = new ArrayList<>();
+        if (isCheckedById(R.id.audioOffAllowSelfOn)) {
+            controls.add(new NEMeetingAudioControl(NEMeetingAttendeeOffType.OffAllowSelfOn));
+        } else if (isCheckedById(R.id.audioOffNotAllowSelfOn)) {
+            controls.add(new NEMeetingAudioControl(NEMeetingAttendeeOffType.OffNotAllowSelfOn));
+        }
+        if (isCheckedById(R.id.videoOffAllowSelfOn)) {
+            controls.add(new NEMeetingVideoControl(NEMeetingAttendeeOffType.OffAllowSelfOn));
+        } else if (isCheckedById(R.id.videoOffNotAllowSelfOn)) {
+            controls.add(new NEMeetingVideoControl(NEMeetingAttendeeOffType.OffNotAllowSelfOn));
+        }
+        if (controls.size() > 0) {
+            params.controls = controls;
+        }
+
         NEStartMeetingOptions options = (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
 
         showDialogProgress("正在创建会议...");

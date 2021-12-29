@@ -68,6 +68,7 @@ public class HomeViewModel extends ViewModel {
                 item.setDay(startTime.substring(8, 10));
                 item.setSetting(neMeetingItem.getSetting());
                 item.setLive(neMeetingItem.getLive());
+                item.setExtraData(neMeetingItem.getExtraData());
                 items.add(item);
             }
             Collections.sort(items);

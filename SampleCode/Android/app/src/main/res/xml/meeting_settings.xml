@@ -36,4 +36,14 @@
             style="@style/MySwitchPreference"
             />
 
+    <ListPreference
+            app:key="audioProfile"
+            app:title="音频模式"
+            app:allowDividerAbove="true"
+            app:entries="@array/AudioProfileNames"
+            app:entryValues="@array/AudioProfileKeys"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            />
+
 </PreferenceScreen>

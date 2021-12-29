@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVF-9b-4X4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVF-9b-4X4">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -96,25 +96,40 @@
                                     <action selector="onAppSettings:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IkZ-h2-XVZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFj-aE-Tjp">
+                                <rect key="frame" x="124" y="608" width="166" height="46"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <state key="normal" title="会议设置">
+                                    <color key="titleColor" systemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="onMeetingSettings:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yTg-Sj-XUq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="pYM-Js-5Hh" firstAttribute="leading" secondItem="GHB-6C-PiU" secondAttribute="leading" id="40g-lZ-IEE"/>
+                            <constraint firstItem="oFj-aE-Tjp" firstAttribute="leading" secondItem="HQb-cY-cpG" secondAttribute="leading" id="8kR-uH-dJa"/>
                             <constraint firstItem="HQb-cY-cpG" firstAttribute="trailing" secondItem="ysI-09-3U7" secondAttribute="trailing" id="8wl-Eh-ozl"/>
                             <constraint firstItem="HQb-cY-cpG" firstAttribute="top" secondItem="ysI-09-3U7" secondAttribute="bottom" constant="32" id="Brr-lS-v7g"/>
                             <constraint firstItem="quN-SD-N7Y" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.4" id="CQ1-gW-RsV"/>
                             <constraint firstItem="HQb-cY-cpG" firstAttribute="leading" secondItem="ysI-09-3U7" secondAttribute="leading" id="JmH-Ka-1fK"/>
                             <constraint firstItem="ysI-09-3U7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Lad-z8-VOB"/>
                             <constraint firstItem="ysI-09-3U7" firstAttribute="height" secondItem="quN-SD-N7Y" secondAttribute="height" id="Qc7-iE-hY4"/>
+                            <constraint firstItem="oFj-aE-Tjp" firstAttribute="top" secondItem="HQb-cY-cpG" secondAttribute="bottom" constant="32" id="S2j-TB-7iC"/>
                             <constraint firstItem="quN-SD-N7Y" firstAttribute="trailing" secondItem="GHB-6C-PiU" secondAttribute="trailing" id="Uoc-Jp-NZB"/>
                             <constraint firstItem="HQb-cY-cpG" firstAttribute="width" secondItem="ysI-09-3U7" secondAttribute="width" id="WfN-gW-DWG"/>
                             <constraint firstItem="pYM-Js-5Hh" firstAttribute="trailing" secondItem="GHB-6C-PiU" secondAttribute="trailing" id="YaS-Iy-Wr0"/>
+                            <constraint firstItem="oFj-aE-Tjp" firstAttribute="width" secondItem="HQb-cY-cpG" secondAttribute="width" id="dqN-5K-hFR"/>
                             <constraint firstItem="ysI-09-3U7" firstAttribute="width" secondItem="quN-SD-N7Y" secondAttribute="width" id="fAv-VM-Dfk"/>
                             <constraint firstItem="quN-SD-N7Y" firstAttribute="top" secondItem="pYM-Js-5Hh" secondAttribute="bottom" constant="32" id="oUC-gt-BQA"/>
                             <constraint firstItem="ysI-09-3U7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="pWm-CS-kjr"/>
+                            <constraint firstItem="oFj-aE-Tjp" firstAttribute="trailing" secondItem="HQb-cY-cpG" secondAttribute="trailing" id="qEi-lg-W1O"/>
                             <constraint firstItem="quN-SD-N7Y" firstAttribute="leading" secondItem="GHB-6C-PiU" secondAttribute="leading" id="sFD-rz-zcG"/>
                             <constraint firstItem="pYM-Js-5Hh" firstAttribute="top" secondItem="GHB-6C-PiU" secondAttribute="bottom" constant="32" id="sww-88-L0M"/>
+                            <constraint firstItem="oFj-aE-Tjp" firstAttribute="height" secondItem="HQb-cY-cpG" secondAttribute="height" id="tag-4e-VUk"/>
                             <constraint firstItem="HQb-cY-cpG" firstAttribute="height" secondItem="ysI-09-3U7" secondAttribute="height" id="tcY-tw-RLd"/>
                             <constraint firstItem="ysI-09-3U7" firstAttribute="top" secondItem="quN-SD-N7Y" secondAttribute="bottom" constant="32" id="vTZ-MT-RP8"/>
                             <constraint firstItem="quN-SD-N7Y" firstAttribute="centerX" secondItem="ysI-09-3U7" secondAttribute="centerX" id="xkG-HH-bnp"/>

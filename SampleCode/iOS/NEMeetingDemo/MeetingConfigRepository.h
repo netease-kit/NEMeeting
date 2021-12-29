@@ -12,7 +12,15 @@
 
 + (instancetype)getInstance;
 
++ (NSDictionary<NSString *,NSString *> *) audioProfiles;
+
 @property (nonatomic, assign) NSInteger joinMeetingTimeout;
+
+@property (nonatomic, readonly) BOOL useSpeechAudioProfile;
+
+@property (nonatomic, readonly) BOOL useMusicAudioProfile;
+
+@property (nonatomic, copy) NSString *audioProfile;
 
 @end
 

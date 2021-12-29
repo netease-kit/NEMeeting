@@ -126,9 +126,15 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="userId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#a89575a71e2da72bf2f1e7b8efe4a6996"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="userName"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#ad6e3d249f3eb80828768ea021ea536ad"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingControl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="attendeeOff"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html#a65713f1b4507272788c3e60405df134e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="type"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html#a45ec380af2da56751a7822b6c66f6837"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingInfo"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="duration"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a78e5fc9d2a0e62eea4c3911405f69604"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#aaae266c435755df3e0d048866bfdba5d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="hostUserId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a01cec5b82b50eb6b6378215f77145385"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isHost"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a431873705c02bc69fa1b422bc54edbed"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isLocked"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#abcb9cad1df65f272ff9cdb703d63a4b4"><param name="ImageNumber" value="11"></OBJECT>
@@ -179,7 +185,8 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a793a0eadd50fe72ac28e4cb164bb02ab"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a4770490cf943d034cc01acb1648e7325"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="audioAINSEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aa8853d2777bd0244718402bff4c809bf"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="defaultWindowMode"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ab92833ff734e7c51e59750bd7baaa8ee"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="full_more_menu_items_"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aec93632b8f3f27e5c80bc38e96d826c2"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="full_toolbar_menu_items_"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a842abcd8c34bd8d7a33417882b5dda14"><param name="ImageNumber" value="11"></OBJECT>
@@ -191,12 +198,16 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noInvite"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a8abcecedec6751b650bce71e0cde98f2"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noRename"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ae8c91ed198f3ed3bafd3df2c905448f6"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noScreenShare"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a41064f9dbff2ec49d80c4f51ac4c6338"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="noSip"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a05b4b611fc97b8b15a2adc82a634cf1b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noVideo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a07e601a2839a16c315c01fa4d31fe826"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noView"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ad9153ef3dc3953adf2c6742cbee32fd1"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noWhiteboard"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a8f226ef82131f9b438a32dbe74279727"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="showMemberTag"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#abe6274b8d0d5eac3178a1207a7689cbc"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEStartMeetingParams"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="controls"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#a376929ffafc0015c56885abafa498e75"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#aca8da22c11e2ebe86feba98a68c823c7"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="scene"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#ae50f0dbb5ac89ea283fe42ecebea8e55"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEStartMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -209,6 +220,7 @@
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="attendeeAudioOff"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#aed3df2bb5d1607cd96b7d66a8d662539"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="cloudRecordOn"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#ac5f59bd0f32a16ead66e9ac476a67803"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="controls"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#a779fffe5d59cdbcfc0a5c407acb9ea8d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="scene"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#add984e5f3382896a51c3a15f468dbc99"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingItemLiveSetting"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -225,6 +237,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="createTime"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a6f2ab7310984fc82ee546122016235a9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="enableLive"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a7dc97ef28f77213d4c996ef3f87067c9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="endTime"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#abf54aa01d244a0300da2d8c45efec3c5"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a97b056678aad2b22ab6e8651ab6c13c3"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="liveUrl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#aefdfb95bab62dd9c4c70c90c016b6b91"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="liveWebAccessControlLevel"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a9854704863cf28b0b09cf12350120b53"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="meetingId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a5a7d489447f5b3fc42fc601a5b67a585"><param name="ImageNumber" value="11"></OBJECT>
@@ -329,9 +342,12 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsService"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAudioQualityCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a199fa7576410f9b5f3e69a1f2541470a"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEBoolCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#af9e3ce5ca31aabf12b2f944f38179b16"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEHistoryMeetingCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a9c2f1756455fb5c0a0f0ebaf00674876"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEIntCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a271c3469a11cfb3dc5e9e6fd66457ce7"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NELocalVideoResolutionCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a644843db23504e66182acde2f3144618"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NERemoteVideoResolutionCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a20a5b796288f97a95764bda62e850a23"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEShowSettingUIWndCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a82435e8a773147029da97a32ea22fcb0"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="GetAudioController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a051477938bc13344e8702a1ebc9932d7"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="GetBeautyFaceController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a39b9d2231a9eea33086fcbbd35894f21"><param name="ImageNumber" value="11"></OBJECT>
@@ -346,19 +362,40 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEVideoController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getMyVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a4385e2081540f815445945e45d4d5206"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getRemoteVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#accd48449e8b222ab81c862c118a4e4f8"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyVideoWhenJoinMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a434ca10d221b8c867e35e55dd4a6b31d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a0c194150b8a1893b01fbbc7851a9243b"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setRemoteVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a2a915f18b40fe80c22574f41cd6b352e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyVideoWhenJoinMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a0b5d083fdf88eda56e81b2e6f456745e"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAudioController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getMyAudioQuality"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a3db3ca712f8b5c3d1abd3f27764a769d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioEchoCancellation"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7b5bd01fa776f550095c89ea2ed8504a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioEnableStereo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aaee2a5af619c50b66be99f8898ebad61"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioVolumeAutoAdjust"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a2e47fd95d59996149b6c4e682c77d99a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyAudioAINSWhenInMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a4dae0c341171f44aca0e1d4d3fc3856b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyAudioWhenJoinMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7c3cfa30cba096469be2962ae7affd11"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioEchoCancellation"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aab34fe92fd66fee774800cb6f6008c17"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioEnableStereo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a55acc76c8041cd885fbe473a2d8eb693"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioQuality"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a1395b9063d1e06375434b3e7f278a66c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioVolumeAutoAdjust"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aa906a8aae129e0c7bcd449a5688d882c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyAudioAINSWhenInMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#abadb676c24ca5160943fb95a1929efbe"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyAudioWhenJoinMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a8c3dca8bb12dcec0f5986f57ac0fd2fc"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEOtherController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_other_controller.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsChangeNotifyHandler"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioAINSSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#adf1c3da723c0478fda3569ec868fab4d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioEchoCancellationSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a7ec681ee0a2eb2434a354d3d09d3111f"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioEnableStereoSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a923441d346836354cedf58547ee9787e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioQualitySettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a734624e22f58c6a4131af100630661e0"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#adc30bc0386598e51bcd2108848683700"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioVolumeAutoAdjustSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#aa0d25ac4f109d50a0c26c37e84468820"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnMyVideoResolutionSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a00e88482b34675134f2dde93b4ab8d02"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnOtherSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a5ce9e7febdd31e056369c519d6451791"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnRemoteVideoResolutionSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#ad659efe000be090c13531151ae9a0c8e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnVideoSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#afd6ca6bae4dae883593a579e837e4316"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEBeautyFaceController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_beauty_face_controller.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -385,6 +422,7 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEEmptyCallback"><param name="Local" value="namespacenem__sdk__interface.html#a1651522b555b313a6bc85f585169a5d0"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEHistoryMeetingItem"><param name="Local" value="namespacenem__sdk__interface.html#aea21dd2c55e7bdf29dd434a9f5f29978"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEInMeetingUserInfo"><param name="Local" value="namespacenem__sdk__interface.html#afaba9d1eb53c217ff09544bd55325cac"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingControl"><param name="Local" value="namespacenem__sdk__interface.html#a7c4c47fa0f6d8a1760e6b76574dd2884"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingInfo"><param name="Local" value="namespacenem__sdk__interface.html#ab25e7d5934defcc31cfa70c04cbab224"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingItem"><param name="Local" value="namespacenem__sdk__interface.html#a1f71aabef6c3b7723fe0d27ed166999c"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingItemLiveSetting"><param name="Local" value="namespacenem__sdk__interface.html#a90e4f912cccd71d062ea389026147651"><param name="ImageNumber" value="11"></OBJECT>
@@ -392,6 +430,17 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingMenuItem"><param name="Local" value="namespacenem__sdk__interface.html#a304ef9ad9b43be6b943b7eb89c6dd074"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingRoleConfiguration"><param name="Local" value="namespacenem__sdk__interface.html#a220fea69f6b71183d640b0c1cf321f10"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingScene"><param name="Local" value="namespacenem__sdk__interface.html#a0b5bdf1a30affb84db9f4a2d4f655c1a"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="AudioQuality"><param name="Local" value="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="AudioQuality_Talk"><param name="Local" value="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9aaac0acf1ce022cf204e2ac0dbe448634"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="AudioQuality_Music"><param name="Local" value="namespacenem__sdk__interface.html#af345decf7aa07c546067660703ee66c9ab93f69e24f0bb5b38522925d5e89cfef"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution"><param name="Local" value="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution_480P"><param name="Local" value="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31a92cb725dbbf19c4c04a19958b3a38dc4"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution_720P"><param name="Local" value="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31a7878282e1986cdce8bbf153d03337be0"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution_1080P"><param name="Local" value="namespacenem__sdk__interface.html#abeb0ccc48e9d0db84e8a6885a7771f31a6fb9204e697b0e8ba605502a01df7abf"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="MeetingDisconnectCode"><param name="Local" value="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_DISCONNECTING_BY_SELF"><param name="Local" value="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7acd1f1648c8c14b7538390d20870721c5"><param name="ImageNumber" value="11"></OBJECT>
@@ -407,6 +456,17 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_DISCONNECTING_BY_JOINCHANNELERROR"><param name="Local" value="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7ac573797b57692fb2605d52f99e316dba"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_DISCONNECTING_BY_TIMEOUT"><param name="Local" value="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7a7bd0773b83040b15954553bb2bdfcdd8"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_WAITING_VERIFY_PASSWORD"><param name="Local" value="namespacenem__sdk__interface.html#a588a288d8a42c5ed94e83a06253b4db7aedb91daa3d043bd1b8934339ad814b05"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAttendeeOffType"><param name="Local" value="namespacenem__sdk__interface.html#a305a03a371cee4476c747c91d3e742fc"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kAttendeeOffNone"><param name="Local" value="namespacenem__sdk__interface.html#a305a03a371cee4476c747c91d3e742fcaf4b3bf81b4ef78c5cf73da0779d3841f"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kAttendeeOffAllowSelfOn"><param name="Local" value="namespacenem__sdk__interface.html#a305a03a371cee4476c747c91d3e742fcad8d665943e978789cde6f8ba26399566"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kAttendeeOffNotAllowSelfOn"><param name="Local" value="namespacenem__sdk__interface.html#a305a03a371cee4476c747c91d3e742fca7ba6a9478d770b29e4e263497dfc80d5"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NEControlType"><param name="Local" value="namespacenem__sdk__interface.html#a9c2e8f1e59ffd2dcca6a7129704f025c"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kControlTypeAudio"><param name="Local" value="namespacenem__sdk__interface.html#a9c2e8f1e59ffd2dcca6a7129704f025ca3daf9ca95761f42e4ec167f52a3dbdf6"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kControlTypeVideo"><param name="Local" value="namespacenem__sdk__interface.html#a9c2e8f1e59ffd2dcca6a7129704f025ca3a2f052c65ac25b6dbf92eb5213bd848"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEErrorCode"><param name="Local" value="namespacenem__sdk__interface.html#a7328a07f46550e029c47134fbdf2bbf2"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
@@ -495,10 +555,22 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="kDisplayLongIdOnly"><param name="Local" value="namespacenem__sdk__interface.html#addddf7d46294c9e6aeb47df2080dd88eac0f95ebcb48d579b511b7f301aa805e1"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="kDisplayAll"><param name="Local" value="namespacenem__sdk__interface.html#addddf7d46294c9e6aeb47df2080dd88ea9b028d3202ea0ac197dd04f84c9a45db"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="RemoteVideoResolution"><param name="Local" value="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="RemoteVideoResolution_Default"><param name="Local" value="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92ae04ef58a9d4b8c1c56f97eb7ec769f88"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="RemoteVideoResolution_HD"><param name="Local" value="namespacenem__sdk__interface.html#a2675cb3e058acb583bb2456c9dfacb92af467699c853554ed50277440e156c76d"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_Audio"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a11d55f160a0d19437b8d55e0292e7b47"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_Video"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a8d4c3d10738ae7c4bda075e3ddca4382"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioAINS"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a5c4b0437b7215eceedc3e409923b640d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioVolumeAutoAdjust"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9abd33faffd66a159e6fc02c8b35264874"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioQuality"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a2566b2494e902a170e0f5491fc000588"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioEchoCancellation"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a2b058ad2079956cba7795b618abc81b9"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioEnableStereo"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a9013e25b357edd0766980a444fd33bfa"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_RemoteVideoResolution"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9add05bcdd496575cb9b54b7ed0cd2f665"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_MyVideoResolution"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a7e334ffa5d9fe44a9fcd9fd814d35b83"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_Other"><param name="Local" value="namespacenem__sdk__interface.html#aa501e41fc5b939266bb612c954c17ab9a866d3344315a6cc6d1b109aa60e27781"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="kCameraMenuId"><param name="Local" value="namespacenem__sdk__interface.html#a20a3a192be9020ebc8df1c663d0031df"><param name="ImageNumber" value="11"></OBJECT>
@@ -635,9 +707,15 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="userId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#a89575a71e2da72bf2f1e7b8efe4a6996"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="userName"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#ad6e3d249f3eb80828768ea021ea536ad"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingControl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="attendeeOff"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html#a65713f1b4507272788c3e60405df134e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="type"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html#a45ec380af2da56751a7822b6c66f6837"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingInfo"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="duration"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a78e5fc9d2a0e62eea4c3911405f69604"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#aaae266c435755df3e0d048866bfdba5d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="hostUserId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a01cec5b82b50eb6b6378215f77145385"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isHost"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a431873705c02bc69fa1b422bc54edbed"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isLocked"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#abcb9cad1df65f272ff9cdb703d63a4b4"><param name="ImageNumber" value="11"></OBJECT>
@@ -688,7 +766,8 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a793a0eadd50fe72ac28e4cb164bb02ab"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a4770490cf943d034cc01acb1648e7325"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="audioAINSEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aa8853d2777bd0244718402bff4c809bf"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="defaultWindowMode"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ab92833ff734e7c51e59750bd7baaa8ee"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="full_more_menu_items_"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aec93632b8f3f27e5c80bc38e96d826c2"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="full_toolbar_menu_items_"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a842abcd8c34bd8d7a33417882b5dda14"><param name="ImageNumber" value="11"></OBJECT>
@@ -700,12 +779,16 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noInvite"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a8abcecedec6751b650bce71e0cde98f2"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noRename"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ae8c91ed198f3ed3bafd3df2c905448f6"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noScreenShare"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a41064f9dbff2ec49d80c4f51ac4c6338"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="noSip"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a05b4b611fc97b8b15a2adc82a634cf1b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noVideo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a07e601a2839a16c315c01fa4d31fe826"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noView"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ad9153ef3dc3953adf2c6742cbee32fd1"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noWhiteboard"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a8f226ef82131f9b438a32dbe74279727"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="showMemberTag"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#abe6274b8d0d5eac3178a1207a7689cbc"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEStartMeetingParams"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="controls"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#a376929ffafc0015c56885abafa498e75"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#aca8da22c11e2ebe86feba98a68c823c7"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="scene"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#ae50f0dbb5ac89ea283fe42ecebea8e55"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEStartMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -718,6 +801,7 @@
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="attendeeAudioOff"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#aed3df2bb5d1607cd96b7d66a8d662539"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="cloudRecordOn"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#ac5f59bd0f32a16ead66e9ac476a67803"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="controls"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#a779fffe5d59cdbcfc0a5c407acb9ea8d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="scene"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#add984e5f3382896a51c3a15f468dbc99"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingItemLiveSetting"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -734,6 +818,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="createTime"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a6f2ab7310984fc82ee546122016235a9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="enableLive"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a7dc97ef28f77213d4c996ef3f87067c9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="endTime"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#abf54aa01d244a0300da2d8c45efec3c5"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a97b056678aad2b22ab6e8651ab6c13c3"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="liveUrl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#aefdfb95bab62dd9c4c70c90c016b6b91"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="liveWebAccessControlLevel"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a9854704863cf28b0b09cf12350120b53"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="meetingId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a5a7d489447f5b3fc42fc601a5b67a585"><param name="ImageNumber" value="11"></OBJECT>
@@ -838,9 +923,12 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsService"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAudioQualityCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a199fa7576410f9b5f3e69a1f2541470a"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEBoolCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#af9e3ce5ca31aabf12b2f944f38179b16"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEHistoryMeetingCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a9c2f1756455fb5c0a0f0ebaf00674876"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEIntCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a271c3469a11cfb3dc5e9e6fd66457ce7"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NELocalVideoResolutionCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a644843db23504e66182acde2f3144618"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NERemoteVideoResolutionCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a20a5b796288f97a95764bda62e850a23"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEShowSettingUIWndCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a82435e8a773147029da97a32ea22fcb0"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="GetAudioController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a051477938bc13344e8702a1ebc9932d7"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="GetBeautyFaceController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a39b9d2231a9eea33086fcbbd35894f21"><param name="ImageNumber" value="11"></OBJECT>
@@ -855,19 +943,40 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEVideoController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getMyVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a4385e2081540f815445945e45d4d5206"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getRemoteVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#accd48449e8b222ab81c862c118a4e4f8"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyVideoWhenJoinMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a434ca10d221b8c867e35e55dd4a6b31d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a0c194150b8a1893b01fbbc7851a9243b"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setRemoteVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a2a915f18b40fe80c22574f41cd6b352e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyVideoWhenJoinMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a0b5d083fdf88eda56e81b2e6f456745e"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAudioController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getMyAudioQuality"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a3db3ca712f8b5c3d1abd3f27764a769d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioEchoCancellation"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7b5bd01fa776f550095c89ea2ed8504a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioEnableStereo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aaee2a5af619c50b66be99f8898ebad61"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioVolumeAutoAdjust"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a2e47fd95d59996149b6c4e682c77d99a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyAudioAINSWhenInMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a4dae0c341171f44aca0e1d4d3fc3856b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyAudioWhenJoinMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7c3cfa30cba096469be2962ae7affd11"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioEchoCancellation"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aab34fe92fd66fee774800cb6f6008c17"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioEnableStereo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a55acc76c8041cd885fbe473a2d8eb693"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioQuality"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a1395b9063d1e06375434b3e7f278a66c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioVolumeAutoAdjust"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aa906a8aae129e0c7bcd449a5688d882c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyAudioAINSWhenInMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#abadb676c24ca5160943fb95a1929efbe"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyAudioWhenJoinMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a8c3dca8bb12dcec0f5986f57ac0fd2fc"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEOtherController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_other_controller.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsChangeNotifyHandler"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioAINSSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#adf1c3da723c0478fda3569ec868fab4d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioEchoCancellationSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a7ec681ee0a2eb2434a354d3d09d3111f"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioEnableStereoSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a923441d346836354cedf58547ee9787e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioQualitySettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a734624e22f58c6a4131af100630661e0"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#adc30bc0386598e51bcd2108848683700"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioVolumeAutoAdjustSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#aa0d25ac4f109d50a0c26c37e84468820"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnMyVideoResolutionSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a00e88482b34675134f2dde93b4ab8d02"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnOtherSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a5ce9e7febdd31e056369c519d6451791"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnRemoteVideoResolutionSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#ad659efe000be090c13531151ae9a0c8e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnVideoSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#afd6ca6bae4dae883593a579e837e4316"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEBeautyFaceController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_beauty_face_controller.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -941,6 +1050,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagAccountInfo"><param name="Local" value="structnem__sdk__interface_1_1tag_account_info.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagNEHistoryMeetingItem"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_history_meeting_item.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagNEInMeetingUserInfo"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagNEMeetingControl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagNEMeetingInfo"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagNEMeetingItem"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="nem_sdk_interface::tagNEMeetingItemLiveSetting"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -1157,9 +1267,15 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="userId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#a89575a71e2da72bf2f1e7b8efe4a6996"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="userName"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_in_meeting_user_info.html#ad6e3d249f3eb80828768ea021ea536ad"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingControl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="attendeeOff"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html#a65713f1b4507272788c3e60405df134e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="type"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_control.html#a45ec380af2da56751a7822b6c66f6837"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingInfo"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="duration"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a78e5fc9d2a0e62eea4c3911405f69604"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#aaae266c435755df3e0d048866bfdba5d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="hostUserId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a01cec5b82b50eb6b6378215f77145385"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isHost"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#a431873705c02bc69fa1b422bc54edbed"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isLocked"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_info.html#abcb9cad1df65f272ff9cdb703d63a4b4"><param name="ImageNumber" value="11"></OBJECT>
@@ -1210,7 +1326,8 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a793a0eadd50fe72ac28e4cb164bb02ab"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a4770490cf943d034cc01acb1648e7325"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="audioAINSEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aa8853d2777bd0244718402bff4c809bf"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="defaultWindowMode"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ab92833ff734e7c51e59750bd7baaa8ee"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="full_more_menu_items_"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#aec93632b8f3f27e5c80bc38e96d826c2"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="full_toolbar_menu_items_"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a842abcd8c34bd8d7a33417882b5dda14"><param name="ImageNumber" value="11"></OBJECT>
@@ -1222,12 +1339,16 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noInvite"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a8abcecedec6751b650bce71e0cde98f2"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noRename"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ae8c91ed198f3ed3bafd3df2c905448f6"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noScreenShare"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a41064f9dbff2ec49d80c4f51ac4c6338"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="noSip"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a05b4b611fc97b8b15a2adc82a634cf1b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noVideo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a07e601a2839a16c315c01fa4d31fe826"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noView"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#ad9153ef3dc3953adf2c6742cbee32fd1"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="noWhiteboard"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#a8f226ef82131f9b438a32dbe74279727"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="showMemberTag"><param name="Local" value="classnem__sdk__interface_1_1_n_e_meeting_options.html#abe6274b8d0d5eac3178a1207a7689cbc"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEStartMeetingParams"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="controls"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#a376929ffafc0015c56885abafa498e75"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#aca8da22c11e2ebe86feba98a68c823c7"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="scene"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_params.html#ae50f0dbb5ac89ea283fe42ecebea8e55"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEStartMeetingOptions"><param name="Local" value="classnem__sdk__interface_1_1_n_e_start_meeting_options.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -1240,6 +1361,7 @@
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="attendeeAudioOff"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#aed3df2bb5d1607cd96b7d66a8d662539"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="cloudRecordOn"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#ac5f59bd0f32a16ead66e9ac476a67803"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="controls"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#a779fffe5d59cdbcfc0a5c407acb9ea8d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="scene"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_setting.html#add984e5f3382896a51c3a15f468dbc99"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="tagNEMeetingItemLiveSetting"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item_live_setting.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -1256,6 +1378,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="createTime"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a6f2ab7310984fc82ee546122016235a9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="enableLive"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a7dc97ef28f77213d4c996ef3f87067c9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="endTime"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#abf54aa01d244a0300da2d8c45efec3c5"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="extraData"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a97b056678aad2b22ab6e8651ab6c13c3"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="liveUrl"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#aefdfb95bab62dd9c4c70c90c016b6b91"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="liveWebAccessControlLevel"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a9854704863cf28b0b09cf12350120b53"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="meetingId"><param name="Local" value="structnem__sdk__interface_1_1tag_n_e_meeting_item.html#a5a7d489447f5b3fc42fc601a5b67a585"><param name="ImageNumber" value="11"></OBJECT>
@@ -1292,6 +1415,7 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="AccountInfo"><param name="Local" value="metting_8h.html#a32022458a69ce812e898210317043fe4"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEHistoryMeetingItem"><param name="Local" value="metting_8h.html#aea21dd2c55e7bdf29dd434a9f5f29978"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEInMeetingUserInfo"><param name="Local" value="metting_8h.html#afaba9d1eb53c217ff09544bd55325cac"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingControl"><param name="Local" value="metting_8h.html#a7c4c47fa0f6d8a1760e6b76574dd2884"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingInfo"><param name="Local" value="metting_8h.html#ab25e7d5934defcc31cfa70c04cbab224"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingItem"><param name="Local" value="metting_8h.html#a1f71aabef6c3b7723fe0d27ed166999c"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEMeetingItemLiveSetting"><param name="Local" value="metting_8h.html#a90e4f912cccd71d062ea389026147651"><param name="ImageNumber" value="11"></OBJECT>
@@ -1314,6 +1438,17 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_DISCONNECTING_BY_JOINCHANNELERROR"><param name="Local" value="metting_8h.html#a588a288d8a42c5ed94e83a06253b4db7ac573797b57692fb2605d52f99e316dba"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_DISCONNECTING_BY_TIMEOUT"><param name="Local" value="metting_8h.html#a588a288d8a42c5ed94e83a06253b4db7a7bd0773b83040b15954553bb2bdfcdd8"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="MEETING_WAITING_VERIFY_PASSWORD"><param name="Local" value="metting_8h.html#a588a288d8a42c5ed94e83a06253b4db7aedb91daa3d043bd1b8934339ad814b05"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAttendeeOffType"><param name="Local" value="metting_8h.html#a305a03a371cee4476c747c91d3e742fc"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kAttendeeOffNone"><param name="Local" value="metting_8h.html#a305a03a371cee4476c747c91d3e742fcaf4b3bf81b4ef78c5cf73da0779d3841f"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kAttendeeOffAllowSelfOn"><param name="Local" value="metting_8h.html#a305a03a371cee4476c747c91d3e742fcad8d665943e978789cde6f8ba26399566"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kAttendeeOffNotAllowSelfOn"><param name="Local" value="metting_8h.html#a305a03a371cee4476c747c91d3e742fca7ba6a9478d770b29e4e263497dfc80d5"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NEControlType"><param name="Local" value="metting_8h.html#a9c2e8f1e59ffd2dcca6a7129704f025c"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kControlTypeAudio"><param name="Local" value="metting_8h.html#a9c2e8f1e59ffd2dcca6a7129704f025ca3daf9ca95761f42e4ec167f52a3dbdf6"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="kControlTypeVideo"><param name="Local" value="metting_8h.html#a9c2e8f1e59ffd2dcca6a7129704f025ca3a2f052c65ac25b6dbf92eb5213bd848"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NELoginType"><param name="Local" value="metting_8h.html#a7bc406d9e69cc6f14591eb2f07ee0687"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
@@ -1481,9 +1616,12 @@
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsService"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAudioQualityCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a199fa7576410f9b5f3e69a1f2541470a"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEBoolCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#af9e3ce5ca31aabf12b2f944f38179b16"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEHistoryMeetingCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a9c2f1756455fb5c0a0f0ebaf00674876"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEIntCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a271c3469a11cfb3dc5e9e6fd66457ce7"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NELocalVideoResolutionCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a644843db23504e66182acde2f3144618"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NERemoteVideoResolutionCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a20a5b796288f97a95764bda62e850a23"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="NEShowSettingUIWndCallback"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a82435e8a773147029da97a32ea22fcb0"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="GetAudioController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a051477938bc13344e8702a1ebc9932d7"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="GetBeautyFaceController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_service.html#a39b9d2231a9eea33086fcbbd35894f21"><param name="ImageNumber" value="11"></OBJECT>
@@ -1498,19 +1636,40 @@
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEVideoController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getMyVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a4385e2081540f815445945e45d4d5206"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getRemoteVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#accd48449e8b222ab81c862c118a4e4f8"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyVideoWhenJoinMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a434ca10d221b8c867e35e55dd4a6b31d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a0c194150b8a1893b01fbbc7851a9243b"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setRemoteVideoResolution"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a2a915f18b40fe80c22574f41cd6b352e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyVideoWhenJoinMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_video_controller.html#a0b5d083fdf88eda56e81b2e6f456745e"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEAudioController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getMyAudioQuality"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a3db3ca712f8b5c3d1abd3f27764a769d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioEchoCancellation"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7b5bd01fa776f550095c89ea2ed8504a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioEnableStereo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aaee2a5af619c50b66be99f8898ebad61"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isMyAudioVolumeAutoAdjust"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a2e47fd95d59996149b6c4e682c77d99a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyAudioAINSWhenInMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a4dae0c341171f44aca0e1d4d3fc3856b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isTurnOnMyAudioWhenJoinMeetingEnabled"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a7c3cfa30cba096469be2962ae7affd11"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioEchoCancellation"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aab34fe92fd66fee774800cb6f6008c17"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioEnableStereo"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a55acc76c8041cd885fbe473a2d8eb693"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioQuality"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a1395b9063d1e06375434b3e7f278a66c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setMyAudioVolumeAutoAdjust"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#aa906a8aae129e0c7bcd449a5688d882c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyAudioAINSWhenInMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#abadb676c24ca5160943fb95a1929efbe"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="setTurnOnMyAudioWhenJoinMeeting"><param name="Local" value="classnem__sdk__interface_1_1_n_e_audio_controller.html#a8c3dca8bb12dcec0f5986f57ac0fd2fc"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEOtherController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_other_controller.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsChangeNotifyHandler"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioAINSSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#adf1c3da723c0478fda3569ec868fab4d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioEchoCancellationSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a7ec681ee0a2eb2434a354d3d09d3111f"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioEnableStereoSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a923441d346836354cedf58547ee9787e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioQualitySettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a734624e22f58c6a4131af100630661e0"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#adc30bc0386598e51bcd2108848683700"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnAudioVolumeAutoAdjustSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#aa0d25ac4f109d50a0c26c37e84468820"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnMyVideoResolutionSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a00e88482b34675134f2dde93b4ab8d02"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnOtherSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#a5ce9e7febdd31e056369c519d6451791"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="OnRemoteVideoResolutionSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#ad659efe000be090c13531151ae9a0c8e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="OnVideoSettingsChange"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_change_notify_handler.html#afd6ca6bae4dae883593a579e837e4316"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NEBeautyFaceController"><param name="Local" value="classnem__sdk__interface_1_1_n_e_beauty_face_controller.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -1535,10 +1694,33 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="settings.h"><param name="Local" value="settings_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NESettingsUIWndConfig"><param name="Local" value="classnem__sdk__interface_1_1_n_e_settings_u_i_wnd_config.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="AudioQuality"><param name="Local" value="settings_8h.html#af345decf7aa07c546067660703ee66c9"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="AudioQuality_Talk"><param name="Local" value="settings_8h.html#af345decf7aa07c546067660703ee66c9aaac0acf1ce022cf204e2ac0dbe448634"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="AudioQuality_Music"><param name="Local" value="settings_8h.html#af345decf7aa07c546067660703ee66c9ab93f69e24f0bb5b38522925d5e89cfef"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution"><param name="Local" value="settings_8h.html#abeb0ccc48e9d0db84e8a6885a7771f31"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution_480P"><param name="Local" value="settings_8h.html#abeb0ccc48e9d0db84e8a6885a7771f31a92cb725dbbf19c4c04a19958b3a38dc4"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution_720P"><param name="Local" value="settings_8h.html#abeb0ccc48e9d0db84e8a6885a7771f31a7878282e1986cdce8bbf153d03337be0"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="LocalVideoResolution_1080P"><param name="Local" value="settings_8h.html#abeb0ccc48e9d0db84e8a6885a7771f31a6fb9204e697b0e8ba605502a01df7abf"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="RemoteVideoResolution"><param name="Local" value="settings_8h.html#a2675cb3e058acb583bb2456c9dfacb92"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="RemoteVideoResolution_Default"><param name="Local" value="settings_8h.html#a2675cb3e058acb583bb2456c9dfacb92ae04ef58a9d4b8c1c56f97eb7ec769f88"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="RemoteVideoResolution_HD"><param name="Local" value="settings_8h.html#a2675cb3e058acb583bb2456c9dfacb92af467699c853554ed50277440e156c76d"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_Audio"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a11d55f160a0d19437b8d55e0292e7b47"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_Video"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a8d4c3d10738ae7c4bda075e3ddca4382"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioAINS"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a5c4b0437b7215eceedc3e409923b640d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioVolumeAutoAdjust"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9abd33faffd66a159e6fc02c8b35264874"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioQuality"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a2566b2494e902a170e0f5491fc000588"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioEchoCancellation"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a2b058ad2079956cba7795b618abc81b9"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_AudioEnableStereo"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a9013e25b357edd0766980a444fd33bfa"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_RemoteVideoResolution"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9add05bcdd496575cb9b54b7ed0cd2f665"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_MyVideoResolution"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a7e334ffa5d9fe44a9fcd9fd814d35b83"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="SettingChangType_Other"><param name="Local" value="settings_8h.html#aa501e41fc5b939266bb612c954c17ab9a866d3344315a6cc6d1b109aa60e27781"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       </UL>

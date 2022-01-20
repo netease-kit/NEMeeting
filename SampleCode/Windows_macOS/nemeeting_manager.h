@@ -5,6 +5,7 @@
 #define NEMEETINGMANAGER_H
 
 #include <QDebug>
+#include <QJsonArray>
 #include <QObject>
 #include "nemeeting_sdk_interface_include.h"
 
@@ -73,12 +74,16 @@ public:
     Q_PROPERTY(QString personalMeetingId READ personalMeetingId WRITE setPersonalMeetingId NOTIFY personalMeetingIdChanged)
     Q_PROPERTY(bool isSupportRecord READ isSupportRecord WRITE setIsSupportRecord NOTIFY isSupportRecordChanged)
     Q_PROPERTY(bool isSupportLive READ isSupportLive WRITE setIsSupportLive NOTIFY isSupportLiveChanged)
+    Q_PROPERTY(bool isAudioAINS READ isAudioAINS WRITE setIsAudioAINS NOTIFY isAudioAINSChanged)
+    Q_PROPERTY(bool audodeviceAutoSelectType READ audodeviceAutoSelectType WRITE setAudodeviceAutoSelectType NOTIFY audodeviceAutoSelectTypeChanged)
+    Q_PROPERTY(bool softwareRender READ softwareRender WRITE setSoftwareRender NOTIFY softwareRenderChanged)
 
-    Q_INVOKABLE void initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin);
+    Q_INVOKABLE void initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate);
     Q_INVOKABLE void initialize(const QString& strAppkey, int keepAliveInterval);
     Q_INVOKABLE void unInitialize();
     Q_INVOKABLE bool isInitializd();
     Q_INVOKABLE void login(const QString& appKey, const QString& accountId, const QString& accountToken, int keepAliveInterval);
+    Q_INVOKABLE void loginByUsernamePassword(const QString& appKey, const QString& userName, const QString& password, int keepAliveInterval);
     Q_INVOKABLE void getAccountInfo();
     Q_INVOKABLE void logout();
     Q_INVOKABLE void showSettings();
@@ -91,7 +96,9 @@ public:
                                      bool attendeeAudioOff,
                                      bool enableLive = false,
                                      bool needLiveAuthentication = false,
-                                     bool enableRecord = false);
+                                     bool enableRecord = false,
+                                     const QString& extraData = "",
+                                     const QJsonArray& controls = QJsonArray());
     Q_INVOKABLE void cancelMeeting(const qint64& meetingUniqueId);
     Q_INVOKABLE void editMeeting(const qint64& meetingUniqueId,
                                  const QString& meetingId,
@@ -103,7 +110,9 @@ public:
                                  bool attendeeAudioOff,
                                  bool enableLive = false,
                                  bool needLiveAuthentication = false,
-                                 bool enableRecord = false);
+                                 bool enableRecord = false,
+                                 const QString& extraData = "",
+                                 const QJsonArray& controls = QJsonArray());
     Q_INVOKABLE void getMeetingList();
     Q_INVOKABLE void invokeStart(const QString& meetingId,
                                  const QString& nickname,
@@ -118,7 +127,15 @@ public:
                                  bool autoOpenWhiteboard = false,
                                  bool rename = true,
                                  int displayOption = 0,
-                                 bool enableRecord = false);
+                                 bool enableRecord = false,
+                                 bool openWhiteboard = false,
+                                 bool audioAINS = true,
+                                 bool sip = false,
+                                 bool showMemberTag = false,
+                                 const QString& extraData = "",
+                                 const QJsonArray& controls = QJsonArray(),
+                                 bool enableMuteAllVideo = false,
+                                 bool enableMuteAllAudio = true);
     Q_INVOKABLE void invokeJoin(const QString& meetingId,
                                 const QString& nickname,
                                 const QString& tag,
@@ -130,7 +147,13 @@ public:
                                 bool autoOpenWhiteboard = false,
                                 const QString& password = QString(),
                                 bool rename = true,
-                                int displayOption = 0);
+                                int displayOption = 0,
+                                bool openWhiteboard = false,
+                                bool audioAINS = true,
+                                bool sip = false,
+                                bool showMemberTag = false,
+                                bool enableMuteAllVideo = false,
+                                bool enableMuteAllAudio = true);
     Q_INVOKABLE void leaveMeeting(bool finish);
     Q_INVOKABLE int getMeetingStatus();
     Q_INVOKABLE void getMeetingInfo();
@@ -153,12 +176,26 @@ public:
     virtual void OnAudioSettingsChange(bool status) override;
     virtual void OnVideoSettingsChange(bool status) override;
     virtual void OnOtherSettingsChange(bool status) override;
+    virtual void OnAudioAINSSettingsChange(bool status) override;
+    virtual void OnAudioVolumeAutoAdjustSettingsChange(bool status) override;
+    virtual void OnAudioQualitySettingsChange(AudioQuality enumAudioQuality) override;
+    virtual void OnAudioEchoCancellationSettingsChange(bool status) override;
+    virtual void OnAudioEnableStereoSettingsChange(bool status) override;
+    virtual void OnRemoteVideoResolutionSettingsChange(RemoteVideoResolution enumRemoteVideoResolution) override;
+    virtual void OnMyVideoResolutionSettingsChange(LocalVideoResolution enumLocalVideoResolution) override;
 
     bool isSupportRecord() const;
     void setIsSupportRecord(bool isSupportRecord);
 
     bool isSupportLive() const;
     void setIsSupportLive(bool isSupportLive);
+
+    bool isAudioAINS() const;
+    void setIsAudioAINS(bool isAudioAINS);
+
+    bool audodeviceAutoSelectType() const { return m_audodeviceAutoSelectType; }
+
+    bool softwareRender() const { return m_softwareRender; }
 
 private:
     void pushSubmenus(std::vector<NEMeetingMenuItem>& items_list, int MenuIdIndex);
@@ -192,6 +229,11 @@ signals:
     void deviceStatusChanged(int type, bool status);
     void isSupportRecordChanged();
     void isSupportLiveChanged();
+    void isAudioAINSChanged();
+
+    void audodeviceAutoSelectTypeChanged(bool audodeviceAutoSelectType);
+
+    void softwareRenderChanged(bool softwareRender);
 
 public slots:
     void onGetMeetingListUI();
@@ -205,15 +247,22 @@ public slots:
     // bool checkDuration();
     // void setCheckDuration(bool checkDuration);
 
+    void setAudodeviceAutoSelectType(bool audodeviceAutoSelectType);
+    void setSoftwareRender(bool softwareRender);
+
 private:
     std::atomic_bool m_initialized;
     std::atomic_bool m_initSuc;
     QString m_personalMeetingId;
     bool m_bSupportRecord = false;
     bool m_bSupportLive = false;
+    bool m_bAudioAINS = false;
     QString m_strSdkLogPath;
     int m_sdkLogLevel = NEINFO;
     bool m_bRunAdmin = true;
+    bool m_bPrivate = false;
+    bool m_audodeviceAutoSelectType = true;
+    bool m_softwareRender = false;
 };
 
 #endif  // NEMEETINGMANAGER_H

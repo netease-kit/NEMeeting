@@ -7,7 +7,7 @@ import NetEase.Meeting.RunningStatus 1.0
 
 Rectangle {
     Component.onCompleted: {
-
+        mainWindow.showNormal()
     }
 
     Settings {
@@ -142,6 +142,7 @@ Rectangle {
 
     ColumnLayout {
         anchors.centerIn: parent
+        width: 600
         Image {
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: 58
@@ -154,8 +155,7 @@ Rectangle {
                 implicitWidth: 300
                 id: textAppKey
                 placeholderText: qsTr('Your application key')
-                text: !anon.checked ? setting.value('sampleAppkey',
-                                                    '') : setting.value(
+                text: !anon.checked ? (!passwordLogin.checked ? setting.value('sampleAppkey', '') : setting.value('samplePasswordAppkey', '')) : setting.value(
                                           'sampleAnonAppkey', '')
                 selectByMouse: true
                 Layout.fillWidth: true
@@ -168,6 +168,14 @@ Rectangle {
             }
 
             CheckBox {
+                id: passwordLogin
+                text: qsTr('PasswordLogin')
+                Layout.topMargin: 20
+                visible: !anon.checked
+                checked: false
+            }
+
+            CheckBox {
                 id: rename
                 visible: anon.checked
                 text: qsTr('Rename')
@@ -177,27 +185,33 @@ Rectangle {
         RowLayout {
             TextField {
                 id: textAccountId
-                placeholderText: !anon.checked ? qsTr('Your account ID') : qsTr(
+                placeholderText: !anon.checked ? (!passwordLogin.checked ? qsTr('Your account ID') : qsTr('Your userName')) : qsTr(
                                                      'Meeting ID')
-                text: !anon.checked ? setting.value('sampleAccoundId',
-                                                    '') : setting.value(
+                text: !anon.checked ? (!passwordLogin.checked ? setting.value('sampleAccoundId', '') : setting.value('sampleUserName', '')) : setting.value(
                                           'sampleAnonMeetingId', '')
                 selectByMouse: true
                 Layout.fillWidth: true
             }
             TextField {
                 id: textKeepAliveInterval
+                Layout.preferredWidth: 150
                 placeholderText: qsTr('KeepAliveInterval')
                 selectByMouse: true
+            }
+            CheckBox {
+                id: softwareRender
+                text: qsTr("Software Render")
+                visible: Qt.platform.os === 'windows'
+                checked: meetingManager.softwareRender
+                onClicked: meetingManager.setSoftwareRender(checked)
             }
         }
         RowLayout {
             TextField {
                 id: textPassword
-                placeholderText: !anon.checked ? qsTr('Your password') : qsTr(
+                placeholderText: !anon.checked ? (!passwordLogin.checked ? qsTr('Your password') : qsTr('Your password') ) : qsTr(
                                                      'Password')
-                text: !anon.checked ? setting.value('sampleAccoundToken',
-                                                    '') : setting.value(
+                text: !anon.checked ? (!passwordLogin.checked ? setting.value('sampleAccoundToken', '') : setting.value('samplePassword', '') ): setting.value(
                                           'sampleAnonMeetingPwd', '')
                 selectByMouse: true
                 Layout.fillWidth: true
@@ -251,6 +265,11 @@ Rectangle {
                 checked: true
                 visible: Qt.platform.os === 'windows'
             }
+            CheckBox {
+                id: privateConfig
+                text: qsTr("Private Config")
+                checked: false
+            }
         }
         RowLayout {
             Button {
@@ -296,25 +315,32 @@ Rectangle {
         interval: 200
         onTriggered: {
             if (!anon.checked) {
-                setting.setValue('sampleAppkey', textAppKey.text)
-                setting.setValue('sampleAccoundId', textAccountId.text)
-                setting.setValue('sampleAccoundToken', textPassword.text)
+                setting.setValue(!passwordLogin.checked ? 'sampleAppkey' : 'samplePasswordAppkey', textAppKey.text)
+                setting.setValue(!passwordLogin.checked ? 'sampleAccoundId' : 'sampleUserName', textAccountId.text)
+                setting.setValue(!passwordLogin.checked ? 'sampleAccoundToken': 'samplePassword', textPassword.text)
                 meetingManager.initializeParam(logPath.text,
                                                logLevel.currentIndex,
-                                               runAdmin.checked)
-                meetingManager.login(
+                                               runAdmin.checked,
+                                               privateConfig.checked)
+                if (!passwordLogin.checked) {
+                    meetingManager.login(
                             textAppKey.text, textAccountId.text,
                             textPassword.text,
-                            textKeepAliveInterval.text.toString().trim(
-                                ).length === 0 ? 13566 : parseInt(
-                                                     textKeepAliveInterval.text))
+                            textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                } else {
+                    meetingManager.loginByUsernamePassword(
+                            textAppKey.text, textAccountId.text,
+                            textPassword.text,
+                            textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                }
             } else {
                 setting.setValue('sampleAnonAppkey', textAppKey.text)
                 setting.setValue('sampleAnonMeetingId', textAccountId.text)
                 setting.setValue('sampleAnonMeetingPwd', textPassword.text)
                 meetingManager.initializeParam(logPath.text,
                                                logLevel.currentIndex,
-                                               runAdmin.checked)
+                                               runAdmin.checked,
+                                               privateConfig.checked)
                 meetingManager.initialize(
                             textAppKey.text,
                             textKeepAliveInterval.text.toString().trim(

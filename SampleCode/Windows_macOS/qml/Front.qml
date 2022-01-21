@@ -10,8 +10,13 @@ Rectangle {
         meetingManager.isInitializd()
         checkAudio.checked = meetingManager.checkAudio()
         checkVideo.checked = meetingManager.checkVideo()
-        mainWindow.width = 1088
-        mainWindow.height = 720
+//        let w = mainWindow.width;
+//        let h = mainWindow.height;
+//        mainWindow.width = 1300
+//        mainWindow.height = 800
+//        mainWindow.x -= (mainWindow.width - w) / 2
+//        mainWindow.y -= (mainWindow.height - h) / 2
+        mainWindow.showMaximized()
         Qt.callLater(function () {
             meetingManager.getIsSupportRecord()
             liveTimer.start()
@@ -26,15 +31,6 @@ Rectangle {
         onTriggered: {
             meetingManager.getIsSupportLive()
         }
-    }
-
-    ToolButton {
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        text: qsTr("⋮")
-        onClicked: meetingManager.showSettings()
     }
 
     RowLayout {
@@ -53,11 +49,21 @@ Rectangle {
                 Layout.fillWidth: true
                 placeholderText: qsTr('Meeting Topic')
             }
-            TextField {
-                id: meetingPassword
-                Layout.fillWidth: true
-                placeholderText: qsTr('Password')
+            RowLayout {
+                TextField {
+                    id: meetingPassword
+                    Layout.fillWidth: true
+                    placeholderText: qsTr('Password')
+                }
+
+                TextField {
+                    id: preExtraData
+                    placeholderText: qsTr('preExtraData')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
             }
+
             RowLayout {
                 TextField {
                     id: startTimestamp
@@ -77,10 +83,18 @@ Rectangle {
                 id: muteCheckbox
                 text: qsTr('Automatically mute after members join')
             }
-            CheckBox {
-                id: idLiveSettingCheck
-                visible: meetingManager.isSupportLive
-                text: qsTr("is open live")
+            RowLayout {
+                CheckBox {
+                    id: idLiveSettingCheck
+                    visible: meetingManager.isSupportLive
+                    text: qsTr("is open live")
+                }
+
+                CheckBox {
+                    id: idRecord
+                    visible: meetingManager.isSupportRecord
+                    text: qsTr("is open record")
+                }
             }
             CheckBox {
                 id: idLiveAccessCheck
@@ -88,12 +102,77 @@ Rectangle {
                 visible: idLiveSettingCheck.checked
             }
 
+            RowLayout {
+                Layout.fillWidth: true
+
+                CheckBox {
+                    id: idPreAudioCcontrol
+                    text: qsTr("use audio control")
+                    Layout.alignment: Qt.AlignHCenter
+                }
+
+                CheckBox {
+                    id: idPreAudioAttendeeOff
+                    text: qsTr('audioAttendeeOff')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idPreAudioCcontrol.checked
+                }
+
+                CheckBox {
+                    id: idPreAudioAllowSelfOn
+                    text: qsTr('audioAllowSelfOn')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idPreAudioCcontrol.checked
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+
+                CheckBox {
+                    id: idPreVideoCcontrol
+                    text: qsTr("use video control")
+                    Layout.alignment: Qt.AlignHCenter
+                }
+
+                CheckBox {
+                    id: idPreVideoAttendeeOff
+                    text: qsTr('videoAttendeeOff')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idPreVideoCcontrol.checked
+                }
+
+                CheckBox {
+                    id: idPreVideoAllowSelfOn
+                    text: qsTr('videoAllowSelfOn')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idPreVideoCcontrol.checked
+                }
+            }
+
+
             Button {
                 id: btnSchedule
                 highlighted: true
                 Layout.fillWidth: true
                 text: qsTr('Schedule')
                 onClicked: {
+                    var controls = []
+                    if(idPreAudioCcontrol.checked) {
+                        var audiocontrol = {}
+                        audiocontrol["attendeeOff"] = idPreAudioAttendeeOff.checked
+                        audiocontrol["allowSelfOn"] = idPreAudioAllowSelfOn.checked
+                        audiocontrol["type"] = 0
+                        controls.push(audiocontrol)
+                    }
+                    if(idPreVideoCcontrol.checked) {
+                        var videocontrol = {}
+                        videocontrol["attendeeOff"] = idPreVideoAttendeeOff.checked
+                        videocontrol["allowSelfOn"] = idPreVideoAllowSelfOn.checked
+                        videocontrol["type"] = 1
+                        controls.push(videocontrol)
+                    }
+
                     meetingManager.scheduleMeeting(meetingTopic.text,
                                                    startTimestamp.text,
                                                    endTimestamp.text,
@@ -102,7 +181,9 @@ Rectangle {
                                                    muteCheckbox.checked,
                                                    idLiveSettingCheck.checked,
                                                    idLiveAccessCheck.checked,
-                                                   idOpenRecord.checked)
+                                                   idRecord.checked,
+                                                   preExtraData.text,
+                                                   controls)
                 }
             }
             ListView {
@@ -111,7 +192,7 @@ Rectangle {
                         meetingManager.getMeetingList()
                     })
                 }
-                Layout.preferredHeight: 280
+                Layout.preferredHeight: 400
                 Layout.fillWidth: true
                 spacing: 10
                 clip: true
@@ -119,7 +200,7 @@ Rectangle {
                     id: listModel
                 }
                 delegate: ItemDelegate {
-                    height: 280
+                    height: 400
                     width: parent.width
                     ColumnLayout {
                         width: parent.width
@@ -209,6 +290,66 @@ Rectangle {
                             }
                         }
                         RowLayout {
+                            Label {
+                                text: "extraData: "
+                            }
+                            TextField {
+                                id: editExtraData
+                                text: model.extraData
+                            }
+                        }
+
+                        RowLayout {
+                            Layout.fillWidth: true
+
+                            CheckBox {
+                                id: idEditAudioCcontrol
+                                text: qsTr("use audio control")
+                                Layout.alignment: Qt.AlignHCenter
+                                checked: model.audioControl !== undefined
+                            }
+
+                            CheckBox {
+                                id: idEditAudioAttendeeOff
+                                text: qsTr('audioAttendeeOff')
+                                Layout.alignment: Qt.AlignHCenter
+                                checked: model.audioControl.attendeeOff
+                            }
+
+                            CheckBox {
+                                id: idEditAudioAllowSelfOn
+                                text: qsTr('audioAllowSelfOn')
+                                Layout.alignment: Qt.AlignHCenter
+                                checked: model.audioControl.allowSelfOn
+                            }
+                        }
+
+                        RowLayout {
+                            Layout.fillWidth: true
+
+                            CheckBox {
+                                id: idEditVideoCcontrol
+                                text: qsTr("use video control")
+                                Layout.alignment: Qt.AlignHCenter
+                                checked: model.videoControl !== undefined
+                            }
+
+                            CheckBox {
+                                id: idEditVideoAttendeeOff
+                                text: qsTr('videoAttendeeOff')
+                                Layout.alignment: Qt.AlignHCenter
+                                checked: model.videoControl !== undefined && model.videoControl.attendeeOff
+                            }
+
+                            CheckBox {
+                                id: idEditVideoAllowSelfOn
+                                text: qsTr('videoAllowSelfOn')
+                                Layout.alignment: Qt.AlignHCenter
+                                checked: model.videoControl !== undefined && model.videoControl.allowSelfOn
+                            }
+                        }
+
+                        RowLayout {
                             Layout.preferredWidth: 40
                             Button {
                                 Layout.fillWidth: true
@@ -241,6 +382,22 @@ Rectangle {
                                 Layout.preferredHeight: 30
                                 text: qsTr('Edit')
                                 onClicked: {
+                                    var controls = []
+                                    if(idEditAudioCcontrol.checked) {
+                                        var audiocontrol = {}
+                                        audiocontrol["attendeeOff"] = idEditAudioAttendeeOff.checked
+                                        audiocontrol["allowSelfOn"] = idEditAudioAllowSelfOn.checked
+                                        audiocontrol["type"] = 0
+                                        controls.push(audiocontrol)
+                                    }
+                                    if(idEditVideoCcontrol.checked) {
+                                        var videocontrol = {}
+                                        videocontrol["attendeeOff"] = idEditVideoAttendeeOff.checked
+                                        videocontrol["allowSelfOn"] = idEditVideoAllowSelfOn.checked
+                                        videocontrol["type"] = 1
+                                        controls.push(videocontrol)
+                                    }
+
                                     meetingManager.editMeeting(
                                                 model.uniqueMeetingId,
                                                 model.meetingId, topic2.text,
@@ -250,7 +407,9 @@ Rectangle {
                                                 muteCheckbox2.checked,
                                                 idLiveSettingCheckEdit.checked,
                                                 idLiveAccessCheckEdit.checked,
-                                                idOpenRecordEdit.checked)
+                                                idOpenRecordEdit.checked,
+                                                editExtraData.text,
+                                                controls)
                                 }
                             }
                         }
@@ -262,13 +421,23 @@ Rectangle {
             }
         }
         ColumnLayout {
-            TextField {
-                id: textMeetingId
-                enabled: !checkBox.checked
-                text: checkBox.checked ? meetingManager.personalMeetingId : ''
-                placeholderText: qsTr('Meeting ID')
-                selectByMouse: true
-                Layout.fillWidth: true
+            RowLayout {
+                TextField {
+                    id: textMeetingId
+                    enabled: !checkBox.checked
+                    text: checkBox.checked ? meetingManager.personalMeetingId : ''
+                    placeholderText: qsTr('Meeting ID')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
+
+                ToolButton {
+                    id: idSettings
+                    Layout.topMargin: 10
+                    Layout.rightMargin: 10
+                    text: qsTr("settings")
+                    onClicked: { idSettings.enabled=false; meetingManager.showSettings() }
+                }
             }
 
             TextField {
@@ -296,12 +465,22 @@ Rectangle {
                 }
             }
 
-            TextField {
-                id: textTag
-                placeholderText: qsTr('user tag')
-                selectByMouse: true
-                Layout.fillWidth: true
+            RowLayout {
+                TextField {
+                    id: textTag
+                    placeholderText: qsTr('user tag')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
+
+                TextField {
+                    id: extraData
+                    placeholderText: qsTr('extraData')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
             }
+
 
             TextField {
                 id: textScene
@@ -364,6 +543,18 @@ Rectangle {
                     checked: true
                     text: qsTr('rename')
                 }
+
+                CheckBox {
+                    id: enableMuteAllVideo
+                    checked: false
+                    text: qsTr('Enable muteAllVideo')
+                }
+
+                CheckBox {
+                    id: enableMuteAllAudio
+                    checked: true
+                    text: qsTr('Enable muteAllAudio')
+                }
             }
 
             RowLayout {
@@ -381,19 +572,104 @@ Rectangle {
                 }
 
                 CheckBox {
+                    id: checkSip
+                    checked: false
+                    text: qsTr('Enable sip')
+                }
+
+                CheckBox {
                     id: idOpenRecord
                     text: qsTr("is Open record")
                     visible: meetingManager.isSupportRecord
                 }
+
+                CheckBox {
+                    id: idAudioAINS
+                    text: qsTr("is AudioAINS")
+                    checked: meetingManager.isAudioAINS
+                    onClicked: meetingManager.isAudioAINS = checked
+                }
             }
 
-            CheckBox {
-                id: checkBox
-                text: qsTr('Personal meeting ID: %1').arg(
-                          meetingManager.personalMeetingId)
-                Layout.alignment: Qt.AlignHCenter
+            RowLayout {
+                Layout.fillWidth: true
+
+                CheckBox {
+                    id: idOpenWhiteboard
+                    text: qsTr("Enable whiteboard")
+                    visible:true
+                }
+
+                CheckBox {
+                    id: checkBox
+                    text: qsTr('Personal meeting ID: %1').arg(
+                              meetingManager.personalMeetingId)
+                    Layout.alignment: Qt.AlignHCenter
+                }
+
+                CheckBox {
+                    id: idShowMemberTag
+                    text: qsTr('Show MemberTag')
+                }
             }
 
+            RowLayout {
+                Layout.fillWidth: true
+
+                CheckBox {
+                    id: idAudioCcontrol
+                    text: qsTr("use audio control")
+                    Layout.alignment: Qt.AlignHCenter
+                }
+
+                CheckBox {
+                    id: idAudioAttendeeOff
+                    text: qsTr('audioAttendeeOff')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idAudioCcontrol.checked
+                }
+
+                CheckBox {
+                    id: idAudioAllowSelfOn
+                    text: qsTr('audioAllowSelfOn')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idAudioCcontrol.checked
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+
+                CheckBox {
+                    id: idVideoCcontrol
+                    text: qsTr("use video control")
+                    Layout.alignment: Qt.AlignHCenter
+                }
+
+                CheckBox {
+                    id: idVideoAttendeeOff
+                    text: qsTr('videoAttendeeOff')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idVideoCcontrol.checked
+                }
+
+                CheckBox {
+                    id: idVideoAllowSelfOn
+                    text: qsTr('videoAllowSelfOn')
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: idVideoCcontrol.checked
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                CheckBox {
+                    id: idAudioDeviceAutoSelectType
+                    text: qsTr('AudioDeviceAutoSelectType Available')
+                    checked: meetingManager.audodeviceAutoSelectType
+                    onClicked: meetingManager.setAudodeviceAutoSelectType(checked);
+                }
+            }
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 0
@@ -462,6 +738,23 @@ Rectangle {
                     Layout.fillWidth: true
                     onClicked: {
                         btnCreate.enabled = false
+
+                        var controls = []
+                        if(idAudioCcontrol.checked) {
+                            var audiocontrol = {}
+                            audiocontrol["attendeeOff"] = idAudioAttendeeOff.checked
+                            audiocontrol["allowSelfOn"] = idAudioAllowSelfOn.checked
+                            audiocontrol["type"] = 0
+                            controls.push(audiocontrol)
+                        }
+                        if(idVideoCcontrol.checked) {
+                            var videocontrol = {}
+                            videocontrol["attendeeOff"] = idVideoAttendeeOff.checked
+                            videocontrol["allowSelfOn"] = idVideoAllowSelfOn.checked
+                            videocontrol["type"] = 1
+                            controls.push(videocontrol)
+                        }
+
                         meetingManager.invokeStart(
                                     checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
                                     textTag.text, textScene.text,
@@ -469,7 +762,11 @@ Rectangle {
                                     checkAudio.checked, checkVideo.checked,
                                     checkChatroom.checked, checkInvitation.checked,
                                     autoOpenWhiteboard.checked, autorename.checked,
-                                    displayOption.currentIndex, idOpenRecord.checked)
+                                    displayOption.currentIndex, idOpenRecord.checked,
+                                    idOpenWhiteboard.checked, idAudioAINS.checked,
+                                    checkSip.checked, idShowMemberTag.checked,
+                                    extraData.text, controls, enableMuteAllVideo.checked,
+                                    enableMuteAllAudio.checked)
                     }
                 }
                 Button {
@@ -490,7 +787,13 @@ Rectangle {
                                                   autoOpenWhiteboard.checked,
                                                   textpassword.text,
                                                   autorename.checked,
-                                                  displayOption.currentIndex)
+                                                  displayOption.currentIndex,
+                                                  idOpenWhiteboard.checked,
+                                                  idAudioAINS.checked,
+                                                  checkSip.checked,
+                                                  idShowMemberTag.checked,
+                                                  enableMuteAllVideo.checked,
+                                                  enableMuteAllAudio.checked)
                     }
                 }
                 Button {
@@ -559,6 +862,7 @@ Rectangle {
         property string sipId: ""
         property int duration: 0
         property string hostUserId: ""
+        property string extraData: ""
 
         contentItem: Rectangle {
             implicitHeight: 600
@@ -626,6 +930,10 @@ Rectangle {
 
                 Label {
                     text: "hostUserId: " + meetinginfo.hostUserId
+                }
+
+                Label {
+                    text: "extraData: " + meetinginfo.extraData
                 }
 
                 Label {
@@ -726,6 +1034,7 @@ Rectangle {
             toast.show('Finsh meeting signal: ' + errorCode + ", " + errorMessage)
         }
         onMeetingStatusChanged: {
+        toast.show(qsTr('MeetingStatus: ') + meetingStatus)
             switch (meetingStatus) {
             case RunningStatus.MEETING_STATUS_CONNECTING:
                 break
@@ -787,6 +1096,7 @@ Rectangle {
             meetinginfo.sipId = meetingBaseInfo.sipId
             meetinginfo.duration = meetingBaseInfo.duration
             meetinginfo.hostUserId = meetingBaseInfo.hostUserId
+            meetinginfo.extraData = meetingBaseInfo.extraData
 
             listUserModel.clear()
             for (var i = 0; i < meetingUserList.length; i++) {
@@ -822,6 +1132,8 @@ Rectangle {
             } else if (type === 2) {
                 checkVideo.checked = status
                 toast.show('video device status is ' + status)
+            } else if (type === 3) {
+                toast.show('audio AINS status is ' + status)
             }
         }
 
@@ -860,6 +1172,10 @@ Rectangle {
 
         onError: {
             toast.show(errorCode + '(' + errorMessage + ')')
+        }
+
+        onShowSettingsSignal: {
+            idSettings.enabled = true
         }
     }
 

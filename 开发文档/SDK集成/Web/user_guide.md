@@ -5,28 +5,29 @@
 
 ## 变更记录
 
-| 日期 | 版本 | 变更内容 |
-| :------: | :------: | :------- |
-| 2020-09-15  | 1.0.0 | 首次正式发布，支持基础会议功能 |
-| 2020-09-29  | 1.2.6 | 支持预约会议加入，修复已知bug |
-| 2020-10-29  | 1.3.0 | 支持预约会议密码加入，修复已知bug |
-| 2020-10-22 | 1.2.8 | 支持多端互踢，增加*NEMeetingInfo*字段
-| 2020-11-12 | 1.3.1 | 增加*shortId*字段  <br>  增加两种登陆方式 *loginWithNEMeeting* *loginWithSSOToken* <br> 增加初始化配置，兼容已有方案|
-| 2020-11-20 | 1.3.2 | 增加创会入会额外可选配置： *meetingIdDisplayOptions* 会议号展示逻辑 |
-| 2020-11-27 | 1.3.3 | 补充关闭预约会议密码回调监听 <br> 补充创建会议提示已存在会议取消操作监听 <br> 加入会议增加预约会议密码参数*password* <br> 调整会议画廊模式展示策略 |
-| 2020-12-21 | 1.5.0 | 补充自定义按钮配置 |
-| 2021-01-15 | 1.5.2 | 增加音频流订阅方法 <br> *subscribeRemoteAudioStream*订阅用户音频流 <br> *subscribeAllRemoteAudioStreams*订阅所有用户音频流 <br> *subscribeRemoteAudioStreams*订阅用户音频流Bylist |
-| 2021-02-05 | 1.6.0 | 修复部分已知bug |
-| 2021-03-17 | 1.7.0 | 增加会中改名入口 <br> 创建，加入会议增加 *noRename* 字段（是否使用会中改名）<br> 新增*defaultWindowMode*选项配置“会议视图模式”，支持普通和白板模式 |
-| 2021-03-30 | 1.7.2 | 增加成员进出事件监听*peerJoin* *peerLeave* <br> 网络事件监听*networkQuality*<br> 国际化配置*setLocale* *useLocale* |
-| 2021-04-29 | 1.8.1 | 共享时支持视频显示 <br> 增加额外会议信息 <br> 增加会议创建配置 |
-| 2021-06-02 | 1.9.1 | 修复已知bug |
-| 2021-07-08 | 1.10.0 | 增加创建会议额外配置*scene* <br> 增加创会入会时自定义*memberTag* <br> 增加日志方法*uploadLog* *downLog* |
-| 2021-07-20 | 1.12.0 | 升级音视频SDK |
-| 2021-08-12 | 1.12.2 | 调整主讲人切换间隔 <br> 修复已知bug |
-| 2021-09-09 | 2.0.4 | 订阅接口支持promise <br> 修复已知bug |
-| 2021-10-28 | 2.0.10 | 增加获取会议人员布局位置接口 <br> 增加主持人离会提示是否移交权限 <br> 修复已知bug |
-| 2021-11-08 | 2.0.12 | 增加角色标签显示 <br> 支持一键开启全体摄像头 <br> 支持创建会议时关闭音视频 <br> 添加聊天室 <br> 修复已知bug |
+|     日期     |   版本   | 变更内容                                                                                                                                              |
+|:----------:|:------:|:--------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2020-09-15 | 1.0.0  | 首次正式发布，支持基础会议功能                                                                                                                                   |
+| 2020-09-29 | 1.2.6  | 支持预约会议加入，修复已知bug                                                                                                                                  |
+| 2020-10-29 | 1.3.0  | 支持预约会议密码加入，修复已知bug                                                                                                                                |
+| 2020-10-22 | 1.2.8  | 支持多端互踢，增加*NEMeetingInfo*字段                                                                                                                        
+| 2020-11-12 | 1.3.1  | 增加*shortId*字段  <br>  增加两种登陆方式 *loginWithNEMeeting* *loginWithSSOToken* <br> 增加初始化配置，兼容已有方案                                                        |
+| 2020-11-20 | 1.3.2  | 增加创会入会额外可选配置： *meetingIdDisplayOptions* 会议号展示逻辑                                                                                                   |
+| 2020-11-27 | 1.3.3  | 补充关闭预约会议密码回调监听 <br> 补充创建会议提示已存在会议取消操作监听 <br> 加入会议增加预约会议密码参数*password* <br> 调整会议画廊模式展示策略                                                           |
+| 2020-12-21 | 1.5.0  | 补充自定义按钮配置                                                                                                                                         |
+| 2021-01-15 | 1.5.2  | 增加音频流订阅方法 <br> *subscribeRemoteAudioStream*订阅用户音频流 <br> *subscribeAllRemoteAudioStreams*订阅所有用户音频流 <br> *subscribeRemoteAudioStreams*订阅用户音频流Bylist |
+| 2021-02-05 | 1.6.0  | 修复部分已知bug                                                                                                                                         |
+| 2021-03-17 | 1.7.0  | 增加会中改名入口 <br> 创建，加入会议增加 *noRename* 字段（是否使用会中改名）<br> 新增*defaultWindowMode*选项配置“会议视图模式”，支持普通和白板模式                                                   |
+| 2021-03-30 | 1.7.2  | 增加成员进出事件监听*peerJoin* *peerLeave* <br> 网络事件监听*networkQuality*<br> 国际化配置*setLocale* *useLocale*                                                     |
+| 2021-04-29 | 1.8.1  | 共享时支持视频显示 <br> 增加额外会议信息 <br> 增加会议创建配置                                                                                                             |
+| 2021-06-02 | 1.9.1  | 修复已知bug                                                                                                                                           |
+| 2021-07-08 | 1.10.0 | 增加创建会议额外配置*scene* <br> 增加创会入会时自定义*memberTag* <br> 增加日志方法*uploadLog* *downLog*                                                                     |
+| 2021-07-20 | 1.12.0 | 升级音视频SDK                                                                                                                                          |
+| 2021-08-12 | 1.12.2 | 调整主讲人切换间隔 <br> 修复已知bug                                                                                                                            |
+| 2021-09-09 | 2.0.4  | 订阅接口支持promise <br> 修复已知bug                                                                                                                        |
+| 2021-10-28 | 2.0.10 | 增加获取会议人员布局位置接口 <br> 增加主持人离会提示是否移交权限 <br> 修复已知bug                                                                                                  |
+| 2021-11-08 | 2.0.12 | 增加角色标签显示 <br> 支持一键开启全体摄像头 <br> 支持创建会议时关闭音视频 <br> 添加聊天室 <br> 修复已知bug                                                                               |
+| 2022-02-17 | 2.2.5  | 添加设置焦点分辨率 <br> 添加设置默认主持人焦点配置 <br> 添加是否根据声音大小排序配置 <br> 大小流功能 <br> 聊天室定向消息 <br> 修复已知bug                                                                    |
 
 ## 快速接入
 
@@ -145,6 +146,28 @@
                 accountIds: [], // Array<string> 场景角色限制哪些账号可以入会
             }
         ]
+      },
+      muteBtnConfig: {
+        showMuteAllVideo: true, // 显示全体关闭视频按钮
+        showUnMuteAllVideo: true, // 显示全体开启按钮
+        showMuteAllAudio: true, // 显示全体静音按钮
+        showUnMuteAllAudio: true, // 显示全体解除静音按钮
+      },
+      showFocusBtn: false, // 是否显示设置焦点后画面右上角的按钮， 默认为true
+      videoProfile: { // 默认画面配置
+        resolution: 180, // 默认画面分辨率
+        frameRate: 15, // 默认画面帧率
+      },
+      focusVideoProfile: { // 焦点画面配置
+        resolution: 480, // 焦点画面分辨率
+        frameRate: 15, // 焦点画面帧率
+      },
+      enableSortByVoice: true, // 是否根据声音大小显示主画面 默认为true
+      enableSetDefaultFocus: false, // 是否默认设置支持人为焦点画面 默认为false
+      chatroomConfig: { // 聊天室定向消息
+        tags: [], // 本端聊天室标签（填写一个即可）
+        enableDirectionalTransmission: false, // 是否开启定向消息 默认为false
+        defaultDirectionalTags: [] // 默认可以发送目标人员的标签组，为空则可以发送给全体人员
       }
     }
     neWebMeeting.actions.create(obj, callback)
@@ -172,6 +195,28 @@
       showMaxCount: false, // 是否显示会议应进最大人数
       showSubject: false, // 是否显示会议主题
       showMemberTag: false, // 是否显示成员标签
+      muteBtnConfig: {
+        showMuteAllVideo: true, // 显示全体关闭视频按钮
+        showUnMuteAllVideo: true, // 显示全体开启按钮
+        showMuteAllAudio: true, // 显示全体静音按钮
+        showUnMuteAllAudio: true, // 显示全体解除静音按钮
+      },
+      showFocusBtn: false, // 是否显示设置焦点后画面右上角的按钮， 默认为true
+      videoProfile: { // 默认画面配置
+        resolution: 180, // 默认画面分辨率
+        frameRate: 15, // 默认画面帧率
+      },
+      focusVideoProfile: { // 焦点画面配置
+        resolution: 480, // 焦点画面分辨率
+        frameRate: 15, // 焦点画面帧率
+      },
+      enableSortByVoice: true, // 是否根据声音大小显示主画面 默认为true
+      enableSetDefaultFocus: false, // 是否默认设置支持人为焦点画面 默认为false
+      chatroomConfig: { // 聊天室定向消息
+        tags: [], // 本端聊天室标签（填写一个即可）
+        enableDirectionalTransmission: false, // 是否开启定向消息 默认为false
+        defaultDirectionalTags: [] // 默认可以发送目标人员的标签组，为空则可以发送给全体人员
+      }
     }
     neWebMeeting.actions.join(obj, callback)
     ```

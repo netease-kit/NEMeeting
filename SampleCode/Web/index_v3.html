@@ -26,7 +26,7 @@
   function init() {
     const config = {
       appKey: '', //云信服务appkey
-      meetingServerDomain: 'https://roomkit.netease.im', //会议服务器地址，支持私有化部署
+      meetingServerDomain: '', //会议服务器地址，支持私有化部署
       NIMconf: {
         // IM私有化配置
       }
@@ -51,7 +51,7 @@
   }
 
   function loginWithNEMeeting() { // 账号密码登陆
-    const account = '13641984192',password = '12345678';
+    const account = '',password = '';
     NEMeetingKit.actions.loginWithNEMeeting(account, password, function(e) {
       console.log(e)
     })

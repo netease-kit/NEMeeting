@@ -7,5 +7,3 @@
 > 最新开发文档请移至官方文档地址查看：[会议组件开发文档](https://doc.yunxin.163.com/docs/TE5OTgwODE/zUzOTE4NTU)。
 
 **推荐客户得京东卡，首次推荐成单得3000元京东卡，连续推荐4500元/单，上不封顶。点击参与https://yunxin.163.com/promotion/recommend**
-
-![main](https://github.com/netease-kit/NIM_iOS_UIKit/blob/master/activity-1.png)

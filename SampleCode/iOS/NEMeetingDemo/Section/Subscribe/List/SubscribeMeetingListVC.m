@@ -9,28 +9,41 @@
 #import "SubMeetingCell.h"
 #import "SubDateCell.h"
 #import "NESubscribeMeetingDetailVC.h"
+#import <Reachability/Reachability.h>
 
 @interface SubscribeMeetingListVC ()<UITableViewDelegate, UITableViewDataSource, NEScheduleMeetingListener>
 
 @property (weak, nonatomic) IBOutlet UITableView *listView;
 @property (nonatomic, strong) NSMutableArray *datas;
 @property (nonatomic, strong) NSMutableArray <NEMeetingItem *> *items;
-
+@property (nonatomic, strong) Reachability *connect;
 @end
 
 @implementation SubscribeMeetingListVC
 
 - (void)dealloc {
-    [[NEMeetingSDK getInstance].getPreMeetingService removeListener:self];
+    [[NEMeetingKit getInstance].getPreMeetingService removeListener:self];
+    [self.connect stopNotifier];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
     [self setupDatas];
-    [[NEMeetingSDK getInstance].getPreMeetingService addListener:self];
+    [[NEMeetingKit getInstance].getPreMeetingService addListener:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStateChange) name:kReachabilityChangedNotification object:nil];
+    [self.connect startNotifier];
 }
-
+- (void)netStateChange {
+    // 1.检测手机是否能上网络(WiFi\3G\2.5G)
+    Reachability *connect = [Reachability reachabilityForInternetConnection];
+    // 2.判断网络状态
+    if ([connect currentReachabilityStatus] == ReachableViaWiFi ||
+        [connect currentReachabilityStatus] == ReachableViaWWAN) {
+        [self setupDatas];
+    }
+}
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     _listView.frame = self.view.bounds;
@@ -52,7 +65,7 @@
     NSArray *meetingStatus = @[@(NEMeetingItemStatusInit),
                                @(NEMeetingItemStatusStarted),
                                @(NEMeetingItemStatusEnded)];
-    [[NEMeetingSDK getInstance].getPreMeetingService getMeetingList:meetingStatus
+    [[NEMeetingKit getInstance].getPreMeetingService getMeetingList:meetingStatus
                                                            callback:^(NSInteger resultCode, NSString * _Nonnull resultMsg, NSArray<NEMeetingItem *> * _Nonnull items) {
         if (resultCode == ERROR_CODE_SUCCESS) {
             weakSelf.items = [NSMutableArray arrayWithArray:items];
@@ -178,11 +191,19 @@
 #pragma mark - <NEScheduleMeetingListener>
 - (void)onScheduleMeetingStatusChange:(NSArray<NEMeetingItem *> *)changedMeetingItemList
                           incremental:(BOOL)incremental{
-    if (incremental) { //增量
-        [self mergeDatas:changedMeetingItemList];
-    } else { //全量
-        [self setupDatas];
-    }
+    [self setupDatas];
+//    if (incremental) { //增量
+//        [self mergeDatas:changedMeetingItemList];
+//    } else { //全量
+//        [self setupDatas];
+//    }
 }
 
+
+- (Reachability *)connect {
+    if (!_connect) {
+        _connect = [Reachability reachabilityForInternetConnection];
+    }
+    return _connect;
+}
 @end

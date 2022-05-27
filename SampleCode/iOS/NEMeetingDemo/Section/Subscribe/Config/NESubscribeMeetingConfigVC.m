@@ -8,10 +8,9 @@
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
 #import "NEFromDatePicker.h"
-#import "SceneSettingsViewController.h"
 #import <YYModel/YYModel.h>
 
-@interface NESubscribeMeetingConfigVC () <SceneSettingsDelegate>
+@interface NESubscribeMeetingConfigVC ()
 
 @property (nonatomic, strong) UIButton *sureBtn;
 
@@ -20,8 +19,6 @@
 @property (nonatomic, readonly) NEPreMeetingService *preMeetingService;
 
 @property (nonatomic, copy) NSString *password;
-
-@property (nonatomic, copy) NSString *sceneJsonString;
 
 @property (nonatomic, assign) BOOL muteAllAudio;
 
@@ -63,7 +60,7 @@
 - (void)setupItem {
     _allowAudioSelfOn = YES;
     _allowVideoSelfOn = YES;
-    _item = [[NEMeetingSDK getInstance].getPreMeetingService createScheduleMeetingItem];
+    _item = [[NEMeetingKit getInstance].getPreMeetingService createScheduleMeetingItem];
     uint64_t startTimeS = [[NSDate date] timeIntervalSince1970];
     startTimeS = (startTimeS - startTimeS%(30*60) + 30*60);
     _item.startTime = startTimeS * 1000;
@@ -158,7 +155,7 @@
     };
     [group4.rows addObject:openRecord];
     
-    if([[NEMeetingSDK getInstance].getSettingsService isMeetingLiveEnabled]){
+    if([[NEMeetingKit getInstance].getSettingsService isMeetingLiveEnabled]){
         
         NEFromGroup *group5 = [[NEFromGroup alloc] init];
         NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
@@ -328,21 +325,9 @@
 }
 
 - (NEPreMeetingService *)preMeetingService {
-    return [[NEMeetingSDK getInstance] getPreMeetingService];
+    return [[NEMeetingKit getInstance] getPreMeetingService];
 }
 
 - (void)doSceneSettings {
-    SceneSettingsViewController *view = [[SceneSettingsViewController alloc] init];
-    view.sceneJsonString = self.sceneJsonString;
-    view.delegate = self;
-    [self presentViewController:view animated:YES completion:nil];
 }
-
-- (void)didSceneSettingsConfirm:(NSString *)settings {
-    self.sceneJsonString = settings;
-    if (settings) {
-        self.item.settings.scene = [NEMeetingScene yy_modelWithJSON: settings];
-    }
-}
-
 @end

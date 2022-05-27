@@ -7,7 +7,7 @@
 //
 
 #import "Config.h"
-//#import "HttpService.h"
+#import "HttpService.h"
 #import "LoginInfoManager.h"
 
 NSString *const kAppKey = @"Your_Meeting_App_Key";
@@ -25,9 +25,9 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     static NSDictionary *configs;
     if (configs == nil) {
         configs = @{
-            @"online": [[ServerConfig alloc] init: kAppKey
+            @"online": [[ServerConfig alloc] init:kAppKey
                                      appServerUrl: @""
-                                     sdkServerUrl: @""],
+                                     sdkServerUrl: @""]
         };
     }
     return configs;
@@ -125,7 +125,15 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
 + (void)queryAccountInfoWithUserName:(NSString *)userName
                             password:(NSString *)password
                           completion:(QueryAccoutInfoBlock)completion {
-    //请根据自己情况获得真正的用户id和token,并调用completion返回
+    [HttpService requestLoginAuth:userName
+                         password:password
+                       completion:^(NSError * _Nonnull error, LoginResponse * _Nonnull response) {
+        NSLog(@"%@", response);
+        [LoginInfoManager shareInstance].nickName = response.ret.nickName;
+        if (completion) {
+            completion(error, response.ret.accountId, response.ret.accountToken);
+        }
+    }];
 }
 
 @end

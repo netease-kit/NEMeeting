@@ -16,6 +16,10 @@
 
 @property (nonatomic, assign) NSInteger joinMeetingTimeout;
 
+@property (nonatomic, assign) BOOL noMuteAllVideo;
+
+@property (nonatomic, assign) BOOL noMuteAllAudio;
+
 @property (nonatomic, readonly) BOOL useSpeechAudioProfile;
 
 @property (nonatomic, readonly) BOOL useMusicAudioProfile;

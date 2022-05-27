@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [[NEMeetingSDK getInstance].getMeetingService addListener:self];
+    [[NEMeetingKit getInstance].getMeetingService addListener:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,7 +72,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [IQKeyboardManager sharedManager].enable = NO;
-    _menuItems = nil;
 }
 
 - (void)setupUI {
@@ -92,7 +91,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"显示白板窗口",
                                               @"隐藏白板菜单按钮",
                                               @"关闭会中改名",
-                                              @"隐藏Sip菜单",
+//                                              @"隐藏Sip菜单",
                                               @"显示用户角色标签"
                                             ]];
     _settingCheckBox.delegate = self;
@@ -100,7 +99,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (IBAction)onLeaveCurrentMeeting:(id)sender {
     WEAK_SELF(weakSelf);
-    [[NEMeetingSDK.getInstance getMeetingService] leaveCurrentMeeting:NO callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+    [[NEMeetingKit.getInstance getMeetingService] leaveCurrentMeeting:NO callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         }
@@ -116,47 +115,52 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     params.password = _passworkInput.text;
     params.tag = _tagInput.text;
     
-    NEJoinMeetingOptions *options = nil;
+    NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
     if (![self useDefaultConfig]) {
-        options = [[NEJoinMeetingOptions alloc] init];
         options.noAudio = ![self openMicWhenJoin];
         options.noVideo = ![self openVideoWhenJoin];
         options.showMeetingTime = [self showMeetingTime];
-        options.meetingIdDisplayOption = [self meetingIdDisplayOption];
-        options.noChat = [self disableChat];
-        options.noInvite = [self disableInvite];
-        options.noMinimize = [self disableMinimize];
-        options.injectedMoreMenuItems = _menuItems;
-        options.noGallery = [self disableGallery];
-        options.noSwitchCamera = [self disableCameraSwitch];
-        options.noSwitchAudioMode = [self disableAudioModeSwitch];
-        options.noWhiteBoard = [self hideWhiteboardMenu];
-        options.noRename = [self disableRename];
-        options.noSip = [self disableSip];
-        options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
-        options.audioAINSEnabled = [[[NEMeetingSDK getInstance] getSettingsService] isAudioAINSEnabled];
-        options.showMemberTag = [self showMemberTag];
-        //白板相关设置
-        if ([self showWhiteboard]) {
-            //设置默认展示白板窗口
-            options.defaultWindowMode = NEMeetingWindowModeWhiteBoard;
-        }
-        if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
-            options.audioProfile = [NEAudioProfile createMusicAudioProfile];
-        } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
-            options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
-        }
-        if (options.audioProfile != nil) {
-            options.audioProfile.enableAINS = options.audioAINSEnabled;
-        }
-        
+    } else {
+        NESettingsService *settingService = NEMeetingKit.getInstance.getSettingsService;
+        options.noAudio = !settingService.isTurnOnMyAudioWhenJoinMeetingEnabled;
+        options.noVideo = !settingService.isTurnOnMyVideoWhenJoinMeetingEnabled;
+        options.showMeetingTime = settingService.isShowMyMeetingElapseTimeEnabled;
     }
+    options.meetingIdDisplayOption = [self meetingIdDisplayOption];
+    options.noChat = [self disableChat];
+    options.noInvite = [self disableInvite];
+    options.noMinimize = [self disableMinimize];
+    options.noGallery = [self disableGallery];
+    options.noSwitchCamera = [self disableCameraSwitch];
+    options.noSwitchAudioMode = [self disableAudioModeSwitch];
+    options.noWhiteBoard = [self hideWhiteboardMenu];
+    options.noRename = [self disableRename];
+//    options.noSip = [self disableSip];
+    options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
+//    options.audioAINSEnabled = [[[NEMeetingKit getInstance] getSettingsService] isAudioAINSEnabled];
+    options.showMemberTag = [self showMemberTag];
+    //白板相关设置
+    if ([self showWhiteboard]) {
+        //设置默认展示白板窗口
+        options.defaultWindowMode = NEMeetingWindowModeWhiteBoard;
+    }
+    if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
+        options.audioProfile = [NEAudioProfile createMusicAudioProfile];
+    } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
+        options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
+    }
+//    if (options.audioProfile != nil) {
+//        options.audioProfile.enableAINS = options.audioAINSEnabled;
+//    }
+    
+    options.noMuteAllAudio = [MeetingConfigRepository getInstance].noMuteAllAudio;
+    options.noMuteAllVideo = [MeetingConfigRepository getInstance].noMuteAllVideo;
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
     options.fullMoreMenuItems = _fullMoreMenuItems;
 
     WEAK_SELF(weakSelf);
     [SVProgressHUD show];
-    [[[NEMeetingSDK getInstance] getMeetingService] joinMeeting:params
+    [[[NEMeetingKit getInstance] getMeetingService] joinMeeting:params
                                                            opts:options
                                                        callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];
@@ -203,22 +207,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 }
 
 - (IBAction)addMenuAction:(UIButton *)sender {
-    [self.view endEditing:YES];
-    if (!_menuItems) {
-        _menuItems = [NSMutableArray array];
-    }
-    NEMeetingMenuItem *item = [[NEMeetingMenuItem alloc] init];
-    item.itemId = [_menuIdInput.text  intValue];
-    if (item.itemId == 101) {
-        item.title = @"显示会议信息";
-    } else {
-        item.title = _menuTitleInput.text;
-    }
-    [_menuItems addObject:item];
-
-    NSString *msg = [NSString stringWithFormat:@"添加MenuItemId:%@ title:%@",
-                     @(item.itemId), item.title];
-    [self.view makeToast:msg];
 }
 - (void)showSeletedItemResult:(NSArray *)menuItems {
     NSString *string = @"已选";
@@ -236,7 +224,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (void)updateNickname {
     WEAK_SELF(weakSelf);
-    [[NEMeetingSDK getInstance].getSettingsService getHistoryMeetingItem:^(NSInteger resultCode, NSString* resultMsg, NSArray<NEHistoryMeetingItem *> * items) {
+    [[NEMeetingKit getInstance].getSettingsService getHistoryMeetingItem:^(NSInteger resultCode, NSString* resultMsg, NSArray<NEHistoryMeetingItem *> * items) {
         if (items && items.count > 0) {
             NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
             if ([items[0].meetingId isEqualToString: weakSelf.meetingIdInput.text]) {
@@ -338,13 +326,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 - (BOOL)disableRename {
     return [_settingCheckBox getItemSelectedAtIndex:11];
 }
-
-- (BOOL)disableSip {
-    return [_settingCheckBox getItemSelectedAtIndex:12];
-}
+//
+//- (BOOL)disableSip {
+//    return [_settingCheckBox getItemSelectedAtIndex:12];
+//}
 
 - (BOOL)showMemberTag {
-    return [_settingCheckBox getItemSelectedAtIndex:13];
+    return [_settingCheckBox getItemSelectedAtIndex:12];
 }
 
 @end

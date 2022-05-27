@@ -18,7 +18,6 @@
 }
 
 - (XLFormDescriptor *)setupForm {
-    __weak typeof(self) weakSelf = self;
     XLFormDescriptor *form = [XLFormDescriptor formDescriptorWithTitle:@"应用设置"];
     
     XLFormSectionDescriptor *appSection = [XLFormSectionDescriptor formSection];
@@ -40,6 +39,7 @@
     serverType.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
         if (newValue && (NSNull *)newValue != [NSNull null]) {
             ServerConfig.serverType = [newValue formValue];
+            [NSNotificationCenter.defaultCenter postNotificationName:kNEMeetingResetWindow object:nil];
         }
     };
     [appSection addFormRow:serverType];
@@ -74,6 +74,17 @@
         ServerConfig.customSDKServerUrl = newValue;
     };
     [appSection addFormRow:customSDKServerUrl];
+    
+    XLFormRowDescriptor *developerMode = [XLFormRowDescriptor formRowDescriptorWithTag:@"developerMode"
+        rowType:XLFormRowDescriptorTypeBooleanSwitch
+        title:@"开发者模式"
+    ];
+    developerMode.height = 60.0;
+    developerMode.value =  @([[NSUserDefaults standardUserDefaults] boolForKey:@"developerMode"]);
+    developerMode.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        [[NSUserDefaults standardUserDefaults] setBool:[newValue boolValue] forKey:@"developerMode"];
+    };
+    [appSection addFormRow:developerMode];
     
     return form;
 }

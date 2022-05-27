@@ -8,7 +8,7 @@
 #ifndef NEMeetingDemo_pch
 #define NEMeetingDemo_pch
 
-#import <NEMeetingSDK/NEMeetingSDK.h>
+#import <NEMeetingKit/NEMeetingKit.h>
 #import "UIView+NTES.h"
 #import "SVProgressHUD.h"
 
@@ -25,4 +25,6 @@ alpha:alphaValue]
 
 #define kNEMeetingInitCompletionNotication @"kNEMeetingInitCompletionNotication"
 
+/// 重置窗口
+#define kNEMeetingResetWindow  @"com.netease.meetinglib.window.notification"
 #endif /* NEMeetingDemo_pch */

@@ -11,9 +11,10 @@
 #import "LoginInfoManager.h"
 #import "BaseViewController.h"
 #import "IMLoginVC.h"
+#import "LoginTask.h"
 #import <NIMSDK/NIMSDK.h>
 #import "NSString+Demo.h"
-
+#import "AppDelegate+MeetingExtension.h"
 static NSString * const prefixName = @"meetingdemo://";
 
 @interface AppDelegate ()
@@ -22,7 +23,9 @@ static NSString * const prefixName = @"meetingdemo://";
 
 @implementation AppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self meeting_addNotification];
     [self doSetupMeetingSdk];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     return YES;
@@ -33,22 +36,26 @@ static NSString * const prefixName = @"meetingdemo://";
 }
 
 - (void)doSetupMeetingSdk {
-    NEMeetingSDKConfig *config = [[NEMeetingSDKConfig alloc] init];
+    [[NSUserDefaults standardUserDefaults] registerDefaults: @{@"developerMode": @(YES)}];
+    NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
-    config.reuseNIM = [LoginInfoManager shareInstance].reuseNIM;
-//    config.enableDebugLog = YES;
+    config.extras = @{
+        @"serverUrl": ServerConfig.current.sdkServerUrl,
+        @"debugMode": [[NSUserDefaults standardUserDefaults] boolForKey:@"developerMode"] ? @(1) : @(0)
+    };
     config.appName = @"测试APP Name";
+    config.broadcastAppGroup = @"group.com.netease.meetinglib.demo.NEMeetingDevDemo";
     NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
     //默认等级
-    loggerConfig.level = NELogLevelVerbose;
+    loggerConfig.level = NELogLevelInfo;
     // Document路径
     NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
     config.loggerConfig = loggerConfig;
-    config.useAssetServerConfig = [ServerConfig.serverType isEqual: @"private"];
+//    config.useAssetServerConfig = [ServerConfig.serverType isEqual: @"private"];
     
     [SVProgressHUD showWithStatus:@"初始化..."];
-    [[NEMeetingSDK getInstance] initialize:config
+    [[NEMeetingKit getInstance] initialize:config
                                   callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
         NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
         [SVProgressHUD dismiss];
@@ -74,7 +81,7 @@ static NSString * const prefixName = @"meetingdemo://";
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     
-    [[[NEMeetingSDK getInstance] getMeetingService] stopBroadcastExtension];
+    [[[NEMeetingKit getInstance] getMeetingService] stopBroadcastExtension];
 
 }
 

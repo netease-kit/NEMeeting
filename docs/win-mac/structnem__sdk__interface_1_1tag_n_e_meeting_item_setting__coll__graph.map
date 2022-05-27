@@ -1,4 +1,0 @@
-<map id="nem_sdk_interface::tagNEMeetingItemSetting" name="nem_sdk_interface::tagNEMeetingItemSetting">
-<area shape="rect" id="node1" title="预约会议的配置" alt="" coords="5,109,176,151"/>
-<area shape="rect" id="node2" href="$structnem__sdk__interface_1_1tag_n_e_meeting_scene.html" title="会议场景定义" alt="" coords="20,5,161,47"/>
-</map>

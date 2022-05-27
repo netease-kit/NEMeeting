@@ -6,10 +6,8 @@
 //  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
 //
 
-#import "Config.h"
-#import "HttpService.h"
 #import "LoginInfoManager.h"
-
+#import "ServerConfig.h"
 NSString *const kAppKey = @"Your_Meeting_App_Key";
 
 NSString * const kServerType = @"serverType";
@@ -118,22 +116,3 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
 
 @end
 
-
-
-@implementation Config
-
-+ (void)queryAccountInfoWithUserName:(NSString *)userName
-                            password:(NSString *)password
-                          completion:(QueryAccoutInfoBlock)completion {
-    [HttpService requestLoginAuth:userName
-                         password:password
-                       completion:^(NSError * _Nonnull error, LoginResponse * _Nonnull response) {
-        NSLog(@"%@", response);
-        [LoginInfoManager shareInstance].nickName = response.ret.nickName;
-        if (completion) {
-            completion(error, response.ret.accountId, response.ret.accountToken);
-        }
-    }];
-}
-
-@end

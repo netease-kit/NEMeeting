@@ -6,12 +6,11 @@
 //
 
 #import "AppDelegate.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import "SystemAuthHelper.h"
 #import "LoginInfoManager.h"
 #import "BaseViewController.h"
 #import "IMLoginVC.h"
-#import "LoginTask.h"
 #import <NIMSDK/NIMSDK.h>
 #import "NSString+Demo.h"
 #import "AppDelegate+MeetingExtension.h"
@@ -39,12 +38,8 @@ static NSString * const prefixName = @"meetingdemo://";
     [[NSUserDefaults standardUserDefaults] registerDefaults: @{@"developerMode": @(YES)}];
     NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
-    config.extras = @{
-        @"serverUrl": ServerConfig.current.sdkServerUrl,
-        @"debugMode": [[NSUserDefaults standardUserDefaults] boolForKey:@"developerMode"] ? @(1) : @(0)
-    };
     config.appName = @"测试APP Name";
-    config.broadcastAppGroup = @"group.com.netease.meetinglib.demo.NEMeetingDevDemo";
+    config.broadcastAppGroup = @"xxxxxxxxxxxx";
     NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
     //默认等级
     loggerConfig.level = NELogLevelInfo;
@@ -52,7 +47,6 @@ static NSString * const prefixName = @"meetingdemo://";
     NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
     config.loggerConfig = loggerConfig;
-//    config.useAssetServerConfig = [ServerConfig.serverType isEqual: @"private"];
     
     [SVProgressHUD showWithStatus:@"初始化..."];
     [[NEMeetingKit getInstance] initialize:config

@@ -21,14 +21,11 @@
 		410B432624AB2FF800017FA6 /* MeetingControlVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410B432424AB2FF800017FA6 /* MeetingControlVC.xib */; };
 		410B433224AB5C2A00017FA6 /* StartMeetingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410B433024AB5C2A00017FA6 /* StartMeetingVC.xib */; };
 		410B433F24AC5F1100017FA6 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B433E24AC5F1100017FA6 /* BaseViewController.m */; };
-		410B434924AC687700017FA6 /* LoginTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B434824AC687700017FA6 /* LoginTask.m */; };
-		410B434F24AC7CB500017FA6 /* LoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B434E24AC7CB500017FA6 /* LoginResponse.m */; };
 		410B435224AC819500017FA6 /* NSString+Demo.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B435124AC819500017FA6 /* NSString+Demo.m */; };
 		410B435524AC81F500017FA6 /* NSData+Demo.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B435424AC81F500017FA6 /* NSData+Demo.m */; };
-		410B435824AC851800017FA6 /* HttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B434424AC675B00017FA6 /* HttpService.m */; };
 		410B435C24AC914900017FA6 /* StartMeetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B432F24AB5C2A00017FA6 /* StartMeetingVC.m */; };
 		410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B431C24AB295B00017FA6 /* EnterMeetingVC.m */; };
-		4111C2D424D2B20500550390 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4111C2D324D2B20500550390 /* Config.m */; };
+		4111C2D424D2B20500550390 /* ServerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4111C2D324D2B20500550390 /* ServerConfig.m */; };
 		41228FAB24E69D7D00C7B717 /* MeetingSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */; };
 		414EF1EC251AE73F00F9D91A /* MeetingActionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 414EF1EA251AE73F00F9D91A /* MeetingActionVC.m */; };
 		414EF1ED251AE73F00F9D91A /* MeetingActionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 414EF1EB251AE73F00F9D91A /* MeetingActionVC.xib */; };
@@ -132,19 +129,12 @@
 		410B433024AB5C2A00017FA6 /* StartMeetingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StartMeetingVC.xib; sourceTree = "<group>"; };
 		410B433D24AC5F1100017FA6 /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		410B433E24AC5F1100017FA6 /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
-		410B434324AC675B00017FA6 /* HttpService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpService.h; sourceTree = "<group>"; };
-		410B434424AC675B00017FA6 /* HttpService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpService.m; sourceTree = "<group>"; };
-		410B434624AC678B00017FA6 /* HttpTaskProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpTaskProtocol.h; sourceTree = "<group>"; };
-		410B434724AC687700017FA6 /* LoginTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginTask.h; sourceTree = "<group>"; };
-		410B434824AC687700017FA6 /* LoginTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginTask.m; sourceTree = "<group>"; };
-		410B434D24AC7CB500017FA6 /* LoginResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginResponse.h; sourceTree = "<group>"; };
-		410B434E24AC7CB500017FA6 /* LoginResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginResponse.m; sourceTree = "<group>"; };
 		410B435024AC819500017FA6 /* NSString+Demo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Demo.h"; sourceTree = "<group>"; };
 		410B435124AC819500017FA6 /* NSString+Demo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Demo.m"; sourceTree = "<group>"; };
 		410B435324AC81F500017FA6 /* NSData+Demo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Demo.h"; sourceTree = "<group>"; };
 		410B435424AC81F500017FA6 /* NSData+Demo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Demo.m"; sourceTree = "<group>"; };
-		4111C2D224D2B20500550390 /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		4111C2D324D2B20500550390 /* Config.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		4111C2D224D2B20500550390 /* ServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
+		4111C2D324D2B20500550390 /* ServerConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerConfig.m; sourceTree = "<group>"; };
 		41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingSettingVC.h; sourceTree = "<group>"; };
 		41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingSettingVC.m; sourceTree = "<group>"; };
 		414EF1E9251AE73F00F9D91A /* MeetingActionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingActionVC.h; sourceTree = "<group>"; };
@@ -303,25 +293,6 @@
 			path = Section;
 			sourceTree = "<group>";
 		};
-		410B435624AC83C100017FA6 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				41937CB024B4624F00A06BF2 /* HttpService */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		410B435724AC83D100017FA6 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				410B434724AC687700017FA6 /* LoginTask.h */,
-				410B434824AC687700017FA6 /* LoginTask.m */,
-				410B434D24AC7CB500017FA6 /* LoginResponse.h */,
-				410B434E24AC7CB500017FA6 /* LoginResponse.m */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		410B435924AC8E4800017FA6 /* Catagories */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,17 +353,6 @@
 				41937CA924B4611C00A06BF2 /* SVProgressHUD.bundle */,
 			);
 			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		41937CB024B4624F00A06BF2 /* HttpService */ = {
-			isa = PBXGroup;
-			children = (
-				410B434624AC678B00017FA6 /* HttpTaskProtocol.h */,
-				410B434324AC675B00017FA6 /* HttpService.h */,
-				410B434424AC675B00017FA6 /* HttpService.m */,
-				410B435724AC83D100017FA6 /* Login */,
-			);
-			path = HttpService;
 			sourceTree = "<group>";
 		};
 		41937CB424B4655200A06BF2 /* LoginInfoService */ = {
@@ -519,11 +479,10 @@
 				2DB8EC7F265610E200BB171E /* NEMeetingDemo.entitlements */,
 				41A1C98424A302F9003369D3 /* AppDelegate.h */,
 				41A1C98524A302F9003369D3 /* AppDelegate.m */,
-				4111C2D224D2B20500550390 /* Config.h */,
-				4111C2D324D2B20500550390 /* Config.m */,
+				4111C2D224D2B20500550390 /* ServerConfig.h */,
+				4111C2D324D2B20500550390 /* ServerConfig.m */,
 				410B434224AC665600017FA6 /* Section */,
 				41937CB424B4655200A06BF2 /* LoginInfoService */,
-				410B435624AC83C100017FA6 /* Service */,
 				410B431E24AB2B7500017FA6 /* Common */,
 				41937CA024B460E200A06BF2 /* Vender */,
 				41A1CA7524A33994003369D3 /* NEMeetingDemo.pch */,
@@ -737,7 +696,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				410B434F24AC7CB500017FA6 /* LoginResponse.m in Sources */,
 				41937CAB24B4611C00A06BF2 /* SVRadialGradientLayer.m in Sources */,
 				41228FAB24E69D7D00C7B717 /* MeetingSettingVC.m in Sources */,
 				419EE5092508EE3A004F8984 /* UIView+NTES.m in Sources */,
@@ -761,10 +719,8 @@
 				419EE4F82508D3EE004F8984 /* NEFromTextFieldCell.m in Sources */,
 				41937CAC24B4611C00A06BF2 /* SVProgressAnimatedView.m in Sources */,
 				414EF236251C9D1700F9D91A /* NENavigationController.m in Sources */,
-				410B435824AC851800017FA6 /* HttpService.m in Sources */,
 				2D5A14FA26BAAECF00A530BA /* MeetingConfigRepository.m in Sources */,
 				419EE5182509D5C6004F8984 /* NESubscribeMeetingConfigVC.m in Sources */,
-				410B434924AC687700017FA6 /* LoginTask.m in Sources */,
 				9E451CF125B041BF00E69CDE /* MeetingMenuSelectVC.m in Sources */,
 				414EF22B251C8F4B00F9D91A /* TimerButton.m in Sources */,
 				41B3B51D24EA99F6001FCFFA /* IMLoginVC.m in Sources */,
@@ -783,7 +739,7 @@
 				2DA99BEC27FDEE8500D4CE12 /* AppDelegate+MeetingExtension.m in Sources */,
 				41937CAD24B4611C00A06BF2 /* SVProgressHUD.m in Sources */,
 				41937CB324B4626100A06BF2 /* LoginInfoManager.m in Sources */,
-				4111C2D424D2B20500550390 /* Config.m in Sources */,
+				4111C2D424D2B20500550390 /* ServerConfig.m in Sources */,
 				41A1C98624A302F9003369D3 /* AppDelegate.m in Sources */,
 				419EE4DC2508BE36004F8984 /* SubDateCell.m in Sources */,
 				41A1C99724A302F9003369D3 /* main.m in Sources */,

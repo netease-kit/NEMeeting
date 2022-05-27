@@ -8,7 +8,7 @@
 
 #import "NEMeetingLoginViewController.h"
 #import "MeetingControlVC.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import "LoginInfoManager.h"
 
 @interface NEMeetingLoginViewController ()

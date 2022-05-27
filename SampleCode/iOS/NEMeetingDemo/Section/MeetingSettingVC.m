@@ -7,7 +7,7 @@
 
 #import "MeetingSettingVC.h"
 #import "MeetingConfigRepository.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import <Foundation/Foundation.h>
 
 NSString * const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";

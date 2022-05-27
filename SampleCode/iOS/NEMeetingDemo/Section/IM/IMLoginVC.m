@@ -7,7 +7,7 @@
 
 #import "IMLoginVC.h"
 #import "LoginInfoManager.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import <NIMSDK/NIMSDK.h>
 #import <CommonCrypto/CommonDigest.h>
 

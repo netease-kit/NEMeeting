@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AppSettingsVC.h"
-#import "Config.h"
+#import "ServerConfig.h"
 
 @implementation AppSettingsVC
 

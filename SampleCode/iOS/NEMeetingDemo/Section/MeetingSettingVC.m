@@ -7,7 +7,7 @@
 
 #import "MeetingSettingVC.h"
 #import "MeetingConfigRepository.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import <Foundation/Foundation.h>
 
 NSString * const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";
@@ -131,32 +131,57 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
         [section addFormRow:audioProfile];
     }
     
+    {
+        XLFormRowDescriptor *row = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingOpenAudio
+                                                                          rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                                            title:@"关闭全体静音/解除全体静音"];
+        row.height = 60.0;
+        row.value = @([MeetingConfigRepository getInstance].noMuteAllAudio);
+        row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+            [MeetingConfigRepository getInstance].noMuteAllAudio = [newValue boolValue];
+        };
+        [section addFormRow:row];
+    }
+    
+    {
+        XLFormRowDescriptor *row = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingOpenAudio
+                                                                          rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                                            title:@"关闭全体关闭视频/打开全体视频"];
+        row.height = 60.0;
+        row.value = @([MeetingConfigRepository getInstance].noMuteAllVideo);
+        row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+            [MeetingConfigRepository getInstance].noMuteAllVideo = [newValue boolValue];
+        };
+        [section addFormRow:row];
+    }
+
+    
     return form;
 }
 
 #pragma mark - Getter
 - (BOOL)showMeetingTime {
-    return [[NEMeetingSDK getInstance].getSettingsService isShowMyMeetingElapseTimeEnabled];
+    return [[NEMeetingKit getInstance].getSettingsService isShowMyMeetingElapseTimeEnabled];
 }
 
 - (void)setShowMeetingTime:(BOOL)showMeetingTime {
-    [[NEMeetingSDK getInstance].getSettingsService enableShowMyMeetingElapseTime:showMeetingTime];
+    [[NEMeetingKit getInstance].getSettingsService enableShowMyMeetingElapseTime:showMeetingTime];
 }
 
 - (BOOL)openVideoWhenJoin {
-    return [[NEMeetingSDK getInstance].getSettingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
+    return [[NEMeetingKit getInstance].getSettingsService isTurnOnMyVideoWhenJoinMeetingEnabled];
 }
 
 - (void)setOpenVideoWhenJoin:(BOOL)openVideoWhenJoin {
-    [[NEMeetingSDK getInstance].getSettingsService setTurnOnMyVideoWhenJoinMeeting:openVideoWhenJoin];
+    [[NEMeetingKit getInstance].getSettingsService setTurnOnMyVideoWhenJoinMeeting:openVideoWhenJoin];
 }
 
 - (BOOL)openAudioWhenJoin {
-    return [[NEMeetingSDK getInstance].getSettingsService isTurnOnMyAudioWhenJoinMeetingEnabled];
+    return [[NEMeetingKit getInstance].getSettingsService isTurnOnMyAudioWhenJoinMeetingEnabled];
 }
 
 - (void)setOpenAudioWhenJoin:(BOOL)openAudioWhenJoin {
-    [[NEMeetingSDK getInstance].getSettingsService setTurnOnMyAudioWhenJoinMeeting:openAudioWhenJoin];
+    [[NEMeetingKit getInstance].getSettingsService setTurnOnMyAudioWhenJoinMeeting:openAudioWhenJoin];
 }
 
 - (BOOL)openCustomServerUrl {
@@ -168,11 +193,11 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 }
 
 - (BOOL)audioAINSEnabled {
-    return [[NEMeetingSDK getInstance].getSettingsService isAudioAINSEnabled];
+    return [[NEMeetingKit getInstance].getSettingsService isAudioAINSEnabled];
 }
 
 - (void)setAudioAINSEnabled:(BOOL)enable {
-    [[NEMeetingSDK getInstance].getSettingsService enableAudioAINS:enable];
+    [[NEMeetingKit getInstance].getSettingsService enableAudioAINS:enable];
 }
 
 @end

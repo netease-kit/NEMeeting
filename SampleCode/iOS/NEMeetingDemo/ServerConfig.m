@@ -6,10 +6,8 @@
 //  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
 //
 
-#import "Config.h"
-//#import "HttpService.h"
 #import "LoginInfoManager.h"
-
+#import "ServerConfig.h"
 NSString *const kAppKey = @"Your_Meeting_App_Key";
 
 NSString * const kServerType = @"serverType";
@@ -25,9 +23,9 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     static NSDictionary *configs;
     if (configs == nil) {
         configs = @{
-            @"online": [[ServerConfig alloc] init: kAppKey
+            @"online": [[ServerConfig alloc] init:kAppKey
                                      appServerUrl: @""
-                                     sdkServerUrl: @""],
+                                     sdkServerUrl: @""]
         };
     }
     return configs;
@@ -118,14 +116,3 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
 
 @end
 
-
-
-@implementation Config
-
-+ (void)queryAccountInfoWithUserName:(NSString *)userName
-                            password:(NSString *)password
-                          completion:(QueryAccoutInfoBlock)completion {
-    //请根据自己情况获得真正的用户id和token,并调用completion返回
-}
-
-@end

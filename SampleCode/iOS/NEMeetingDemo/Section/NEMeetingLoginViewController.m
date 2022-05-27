@@ -8,7 +8,7 @@
 
 #import "NEMeetingLoginViewController.h"
 #import "MeetingControlVC.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import "LoginInfoManager.h"
 
 @interface NEMeetingLoginViewController ()
@@ -43,7 +43,7 @@
     
     WEAK_SELF(weakSelf);
     [SVProgressHUD showWithStatus:@"登录中"];
-    [[NEMeetingSDK getInstance] loginWithNEMeeting:account
+    [[NEMeetingKit getInstance] loginWithNEMeeting:account
                                 password:password
                              callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];

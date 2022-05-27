@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NEMeetingMenuItem *menuItem;
 
 @property (nonatomic, copy) void (^MenuItemDeleteCallback)(void);
-
+@property (nonatomic, copy) void (^menuItemSure)(void);
 @end
 
 #endif /* SelectedMenuItemEditVC_h */

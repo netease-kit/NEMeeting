@@ -33,18 +33,4 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *sdkServerUrl;
 
 @end
-
-
-@interface Config : NSObject
-
-typedef void(^QueryAccoutInfoBlock)(NSError *error, NSString *accountId, NSString *accountToken);
-
-//通过服务端查询真正的用户id和token用于登录
-//用户需要自行实现该方法，回调正确的用户id和token用于登录
-+ (void)queryAccountInfoWithUserName:(NSString *)userName
-                            password:(NSString *)password
-                          completion:(QueryAccoutInfoBlock)completion;
-
-@end
-
 NS_ASSUME_NONNULL_END

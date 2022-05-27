@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/entranceFragment"
-        android:name="com.netease.meetinglib.demo.view.EntranceFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.EntranceFragment"
         android:label="EntranceFragment"
         tools:layout="@layout/fragment_entrance">
         <action
@@ -17,9 +17,6 @@
             android:id="@+id/action_entranceFragment_to_loginWithTokenFragment"
             app:destination="@id/loginWithTokenFragment" />
         <action
-            android:id="@+id/action_entranceFragment_to_loginWithSSOFragment"
-            app:destination="@id/loginWithSSOFragment" />
-        <action
             android:id="@+id/action_entranceFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
@@ -28,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginWithNEMeetingFragment"
-        android:name="com.netease.meetinglib.demo.view.LoginWithNEMeetingFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.LoginWithNEMeetingFragment"
         android:label="LoginWithNEMeetingFragment"
         tools:layout="@layout/fragment_login_with_ne_meeting">
         <action
@@ -37,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginWithTokenFragment"
-        android:name="com.netease.meetinglib.demo.view.LoginWithTokenFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.LoginWithTokenFragment"
         android:label="LoginWithTokenFragment"
         tools:layout="@layout/fragment_login_with_token">
         <action
@@ -46,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginWithSSOFragment"
-        android:name="com.netease.meetinglib.demo.view.LoginWithSSOFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.LoginWithSSOFragment"
         android:label="LoginWithSSOFragment"
         tools:layout="@layout/fragment_login_with_sso">
         <action
@@ -55,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.netease.meetinglib.demo.view.HomeFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -79,27 +76,27 @@
     </fragment>
     <fragment
         android:id="@+id/joinMeetingFragment"
-        android:name="com.netease.meetinglib.demo.view.JoinMeetingFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.JoinMeetingFragment"
         android:label="JoinMeetingFragment"
         tools:layout="@layout/fragment_meeting_base" />
     <fragment
         android:id="@+id/startMeetingFragment"
-        android:name="com.netease.meetinglib.demo.view.StartMeetingFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.StartMeetingFragment"
         android:label="StartMeetingFragment"
         tools:layout="@layout/fragment_meeting_base"/>
     <fragment
         android:id="@+id/scheduleMeetingFragment"
-        android:name="com.netease.meetinglib.demo.view.ScheduleMeetingFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.ScheduleMeetingFragment"
         android:label="ScheduleMeetingFragment"
         tools:layout="@layout/fragment_schedule" />
     <fragment
         android:id="@+id/scheduleMeetingDetailFragment"
-        android:name="com.netease.meetinglib.demo.view.ScheduleMeetingDetailFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.ScheduleMeetingDetailFragment"
         android:label="ScheduleMeetingDetailFragment"
         tools:layout="@layout/fragment_schedule_detail" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.netease.meetinglib.demo.view.SettingsFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.SettingsFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

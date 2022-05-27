@@ -5,7 +5,7 @@
     android:id="@+id/settingsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.netease.meetinglib.demo.view.SettingsFragment">
+    tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.SettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,79 +13,6 @@
         android:background="@color/white"
         android:paddingBottom="8dp"
         tools:context=".MainActivity">
-
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/button_circle_shape"
-            android:text="退出登录"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_open_control"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/btn_control_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:text="遥控器设置"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_open_control"
-            app:layout_constraintTop_toBottomOf="@+id/btn_logout"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/configToolbarMenus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:text="自定义工具栏菜单"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
-
-            <Button
-                android:id="@+id/configMoreMenus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:text="自定义更多菜单"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toRightOf="@id/configToolbarMenus"
-                app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_open_control"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/button_circle_shape"
-            android:text="进入遥控器"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_open_beauty"
-            app:layout_constraintTop_toBottomOf="@+id/btn_control_setting" />
 
         <Button
             android:id="@+id/btn_open_beauty"
@@ -101,8 +28,7 @@
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_open_control"
-            app:layout_constraintTop_toBottomOf="@+id/btn_meeting_settings" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_meeting_settings"
@@ -119,5 +45,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_open_beauty" />
+
+        <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/button_circle_shape"
+                android:text="退出登录"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_meeting_settings" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

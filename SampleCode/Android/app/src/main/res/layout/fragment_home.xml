@@ -5,7 +5,7 @@
     android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.netease.meetinglib.demo.view.HomeFragment">
+    tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:paddingBottom="8dp"
         tools:context=".MainActivity">
 
-        <com.netease.meetinglib.demo.widget.EmptyRecyclerView
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.EmptyRecyclerView
             android:id="@+id/rv_meeting_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_start_meeting"
             app:layout_constraintVertical_bias="0.0" />
 
-        <com.netease.meetinglib.demo.widget.ImageTextButton
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
             android:id="@+id/img_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_start_meeting" />
 
-        <com.netease.meetinglib.demo.widget.ImageTextButton
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
             android:id="@+id/btn_join_meeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toTopOf="@+id/btn_start_meeting" />
 
 
-        <com.netease.meetinglib.demo.widget.ImageTextButton
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
             android:id="@+id/btn_schedule_meeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             app:layout_constraintTop_toTopOf="@+id/btn_start_meeting" />
 
 
-        <com.netease.meetinglib.demo.widget.ImageTextButton
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
             android:id="@+id/btn_start_meeting"
             android:layout_width="wrap_content"
             android:layout_height="146dp"
@@ -94,7 +94,7 @@
             app:layout_constraintRight_toLeftOf="@+id/btn_join_meeting"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.netease.meetinglib.demo.widget.ImageTextButton
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
             android:id="@+id/btn_setting"
             android:layout_width="60dp"
             android:layout_height="60dp"

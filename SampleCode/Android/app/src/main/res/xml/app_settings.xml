@@ -65,8 +65,16 @@
         app:key="meeting-logger-path-config"
         app:title="自定义日志路径配置"
         app:summary="重启应用后生效"
-        app:defaultValue="/sdcard/Android/data/com.netease.meetinglib.demo/files/log/"
+        app:defaultValue="/sdcard/Android/data/com.netease.yunxin.kit.meeting.sampleapp/files/log/"
         app:allowDividerAbove="true"
         style="@style/MyEditTextPreference"
         />
+
+    <SwitchPreferenceCompat
+            app:key="developer-mode"
+            app:title="开发者模式"
+            app:defaultValue="true"
+            style="@style/MySwitchPreference"
+            />
+
 </PreferenceScreen>

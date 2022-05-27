@@ -7,11 +7,12 @@ on:
       - main
       - develop
       - release/*
+      - v*
   pull_request:
     branches: 
       - main
       - develop
-      - release/*
+      - v*
 
 jobs:
   build:

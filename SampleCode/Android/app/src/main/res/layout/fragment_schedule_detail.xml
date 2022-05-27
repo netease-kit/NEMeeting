@@ -5,7 +5,7 @@
     android:id="@+id/scheduleMeetingDetailFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.netease.meetinglib.demo.view.ScheduleMeetingDetailFragment">
+    tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.ScheduleMeetingDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

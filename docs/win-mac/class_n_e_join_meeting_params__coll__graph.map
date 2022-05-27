@@ -1,5 +1,0 @@
-<map id="NEJoinMeetingParams" name="NEJoinMeetingParams">
-<area shape="rect" id="node1" title="加入会议参数" alt="" coords="5,155,160,181"/>
-<area shape="rect" id="node2" href="$class_n_e_meeting_params.html" title="菜单项当前的状态（即对应当前显示的名称），默认为1，1是itemTitle， 2是itemTitle2" alt="" coords="17,80,148,107"/>
-<area shape="rect" id="node3" href="$class_n_e_object.html" title="公共对象" alt="" coords="43,5,122,32"/>
-</map>

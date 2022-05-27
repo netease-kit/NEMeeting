@@ -14,6 +14,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.netease.meetinglib.demo.data.ServerConfig;
 import com.netease.meetinglib.demo.nim.NIMInitializer;
 import com.netease.meetinglib.demo.utils.SPUtils;
 import com.netease.meetinglib.sdk.NELogLevel;
@@ -23,6 +24,7 @@ import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NEMeetingSDKConfig;
 import com.netease.meetinglib.sdk.config.NEForegroundServiceConfig;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -91,8 +93,9 @@ public class SdkInitializer {
     
     private void initializeSdk() {
         Log.i(TAG, "initializeSdk");
+        ServerConfig serverConfig = MeetingApplication.getInstance().getServerConfig();
         NEMeetingSDKConfig config = new NEMeetingSDKConfig();
-        config.appKey = context.getString(R.string.appkey);
+        config.appKey = serverConfig.getAppKey();
         config.reuseNIM = NIMInitializer.getInstance().isReuseNIMEnabled();
         config.appName = context.getString(R.string.app_name);
         config.useAssetServerConfig = SPUtils.getInstance().getBoolean("use-asset-server-config");

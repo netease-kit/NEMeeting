@@ -12,6 +12,10 @@
 		2D38F24B25837EC800406DCC /* SelectedMenuItemEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38F24725837EC800406DCC /* SelectedMenuItemEditVC.m */; };
 		2D7233F926034622004E39F6 /* IMLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7233F726034622004E39F6 /* IMLoginVC.m */; };
 		2D7233FA26034622004E39F6 /* IMLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7233F826034622004E39F6 /* IMLoginVC.xib */; };
+		2D8C999526CB66D3008FDDE9 /* MeetingConfigRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8C999426CB66D3008FDDE9 /* MeetingConfigRepository.m */; };
+		2D8C999926CB670D008FDDE9 /* SceneSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8C999726CB670D008FDDE9 /* SceneSettingsViewController.m */; };
+		2D8C999A26CB670D008FDDE9 /* SceneSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D8C999826CB670D008FDDE9 /* SceneSettingsViewController.xib */; };
+		2D8C999D26CB6734008FDDE9 /* AppSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8C999C26CB6734008FDDE9 /* AppSettingsVC.m */; };
 		3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */; };
 		3AAF4F452559739000EB25E5 /* SSOLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF4F442559739000EB25E5 /* SSOLoginViewController.m */; };
 		410B431124AB289600017FA6 /* CheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B431024AB289600017FA6 /* CheckBox.m */; };
@@ -93,6 +97,13 @@
 		2D7233F626034622004E39F6 /* IMLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMLoginVC.h; sourceTree = "<group>"; };
 		2D7233F726034622004E39F6 /* IMLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMLoginVC.m; sourceTree = "<group>"; };
 		2D7233F826034622004E39F6 /* IMLoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IMLoginVC.xib; sourceTree = "<group>"; };
+		2D8C999326CB66D3008FDDE9 /* MeetingConfigRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingConfigRepository.h; sourceTree = "<group>"; };
+		2D8C999426CB66D3008FDDE9 /* MeetingConfigRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingConfigRepository.m; sourceTree = "<group>"; };
+		2D8C999626CB670D008FDDE9 /* SceneSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSettingsViewController.h; sourceTree = "<group>"; };
+		2D8C999726CB670D008FDDE9 /* SceneSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneSettingsViewController.m; sourceTree = "<group>"; };
+		2D8C999826CB670D008FDDE9 /* SceneSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneSettingsViewController.xib; sourceTree = "<group>"; };
+		2D8C999B26CB6734008FDDE9 /* AppSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettingsVC.h; sourceTree = "<group>"; };
+		2D8C999C26CB6734008FDDE9 /* AppSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsVC.m; sourceTree = "<group>"; };
 		3AAF4F402559733700EB25E5 /* NEMeetingLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEMeetingLoginViewController.h; sourceTree = "<group>"; };
 		3AAF4F412559733700EB25E5 /* NEMeetingLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NEMeetingLoginViewController.m; sourceTree = "<group>"; };
 		3AAF4F432559739000EB25E5 /* SSOLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSOLoginViewController.h; sourceTree = "<group>"; };
@@ -269,6 +280,8 @@
 		410B434224AC665600017FA6 /* Section */ = {
 			isa = PBXGroup;
 			children = (
+				2D8C999B26CB6734008FDDE9 /* AppSettingsVC.h */,
+				2D8C999C26CB6734008FDDE9 /* AppSettingsVC.m */,
 				41A1C98A24A302F9003369D3 /* MainViewController.h */,
 				41A1C98B24A302F9003369D3 /* MainViewController.m */,
 				410B431824AB294100017FA6 /* LoginViewController.h */,
@@ -288,6 +301,9 @@
 				414EF1E9251AE73F00F9D91A /* MeetingActionVC.h */,
 				414EF1EA251AE73F00F9D91A /* MeetingActionVC.m */,
 				414EF1EB251AE73F00F9D91A /* MeetingActionVC.xib */,
+				2D8C999626CB670D008FDDE9 /* SceneSettingsViewController.h */,
+				2D8C999726CB670D008FDDE9 /* SceneSettingsViewController.m */,
+				2D8C999826CB670D008FDDE9 /* SceneSettingsViewController.xib */,
 				41228FA924E69D7D00C7B717 /* MeetingSettingVC.h */,
 				41228FAA24E69D7D00C7B717 /* MeetingSettingVC.m */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
@@ -494,6 +510,8 @@
 				41A1C99224A302F9003369D3 /* LaunchScreen.storyboard */,
 				41A1C99524A302F9003369D3 /* Info.plist */,
 				41A1C99624A302F9003369D3 /* main.m */,
+				2D8C999326CB66D3008FDDE9 /* MeetingConfigRepository.h */,
+				2D8C999426CB66D3008FDDE9 /* MeetingConfigRepository.m */,
 				41F8C3A524B5971E0039301B /* strip_archs.sh */,
 			);
 			path = NEMeetingDemo;
@@ -591,6 +609,7 @@
 				419EE4D52508BA23004F8984 /* SubscribeMeetingListVC.xib in Resources */,
 				410B432624AB2FF800017FA6 /* MeetingControlVC.xib in Resources */,
 				41A1C99424A302F9003369D3 /* LaunchScreen.storyboard in Resources */,
+				2D8C999A26CB670D008FDDE9 /* SceneSettingsViewController.xib in Resources */,
 				41A1C99124A302F9003369D3 /* Assets.xcassets in Resources */,
 				419EE4CF2508ABA3004F8984 /* SubMeetingCell.xib in Resources */,
 				41A1C98F24A302F9003369D3 /* Main.storyboard in Resources */,
@@ -690,11 +709,13 @@
 				9E6D55DD25B528F700A05CB2 /* MeetingMenuSelectVC.m in Sources */,
 				419EE4CE2508ABA3004F8984 /* SubMeetingCell.m in Sources */,
 				41937CAE24B4611C00A06BF2 /* SVIndefiniteAnimatedView.m in Sources */,
+				2D8C999D26CB6734008FDDE9 /* AppSettingsVC.m in Sources */,
 				410B431124AB289600017FA6 /* CheckBox.m in Sources */,
 				419EE5192509F413004F8984 /* NEFromTitleInputCell.m in Sources */,
 				3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */,
 				41A1C98C24A302F9003369D3 /* MainViewController.m in Sources */,
 				419EE4F52508D3DB004F8984 /* NEFromLabelCell.m in Sources */,
+				2D8C999926CB670D008FDDE9 /* SceneSettingsViewController.m in Sources */,
 				2D7233F926034622004E39F6 /* IMLoginVC.m in Sources */,
 				9E6D55DC25B528F700A05CB2 /* MeetingMenuItemCell.m in Sources */,
 				419EE4F22508D2D1004F8984 /* NEFromCellFactory.m in Sources */,
@@ -713,6 +734,7 @@
 				410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m in Sources */,
 				419EE5122509C202004F8984 /* NEFromRow.m in Sources */,
 				419EE52C250A4B96004F8984 /* NEDateItem.m in Sources */,
+				2D8C999526CB66D3008FDDE9 /* MeetingConfigRepository.m in Sources */,
 				419EE51B250A0501004F8984 /* NEFromTitleSwitchCell.m in Sources */,
 				2D38F24B25837EC800406DCC /* SelectedMenuItemEditVC.m in Sources */,
 				419EE51A250A018D004F8984 /* NEFromDatePicker.m in Sources */,

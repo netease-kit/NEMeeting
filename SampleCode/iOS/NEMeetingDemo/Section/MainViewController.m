@@ -12,6 +12,8 @@
 #import "CustomViewController.h"
 #import "TimerButton.h"
 #import "MeetingControlVC.h"
+#import "AppSettingsVC.h"
+#import "MeetingSettingVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
@@ -71,6 +73,16 @@
     if (ret) {
         sender.hidden = YES;
     }
+}
+
+- (IBAction)onAppSettings:(id)sender {
+    AppSettingsVC *vc = [[AppSettingsVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)onMeetingSettings:(id)sender {
+    MeetingSettingVC *vc = [[MeetingSettingVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)setupUI {
@@ -301,6 +313,40 @@
             [_preVC dismissViewControllerAnimated:YES completion:nil];
         }
         _restoreMeetingBtn.hidden = YES;
+        
+        if(event.status == MEETING_STATUS_DISCONNECTING){
+            NSString *toastString = [NSString stringWithFormat:@"onMeetingDisconnected: %@", [self stringifyDisconnectedReason: event.arg]];
+            [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:CSToastPositionCenter];
+        }
+    }
+}
+
+- (NSString *) stringifyDisconnectedReason:(NSInteger)disconnectCode {
+    switch (disconnectCode) {
+        case MEETING_DISCONNECTING_BY_HOST:
+             return @"remove_by_host";
+        case MEETING_DISCONNECTING_BY_NORMAL:
+             return @"leave_by_self";
+        case MEETING_DISCONNECTING_CLOSED_BY_HOST:
+             return @"close_by_host";
+        case MEETING_DISCONNECTING_CLOSED_BY_SELF_AS_HOST:
+             return @"close_by_self";
+        case MEETING_DISCONNECTING_LOGIN_ON_OTHER_DEVICE:
+             return @"login_on_other_device";
+        case MEETING_DISCONNECTING_AUTH_INFO_EXPIRED:
+             return @"auth_inf_expired";
+        case MEETING_DISCONNECTING_NOT_EXIST:
+             return @"not_exist";
+        case MEETING_DISCONNECTING_SYNC_DATA_ERROR:
+             return @"sync_data_error";
+        case MEETING_DISCONNECTING_RTC_INIT_ERROR:
+             return @"rtc_init_error";
+        case MEETING_DISCONNECTING_JOIN_CHANNEL_ERROR:
+             return @"join_channel_error";
+        case MEETING_DISCONNECTING_JOIN_TIMEOUT:
+             return @"join_timeout";
+        default:
+            return @"unkown";
     }
 }
 

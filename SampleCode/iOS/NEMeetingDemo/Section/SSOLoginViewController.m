@@ -51,7 +51,7 @@
     NSDictionary *ssoDict = notification.object;
     NSString *appKey = [ssoDict objectForKey:@"appKey"];
     NSString *ssoToken = [ssoDict objectForKey:@"ssoToken"];
-    if (![kAppKey isEqualToString:appKey]) {
+    if (![ServerConfig.current.appKey isEqualToString:appKey]) {
         NSString *msg = @"和当前初始化的appKey不同，不能进行sso登录";
         [self.view makeToast:msg];
         return;
@@ -74,7 +74,7 @@
 - (IBAction)onLoginAction:(id)sender {
     NSString *corpCode = _accountInput.text;
     corpCode = [self dealWithSpecialCharacter: corpCode];
-    NSString *urlString = [NSString stringWithFormat:@"https://meeting-api.netease.im/v1/auth/sso/authorize?ssoAppNamespace=%@&ssoClientLoginUrl=nemeetingdemo://meeting.netease.im/", corpCode];
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/sso/authorize?ssoAppNamespace=%@&ssoClientLoginUrl=nemeetingdemo://meeting.netease.im/", ServerConfig.current.appServerUrl, corpCode];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
 

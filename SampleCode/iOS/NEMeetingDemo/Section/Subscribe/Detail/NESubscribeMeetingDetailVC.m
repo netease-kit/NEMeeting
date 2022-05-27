@@ -135,6 +135,47 @@
             self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2]];
         }
     }
+    
+    {
+        NEFromGroup *extraDataGroup = [[NEFromGroup alloc] init];
+        NEFromRow *extraDataRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingExtraData"];
+        extraDataRow.title = @"扩展字段";
+        extraDataRow.value = _item.extraData;
+        [extraDataGroup.rows addObject:extraDataRow];
+        [self.groups addObject: extraDataGroup];
+    }
+    
+    if (_item.settings != nil && _item.settings.currentAudioControl != nil) {
+        NEFromGroup *group = [[NEFromGroup alloc] init];
+        NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMute"];
+        autoMuteRow.title = @"自动静音";
+        autoMuteRow.subTitle = @"参会者加入会议时自动静音";
+        autoMuteRow.value = @(_item.settings.currentAudioControl.attendeeOff != AttendeeOffTypeNone);
+        
+        NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAudioAllowSelfOn"];
+        allowSelfOnRow.title = @"允许自行解除静音";
+        allowSelfOnRow.subTitle = @"允许参会者自行解除静音";
+        allowSelfOnRow.value = @(_item.settings.currentAudioControl.attendeeOff == AttendeeOffTypeOffAllowSelfOn);
+        
+        [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
+        [self.groups addObject: group];
+    }
+    
+    if (_item.settings != nil && _item.settings.currentVideoControl != nil) {
+        NEFromGroup *group = [[NEFromGroup alloc] init];
+        NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMuteVideo"];
+        autoMuteRow.title = @"自动关闭视频";
+        autoMuteRow.subTitle = @"参会者加入会议时自动关闭视频";
+        autoMuteRow.value = @(_item.settings.currentVideoControl.attendeeOff != AttendeeOffTypeNone);
+        
+        NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingVideoAllowSelfOn"];
+        allowSelfOnRow.title = @"允许自行打开视频";
+        allowSelfOnRow.subTitle = @"允许参会者自行打开视频";
+        allowSelfOnRow.value = @(_item.settings.currentVideoControl.attendeeOff == AttendeeOffTypeOffAllowSelfOn);
+        
+        [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
+        [self.groups addObject: group];
+    }
 }
 
 - (void)updateWithMeetingStatus {

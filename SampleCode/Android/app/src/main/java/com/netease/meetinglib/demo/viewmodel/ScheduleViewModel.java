@@ -16,6 +16,7 @@ import com.netease.meetinglib.sdk.NEScheduleMeetingStatusListener;
 public class ScheduleViewModel extends ViewModel {
     public MutableLiveData<String> passWord = new MutableLiveData<>();
     public MutableLiveData<String> tittle = new MutableLiveData<>();
+    public MutableLiveData<String> extraData = new MutableLiveData<>();
     public MutableLiveData<NEMeetingItem> itemMutableLiveData = new MutableLiveData<>();
 
     private MeetingDataRepository mRepository = MeetingDataRepository.getInstance();

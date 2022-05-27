@@ -9,6 +9,7 @@
 #import "CheckBox.h"
 #import "MeetingSettingVC.h"
 #import "MeetingMenuSelectVC.h"
+#import "MeetingConfigRepository.h"
 
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (weak, nonatomic) IBOutlet UITextField *passworkInput;
+@property (weak, nonatomic) IBOutlet UITextField *tagInput;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoin;
@@ -41,6 +43,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (nonatomic, readonly) BOOL disableCameraSwitch;
 @property (nonatomic, readonly) BOOL disableAudioModeSwitch;
 @property (nonatomic, readonly) BOOL disableRename;
+@property (nonatomic, readonly) BOOL disableSip;
+@property (nonatomic, readonly) BOOL showMemberTag;
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
@@ -87,11 +91,22 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"关闭音频模式切换",
                                               @"显示白板窗口",
                                               @"隐藏白板菜单按钮",
-                                              @"关闭会中改名"]];
-    [_settingCheckBox setItemSelected:YES index:2];
-
+                                              @"关闭会中改名",
+                                              @"隐藏Sip菜单",
+                                              @"显示用户角色标签"
+                                            ]];
     _settingCheckBox.delegate = self;
 }
+
+- (IBAction)onLeaveCurrentMeeting:(id)sender {
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK.getInstance getMeetingService] leaveCurrentMeeting:NO callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        }
+    }];
+}
+
 
 #pragma mark - Action
 - (IBAction)onEnterMeetingAction:(id)sender {
@@ -99,6 +114,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     params.meetingId =  _meetingIdInput.text;
     params.displayName = _nickInput.text;
     params.password = _passworkInput.text;
+    params.tag = _tagInput.text;
     
     NEJoinMeetingOptions *options = nil;
     if (![self useDefaultConfig]) {
@@ -116,11 +132,24 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noSwitchAudioMode = [self disableAudioModeSwitch];
         options.noWhiteBoard = [self hideWhiteboardMenu];
         options.noRename = [self disableRename];
+        options.noSip = [self disableSip];
+        options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
+        options.audioAINSEnabled = [[[NEMeetingSDK getInstance] getSettingsService] isAudioAINSEnabled];
+        options.showMemberTag = [self showMemberTag];
         //白板相关设置
         if ([self showWhiteboard]) {
             //设置默认展示白板窗口
             options.defaultWindowMode = NEMeetingWindowModeWhiteBoard;
         }
+        if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
+            options.audioProfile = [NEAudioProfile createMusicAudioProfile];
+        } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
+            options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
+        }
+        if (options.audioProfile != nil) {
+            options.audioProfile.enableAINS = options.audioAINSEnabled;
+        }
+        
     }
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
     options.fullMoreMenuItems = _fullMoreMenuItems;
@@ -308,6 +337,14 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (BOOL)disableRename {
     return [_settingCheckBox getItemSelectedAtIndex:11];
+}
+
+- (BOOL)disableSip {
+    return [_settingCheckBox getItemSelectedAtIndex:12];
+}
+
+- (BOOL)showMemberTag {
+    return [_settingCheckBox getItemSelectedAtIndex:13];
 }
 
 @end

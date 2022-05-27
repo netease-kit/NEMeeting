@@ -1,9 +1,0 @@
-<map id="callback_interface.h" name="callback_interface.h">
-<area shape="rect" id="node1" title="通用回调头文件" alt="" coords="133,5,271,32"/>
-<area shape="rect" id="node2" href="$nemeeting__sdk__interface__export_8h.html" title="库导入导出定义头文件" alt="" coords="5,229,172,271"/>
-<area shape="rect" id="node3" href="$build__config_8h.html" title="编译配置头文件" alt="" coords="251,237,353,263"/>
-<area shape="rect" id="node4" title=" " alt="" coords="163,80,241,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="265,80,320,107"/>
-<area shape="rect" id="node6" href="$error_8h.html" title="错误码头文件" alt="" coords="81,80,139,107"/>
-<area shape="rect" id="node7" href="$public__define_8h.html" title="公共对象定义头文件" alt="" coords="81,155,189,181"/>
-</map>

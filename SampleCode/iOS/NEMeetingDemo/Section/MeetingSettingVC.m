@@ -6,10 +6,15 @@
 //
 
 #import "MeetingSettingVC.h"
+#import "MeetingConfigRepository.h"
+#import "Config.h"
+#import <Foundation/Foundation.h>
 
 NSString * const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";
 NSString * const kSettingsJoinMeetingOpenVideo = @"kSettingsJoinMeetingOpenVideo";
 NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio";
+NSString * const kSettingsAudioAINS = @"kSettingsAudioAINS";
+NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 
 @interface MeetingSettingVC ()
 
@@ -17,6 +22,7 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
 @property (nonatomic, assign) BOOL openVideoWhenJoin;
 @property (nonatomic, assign) BOOL openAudioWhenJoin;
 @property (nonatomic, assign) BOOL openCustomServerUrl;
+@property (nonatomic, assign) BOOL audioAINSEnabled;
 
 
 @end
@@ -34,11 +40,14 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
 }
 
 - (XLFormDescriptor *)setupForm {
+    __weak typeof(self) weakSelf = self;
     XLFormDescriptor *form = [XLFormDescriptor formDescriptorWithTitle:@"会议设置"];
+    
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor formSection];
+    section.title = @"入会配置";
     [form addFormSection:section];
     
-    __weak typeof(self) weakSelf = self;
+    
     XLFormRowDescriptor *row0 = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsShowMeetingTime
                                                                       rowType:XLFormRowDescriptorTypeBooleanSwitch
                                                                         title:@"显示会议持续时间"];
@@ -77,6 +86,51 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
         weakSelf.openCustomServerUrl = [newValue boolValue];
     };
     [section addFormRow:row3];
+    
+    XLFormRowDescriptor *joinTimeoutItem = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingTimeout
+        rowType:XLFormRowDescriptorTypeInteger
+        title:@"入会超时时间(毫秒)"];
+    joinTimeoutItem.height = 60.0;
+    joinTimeoutItem.value = @([[MeetingConfigRepository getInstance] joinMeetingTimeout]);
+    joinTimeoutItem.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        NSInteger value = 0;
+        if (newValue && (NSNull *)newValue != [NSNull null]) {
+            value = [newValue integerValue];
+        }
+        [MeetingConfigRepository getInstance].joinMeetingTimeout = value;
+    };
+    [section addFormRow:joinTimeoutItem];
+    
+    XLFormRowDescriptor *audioAINS = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsAudioAINS
+                                                                      rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                                        title:@"语音智能降噪"];
+    audioAINS.height = 60.0;
+    audioAINS.value = @(self.audioAINSEnabled);
+    audioAINS.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        weakSelf.audioAINSEnabled = [newValue boolValue];
+    };
+    [section addFormRow:audioAINS];
+    
+    {
+        XLFormRowDescriptor *audioProfile = [XLFormRowDescriptor
+            formRowDescriptorWithTag:@"audioProfile"
+            rowType:XLFormRowDescriptorTypeSelectorActionSheet
+            title:@"音频模式"];
+        audioProfile.height = 60.0;
+        NSMutableArray * selectorOptions = [[NSMutableArray alloc] init];
+        for(id key in MeetingConfigRepository.audioProfiles) {
+            [selectorOptions addObject: [XLFormOptionsObject formOptionsObjectWithValue:key displayText:[MeetingConfigRepository.audioProfiles objectForKey:key]]];
+        }
+        audioProfile.selectorOptions = selectorOptions;
+        audioProfile.value = [XLFormOptionsObject formOptionsOptionForValue: [MeetingConfigRepository getInstance].audioProfile fromOptions:selectorOptions];
+        audioProfile.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+            if (newValue && (NSNull *)newValue != [NSNull null]) {
+                [[MeetingConfigRepository getInstance] setAudioProfile: [newValue formValue]];
+            }
+        };
+        [section addFormRow:audioProfile];
+    }
+    
     return form;
 }
 
@@ -111,6 +165,14 @@ NSString * const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio
 
 - (void)setOpenCustomServerUrl:(BOOL)openCustomServerUrl {
     [[NSUserDefaults standardUserDefaults] setBool:openCustomServerUrl forKey:@"openCustomServerUrl"];
+}
+
+- (BOOL)audioAINSEnabled {
+    return [[NEMeetingSDK getInstance].getSettingsService isAudioAINSEnabled];
+}
+
+- (void)setAudioAINSEnabled:(BOOL)enable {
+    [[NEMeetingSDK getInstance].getSettingsService enableAudioAINS:enable];
 }
 
 @end

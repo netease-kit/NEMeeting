@@ -11,6 +11,8 @@
 #import <NIMSDK/NIMSDK.h>
 #import <CommonCrypto/CommonDigest.h>
 
+NSString *const kIMAppKey = @"Your_NIM_AppKey";
+
 @interface IMLoginVC ()
 
 @property (weak, nonatomic) IBOutlet UITextField *imAccidInput;

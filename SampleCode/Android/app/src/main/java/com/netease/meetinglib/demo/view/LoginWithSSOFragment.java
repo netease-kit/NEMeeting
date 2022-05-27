@@ -11,6 +11,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.netease.meetinglib.demo.BuildConfig;
+import com.netease.meetinglib.demo.MeetingApplication;
 import com.netease.meetinglib.demo.SdkAuthenticator;
 import com.netease.meetinglib.demo.adapter.TextWatcherAdapter;
 import com.netease.meetinglib.demo.base.BaseFragment;
@@ -31,7 +33,7 @@ public class LoginWithSSOFragment extends BaseFragment<FragmentLoginWithSsoBindi
 
             String ssoAppNamespace = binding.edtLoginCorpCode.getText().toString().trim();
             String ssoClientLoginUrl = "nemeetingdemo://meeting.netease.im/";
-            String targetUrl = "https://meeting-api.netease.im/v1/auth/sso/authorize?ssoAppNamespace=" + ssoAppNamespace + "&ssoClientLoginUrl=" + Uri.encode(ssoClientLoginUrl);
+            String targetUrl = getBaseUrl() + "/v1/auth/sso/authorize?ssoAppNamespace=" + ssoAppNamespace + "&ssoClientLoginUrl=" + Uri.encode(ssoClientLoginUrl);
             Uri uri = Uri.parse(targetUrl);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
@@ -54,5 +56,9 @@ public class LoginWithSSOFragment extends BaseFragment<FragmentLoginWithSsoBindi
     @Override
     protected FragmentLoginWithSsoBinding getViewBinding() {
         return FragmentLoginWithSsoBinding.inflate(getLayoutInflater());
+    }
+
+    private String getBaseUrl() {
+        return MeetingApplication.getInstance().getServerConfig().getAppServerUrl();
     }
 }

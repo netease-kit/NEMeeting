@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     private void requestPermissions() {
         PermissionX.init(this)
-                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)
                 .onExplainRequestReason((scope, deniedList) -> scope.showRequestReasonDialog(deniedList, "即将申请的权限是程序必须依赖的权限", "我已明白"))
                 .onForwardToSettings((scope, deniedList) -> scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "我已明白"))
                 .request((allGranted, grantedList, deniedList) -> {
@@ -166,7 +166,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                                             NEMenuClickInfo clickInfo,
                                             NEMeetingInfo meetingInfo, NEMenuStateController stateController) {
             Log.d("OnCustomMenuListener", "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
-            if(clickInfo.getItemId()==102){
+            if (clickInfo.getItemId() == 100) {
+                MeetingSettingsActivity.start(context);
+            } else if(clickInfo.getItemId()==102){
                 handleAudioManager(context);
             }else{
                 AlertDialogUtil.setAlertDialog(new AlertDialog.Builder(context)
@@ -329,10 +331,24 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.leave_meeting:
+                leaveCurrentMeeting(false);
+                break;
+            case R.id.close_meeting:
+                leaveCurrentMeeting(true);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private void leaveCurrentMeeting(boolean closeIfHost) {
+        NEMeetingService meetingService = NEMeetingSDK.getInstance().getMeetingService();
+        if (meetingService != null) {
+            meetingService.leaveCurrentMeeting(closeIfHost,
+                    new ToastCallback<>(this, String.format("%s会议", closeIfHost ? "结束" : "离开")));
+        }
     }
 
     @Override

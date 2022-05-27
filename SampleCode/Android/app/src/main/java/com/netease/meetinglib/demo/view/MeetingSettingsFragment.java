@@ -6,12 +6,16 @@
 package com.netease.meetinglib.demo.view;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceDataStore;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.netease.meetinglib.demo.R;
+import com.netease.meetinglib.demo.data.MeetingConfigRepository;
 import com.netease.meetinglib.sdk.NEMeetingSDK;
 import com.netease.meetinglib.sdk.NESettingsService;
 
@@ -23,6 +27,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         getPreferenceManager().setPreferenceDataStore(new DataStore());
         setPreferencesFromResource(R.xml.meeting_settings, rootKey);
+        ((EditTextPreference) findPreference(DataStore.JOIN_TIMEOUT))
+                .setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
     }
 
     private static class DataStore extends PreferenceDataStore {
@@ -30,6 +36,39 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
         private final static String ENABLE_SHOW_MEETING_TIME = "enable_show_meeting_time";
         private final static String ENABLE_VIDEO = "enable_video";
         private final static String ENABLE_AUDIO = "enable_audio";
+        private final static String ENABLE_AUDIO_AINS = "enable_audio_ains";
+        private final static String JOIN_TIMEOUT = "join_timeout_millis";
+        private final static String AUDIO_PROFILE = "audioProfile";
+
+        @Nullable
+        @Override
+        public String getString(String key, @Nullable String defValue) {
+            switch (key) {
+                case JOIN_TIMEOUT:
+                    return String.valueOf(MeetingConfigRepository.INSTANCE.getJoinTimeout());
+                case AUDIO_PROFILE:
+                    return MeetingConfigRepository.INSTANCE.getAudioProfile();
+            }
+            return super.getString(key, defValue);
+        }
+
+        @Override
+        public void putString(String key, @Nullable String value) {
+            switch (key) {
+                case JOIN_TIMEOUT:
+                    try {
+                        MeetingConfigRepository.INSTANCE.setJoinTimeout(Integer.parseInt(value));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case AUDIO_PROFILE:
+                    MeetingConfigRepository.INSTANCE.setAudioProfile(value);
+                    break;
+                default:
+                    super.putString(key, value);
+            }
+        }
 
         @Override
         public boolean getBoolean(String key, boolean defValue) {
@@ -43,6 +82,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                         value = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();break;
                     case ENABLE_AUDIO:
                         value = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();break;
+                    case ENABLE_AUDIO_AINS:
+                        value = settingsService.isAudioAINSEnabled();break;
                 }
             }
             Log.i(TAG, "getBoolean: " + key + '=' + value);
@@ -61,6 +102,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                         settingsService.setTurnOnMyVideoWhenJoinMeeting(value);break;
                     case ENABLE_AUDIO:
                         settingsService.setTurnOnMyAudioWhenJoinMeeting(value);break;
+                    case ENABLE_AUDIO_AINS:
+                        settingsService.enableAudioAINS(value);break;
                 }
             }
         }

@@ -11,13 +11,16 @@
 #import "MeetingMenuSelectVC.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <NEMeetingSDK/NEMeetingSDK.h>
+#import "SceneSettingsViewController.h"
+#import <YYModel/YYModel.h>
+#import "MeetingConfigRepository.h"
 
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuTypeToolbar = 1,
     MeetingMenuTypeMore = 2,
 };
 
-@interface StartMeetingVC ()<CheckBoxDelegate,MeetingMenuSelectVCDelegate,MeetingServiceListener>
+@interface StartMeetingVC ()<CheckBoxDelegate,MeetingMenuSelectVCDelegate,MeetingServiceListener, SceneSettingsDelegate>
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
 @property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
@@ -26,8 +29,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
+@property (weak, nonatomic) IBOutlet UITextField *tagInput;
+@property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 
 @property (nonatomic, copy) NSString *meetingId;
+@property (nonatomic, copy) NSString *sceneJsonString;
 
 @property (nonatomic, readonly) BOOL openVideoWhenJoinMeeting;
 @property (nonatomic, readonly) BOOL openMicWhenJoinMeeting;
@@ -41,6 +47,12 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (nonatomic, readonly) BOOL disableCameraSwitch;
 @property (nonatomic, readonly) BOOL disableAudioModeSwitch;
 @property (nonatomic, readonly) BOOL disableRename;
+@property (nonatomic, readonly) BOOL disableSip;
+@property (nonatomic, readonly) BOOL showMemberTag;
+@property (nonatomic, assign) BOOL audioOffAllowSelfOn;
+@property (nonatomic, assign) BOOL audioOffNotAllowSelfOn;
+@property (nonatomic, assign) BOOL videoOffAllowSelfOn;
+@property (nonatomic, assign) BOOL videoOffNotAllowSelfOn;
 
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
@@ -90,9 +102,15 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"展示白板",//10
                                               @"隐藏白板菜单按钮",
                                               @"关闭会中改名",
-                                              @"开启云录制"
+                                              @"开启云录制",
+                                              @"隐藏Sip菜单",
+                                              @"显示用户角色标签",
+                                              @"自动静音(可解除)",
+                                              @"自动静音(不可解除)",
+                                              @"自动关视频(可解除)",
+                                              @"自动关视频(不可解除)",
     ]];
-    [_settingCheckBox setItemSelected:YES index:2];
+//    [_settingCheckBox setItemSelected:YES index:2];
     _settingCheckBox.delegate = self;
 }
 - (void)didSelectedItems:(NSArray<NEMeetingMenuItem *> *)menuItems {
@@ -104,11 +122,47 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     [self showSeletedItemResult:menuItems];
 }
 
+- (IBAction)doCloseMeeting:(id)sender {
+    WEAK_SELF(weakSelf);
+    [[NEMeetingSDK.getInstance getMeetingService] leaveCurrentMeeting:YES callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        if (resultCode != ERROR_CODE_SUCCESS) {
+            [weakSelf showErrorCode:resultCode msg:resultMsg];
+        }
+    }];
+}
+
 #pragma mark - Function
 - (void)doStartMeeting {
     NEStartMeetingParams *params = [[NEStartMeetingParams alloc] init];
     params.displayName = _nickInput.text;
     params.meetingId = self.meetingId ? : _meetingIdInput.text;
+    if (_passwordInput.text.length > 0) {
+        params.password = _passwordInput.text;
+    }
+    params.tag = _tagInput.text;
+    if (_sceneJsonString) {
+        params.scene = [NEMeetingScene yy_modelWithJSON: _sceneJsonString];
+    }
+    if (_menuTitleInput.text.length > 0) {
+        params.extraData = _menuTitleInput.text;
+    }
+    
+    NSMutableArray<NEMeetingControl*> *controls = [[NSMutableArray alloc]init];
+    if (self.audioOffAllowSelfOn || self.audioOffNotAllowSelfOn) {
+        NEMeetingControl* control = [NEMeetingControl createAudioControl];
+        control.attendeeOff = self.audioOffAllowSelfOn ? AttendeeOffTypeOffAllowSelfOn : AttendeeOffTypeOffNotAllowSelfOn;
+        [controls addObject: control];
+    }
+    if (self.videoOffAllowSelfOn || self.videoOffNotAllowSelfOn) {
+        NEMeetingControl* control = [NEMeetingControl createVideoControl];
+        control.attendeeOff = self.videoOffAllowSelfOn ? AttendeeOffTypeOffAllowSelfOn : AttendeeOffTypeOffNotAllowSelfOn;
+        [controls addObject: control];
+    }
+    if (controls.count > 0) {
+        params.controls = controls;
+    }
+    
+    
     NEStartMeetingOptions *options = nil;
     if (![self useDefaultConfig]) {
         options = [[NEStartMeetingOptions alloc] init];
@@ -124,6 +178,10 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noSwitchCamera = [self disableCameraSwitch];
         options.noSwitchAudioMode = [self disableAudioModeSwitch];
         options.noRename = [self disableRename];
+        options.noSip = [self disableSip];
+        options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
+        options.audioAINSEnabled = [[[NEMeetingSDK getInstance] getSettingsService] isAudioAINSEnabled];
+        options.showMemberTag = [self showMemberTag];
         
         //白板相关设置
         if ([self showWhiteboard]) {
@@ -133,6 +191,14 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         //设置是否隐藏菜单栏白板创建按钮
         options.noWhiteBoard = [self hideWhiteboardMenueButton];
         options.noCloudRecord = ![self openRecord];
+        if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
+            options.audioProfile = [NEAudioProfile createMusicAudioProfile];
+        } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
+            options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
+        }
+        if (options.audioProfile != nil) {
+            options.audioProfile.enableAINS = options.audioAINSEnabled;
+        }
     }
     
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
@@ -267,6 +333,15 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         _configCheckBox.disableAllItems = [self useDefaultConfig];
         _settingBtn.hidden = ![self useDefaultConfig];
     }
+    if (index == 16) {
+        self.audioOffAllowSelfOn = item.selected;
+    } else if (index == 17) {
+        self.audioOffNotAllowSelfOn = item.selected;
+    } else if (index == 18) {
+        self.videoOffAllowSelfOn = item.selected;
+    } else if (index == 19) {
+        self.videoOffNotAllowSelfOn = item.selected;
+    }
 }
 
 #pragma mark - Getter
@@ -320,6 +395,58 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     return [_settingCheckBox getItemSelectedAtIndex:13];
 }
 
+- (BOOL)disableSip {
+    return [_settingCheckBox getItemSelectedAtIndex:14];
+}
+
+- (BOOL)showMemberTag {
+    return [_settingCheckBox getItemSelectedAtIndex:15];
+}
+
+- (BOOL)audioOffAllowSelfOn {
+    return [_settingCheckBox getItemSelectedAtIndex:16];
+}
+
+- (void)setAudioOffAllowSelfOn:(BOOL)audioOffAllowSelfOn {
+    [_settingCheckBox setItemSelected:audioOffAllowSelfOn index:16];
+    if (audioOffAllowSelfOn) {
+        self.audioOffNotAllowSelfOn = NO;
+    }
+}
+
+- (BOOL)audioOffNotAllowSelfOn {
+    return [_settingCheckBox getItemSelectedAtIndex:17];
+}
+
+- (void)setAudioOffNotAllowSelfOn:(BOOL)audioOffNotAllowSelfOn {
+    [_settingCheckBox setItemSelected:audioOffNotAllowSelfOn index:17];
+    if (audioOffNotAllowSelfOn) {
+        self.audioOffAllowSelfOn = NO;
+    }
+}
+
+- (BOOL)videoOffAllowSelfOn {
+    return [_settingCheckBox getItemSelectedAtIndex:18];
+}
+
+- (void)setVideoOffAllowSelfOn:(BOOL)videoOffAllowSelfOn {
+    [_settingCheckBox setItemSelected:videoOffAllowSelfOn index:18];
+    if (videoOffAllowSelfOn) {
+        self.videoOffNotAllowSelfOn = NO;
+    }
+}
+
+- (BOOL)videoOffNotAllowSelfOn {
+    return [_settingCheckBox getItemSelectedAtIndex:19];
+}
+
+- (void)setVideoOffNotAllowSelfOn:(BOOL)videoOffNotAllowSelfOn {
+    [_settingCheckBox setItemSelected:videoOffNotAllowSelfOn index:19];
+    if (videoOffNotAllowSelfOn) {
+        self.videoOffAllowSelfOn = NO;
+    }
+}
+
 - (NEMeetingIdDisplayOption) meetingIdDisplayOption {
     if ([_settingCheckBox getItemSelectedAtIndex:6]) {
         return DISPLAY_LONG_ID_ONLY;
@@ -335,6 +462,21 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (BOOL)disableAudioModeSwitch {
     return [_settingCheckBox getItemSelectedAtIndex:9];
+}
+
+- (IBAction)sceneSettings:(id)sender {
+    SceneSettingsViewController *view = [[SceneSettingsViewController alloc] init];
+    view.delegate = self;
+    [self presentViewController:view animated:YES completion:nil];
+}
+
+- (void)didSceneSettingsConfirm:(NSString *)settings {
+    self.sceneJsonString = settings;
+//    NEMeetingScene* xx;
+//    if (settings) {
+//        //info = [NEMeetingInfo yy_modelWithDictionary:res.data];
+//        * xx = [NEMeetingScene yy_modelWithJSON: settings];
+//    }
 }
 
 @end

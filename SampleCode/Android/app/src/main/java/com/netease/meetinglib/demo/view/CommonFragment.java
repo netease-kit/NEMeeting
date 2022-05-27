@@ -34,7 +34,7 @@ public abstract class CommonFragment extends Fragment {
 
     protected abstract String getActionLabel();
 
-    protected abstract void performAction(String first, String second,String third);
+    protected abstract void performAction(String first, String second,String third,String fourth);
 
 
     protected final EditText getEditor(int index) {
@@ -56,7 +56,7 @@ public abstract class CommonFragment extends Fragment {
 
         Button action = getView().findViewById(R.id.actionBtn);
         action.setText(getActionLabel());
-        action.setOnClickListener(v -> performAction(getFirstEditTextContent(), getEditorText(1),getEditorText(2)));
+        action.setOnClickListener(v -> performAction(getFirstEditTextContent(), getEditorText(1),getEditorText(2),getEditorText(3)));
 
         Button actionToMeetingSettings = getView().findViewById(R.id.action_to_meeting_settings);
         actionToMeetingSettings.setOnClickListener(v ->  MeetingSettingsActivity.start(getActivity()));

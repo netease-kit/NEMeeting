@@ -1,0 +1,19 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "本示例项目演示了基本集成WEB会议组件的流程与方式，并进行了部分基础演示的说明",
+  "main": "NeWebMeeting_V1.0.0.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-route": "^3.2.0",
+    "koa-sslify": "^4.0.3",
+    "koa-static": "^5.0.0",
+    "https": "^1.0.0"
+  }
+}

@@ -153,6 +153,16 @@ Rectangle {
                 }
             }
 
+            RowLayout {
+                Layout.fillWidth: true
+                TextField {
+                    id: preRoleBinds
+                    placeholderText: "roleBinds"
+                    selectByMouse: true
+                    enabled: true
+                    Layout.fillWidth: true
+                }
+            }
 
             Button {
                 id: btnSchedule
@@ -186,7 +196,8 @@ Rectangle {
                                                    idLiveAccessCheck.checked,
                                                    idRecord.checked,
                                                    preExtraData.text,
-                                                   controls)
+                                                   controls,
+                                                   preRoleBinds.text)
                 }
             }
             ListView {
@@ -300,6 +311,14 @@ Rectangle {
                                 id: editExtraData
                                 text: model.extraData
                             }
+                            TextField {
+                                id: editRoleBinds
+                                placeholderText: "roleBinds"
+                                text: model.roleBinds
+                                selectByMouse: true
+                                enabled: true
+                                Layout.fillWidth: true
+                            }
                         }
 
                         RowLayout {
@@ -368,6 +387,8 @@ Rectangle {
                                                 checkVideo.checked,
                                                 checkChatroom.checked,
                                                 checkInvitation.checked,
+                                                checkScreenShare.checked,
+                                                checkView.checked,
                                                 autoOpenWhiteboard.checked,
                                                 password2.text,
                                                 autorename.checked)
@@ -414,7 +435,8 @@ Rectangle {
                                                 idLiveAccessCheckEdit.checked,
                                                 idOpenRecordEdit.checked,
                                                 editExtraData.text,
-                                                controls)
+                                                controls,
+                                                editRoleBinds.text)
                                 }
                             }
                         }
@@ -462,6 +484,12 @@ Rectangle {
                                             })
                         displayOption.currentIndex = 2
                     }
+                }
+                ToolButton {
+                    id: idgetPMId
+                    Layout.topMargin: 10
+                    text: qsTr("getPMId")
+                    onClicked: { meetingManager.getPersonalMeetingId() }
                 }
                 ToolButton {
                     id: idSettings
@@ -592,6 +620,18 @@ Rectangle {
                     checked: meetingManager.isAudioAINS
                     onClicked: meetingManager.isAudioAINS = checked
                 }
+
+                CheckBox {
+                    id: checkScreenShare
+                    checked: true
+                    text: qsTr('Enable ScreenShare')
+                }
+
+                CheckBox {
+                    id: checkView
+                    checked: true
+                    text: qsTr('Enable View')
+                }
             }
 
             RowLayout {
@@ -672,36 +712,46 @@ Rectangle {
                     checked: meetingManager.audodeviceAutoSelectType
                     onClicked: meetingManager.setAudodeviceAutoSelectType(checked);
                 }
-//                CheckBox {
-//                    id: idVirtualBackground
-//                    text: qsTr("Show VB")
-//                    checked: meetingManager.virtualBackground
-//                    onClicked: meetingManager.virtualBackground = checked
-//                }
-//                Button {
-//                    id: btnDefaultVB
-//                    highlighted: true
-//                    text: qsTr('Default VB')
-//                    Layout.fillWidth: true
-//                    onClicked: {
-//                        meetingManager.getVirtualBackgroundList()
-//                    }
-//                }
-//                TextField {
-//                    id: vbList
-//                    placeholderText: qsTr('vb path,vb path,vb path....')
-//                    selectByMouse: true
-//                    Layout.fillWidth: true
-//                }
-//                Button {
-//                    id: btnSetVB
-//                    highlighted: true
-//                    text: qsTr('Set VB')
-//                    Layout.fillWidth: true
-//                    onClicked: {
-//                        meetingManager.setVirtualBackgroundList(vbList.text)
-//                    }
-//                }
+                CheckBox {
+                    id: idVirtualBackground
+                    text: qsTr("Show VB")
+                    checked: meetingManager.virtualBackground
+                    onClicked: meetingManager.virtualBackground = checked
+                }
+                Button {
+                    id: btnDefaultVB
+                    highlighted: true
+                    text: qsTr('Default VB')
+                    Layout.fillWidth: true
+                    onClicked: {
+                        meetingManager.getVirtualBackgroundList()
+                    }
+                }
+                TextField {
+                    id: vbList
+                    placeholderText: qsTr('vb path,vb path,vb path....')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
+                Button {
+                    id: btnSetVB
+                    highlighted: true
+                    text: qsTr('Set VB')
+                    Layout.fillWidth: true
+                    onClicked: {
+                        meetingManager.setVirtualBackgroundList(vbList.text)
+                    }
+                }
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                TextField {
+                    id: roleBinds
+                    placeholderText: "roleBinds"
+                    selectByMouse: true
+                    enabled: true
+                    Layout.fillWidth: true
+                }
             }
             RowLayout {
                 id: subscribeAudio
@@ -791,12 +841,13 @@ Rectangle {
                                     textpassword.text, textTimeout.text,
                                     checkAudio.checked, checkVideo.checked,
                                     checkChatroom.checked, checkInvitation.checked,
+                                    checkScreenShare.checked, checkView.checked,
                                     autoOpenWhiteboard.checked, autorename.checked,
                                     displayOption.currentIndex, idOpenRecord.checked,
                                     idOpenWhiteboard.checked, idAudioAINS.checked,
                                     checkSip.checked, idShowMemberTag.checked,
                                     extraData.text, controls, enableMuteAllVideo.checked,
-                                    enableMuteAllAudio.checked)
+                                    enableMuteAllAudio.checked, roleBinds.text)
                     }
                 }
                 Button {
@@ -814,6 +865,8 @@ Rectangle {
                                                   checkVideo.checked,
                                                   checkChatroom.checked,
                                                   checkInvitation.checked,
+                                                  checkScreenShare.checked,
+                                                  checkView.checked,
                                                   autoOpenWhiteboard.checked,
                                                   textpassword.text,
                                                   autorename.checked,
@@ -1265,6 +1318,10 @@ Rectangle {
 
         onLogoutSignal: {
             mainWindow.close()
+        }
+
+        onGetPersonalMeetingIdChanged: {
+            toast.show('GetPersonalMeetingId: ' + message)
         }
     }
 

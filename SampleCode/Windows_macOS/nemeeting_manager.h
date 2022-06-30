@@ -100,7 +100,8 @@ public:
                                      bool needLiveAuthentication = false,
                                      bool enableRecord = false,
                                      const QString& extraData = "",
-                                     const QJsonArray& controls = QJsonArray());
+                                     const QJsonArray& controls = QJsonArray(),
+                                     const QString& strRoleBinds = "");
     Q_INVOKABLE void cancelMeeting(const qint64& meetingUniqueId);
     Q_INVOKABLE void editMeeting(const qint64& meetingUniqueId,
                                  const QString& meetingId,
@@ -114,7 +115,8 @@ public:
                                  bool needLiveAuthentication = false,
                                  bool enableRecord = false,
                                  const QString& extraData = "",
-                                 const QJsonArray& controls = QJsonArray());
+                                 const QJsonArray& controls = QJsonArray(),
+                                 const QString& strRoleBinds = "");
     Q_INVOKABLE void getMeetingList();
     Q_INVOKABLE void invokeStart(const QString& meetingId,
                                  const QString& nickname,
@@ -126,6 +128,8 @@ public:
                                  bool video,
                                  bool enableChatroom = true,
                                  bool enableInvitation = true,
+                                 bool enableScreenShare = true,
+                                 bool enableView = true,
                                  bool autoOpenWhiteboard = false,
                                  bool rename = true,
                                  int displayOption = 0,
@@ -137,7 +141,8 @@ public:
                                  const QString& extraData = "",
                                  const QJsonArray& controls = QJsonArray(),
                                  bool enableMuteAllVideo = false,
-                                 bool enableMuteAllAudio = true);
+                                 bool enableMuteAllAudio = true,
+                                 const QString& strRoleBinds = "");
     Q_INVOKABLE void invokeJoin(bool anonymous,
                                 const QString& meetingId,
                                 const QString& nickname,
@@ -147,6 +152,8 @@ public:
                                 bool video,
                                 bool enableChatroom = true,
                                 bool enableInvitation = true,
+                                bool enableScreenShare = true,
+                                bool enableView = true,
                                 bool autoOpenWhiteboard = false,
                                 const QString& password = QString(),
                                 bool rename = true,
@@ -170,6 +177,8 @@ public:
     Q_INVOKABLE void getVirtualBackgroundList();
     Q_INVOKABLE void setVirtualBackgroundList(const QString& vbList);
 
+    Q_INVOKABLE void getPersonalMeetingId();
+
     // override virtual functions
     virtual void onMeetingStatusChanged(int status, int code) override;
     virtual void onInjectedMenuItemClick(const NEMeetingMenuItem& meeting_menu_item) override;
@@ -190,7 +199,7 @@ public:
     virtual void OnRemoteVideoResolutionSettingsChange(RemoteVideoResolution enumRemoteVideoResolution) override;
     virtual void OnMyVideoResolutionSettingsChange(LocalVideoResolution enumLocalVideoResolution) override;
     virtual void onKickOut() override;
-    virtual void onAuthInfoExpired() override {};
+    virtual void onAuthInfoExpired() override{};
 
     bool isSupportRecord() const;
     void setIsSupportRecord(bool isSupportRecord);
@@ -246,6 +255,7 @@ signals:
     void softwareRenderChanged(bool softwareRender);
     void virtualBackgroundChanged(bool virtualBackground);
     void virtualBackgroundList(const QString& vbList);
+    void getPersonalMeetingIdChanged(const QString& message);
 
 public slots:
     void onGetMeetingListUI();

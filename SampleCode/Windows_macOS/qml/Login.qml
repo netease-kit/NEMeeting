@@ -355,7 +355,7 @@ Rectangle {
                                                      textKeepAliveInterval.text))
                 meetingManager.invokeJoin(true, textAccountId.text, nicknameAnon.text,
                                           textTag.text, textTimeout.text,
-                                          false, false, true, true,
+                                          false, false, true, true, true, true,
                                           textPassword.text, rename.checked)
             }
         }

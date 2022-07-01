@@ -1,3 +1,7 @@
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 package com.netease.yunxin.kit.meeting.sampleapp.viewmodel;
 
 
@@ -69,6 +73,7 @@ public class HomeViewModel extends ViewModel {
                 item.setSetting(neMeetingItem.getSetting());
                 item.setLive(neMeetingItem.getLive());
                 item.setExtraData(neMeetingItem.getExtraData());
+                item.setRoleBinds(neMeetingItem.getRoleBinds());
                 items.add(item);
             }
             Collections.sort(items);

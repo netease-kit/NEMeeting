@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp;
 
@@ -10,6 +9,7 @@ import android.app.Application;
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfig;
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfigs;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
+import com.netease.yunxin.kit.meeting.sampleapp.utils.FileUtils;
 
 public class MeetingApplication extends Application {
     private static MeetingApplication instance;
@@ -29,6 +29,9 @@ public class MeetingApplication extends Application {
         SdkAuthenticator.getInstance().initialize(this);
         //初始化会议SDK
         SdkInitializer.getInstance().startInitialize(this);
+
+        new Thread(() -> FileUtils.INSTANCE.copyAssetsToDst(instance,"virtual", getFilesDir().getPath()+"/virtual")).start();
+
     }
 
     public static MeetingApplication getInstance() {

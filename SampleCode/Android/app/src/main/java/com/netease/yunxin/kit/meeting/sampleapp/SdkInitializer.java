@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp;
 
@@ -92,9 +91,11 @@ public class SdkInitializer {
     }
     
     private void initializeSdk() {
+        Log.i(TAG, "initializeSdk");
         ServerConfig serverConfig = MeetingApplication.getInstance().getServerConfig();
         NEMeetingKitConfig config = new NEMeetingKitConfig();
         config.appKey = serverConfig.getAppKey();
+        config.reuseIM = SPUtils.getInstance().getBoolean("meeting-reuse-nim", false);
         /// to remove start
         config.extras = new HashMap<String,Object>(){
             {
@@ -103,7 +104,6 @@ public class SdkInitializer {
             }
         };
         config.appName = context.getString(R.string.app_name);
-        // config.useAssetServerConfig = SPUtils.getInstance().getBoolean("use-asset-server-config");
         //配置会议时显示前台服务
         NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
         foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);

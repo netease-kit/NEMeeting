@@ -1,3 +1,7 @@
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 package com.netease.yunxin.kit.meeting.sampleapp.data;
 
 
@@ -43,6 +47,10 @@ public class MeetingDataRepository {
 
     public void joinMeeting(Context context, @NonNull NEJoinMeetingParams param, @Nullable NEJoinMeetingOptions opts, NECallback<Void> callback) {
         NEMeetingKit.getInstance().getMeetingService().joinMeeting(context, param, opts, callback);
+    }
+
+    public void anonymousJoinMeeting(Context context, @NonNull NEJoinMeetingParams param, @Nullable NEJoinMeetingOptions opts, NECallback<Void> callback) {
+        NEMeetingKit.getInstance().getMeetingService().anonymousJoinMeeting(context, param, opts, callback);
     }
 
     public void getCurrentMeetingInfo(NECallback<NEMeetingInfo> callback) {
@@ -112,7 +120,7 @@ public class MeetingDataRepository {
     }
 
     public void editMeeting(NEMeetingItem item, NECallback<NEMeetingItem> callback) {
-
+        NEMeetingKit.getInstance().getPreMeetingService().editMeeting(item,callback);
     }
 
     public void cancelMeeting(long meetingUniqueId, NECallback<Void> callback) {

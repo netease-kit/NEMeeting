@@ -6,10 +6,10 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QTimer>
 #include <QUrl>
 #include <future>
 #include <iostream>
-#include <QTimer>
 
 NEMeetingManager::NEMeetingManager(QObject* parent)
     : QObject(parent)
@@ -43,13 +43,17 @@ NEMeetingManager::NEMeetingManager(QObject* parent)
                     }
 
                     [[maybe_unused]] auto tmp = std::async(std::launch::async, [this]() {
-                        //                        NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->isVirtualBackgroundEnabled(
-                        //                            [this](NEErrorCode errorCode, const std::string& errorMessage, const bool& virtualBackground) {
-                        //                                qInfo() << "isVirtualBackgroundEnabled callback, error code: " << errorCode
-                        //                                        << ", error message: " << QString::fromStdString(errorMessage);
-                        //                                m_virtualBackground = virtualBackground;
-                        //                                emit virtualBackgroundChanged(m_virtualBackground);
-                        //                            });
+                        NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->isVirtualBackgroundEnabled(
+                            [this](NEErrorCode errorCode, const std::string& errorMessage, const bool& virtualBackground) {
+                                qInfo() << "isVirtualBackgroundEnabled callback, error code: " << errorCode
+                                        << ", error message: " << QString::fromStdString(errorMessage);
+                                if (ERROR_CODE_SUCCESS == errorCode) {
+                                    m_virtualBackground = virtualBackground;
+                                    emit virtualBackgroundChanged(m_virtualBackground);
+                                } else {
+                                    emit error(errorCode, QString::fromStdString(errorMessage));
+                                }
+                            });
                     });
                 });
         }
@@ -193,7 +197,7 @@ void NEMeetingManager::login(const QString& appKey, const QString& accountId, co
     while (!m_initialized) {
         if (!m_initSuc)
             return;
-        if (time.elapsed() > 10 * 1000) {
+        if (time.elapsed() > 30 * 1000) {
             m_initialized = true;
             emit loginSignal(-1, tr("Initialization timeout"));
             return;
@@ -225,7 +229,7 @@ void NEMeetingManager::loginByUsernamePassword(const QString& appKey, const QStr
     while (!m_initialized) {
         if (!m_initSuc)
             return;
-        if (time.elapsed() > 10 * 1000) {
+        if (time.elapsed() > 30 * 1000) {
             m_initialized = true;
             emit loginSignal(-1, tr("Initialization timeout"));
             return;
@@ -295,9 +299,10 @@ void NEMeetingManager::scheduleMeeting(const QString& meetingSubject,
                                        bool needLiveAuthentication,
                                        bool enableRecord,
                                        const QString& extraData,
-                                       const QJsonArray& controls) {
+                                       const QJsonArray& controls,
+                                       const QString& strRoleBinds) {
     qInfo() << "scheduleMeeting: "
-            << "controls " << controls;
+            << "controls " << controls << ", strRoleBinds " << strRoleBinds;
 
     QString strPassword = password.isEmpty() ? "null" : "no null";
     while (!m_initialized) {
@@ -364,6 +369,28 @@ void NEMeetingManager::scheduleMeeting(const QString& meetingSubject,
             }
         }
 
+        if (!strRoleBinds.isEmpty()) {
+            QJsonParseError err;
+            QJsonDocument doc = QJsonDocument::fromJson(strRoleBinds.toUtf8(), &err);
+            if (err.error != QJsonParseError::NoError) {
+                emit error(-1, "error roleBinds");
+                return;
+            }
+
+            QJsonObject roleBindsObj = doc.object();
+            QJsonObject* pRoleBindsObj = reinterpret_cast<QJsonObject*>(&roleBindsObj);
+            QJsonObject::const_iterator it = pRoleBindsObj->constBegin();
+            QJsonObject::const_iterator end = pRoleBindsObj->constEnd();
+            while (it != end) {
+                auto key = it.key().toStdString();
+                auto value = static_cast<NEMeetingRoleType>(it.value().toInt());
+                item.roleBinds[key] = value;
+                qInfo() << "key: " << QString::fromStdString(key);
+                qInfo() << "value: " << value;
+                it++;
+            }
+        }
+
         ipcPreMeetingService->scheduleMeeting(item, [this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingItem& item) {
             qInfo() << "Schedule meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit scheduleSignal(errorCode, QString::fromStdString(errorMessage));
@@ -399,11 +426,12 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
                                    bool needLiveAuthentication,
                                    bool enableRecord,
                                    const QString& extraData,
-                                   const QJsonArray& controls) {
+                                   const QJsonArray& controls,
+                                   const QString& strRoleBinds) {
     QString strPassword = password.isEmpty() ? "null" : "no null";
     qInfo() << "Edit a meeting with meeting subject:" << meetingSubject << ", meetingUniqueId: " << meetingUniqueId << ", meetingId: " << meetingId
             << ", startTime: " << startTime << ", endTime: " << endTime << ", attendeeAudioOff: " << attendeeAudioOff << ", password: " << strPassword
-            << ", textScene: " << textScene;
+            << ", textScene: " << textScene << ", strRoleBinds " << strRoleBinds;
 
     auto ipcPreMeetingService = NEMeetingKit::getInstance()->getPremeetingService();
     if (ipcPreMeetingService) {
@@ -462,6 +490,28 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
                 }
 
                 item.setting.scene.roleTypes.push_back(config);
+            }
+        }
+
+        if (!strRoleBinds.isEmpty()) {
+            QJsonParseError err;
+            QJsonDocument doc = QJsonDocument::fromJson(strRoleBinds.toUtf8(), &err);
+            if (err.error != QJsonParseError::NoError) {
+                emit error(-1, "error roleBinds");
+                return;
+            }
+
+            QJsonObject roleBindsObj = doc.object();
+            QJsonObject* pRoleBindsObj = reinterpret_cast<QJsonObject*>(&roleBindsObj);
+            QJsonObject::const_iterator it = pRoleBindsObj->constBegin();
+            QJsonObject::const_iterator end = pRoleBindsObj->constEnd();
+            while (it != end) {
+                auto key = it.key().toStdString();
+                auto value = static_cast<NEMeetingRoleType>(it.value().toInt());
+                item.roleBinds[key] = value;
+                qInfo() << "key: " << QString::fromStdString(key);
+                qInfo() << "value: " << value;
+                it++;
             }
         }
 
@@ -532,6 +582,16 @@ void NEMeetingManager::getMeetingList() {
                             qInfo() << "obj:" << obj;
                         }
 
+                        QJsonObject roleBindsObj;
+                        qInfo() << "item.roleBinds: " << item.roleBinds.size();
+                        for (auto iter = item.roleBinds.begin(); iter != item.roleBinds.end(); iter++) {
+                            QString userId = QString::fromStdString(iter->first);
+                            roleBindsObj[userId] = iter->second;
+                            qInfo() << "userId111:" << userId;
+                            qInfo() << "role111:" << iter->second;
+                        }
+                        object["roleBinds"] = QString(QJsonDocument(roleBindsObj).toJson());
+
                         jsonArray.push_back(object);
                     }
                     emit getScheduledMeetingList(errorCode, jsonArray);
@@ -552,6 +612,8 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
                                    bool video,
                                    bool enableChatroom /* = true*/,
                                    bool enableInvitation /* = true*/,
+                                   bool enableScreenShare /* = true*/,
+                                   bool enableView /* = true*/,
                                    bool autoOpenWhiteboard,
                                    bool rename,
                                    int displayOption,
@@ -563,9 +625,11 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
                                    const QString& extraData,
                                    const QJsonArray& controls,
                                    bool enableMuteAllVideo,
-                                   bool enableMuteAllAudio) {
+                                   bool enableMuteAllAudio,
+                                   const QString& strRoleBinds) {
     qInfo() << "Start a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
-            << ", display id: " << displayOption << "textScene: " << textScene << ", showMemberTag: " << showMemberTag << ", controls:" << controls;
+            << ", display id: " << displayOption << "textScene: " << textScene << ", showMemberTag: " << showMemberTag << ", controls:" << controls
+            << ", strRoleBinds: " << strRoleBinds;
 
     auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
     if (ipcMeetingService) {
@@ -625,6 +689,28 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
             }
         }
 
+        if (!strRoleBinds.isEmpty()) {
+            QJsonParseError err;
+            QJsonDocument doc = QJsonDocument::fromJson(strRoleBinds.toUtf8(), &err);
+            if (err.error != QJsonParseError::NoError) {
+                emit error(-1, "error roleBinds");
+                return;
+            }
+
+            QJsonObject roleBindsObj = doc.object();
+            QJsonObject* pRoleBindsObj = reinterpret_cast<QJsonObject*>(&roleBindsObj);
+            QJsonObject::const_iterator it = pRoleBindsObj->constBegin();
+            QJsonObject::const_iterator end = pRoleBindsObj->constEnd();
+            while (it != end) {
+                auto key = it.key().toStdString();
+                auto value = static_cast<NEMeetingRoleType>(it.value().toInt());
+                params.roleBinds[key] = value;
+                qInfo() << "key: " << QString::fromStdString(key);
+                qInfo() << "value: " << value;
+                it++;
+            }
+        }
+
         NEStartMeetingOptions options;
         options.noAudio = !audio;
         options.noVideo = !video;
@@ -632,6 +718,8 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
         options.noInvite = !enableInvitation;
         options.noRename = !rename;
         options.noWhiteboard = !openWhiteboard;
+        options.noScreenShare = enableScreenShare;
+        options.noView = enableView;
         options.audioAINSEnabled = audioAINS;
         options.showMemberTag = showMemberTag;
         options.noSip = !sip;
@@ -661,6 +749,8 @@ void NEMeetingManager::invokeJoin(bool anonymous,
                                   bool video,
                                   bool enableChatroom /* = true*/,
                                   bool enableInvitation /* = true*/,
+                                  bool enableScreenShare /* = true*/,
+                                  bool enableView /* = true*/,
                                   bool autoOpenWhiteboard,
                                   const QString& password,
                                   bool rename,
@@ -700,6 +790,8 @@ void NEMeetingManager::invokeJoin(bool anonymous,
             options.noInvite = !enableInvitation;
             options.noRename = !rename;
             options.noWhiteboard = !openWhiteboard;
+            options.noScreenShare = enableScreenShare;
+            options.noView = enableView;
             options.audioAINSEnabled = audioAINS;
             options.showMemberTag = showMemberTag;
             options.noSip = !sip;
@@ -1221,29 +1313,34 @@ void NEMeetingManager::setVirtualBackground(bool virtualBackground) {
     if (m_virtualBackground == virtualBackground)
         return;
 
-    //    NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->enableVirtualBackground(
-    //        virtualBackground, [this, virtualBackground](NEErrorCode errorCode, const std::string& errorMessage) {
-    //            qInfo() << "enableVirtualBackground callback, error code: " << errorCode << ", error message: " <<
-    //            QString::fromStdString(errorMessage); m_virtualBackground = virtualBackground; emit virtualBackgroundChanged(m_virtualBackground);
-    //        });
+    NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->enableVirtualBackground(
+        virtualBackground, [this, virtualBackground](NEErrorCode errorCode, const std::string& errorMessage) {
+            qInfo() << "enableVirtualBackground callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                m_virtualBackground = virtualBackground;
+                emit virtualBackgroundChanged(m_virtualBackground);
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
 }
 
 void NEMeetingManager::getVirtualBackgroundList() {
-    //    NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->getBuiltinVirtualBackgrounds(
-    //        [this](NEErrorCode errorCode, const std::string& errorMessage, const std::vector<NEMeetingVirtualBackground>& vbList) {
-    //            qInfo() << "getBuiltinVirtualBackgrounds callback, error code: " << errorCode
-    //                    << ", error message: " << QString::fromStdString(errorMessage);
-    //            if (ERROR_CODE_SUCCESS == errorCode) {
-    //                std::string strList;
-    //                for (auto& it : vbList) {
-    //                    strList.append(it.path).append("\r\n");
-    //                }
-    //                qInfo() << "getBuiltinVirtualBackgrounds callback, bvList:" << QString::fromStdString(strList);
-    //                emit virtualBackgroundList(QString::fromStdString(strList));
-    //            } else {
-    //                emit error(errorCode, QString::fromStdString(errorMessage));
-    //            }
-    //        });
+    NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->getBuiltinVirtualBackgrounds(
+        [this](NEErrorCode errorCode, const std::string& errorMessage, const std::vector<NEMeetingVirtualBackground>& vbList) {
+            qInfo() << "getBuiltinVirtualBackgrounds callback, error code: " << errorCode
+                    << ", error message: " << QString::fromStdString(errorMessage);
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                std::string strList;
+                for (auto& it : vbList) {
+                    strList.append(it.path).append("\r\n");
+                }
+                qInfo() << "getBuiltinVirtualBackgrounds callback, bvList:" << QString::fromStdString(strList);
+                emit virtualBackgroundList(QString::fromStdString(strList));
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
 }
 
 void NEMeetingManager::setVirtualBackgroundList(const QString& vbList) {
@@ -1255,14 +1352,27 @@ void NEMeetingManager::setVirtualBackgroundList(const QString& vbList) {
             virtualBackgrounds.emplace_back(vb);
         }
     }
-    //    NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->setBuiltinVirtualBackgrounds(
-    //        virtualBackgrounds, [this](NEErrorCode errorCode, const std::string& errorMessage) {
-    //            qInfo() << "setBuiltinVirtualBackgrounds callback, error code: " << errorCode
-    //                    << ", error message: " << QString::fromStdString(errorMessage);
-    //            if (ERROR_CODE_SUCCESS == errorCode) {
-    //                emit virtualBackgroundList("");
-    //            } else {
-    //                emit error(errorCode, QString::fromStdString(errorMessage));
-    //            }
-    //        });
+    NEMeetingKit::getInstance()->getSettingsService()->GetVirtualBackgroundController()->setBuiltinVirtualBackgrounds(
+        virtualBackgrounds, [this](NEErrorCode errorCode, const std::string& errorMessage) {
+            qInfo() << "setBuiltinVirtualBackgrounds callback, error code: " << errorCode
+                    << ", error message: " << QString::fromStdString(errorMessage);
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                emit virtualBackgroundList("");
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+}
+
+void NEMeetingManager::getPersonalMeetingId() {
+    NEMeetingKit::getInstance()->getAccountService()->getPersonalMeetingId(
+        [this](NEErrorCode errorCode, const std::string& errorMessage, const std::string& meetingId) {
+            qInfo() << "getPersonalMeetingId callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage)
+                    << ", meetingId: " << QString::fromStdString(meetingId);
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                emit getPersonalMeetingIdChanged(QString::fromStdString(meetingId));
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
 }

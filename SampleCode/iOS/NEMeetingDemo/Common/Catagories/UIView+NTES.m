@@ -1,9 +1,6 @@
-//
-//  UIView+NTES.m
-//  NIMDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "UIView+NTES.h"
 #import <objc/runtime.h>

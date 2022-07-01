@@ -68,6 +68,7 @@
 		41E9117A25010E6900E63D80 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E9117925010E6900E63D80 /* CustomViewController.m */; };
 		41F8C3A624B5971E0039301B /* strip_archs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 41F8C3A524B5971E0039301B /* strip_archs.sh */; };
 		41FE2B9224AD8F5800624342 /* SystemAuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */; };
+		5354C49B286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5354C499286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m */; };
 		9E451CF125B041BF00E69CDE /* MeetingMenuSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E451CF025B041BF00E69CDE /* MeetingMenuSelectVC.m */; };
 		9E451CF625B04C3100E69CDE /* MeetingMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E451CF525B04C3100E69CDE /* MeetingMenuItemCell.m */; };
 		F97D528B8E70D69CC58B6CC9 /* Pods_NEMeetingDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B417BBB81DD9FF5688ED5537 /* Pods_NEMeetingDemo.framework */; };
@@ -211,6 +212,8 @@
 		41F8C3A524B5971E0039301B /* strip_archs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = strip_archs.sh; sourceTree = "<group>"; };
 		41FE2B9024AD8F5800624342 /* SystemAuthHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemAuthHelper.h; sourceTree = "<group>"; };
 		41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAuthHelper.m; sourceTree = "<group>"; };
+		5354C499286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEditSubscribeMeetingVC.m; sourceTree = "<group>"; };
+		5354C49A286EEDDB000F5193 /* NSEditSubscribeMeetingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditSubscribeMeetingVC.h; sourceTree = "<group>"; };
 		7F47C73E59370BEEAE7064C7 /* Pods-NEMeetingDemo-Broadcaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo-Broadcaster/Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; sourceTree = "<group>"; };
 		9E451CEF25B041BF00E69CDE /* MeetingMenuSelectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingMenuSelectVC.h; sourceTree = "<group>"; };
 		9E451CF025B041BF00E69CDE /* MeetingMenuSelectVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingMenuSelectVC.m; sourceTree = "<group>"; };
@@ -447,6 +450,8 @@
 		419EE51D250A055F004F8984 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				5354C49A286EEDDB000F5193 /* NSEditSubscribeMeetingVC.h */,
+				5354C499286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m */,
 				419EE5162509D5C6004F8984 /* NESubscribeMeetingConfigVC.h */,
 				419EE5172509D5C6004F8984 /* NESubscribeMeetingConfigVC.m */,
 			);
@@ -566,6 +571,7 @@
 				41F8C3A724B597580039301B /* Strip Archs */,
 				2DB8EC7026560BB300BB171E /* Embed App Extensions */,
 				26AAC44327001CD7002B8FC8 /* Embed Frameworks */,
+				D2B6A52EADEFF790EE4C0F2C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -672,6 +678,23 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/bin/sh \"${SRCROOT}/NEMeetingDemo/strip_archs.sh\"\n";
 		};
+		D2B6A52EADEFF790EE4C0F2C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DC78D237D713B7DA319BEAAA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -699,6 +722,7 @@
 				41937CAB24B4611C00A06BF2 /* SVRadialGradientLayer.m in Sources */,
 				41228FAB24E69D7D00C7B717 /* MeetingSettingVC.m in Sources */,
 				419EE5092508EE3A004F8984 /* UIView+NTES.m in Sources */,
+				5354C49B286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m in Sources */,
 				410B432524AB2FF800017FA6 /* MeetingControlVC.m in Sources */,
 				410B433F24AC5F1100017FA6 /* BaseViewController.m in Sources */,
 				410B435524AC81F500017FA6 /* NSData+Demo.m in Sources */,

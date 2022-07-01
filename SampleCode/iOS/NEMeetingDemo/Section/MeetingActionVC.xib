@@ -75,17 +75,6 @@
                         <action selector="configMoreMenuItems:" destination="-1" eventType="touchUpInside" id="t8R-wy-hbq"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BeZ-WW-dIo">
-                    <rect key="frame" x="87" y="340" width="240" height="48"/>
-                    <color key="backgroundColor" red="0.15686274510000001" green="0.3921568627" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="开启美颜预览"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="25"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -93,17 +82,13 @@
                 <constraint firstItem="0z3-4X-QbJ" firstAttribute="top" secondItem="Cee-wt-LhL" secondAttribute="bottom" constant="33" id="2Ww-4L-qIW"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="width" secondItem="Cee-wt-LhL" secondAttribute="width" id="6ur-YW-W6C"/>
                 <constraint firstItem="0z3-4X-QbJ" firstAttribute="top" secondItem="JwL-g3-GgA" secondAttribute="top" id="8yb-sf-WaA"/>
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="9aM-0h-JiD"/>
                 <constraint firstItem="0z3-4X-QbJ" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="60" id="B1f-lC-gDq"/>
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="height" secondItem="SnZ-Tb-soM" secondAttribute="height" multiplier="0.96" id="FSq-0D-Q7F"/>
                 <constraint firstItem="JwL-g3-GgA" firstAttribute="leading" secondItem="0z3-4X-QbJ" secondAttribute="trailing" constant="35" id="TeN-HQ-XEu"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="JwL-g3-GgA" secondAttribute="trailing" constant="60" id="bDt-77-uD1"/>
                 <constraint firstItem="0z3-4X-QbJ" firstAttribute="width" secondItem="JwL-g3-GgA" secondAttribute="width" multiplier="1.17593" id="bth-Vu-lS9"/>
                 <constraint firstItem="Cee-wt-LhL" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="64" id="c9b-7j-pez"/>
                 <constraint firstItem="Cee-wt-LhL" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="ep8-jb-lmJ"/>
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="top" secondItem="SnZ-Tb-soM" secondAttribute="bottom" constant="37" id="p6F-ck-NJa"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="top" secondItem="0z3-4X-QbJ" secondAttribute="bottom" constant="31" id="pCX-JH-ycn"/>
-                <constraint firstItem="BeZ-WW-dIo" firstAttribute="width" secondItem="SnZ-Tb-soM" secondAttribute="width" id="pRD-nl-7fB"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="ufJ-Pj-MQL"/>
                 <constraint firstItem="0z3-4X-QbJ" firstAttribute="height" secondItem="JwL-g3-GgA" secondAttribute="height" multiplier="1.03333" id="vXh-CT-zHz"/>
                 <constraint firstItem="SnZ-Tb-soM" firstAttribute="height" secondItem="Cee-wt-LhL" secondAttribute="height" id="zTh-wR-nTa"/>

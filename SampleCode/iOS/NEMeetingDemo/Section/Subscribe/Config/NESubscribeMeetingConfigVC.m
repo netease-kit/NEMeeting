@@ -1,9 +1,6 @@
-//
-//  NESubscribeMeetingConfigVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
@@ -13,21 +10,13 @@
 @interface NESubscribeMeetingConfigVC ()
 
 @property (nonatomic, strong) UIButton *sureBtn;
-
 @property (nonatomic, strong) NEMeetingItem *item;
-
 @property (nonatomic, readonly) NEPreMeetingService *preMeetingService;
-
 @property (nonatomic, copy) NSString *password;
-
 @property (nonatomic, assign) BOOL muteAllAudio;
-
 @property (nonatomic, assign) BOOL allowAudioSelfOn;
-
 @property (nonatomic, assign) BOOL muteAllVideo;
-
 @property (nonatomic, assign) BOOL allowVideoSelfOn;
-
 @end
 
 @implementation NESubscribeMeetingConfigVC
@@ -67,9 +56,9 @@
     _item.endTime = (startTimeS + 30*60) * 1000;
 }
 
-- (void)setupForm {
-    __weak typeof(self) weakSelf = self;
-    NEFromGroup *group0 = [[NEFromGroup alloc] init];
+/// 会议主题
+- (NEFromGroup *)titleGroup {
+    NEFromGroup *group = [NEFromGroup new];
     NEFromRow *titleRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingTitle"];
     titleRow.title = @"会议主题";
     titleRow.value = _item.subject;
@@ -79,12 +68,16 @@
         @"textAlignment" : @(NSTextAlignmentRight),
         @"clearButtonMode" : @(UITextFieldViewModeWhileEditing),
     };
+    __weak typeof(self) weakSelf = self;
     titleRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         weakSelf.item.subject = newValue;
     };
-    [group0.rows addObject:titleRow];
-    
-    NEFromGroup *group1 = [[NEFromGroup alloc] init];
+    [group.rows addObject:titleRow];
+    return group;
+}
+/// 时间
+- (NEFromGroup *)timeGroup {
+    NEFromGroup *group = [NEFromGroup new];
     NEFromRow *startTimeRow = [NEFromRow rowWithType:NEFromRowTypeTitleDate tag:@"kMeetingStartTime"];
     startTimeRow.title = @"开始时间";
     startTimeRow.value = @(_item.startTime/1000);
@@ -94,6 +87,7 @@
         @"minDate" :@(currentTimeStamp),
         @"maxDate" : @(currentTimeStamp * 7 * 24 * 60 * 60),
     };
+    __weak typeof(self) weakSelf = self;
     startTimeRow.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     startTimeRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         [weakSelf adjustDateTime];
@@ -109,11 +103,15 @@
     endTimeRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         [weakSelf adjustDateTime];
     };
-    [group1.rows addObjectsFromArray:@[startTimeRow, endTimeRow]];
-    
-    NEFromGroup *group2 = [[NEFromGroup alloc] init];
+    [group.rows addObjectsFromArray:@[startTimeRow, endTimeRow]];
+    return group;
+}
+/// 会议密码
+- (NEFromGroup *)passwordGroup {
+    NEFromGroup *group = [NEFromGroup new];
     NEFromRow *meetingKeyRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingKey"];
     meetingKeyRow.title = @"会议密码";
+    __weak typeof(self) weakSelf = self;
     meetingKeyRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         BOOL isShowPassword = [newValue boolValue];
         if (isShowPassword) {
@@ -123,60 +121,86 @@
             [weakSelf deleteRowWithTag:@"kMeetingPassworkInput"];
         }
     };
-    [group2.rows addObject:meetingKeyRow];
-    
-    NEFromGroup *group3 = [[NEFromGroup alloc] init];
-    NEFromRow *sceneSettingsRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kScene"];
-    sceneSettingsRow.title = @"入会人员配置";
-    sceneSettingsRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-        [weakSelf doSceneSettings];
-    };
-    [group3.rows addObjectsFromArray:@[sceneSettingsRow]];
-    
-    
-    NEFromRow *liveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
-    liveLevelRow.title = @"仅本企业员工可观看";
-    liveLevelRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-        BOOL isUseAppToken =  [newValue boolValue];
-        if (isUseAppToken) {
-            weakSelf.item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelAppToken;
-        }else{
-            weakSelf.item.live.liveWebAccessControlLevel = NEMeetingLiveAuthLevelToken;
-        }
-    };
-    liveLevelRow.value = @false;
-    
-    
-    NEFromGroup *group4 = [[NEFromGroup alloc] init];
+    [group.rows addObject:meetingKeyRow];
+    return group;
+}
+/// 云端录制
+- (NEFromGroup *)cloudRecordGroup {
+    NEFromGroup *group = [NEFromGroup new];
     NEFromRow *openRecord = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingOpenRecord"];
     openRecord.title = @"开启云端录制";
+    __weak typeof(self) weakSelf = self;
     openRecord.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         weakSelf.item.settings.cloudRecordOn = [newValue boolValue];
     };
-    [group4.rows addObject:openRecord];
-    
-    if([[NEMeetingKit getInstance].getSettingsService isMeetingLiveEnabled]){
-        
-        NEFromGroup *group5 = [[NEFromGroup alloc] init];
-        NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
-        liveRow.title = @"开启直播";
-        liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-            weakSelf.item.live.enable = [newValue boolValue];
-            if (weakSelf.item.live.enable) {
-                [self insertRow:liveLevelRow below:row];
-            } else {
-                [weakSelf deleteRowWithTag:@"kMeetingLiveLevel"];
-            }
-        };
-        liveRow.value = @false;
-        [group5.rows addObject:liveRow];
-        
-        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3, group4,group5]];
-    }else{
-        self.groups = [NSMutableArray arrayWithArray:@[group0, group1, group2, group3,group4]];
-    }
-    
-    NEFromGroup *extraDataGroup = [[NEFromGroup alloc] init];
+    [group.rows addObject:openRecord];
+    return group;
+}
+
+/// 企业员工
+- (NEFromRow *)enterpriseStaffRow {
+    NEFromRow *liveLevelRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLiveLevel"];
+    liveLevelRow.title = @"仅本企业员工可观看";
+    __weak typeof(self) weakSelf = self;
+    liveLevelRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.item.live.liveWebAccessControlLevel = [newValue boolValue] ? NEMeetingLiveAuthLevelAppToken : NEMeetingLiveAuthLevelToken;
+    };
+    liveLevelRow.value = @false;
+    return liveLevelRow;
+}
+/// 直播
+- (NEFromGroup *)liveGroup {
+    NEFromGroup *group = [[NEFromGroup alloc] init];
+    NEFromRow *liveRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingLive"];
+    liveRow.title = @"开启直播";
+    __weak typeof(self) weakSelf = self;
+    liveRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.item.live.enable = [newValue boolValue];
+        if (weakSelf.item.live.enable) {
+            [self insertRow:[weakSelf enterpriseStaffRow] below:row];
+        } else {
+            [weakSelf deleteRowWithTag:@"kMeetingLiveLevel"];
+        }
+    };
+    liveRow.value = @false;
+    [group.rows addObject:liveRow];
+    return group;
+}
+
+/// 联席主持人
+- (NEFromGroup *)cohostGroup {
+    NEFromGroup *group = [NEFromGroup new];
+    NEFromRow *cohostRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kCohostTitle"];
+    cohostRow.title = @"角色绑定";
+    cohostRow.value =  [_item.roleBinds yy_modelToJSONString];
+//    cohostRow.value = @"{\"42ea43e7df3512e117fa8330\":0,\"9f9071de70e7be411abf716e\":1}";
+    cohostRow.config = @{
+        @"placeholder" : @"请输入配置",
+        @"disableCopy" : @(YES),
+        @"textAlignment" : @(NSTextAlignmentRight),
+        @"clearButtonMode" : @(UITextFieldViewModeWhileEditing)
+    };
+    __weak typeof(self) weakSelf = self;
+    cohostRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        NSString *coText = (NSString *)newValue;
+//        NSDictionary *dic = [NSDictionary yy_modelWithJSON:@"{\"a\":1}"];
+        NSData *data = [coText dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if (dic) {
+            weakSelf.item.roleBinds = dic;
+        }
+    };
+//    self.item.roleBinds = @{
+//        @"42ea43e7df3512e117fa8330": @(0),
+//        @"9f9071de70e7be411abf716e": @(1)
+//    };
+    [group.rows addObject:cohostRow];
+    return group;
+}
+
+/// 额外扩展
+- (NEFromGroup *)extraDataGroup {
+    NEFromGroup *group = [[NEFromGroup alloc] init];
     NEFromRow *extraDataGroupRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingExtraData"];
     extraDataGroupRow.title = @"扩展字段";
     extraDataGroupRow.value = _item.extraData;
@@ -186,53 +210,72 @@
         @"textAlignment" : @(NSTextAlignmentRight),
         @"clearButtonMode" : @(UITextFieldViewModeWhileEditing),
     };
+    __weak typeof(self) weakSelf = self;
     extraDataGroupRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
         weakSelf.item.extraData = newValue;
     };
-    [extraDataGroup.rows addObject:extraDataGroupRow];
-    [self.groups addObject: extraDataGroup];
+    [group.rows addObject:extraDataGroupRow];
+    return group;
+}
+/// 自动 静音/解除静音
+- (NEFromGroup *)autoAudioGroup {
+    NEFromGroup *group = [[NEFromGroup alloc] init];
+    NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMute"];
+    autoMuteRow.title = @"自动静音";
+    autoMuteRow.subTitle = @"参会者加入会议时自动静音";
+    __weak typeof(self) weakSelf = self;
+    autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.muteAllAudio = [newValue boolValue];
+    };
     
-    {
-        NEFromGroup *group = [[NEFromGroup alloc] init];
-        NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMute"];
-        autoMuteRow.title = @"自动静音";
-        autoMuteRow.subTitle = @"参会者加入会议时自动静音";
-        autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-            weakSelf.muteAllAudio = [newValue boolValue];
-        };
-        
-        NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAudioAllowSelfOn"];
-        allowSelfOnRow.title = @"允许自行解除静音";
-        allowSelfOnRow.subTitle = @"允许参会者自行解除静音";
-        allowSelfOnRow.value = @(YES);
-        allowSelfOnRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-            weakSelf.allowAudioSelfOn = [newValue boolValue];
-        };
-        
-        [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
-        [self.groups addObject: group];
-    }
+    NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAudioAllowSelfOn"];
+    allowSelfOnRow.title = @"允许自行解除静音";
+    allowSelfOnRow.subTitle = @"允许参会者自行解除静音";
+    allowSelfOnRow.value = @(YES);
+    allowSelfOnRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.allowAudioSelfOn = [newValue boolValue];
+    };
+    [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
+    return group;
+}
+/// 自动  开/关视频
+- (NEFromGroup *)autoVideoGroup {
+    NEFromGroup *group = [[NEFromGroup alloc] init];
+    NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMuteVideo"];
+    autoMuteRow.title = @"自动关闭视频";
+    autoMuteRow.subTitle = @"参会者加入会议时自动关闭视频";
+    __weak typeof(self) weakSelf = self;
+    autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.muteAllVideo = [newValue boolValue];
+    };
     
-    {
-        NEFromGroup *group = [[NEFromGroup alloc] init];
-        NEFromRow *autoMuteRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingAutoMuteVideo"];
-        autoMuteRow.title = @"自动关闭视频";
-        autoMuteRow.subTitle = @"参会者加入会议时自动关闭视频";
-        autoMuteRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-            weakSelf.muteAllVideo = [newValue boolValue];
-        };
-        
-        NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingVideoAllowSelfOn"];
-        allowSelfOnRow.title = @"允许自行打开视频";
-        allowSelfOnRow.subTitle = @"允许参会者自行打开视频";
-        allowSelfOnRow.value = @(YES);
-        allowSelfOnRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
-            weakSelf.allowVideoSelfOn = [newValue boolValue];
-        };
-        
-        [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
-        [self.groups addObject: group];
+    NEFromRow *allowSelfOnRow = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kMeetingVideoAllowSelfOn"];
+    allowSelfOnRow.title = @"允许自行打开视频";
+    allowSelfOnRow.subTitle = @"允许参会者自行打开视频";
+    allowSelfOnRow.value = @(YES);
+    allowSelfOnRow.onValueChanged = ^(id  _Nonnull newValue, NEFromRow * _Nonnull row) {
+        weakSelf.allowVideoSelfOn = [newValue boolValue];
+    };
+    [group.rows addObjectsFromArray:@[autoMuteRow, allowSelfOnRow]];
+    return  group;
+}
+
+- (void)setupForm {
+    self.groups = @[
+        [self titleGroup],
+        [self timeGroup],
+        [self passwordGroup],
+        [self cloudRecordGroup],
+        [self cohostGroup]
+    ].mutableCopy;
+    if (NEMeetingKit.getInstance.getSettingsService.isMeetingLiveEnabled) {
+        [self.groups addObject:[self liveGroup]];
     }
+    [self.groups addObjectsFromArray:@[
+        [self extraDataGroup],
+        [self autoAudioGroup],
+        [self autoVideoGroup]
+    ]];
 }
 
 - (void)insertPassworkRowBelow:(NEFromRow *)row {
@@ -244,16 +287,10 @@
         weakSelf.password = newValue;
     };
     passwordInputRow.config = @{
-                                @"placeholder" : @"请输入密码",
-                                //@"keyboardType" : @(UIKeyboardTypeNumberPad),
-                                };
-    if (_password.length != 0) {
-        _item.password = _password;
-    } else {
-        _item.password = @(rand()%900000+100000).stringValue;
-    }
+        @"placeholder" : @"请输入密码"
+    };
+    _item.password = _password.length ? _password : @(rand()%900000+100000).stringValue;
     passwordInputRow.value = _item.password;
-    
     [self insertRow:passwordInputRow below:row];
 }
 
@@ -276,7 +313,6 @@
         [self.tableView reloadRowsAtIndexPaths:@[endRowIndex]
                               withRowAnimation:UITableViewRowAnimationNone];
     }
-    
     _item.startTime = startTimestamp*1000;
     _item.endTime = endTimestamp*1000;
 }
@@ -326,8 +362,5 @@
 
 - (NEPreMeetingService *)preMeetingService {
     return [[NEMeetingKit getInstance] getPreMeetingService];
-}
-
-- (void)doSceneSettings {
 }
 @end

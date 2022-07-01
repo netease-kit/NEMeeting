@@ -1,9 +1,6 @@
-//
-//  MainViewController.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "MainViewController.h"
 #import "LoginInfoManager.h"
@@ -150,32 +147,27 @@
 - (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
                     meetingInfo:(NEMeetingInfo *)meetingInfo
                 stateController:(NEMenuStateController)stateController {
-    if (clickInfo.itemId == 100) return;
-    _alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        stateController(NO,nil);
-    }];
-    UIAlertAction *ignoreAction = [UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        stateController(YES,nil);
-    }];
-    [_alert addAction:cancelAction];
-    [_alert addAction:ignoreAction];
-    [_alert addAction:okAction];
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    _preVC = keyWindow.rootViewController.presentedViewController;
-    if (!_preVC) {
-        _preVC = keyWindow.rootViewController;
+    if (clickInfo.itemId == 100) {
+    } else {
+        _alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
+        [_alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            stateController(NO,nil);
+        }]];
+        [_alert addAction:[UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
+        [_alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            stateController(YES,nil);
+        }]];
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        _preVC = keyWindow.rootViewController.presentedViewController;
+        if (!_preVC) {
+            _preVC = keyWindow.rootViewController;
+        }
+        [_preVC presentViewController:_alert animated:YES completion:nil];
     }
-    [_preVC presentViewController:_alert animated:YES completion:nil];
 }
-
 - (void)updateMeetingBtnWithInfo:(NEMeetingInfo *)info {
     NEMeetingStatus status = [[NEMeetingKit getInstance] getMeetingService].getMeetingStatus;
-    if (status != MEETING_STATUS_INMEETING_MINIMIZED) {
-        return;
-    }
+    if (status != MEETING_STATUS_INMEETING_MINIMIZED) return;
 
     NSLog(@"meetingId: %@ meetingUniqueId: %llu", info.meetingId, info.meetingUniqueId);
     _restoreMeetingBtn.neTitle = info.subject;

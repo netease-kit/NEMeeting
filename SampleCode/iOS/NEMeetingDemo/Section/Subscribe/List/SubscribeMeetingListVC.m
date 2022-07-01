@@ -1,15 +1,13 @@
-//
-//  SubscribeMeetingListVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "SubscribeMeetingListVC.h"
 #import "SubMeetingCell.h"
 #import "SubDateCell.h"
 #import "NESubscribeMeetingDetailVC.h"
 #import <Reachability/Reachability.h>
+
 
 @interface SubscribeMeetingListVC ()<UITableViewDelegate, UITableViewDataSource, NEScheduleMeetingListener>
 
@@ -25,16 +23,25 @@
     [[NEMeetingKit getInstance].getPreMeetingService removeListener:self];
     [self.connect stopNotifier];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [self setupDatas];
+//    [self setupDatas];
     [[NEMeetingKit getInstance].getPreMeetingService addListener:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStateChange) name:kReachabilityChangedNotification object:nil];
+    [self addObserver];
     [self.connect startNotifier];
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self setupDatas];
+}
+- (void)addObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStateChange) name:kReachabilityChangedNotification object:nil];
+}
+
 - (void)netStateChange {
     // 1.检测手机是否能上网络(WiFi\3G\2.5G)
     Reachability *connect = [Reachability reachabilityForInternetConnection];

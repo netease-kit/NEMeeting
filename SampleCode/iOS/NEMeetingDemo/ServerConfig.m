@@ -20,7 +20,7 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     static NSDictionary *configs;
     if (configs == nil) {
         configs = @{
-            @"test": [[ServerConfig alloc] init: kAppKey
+            @"online": [[ServerConfig alloc] init: kAppKey
                                    appServerUrl: @"你的appServerUrl"
                                    sdkServerUrl: @"你的sdkServerUrl"],
         };
@@ -68,7 +68,7 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
 }
 
 + (NSString*)serverType {
-    return [ServerConfig ifEmpty:[[NSUserDefaults standardUserDefaults] stringForKey: kServerType] fallback: @"test"];
+    return [ServerConfig ifEmpty:[[NSUserDefaults standardUserDefaults] stringForKey: kServerType] fallback: @"online"];
 }
 
 + (void)setServerType:(NSString*)serverType {

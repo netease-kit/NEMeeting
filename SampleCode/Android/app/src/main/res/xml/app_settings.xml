@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2022 NetEase, Inc. All rights reserved. -->
+<!-- Use of this source code is governed by a MIT license that can be -->
+<!-- found in the LICENSE file. -->
+
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,14 +14,6 @@
             app:allowDividerAbove="true"
             app:entries="@array/ServerConfigTypes"
             app:entryValues="@array/ServerConfigValues"
-            app:iconSpaceReserved="false"
-            app:useSimpleSummaryProvider="true"
-            />
-
-    <EditTextPreference
-            app:key="custom_app_server_url"
-            app:title="自定义应用服务地址"
-            app:allowDividerAbove="true"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true"
             />
@@ -41,13 +37,6 @@
     <SwitchPreferenceCompat
         app:key="meeting-reuse-nim"
         app:title="NIM复用"
-        app:summary="重启应用后生效"
-        style="@style/MySwitchPreference"
-        />
-
-    <SwitchPreferenceCompat
-        app:key="use-asset-server-config"
-        app:title="读取私有化服务器配置"
         app:summary="重启应用后生效"
         style="@style/MySwitchPreference"
         />

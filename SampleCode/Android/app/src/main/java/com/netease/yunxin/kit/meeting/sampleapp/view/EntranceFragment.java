@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -26,6 +25,10 @@ public class EntranceFragment extends BaseFragment<FragmentEntranceBinding> {
 
         binding.btnLoginWithToken.setOnClickListener(v ->
                 Navigation.findNavController(getView()).navigate(R.id.action_entranceFragment_to_loginWithTokenFragment)
+        );
+
+        binding.btnAnonymousLogin.setOnClickListener(v ->
+                Navigation.findNavController(getView()).navigate(R.id.action_entranceFragment_to_joinMeetingFragment)
         );
 
     }

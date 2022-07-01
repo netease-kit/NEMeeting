@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 package com.netease.yunxin.kit.meeting.sampleapp.adapter;
 
 import android.content.Context;
@@ -73,6 +72,7 @@ public class ScheduleMeetingDetailAdapter extends BaseAdapter<ScheduleMeetingDet
 
         if (data.getOn() != null) {
             binding.switchButton.setVisibility(View.VISIBLE);
+            binding.switchButton.setEnabled(false);
             binding.switchButton.setChecked(data.getOn());
         }
     }

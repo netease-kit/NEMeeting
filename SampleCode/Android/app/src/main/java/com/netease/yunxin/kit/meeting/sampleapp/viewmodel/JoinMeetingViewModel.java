@@ -1,3 +1,7 @@
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 package com.netease.yunxin.kit.meeting.sampleapp.viewmodel;
 
 
@@ -28,5 +32,9 @@ public class JoinMeetingViewModel extends AndroidViewModel {
 
     public void joinMeeting(@NonNull NEJoinMeetingParams param, @Nullable NEJoinMeetingOptions opts, NECallback<Void> callback) {
         mRepository.joinMeeting(context, param, opts, callback);
+    }
+
+    public void anonymousJoinMeeting(@NonNull NEJoinMeetingParams param, @Nullable NEJoinMeetingOptions opts, NECallback<Void> callback) {
+        mRepository.anonymousJoinMeeting(context, param, opts, callback);
     }
 }

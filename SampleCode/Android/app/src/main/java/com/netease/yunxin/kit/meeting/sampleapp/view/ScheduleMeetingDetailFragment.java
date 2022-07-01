@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -18,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.SdkAuthenticator;
 import com.netease.yunxin.kit.meeting.sampleapp.ToastCallback;
 import com.netease.yunxin.kit.meeting.sampleapp.adapter.ScheduleMeetingDetailAdapter;
@@ -109,6 +109,12 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
                                          }
                                      });
         });
+        binding.btnEditScheduleMeeting.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("meetingItem", item);
+            bundle.putBoolean("isEditMeeting",true);
+            Navigation.findNavController(getView()).navigate(R.id.action_scheduleMeetingDetailFragment_to_scheduleMeetingFragment, bundle);
+        });
     }
 
     private void copyValue(String text) {
@@ -186,11 +192,16 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
         if (status == NEMeetingItemStatus.cancel || status == NEMeetingItemStatus.recycled) {
             binding.btnCancelScheduleMeeting.setVisibility(View.GONE);
             binding.btnJoinScheduleMeeting.setVisibility(View.GONE);
+            binding.btnEditScheduleMeeting.setVisibility(View.GONE);
         } else if (status == NEMeetingItemStatus.ended) {
             binding.btnCancelScheduleMeeting.setVisibility(View.GONE);
+            binding.btnEditScheduleMeeting.setVisibility(View.GONE);
         } else if (status == NEMeetingItemStatus.init || status == NEMeetingItemStatus.started) {
             binding.btnCancelScheduleMeeting.setVisibility(View.VISIBLE);
             binding.btnJoinScheduleMeeting.setVisibility(View.VISIBLE);
+        }
+        if(status == NEMeetingItemStatus.started){
+            binding.btnEditScheduleMeeting.setVisibility(View.GONE);
         }
         mAdapter.resetData(dataList);
     }

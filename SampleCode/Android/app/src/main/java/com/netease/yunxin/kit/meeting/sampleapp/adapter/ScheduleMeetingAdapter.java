@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 package com.netease.yunxin.kit.meeting.sampleapp.adapter;
 
 import android.content.Context;
@@ -38,21 +37,32 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
 
     private MutableLiveData<String> extraData;
 
+    private MutableLiveData<String> roleBindData;
+
+    public static final int VIEW_TYPE = 100;
+
     public ScheduleMeetingAdapter(Context context, List<ScheduleMeetingItem> data,
                                   MutableLiveData<String> passWord,
                                   MutableLiveData<String> tittle,
-                                  MutableLiveData<String> extraData
+                                  MutableLiveData<String> extraData,
+                                  MutableLiveData<String> roleBindData
     ) {
         super(data);
         this.context = context;
         this.passWord = passWord;
         this.tittle = tittle;
         this.extraData = extraData;
+        this.roleBindData = roleBindData;
     }
 
     @Override
     public ItemScheduleMeetingBinding getViewBinding(ViewGroup parent, int viewType) {
         return ItemScheduleMeetingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return VIEW_TYPE;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -88,6 +98,8 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
                 if (editable != null) {
                     if (data.getClickAction() == ScheduleMeetingItem.SET_EXTRA_DATA_ACTION) {
                         extraData.setValue(editable.toString());
+                    }else if(data.getClickAction() == ScheduleMeetingItem.SET_ROLE_BIND){
+                        roleBindData.setValue(editable.toString());
                     } else {
                         tittle.setValue(editable.toString());
                     }
@@ -105,20 +117,47 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
         switch (data.getClickAction()) {
             case ScheduleMeetingItem.EDIT_TEXT_TITLE_ACTION:
                 edtMeetingTheme.setVisibility(View.VISIBLE);
+                sbMeetingSwitch.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(edtMeetingTheme.getText())) {
-                    edtMeetingTheme.setText(SdkAuthenticator.getAccount() + "的预约会议");
+                    edtMeetingTheme.setText(data.getValueString().isEmpty()?SdkAuthenticator.getAccount() + "的预约会议":data.getValueString());
                 }
                 break;
             case ScheduleMeetingItem.SET_EXTRA_DATA_ACTION:
                 edtMeetingTheme.setVisibility(View.VISIBLE);
                 edtMeetingTheme.setHint("");
+                if(!data.getValueString().isEmpty()) {
+                    edtMeetingTheme.setText(data.getValueString());
+                }
+                break;
+            case ScheduleMeetingItem.SET_ROLE_BIND:
+                edtMeetingTheme.setVisibility(View.VISIBLE);
+                sbMeetingSwitch.setVisibility(View.GONE);
+                edtMeetingTheme.setHint("{\"dew323esd23ew23e3r\":1}");
+                if(!data.getValueString().isEmpty()) {
+                    edtMeetingTheme.setText(data.getValueString());
+                } else if(roleBindData.getValue()!=null && !roleBindData.getValue().isEmpty()){
+                    edtMeetingTheme.setText(roleBindData.getValue());
+            }else {
+                    edtMeetingTheme.setText("");
+                }
                 break;
             case ScheduleMeetingItem.SET_START_TIME_ACTION:
             case ScheduleMeetingItem.SET_END_TIME_ACTION:
                 tvMeetingTime.setVisibility(View.VISIBLE);
+                sbMeetingSwitch.setVisibility(View.GONE);
+                if(!data.getValueString().isEmpty()) {
+                    tvMeetingTime.setText(data.getValueString());
+                } else {
+                    tvMeetingTime.setText(data.getTimeTip());
+                }
                 break;
             case ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION:
                 sbMeetingSwitch.setVisibility(View.VISIBLE);
+
+                if(!data.getValueString().isEmpty()){
+                    sbMeetingSwitch.setChecked(data.isSwitchOn());
+                    edtMeetingPwd.setText(data.getValueString());
+                }
                 if (TextUtils.isEmpty(edtMeetingPwd.getText())) {
                     edtMeetingPwd.setText(String.valueOf((Math.random() * 9 + 1) * 100000).substring(0, 6));
                 }
@@ -135,10 +174,12 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
             case ScheduleMeetingItem.ENABLE_MEETING_LIVE_LEVEL_ACTION:
                 sbMeetingSwitch.setVisibility(View.VISIBLE);
                 sbMeetingSwitch.setChecked(data.isSwitchOn());
+                edtMeetingTheme.setVisibility(View.GONE);
+
                 break;
             case ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION:
                 sbMeetingSwitch.setVisibility(View.VISIBLE);
-//                sbMeetingSwitch.setChecked(data.isSwitchOn());
+                sbMeetingSwitch.setChecked(data.isSwitchOn());
                 break;
         }
     }

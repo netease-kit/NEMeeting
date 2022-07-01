@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.StartMeetingViewModel;
 import com.netease.yunxin.kit.meeting.sdk.NEAccountService;
@@ -21,14 +19,19 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingAudioControl;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingControl;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingError;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingRoleType;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingVideoControl;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class StartMeetingFragment extends MeetingCommonFragment {
@@ -73,7 +76,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
 
     @Override
     protected String[] getEditorLabel() {
-        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "请输入密码","个人TAG", "扩展字段"};
+        return new String[]{"会议号(留空或使用个人会议号)", "昵称", "请输入密码","个人TAG", "扩展字段","json结构uid-role:{\"dew323esd23ew23e3r\":1}"};
     }
 
     @Override
@@ -99,6 +102,24 @@ public class StartMeetingFragment extends MeetingCommonFragment {
         if (!TextUtils.isEmpty(extraData)) {
             params.extraData = extraData;
         }
+        String roleBindsStr = getEditorText(5);
+        if(!TextUtils.isEmpty(roleBindsStr)){
+            try {
+                JSONObject roleBindJson = new JSONObject(roleBindsStr);
+                Map<String, NEMeetingRoleType> roleBinds = new HashMap<>();
+                Iterator<String> iterator = roleBindJson.keys();
+                while (iterator.hasNext()){
+                    String key = iterator.next();
+                    NEMeetingRoleType roleType = NEMeetingRoleType.values()[roleBindJson.optInt(key)];
+                    roleBinds.put(key,roleType);
+                }
+                params.roleBinds = roleBinds;
+            } catch (JSONException e) {
+                Toast.makeText(getContext(),"绑定角色数据结构出错了",Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
         List<NEMeetingControl> controls = new ArrayList<>();
         if (isCheckedById(R.id.audioOffAllowSelfOn)) {
             controls.add(new NEMeetingAudioControl(NEMeetingAttendeeOffType.OffAllowSelfOn));

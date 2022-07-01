@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -106,6 +105,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         addEditorArray(2, R.id.thirdEditor, labels);
         addEditorArray(3, R.id.fourthEditor, labels);
         addEditorArray(4, R.id.fifthEditor, labels);
+        addEditorArray(5,R.id.roleBind,labels);
         Button configToolbarMenu = getView().findViewById(R.id.configToolbarMenus);
         configToolbarMenu.setOnClickListener(v -> {
             InjectMenuContainer.setSelectedMenu(toolbarMenu);
@@ -170,7 +170,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         options.noSwitchCamera = isChecked(9);
         options.noSwitchAudioMode = isChecked(10);
         options.noWhiteBoard = isChecked(11);
-//        options.noSip = isCheckedById(R.id.noSip);
+        options.noSip = isCheckedById(R.id.noSip);
         options.defaultWindowMode = isChecked(12)? NEWindowMode.whiteBoard : NEWindowMode.normal;
         options.noRename = isCheckedById(R.id.noRename);
         options.showMemberTag = isCheckedById(R.id.showMemberTag);

@@ -15,7 +15,7 @@
 #import "MeetingActionVC.h"
 #import "NEMeetingLoginViewController.h"
 #import "MainViewController.h"
-@interface MeetingControlVC ()<NEAuthListener, NEControlListener>
+@interface MeetingControlVC ()<NEAuthListener>
 
 @property (weak, nonatomic) IBOutlet UIView *subscribeListContainer;
 @property (strong, nonatomic) SubscribeMeetingListVC *subscribeListVC;
@@ -26,15 +26,13 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NEMeetingSDK getInstance] removeAuthListener:self];
-    [[[NEMeetingSDK getInstance] getControlService] removeListener:self];
+    [[NEMeetingKit getInstance] removeAuthListener:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [[NEMeetingSDK getInstance] addAuthListener:self];
-    [[[NEMeetingSDK getInstance] getControlService] addListener:self];
+    [[NEMeetingKit getInstance] addAuthListener:self];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -70,7 +68,7 @@
 
 - (void)doLogout {
     WEAK_SELF(weakSelf);
-    [[NEMeetingSDK getInstance] logout:^(NSInteger resultCode, NSString *resultMsg, id result) {
+    [[NEMeetingKit getInstance] logout:^(NSInteger resultCode, NSString *resultMsg, id result) {
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         }
@@ -110,38 +108,6 @@
     [self doBeKickedWithInfo:@"登录状态已过期，请重新登录"];
 }
 
-#pragma mark - <>
-- (void)onStartMeetingResult:(NEControlResult *)result {
-    if (result.code == ERROR_CODE_SUCCESS) {
-        return;
-    }
-    NSString *msg = [NSString stringWithFormat:@"start: code:%d msg:%@", (int)result.code, result.message];
-    if (self.presentedViewController) {
-        [self.presentedViewController.view makeToast:msg
-                                            duration:2
-                                            position:CSToastPositionCenter];
-    } else {
-        [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                      duration:2
-                                                      position:CSToastPositionCenter];
-    }
-}
-
-- (void)onJoinMeetingResult:(NEControlResult *)result {
-    if (result.code == ERROR_CODE_SUCCESS) {
-        return;
-    }
-    NSString *msg = [NSString stringWithFormat:@"join:code:%d msg:%@", (int)result.code, result.message];
-    if (self.presentedViewController) {
-        [self.presentedViewController.view makeToast:msg
-                                            duration:2
-                                            position:CSToastPositionCenter];
-    } else {
-        [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                      duration:2
-                                                      position:CSToastPositionCenter];
-    }
-}
 
 - (void)onInjectedMenuItemClick:(NEMenuClickInfo *)clickInfo
                     meetingInfo:(NEMeetingInfo *)meetingInfo
@@ -165,20 +131,6 @@
     }
     [preVC presentViewController:alert animated:YES completion:nil];
     
-}
-
-- (void)onUnbind:(int)unBindType {
-    NSString *msg = [NSString stringWithFormat:@"电视与遥控器解绑，原因:%d", unBindType];
-    [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                  duration:2
-                                                  position:CSToastPositionCenter];
-}
-
-- (void)onTCProtocolUpgrade:(NETCProtocolUpgrade *)tcProtocolUpgrade {
-    NSString *msg = [NSString stringWithFormat:@"遥控器与电视协议版本不同，遥控器的协议版本：%@，电视的协议版本：%@，是否兼容：%hhd", tcProtocolUpgrade.controllerProtocolVersion, tcProtocolUpgrade.tvProtocolVersion, tcProtocolUpgrade.isCompatible];
-    [[UIApplication sharedApplication].keyWindow makeToast:msg
-                                                  duration:2
-                                                  position:CSToastPositionCenter];
 }
 
 #pragma mark - Getter

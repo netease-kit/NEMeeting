@@ -23,6 +23,14 @@
                                                             action:nil];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = item;
+    if (@available(iOS 15.0, *)) {
+        UINavigationBarAppearance *navBar = [[UINavigationBarAppearance alloc] init];
+        [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        navBar.backgroundColor = UIColorFromRGB(0x2864FE);
+        navBar.backgroundEffect = nil;
+        self.navigationController.navigationBar.scrollEdgeAppearance = navBar;
+        self.navigationController.navigationBar.standardAppearance = navBar;
+    }
 }
 
 - (void)hiddenBackButton {
@@ -35,7 +43,9 @@
     [super touchesBegan:touches withEvent:event];
     [self.view endEditing:YES];
 }
-
+- (void)showMessage:(NSString *)message {
+    [self.view makeToast:message duration:2 position:CSToastPositionCenter];
+}
 - (void)showErrorCode:(NSInteger)code msg:(NSString *)msg {
     NSString *show = [NSString stringWithFormat:@"error:%@, code:%@", msg, @(code)];
     [self.view makeToast:show duration:2 position:CSToastPositionCenter];

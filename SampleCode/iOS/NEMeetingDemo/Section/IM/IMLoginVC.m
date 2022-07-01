@@ -7,11 +7,17 @@
 
 #import "IMLoginVC.h"
 #import "LoginInfoManager.h"
-#import "Config.h"
+#import "ServerConfig.h"
 #import <NIMSDK/NIMSDK.h>
 #import <CommonCrypto/CommonDigest.h>
 
-NSString *const kIMAppKey = @"Your_NIM_AppKey";
+#if ONLINE //线上环境
+NSString *const kIMAppKey = @"";
+#elif PRIVATE //私有化AppKey
+NSString *const kIMAppKey = @"";
+#else
+NSString *const kIMAppKey = @"";
+#endif
 
 @interface IMLoginVC ()
 

@@ -11,12 +11,11 @@
   <button onclick="destory()">销毁</button>
   <button onclick="login()">登陆</button>
   <button onclick="loginWithNEMeeting()">账号密码登陆</button>
-  <button onclick="loginWithSSOToken()">SSO登陆</button>
   <button onclick="create()">创建</button>
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
-  <script src="./NeWebMeeting_V2.2.5.js"></script>
+  <script src="./NEMeetingKit_v3.2.0.js"></script>
   <script>
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
@@ -32,17 +31,17 @@
         // IM私有化配置
       }
     }
-    neWebMeeting.actions.init(800, 600, config);  // （width，height）单位px 建议比例4:3
-    neWebMeeting.actions.afterLeave(() => {
+    NEMeetingKit.actions.init(800, 600, config);  // （width，height）单位px 建议比例4:3
+    NEMeetingKit.actions.afterLeave(() => {
       console.log('离开会议回调')
     })
   }
   function destory() {
-    neWebMeeting.actions.destory(); // 销毁
+    NEMeetingKit.actions.destory(); // 销毁
   }
   
   function login() {
-    neWebMeeting.actions.login({ // 登陆
+    NEMeetingKit.actions.login({ // 登陆
       accountId: 0,
       accountToken: 0,
       appKey: '',
@@ -53,21 +52,16 @@
 
   function loginWithNEMeeting() { // 账号密码登陆
     const account = '',password = '';
-    neWebMeeting.actions.loginWithNEMeeting(account, password, function(e) {
+    NEMeetingKit.actions.loginWithNEMeeting(account, password, function(e) {
       console.log(e)
     })
   }
 
-  function loginWithSSOToken() { // ssoToken登陆
-    const ssoToken = '';
-    neWebMeeting.actions.loginWithSSOToken(ssoToken, function(e) {
-      console.log(e)
-    })
-  }
+  
   
   function create() { // 创建
-    neWebMeeting.actions.create({
-      meetingId: 0, // 1随机0固定
+    NEMeetingKit.actions.create({
+      meetingId: 2, // 1随机2固定
       nickName: 'demo',
       video: 1,
       audio: 1,
@@ -79,7 +73,7 @@
   
   function join(params) {
     var meetingId = document.querySelector('.meeting-id').value;
-    neWebMeeting.actions.join({
+    NEMeetingKit.actions.join({
       meetingId,
       nickName: 'demo1',
       video: 1,

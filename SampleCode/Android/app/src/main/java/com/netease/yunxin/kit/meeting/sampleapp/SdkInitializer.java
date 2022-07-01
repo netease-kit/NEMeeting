@@ -99,12 +99,11 @@ public class SdkInitializer {
         /// to remove start
         config.extras = new HashMap<String,Object>(){
             {
-                put("serverUrl", serverConfig.getServerUrl());
-                put("debugMode", serverConfig.isDebugMode() ? 1 : 0);
+                put("serverUrl", serverConfig.getSdkServerUrl());
+                put("debugMode", SPUtils.getInstance().getBoolean("developer-mode", true) ? 1 : 0);
             }
         };
         config.appName = context.getString(R.string.app_name);
-        config.useAssetServerConfig = serverConfig.getUseAssetServerConfig();
         //配置会议时显示前台服务
         NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
         foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);

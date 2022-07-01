@@ -44,7 +44,7 @@ static NSString * const prefixName = @"meetingdemo://";
     config.reuseIM = [LoginInfoManager shareInstance].reuseNIM;
 //    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
-    config.broadcastAppGroup = @"group.com.netease.meetinglib.demo.NEMeetingDevDemo";
+    config.broadcastAppGroup = @"xxxx";
     NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
     //默认等级
     loggerConfig.level = NELogLevelInfo;

@@ -1,9 +1,6 @@
-//
-//  SelectedMenuItemEditVC.h
-//  NEMeetingDevDemo
-//
-//  Created by 李成达 on 2020/12/11.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #ifndef SelectedMenuItemEditVC_h
 #define SelectedMenuItemEditVC_h

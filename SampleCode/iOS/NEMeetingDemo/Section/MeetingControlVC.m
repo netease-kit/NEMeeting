@@ -1,9 +1,6 @@
-//
-//  MeetingControlVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "MeetingControlVC.h"
 #import "StartMeetingVC.h"
@@ -27,14 +24,18 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NEMeetingKit getInstance] removeAuthListener:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNEMeetingEditSubscribeDone object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
     [[NEMeetingKit getInstance] addAuthListener:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editDone) name:kNEMeetingEditSubscribeDone object:nil];
 }
-
+- (void)editDone {
+    [self.navigationController popToViewController:self animated:YES];
+}
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.subscribeListVC.view.frame = self.subscribeListContainer.bounds;
@@ -85,7 +86,7 @@
 
 - (IBAction)onJoinMeetingAction:(id)sender {
     EnterMeetingVC *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EnterMeetingVC"];
-    vc.type = EnterMeetingNormal;
+    vc.type = EnterMeetingJoin;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -27,4 +27,7 @@ alpha:alphaValue]
 
 /// 重置窗口
 #define kNEMeetingResetWindow  @"com.netease.meetinglib.window.notification"
+
+/// 编辑预约完成
+#define kNEMeetingEditSubscribeDone  @"com.netease.meeting.subscribe.edit.notify"
 #endif /* NEMeetingDemo_pch */

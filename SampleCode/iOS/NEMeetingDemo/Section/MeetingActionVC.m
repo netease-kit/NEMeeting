@@ -1,9 +1,6 @@
-//
-//  MeetingActionVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "MeetingActionVC.h"
 #import "LoginInfoManager.h"
@@ -13,7 +10,6 @@
 #import "NEMeetingLoginViewController.h"
 #import "MainViewController.h"
 #import "MeetingMenuSelectVC.h"
-
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuTypeToolbar = 1,
     MeetingMenuTypeMore = 2,
@@ -99,18 +95,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     }
     [self showSeletedItemResult:menuItems];
 }
-#pragma mark - 开启美颜预览
-//- (IBAction)doOpenBeautyAction:(UIButton *)sender {
-//    [[NEMeetingKit getInstance].getSettingsService getBeautyFaceValue:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
-//        NSLog(@"NEMeetingKit getBeautyFaceValue resultData  %@",resultData);
-//    }];
-//    __weak typeof(self) weakSelf = self;
-//    [[[NEMeetingKit getInstance] getSettingsService] openBeautyUI:^(NSInteger resultCode, NSString *resultMsg) {
-//        if (resultCode != ERROR_CODE_SUCCESS) {
-//            [weakSelf showErrorCode:resultCode msg:resultMsg];
-//        }
-//    }];
-//}
 
 - (IBAction)doOpenMeetingSetting:(UIButton *)sender {
     MeetingSettingVC *vc = [[MeetingSettingVC alloc] init];

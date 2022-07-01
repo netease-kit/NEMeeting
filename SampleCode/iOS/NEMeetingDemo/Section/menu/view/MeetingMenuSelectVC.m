@@ -1,10 +1,6 @@
-//
-//  MeetingMenuSelectVC.m
-//  NEMeetingDemo
-//
-//  Created by gyy on 2021/1/14.
-//  Copyright © 2021 张根宁. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "MeetingMenuSelectVC.h"
 #import "MeetingMenuItemCell.h"

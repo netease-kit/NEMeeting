@@ -1,9 +1,6 @@
-//
-//  AppDelegate.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "AppDelegate.h"
 #import "ServerConfig.h"
@@ -26,7 +23,9 @@ static NSString * const prefixName = @"meetingdemo://";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self meeting_addNotification];
     [self doSetupMeetingSdk];
+    [self meeting_BeatyResource];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     return YES;
 }
 
@@ -38,8 +37,14 @@ static NSString * const prefixName = @"meetingdemo://";
     [[NSUserDefaults standardUserDefaults] registerDefaults: @{@"developerMode": @(YES)}];
     NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
+    config.extras = @{
+        @"serverUrl": ServerConfig.current.sdkServerUrl,
+        @"debugMode": [[NSUserDefaults standardUserDefaults] boolForKey:@"developerMode"] ? @(1) : @(0)
+    };
+    config.reuseIM = [LoginInfoManager shareInstance].reuseNIM;
+//    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
-    config.broadcastAppGroup = @"xxxxxxxxxxxx";
+    config.broadcastAppGroup = @"group.com.netease.meetinglib.demo.NEMeetingDevDemo";
     NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
     //默认等级
     loggerConfig.level = NELogLevelInfo;
@@ -47,6 +52,7 @@ static NSString * const prefixName = @"meetingdemo://";
     NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
     config.loggerConfig = loggerConfig;
+    config.useAssetServerConfig = [ServerConfig.serverType isEqual: @"private"];
     
     [SVProgressHUD showWithStatus:@"初始化..."];
     [[NEMeetingKit getInstance] initialize:config

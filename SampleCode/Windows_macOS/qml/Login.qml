@@ -208,6 +208,13 @@ Rectangle {
         }
         RowLayout {
             TextField {
+                id: nicknameAnon
+                placeholderText: qsTr('nicknameAnon')
+                visible: anon.checked
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+            TextField {
                 id: textPassword
                 placeholderText: !anon.checked ? (!passwordLogin.checked ? qsTr('Your password') : qsTr('Your password') ) : qsTr(
                                                      'Password')
@@ -262,7 +269,7 @@ Rectangle {
             CheckBox {
                 id: runAdmin
                 text: qsTr("Admin privileges")
-                checked: true
+                checked: false
                 visible: Qt.platform.os === 'windows'
             }
             CheckBox {
@@ -346,9 +353,9 @@ Rectangle {
                             textKeepAliveInterval.text.toString().trim(
                                 ).length === 0 ? 13566 : parseInt(
                                                      textKeepAliveInterval.text))
-                meetingManager.invokeJoin(textAccountId.text, 'nicknameAnon',
+                meetingManager.invokeJoin(true, textAccountId.text, nicknameAnon.text,
                                           textTag.text, textTimeout.text,
-                                          false, false, true, true,
+                                          false, false, true, true, true, true,
                                           textPassword.text, rename.checked)
             }
         }
@@ -398,6 +405,12 @@ Rectangle {
                 toast.show(errorCode + '(' + errorMessage + ')')
                 break
             }
+
+            if (MeetingStatus.ERROR_CODE_SUCCESS !== errorCode) {
+                if(anon.checked) {
+                    meetingManager.unInitialize()
+                }
+            }
         }
 
         onLeaveSignal: {
@@ -445,6 +458,9 @@ Rectangle {
                 btnSubmit.enabled = true
                 btnLeave.enabled = false
                 btnFinish.enabled = false
+                if(anon.checked) {
+                    meetingManager.unInitialize()
+                }
                 break
             }
         }

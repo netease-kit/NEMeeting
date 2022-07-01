@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QDir>
+#include <QFont>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -12,7 +13,7 @@
 #include "nemeeting_manager.h"
 
 QString appDataDir;
-QString strLogPath = QDateTime::currentDateTime().toString("yyyy-MM-dd").append("-log.txt");
+QString strLogPath = "meetingSample_" + QDateTime::currentDateTime().toString("yyyy-MM-dd").append("-log.txt");
 
 void messageHandler(QtMsgType, const QMessageLogContext& context, const QString& message) {
     if (context.file && !message.isEmpty()) {
@@ -45,14 +46,24 @@ void messageHandler(QtMsgType, const QMessageLogContext& context, const QString&
 }
 
 int main(int argc, char* argv[]) {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#ifdef WIN32
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#else
+
+#endif
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QGuiApplication::setOrganizationName("NetEase");
     QGuiApplication::setOrganizationDomain("yunxin.163.com");
     QGuiApplication::setApplicationName("MeetingSample");
     QGuiApplication::setApplicationDisplayName("NetEase Meeting");
 
+    QFont font = QGuiApplication::font();
+    font.setWeight(QFont::Light);
+    QGuiApplication::setFont(font);
+
     appDataDir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-    appDataDir.append("/Netease/MeetingSample/App/");
+    appDataDir.append("/Netease/MeetingSample/app/");
     QDir logDir = appDataDir;
     if (!logDir.exists(appDataDir))
         logDir.mkpath(appDataDir);

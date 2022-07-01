@@ -9,6 +9,8 @@
 #import "MeetingConfigRepository.h"
 
 NSString * const kMeetingConfigJoinTimeout = @"MeetingConfig_joinTimeout";
+NSString * const kNoMuteAllVideo = @"MeetingConfig_noMuteAllVideo";
+NSString * const kNoMuteAllAudio = @"MeetingConfig_noMuteAllAudio";
 
 @implementation MeetingConfigRepository
 
@@ -30,6 +32,8 @@ NSString * const kMeetingConfigJoinTimeout = @"MeetingConfig_joinTimeout";
     dispatch_once(&onceToken, ^{
         instance = [[MeetingConfigRepository alloc] init];
         [[NSUserDefaults standardUserDefaults] registerDefaults: @{@"audioProfile": @"default"}];
+        [[NSUserDefaults standardUserDefaults] registerDefaults: @{kNoMuteAllVideo: @(YES)}];
+        [[NSUserDefaults standardUserDefaults] registerDefaults: @{kNoMuteAllAudio: @(NO)}];
     });
     return instance;
 }
@@ -45,6 +49,22 @@ NSString * const kMeetingConfigJoinTimeout = @"MeetingConfig_joinTimeout";
 
 - (void) setAudioProfile:(NSString *)audioProfile {
     [[NSUserDefaults standardUserDefaults] setValue:audioProfile forKey: @"audioProfile"];
+}
+
+- (BOOL)noMuteAllAudio {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kNoMuteAllAudio];
+}
+
+- (void)setNoMuteAllAudio:(BOOL)noMuteAllAudio {
+    [[NSUserDefaults standardUserDefaults] setBool:noMuteAllAudio forKey: kNoMuteAllAudio];
+}
+
+- (BOOL)noMuteAllVideo {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kNoMuteAllVideo];
+}
+
+- (void)setNoMuteAllVideo:(BOOL)noMuteAllVideo {
+    [[NSUserDefaults standardUserDefaults] setBool:noMuteAllVideo forKey: kNoMuteAllVideo];
 }
 
 - (NSString *)audioProfile {

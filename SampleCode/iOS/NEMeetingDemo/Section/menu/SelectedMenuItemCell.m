@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NEMeetingSDK/NEMeetingSDK.h>
+#import <NEMeetingKit/NEMeetingKit.h>
 #import "SelectedMenuItemCell.h"
 
 

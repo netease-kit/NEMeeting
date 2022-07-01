@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)hiddenBackButton;
 
+- (void)showMessage:(NSString *)message;
 - (void)showErrorCode:(NSInteger)code msg:(NSString *)msg;
 
 @end

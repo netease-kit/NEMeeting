@@ -5,7 +5,7 @@
         android:id="@+id/joinMeetingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.netease.meetinglib.demo.view.JoinMeetingFragment">
+        tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.JoinMeetingFragment">
 
     <ScrollView
             android:fillViewport="true"
@@ -32,46 +32,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="加入会议" />
 
-            <EditText
-                    android:id="@+id/injectedMenuIdEdx"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/actionBtn"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:hint="注入菜单Id"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:inputType="numberDecimal"
-                    android:layout_marginLeft="10dp" />
-
-            <EditText
-                    android:id="@+id/injectedMenuTitleEdx"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:hint="注入菜单title"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_marginLeft="10dp"
-                    android:inputType="text"
-                    app:layout_constraintLeft_toRightOf="@id/injectedMenuIdEdx"
-                    app:layout_constraintTop_toBottomOf="@id/actionBtn"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            <Button
-                    android:id="@+id/addInjectedMenuItem"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:text="添加注入菜单"
-                    android:textSize="12sp"
-                    android:layout_marginLeft="10dp"
-                    app:layout_constraintLeft_toRightOf="@id/injectedMenuTitleEdx"
-                    app:layout_constraintTop_toBottomOf="@id/actionBtn"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
             <Button
                     android:id="@+id/configToolbarMenus"
                     android:layout_width="0dp"
@@ -82,7 +42,7 @@
                     android:text="自定义工具栏菜单"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@+id/videoOffNotAllowSelfOn" />
+                    app:layout_constraintTop_toBottomOf="@+id/noMuteAllVideo" />
 
             <Button
                     android:id="@+id/configMoreMenus"
@@ -244,14 +204,14 @@
                 app:layout_constraintLeft_toRightOf="@id/noRename"
                 app:layout_constraintBottom_toBottomOf="@id/noRename" />
 
-            <CheckBox
-                    android:id="@+id/noSip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="关闭Sip功能"
-                    app:layout_constraintLeft_toRightOf="@id/noCloudRecord"
-                    app:layout_constraintBottom_toBottomOf="@id/noRename" />
+<!--            <CheckBox-->
+<!--                    android:id="@+id/noSip"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:text="关闭Sip功能"-->
+<!--                    app:layout_constraintLeft_toRightOf="@id/noCloudRecord"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/noRename" />-->
 
             <CheckBox
                     android:id="@+id/noWhiteBoard"
@@ -317,6 +277,28 @@
                     android:text="自动关闭视频(不可自行解除)"
                     app:layout_constraintLeft_toLeftOf="@id/noRename"
                     app:layout_constraintTop_toBottomOf="@id/videoOffAllowSelfOn" />
+
+            <CheckBox
+                android:id="@+id/noMuteAllVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="入会时不显示全体关闭/打开视频"
+                android:checked="true"
+                app:layout_constraintLeft_toLeftOf="@id/noRename"
+                app:layout_constraintTop_toBottomOf="@id/noMuteAllAudio" />
+
+            <CheckBox
+                android:id="@+id/noMuteAllAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="入会时不显示全体禁音/解除全体静音"
+                android:checked="false"
+                app:layout_constraintLeft_toLeftOf="@id/noRename"
+                app:layout_constraintTop_toBottomOf="@id/videoOffNotAllowSelfOn" />
+
+
 
             <EditText
                     android:id="@+id/firstEditor"

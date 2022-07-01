@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,13 +24,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IM登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGW-qe-QLo">
-                    <rect key="frame" x="12" y="68" width="81" height="32"/>
+                    <rect key="frame" x="12" y="120" width="81" height="32"/>
                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
                     <color key="textColor" red="0.49150674519999998" green="0.22835482509999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="IM账号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FiL-tG-Qno">
-                    <rect key="frame" x="12" y="124" width="390" height="32"/>
+                    <rect key="frame" x="12" y="176" width="390" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="iSp-9D-MzV"/>
                     </constraints>
@@ -37,14 +38,14 @@
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RaX-Wm-OHX">
-                    <rect key="frame" x="12" y="160" width="390" height="1"/>
+                    <rect key="frame" x="12" y="212" width="390" height="1"/>
                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="YlO-AH-4Xk"/>
                     </constraints>
                 </view>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="IM密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xcJ-7H-xZ7">
-                    <rect key="frame" x="12" y="177" width="390" height="32"/>
+                    <rect key="frame" x="12" y="229" width="390" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="EeI-NL-ox7"/>
                     </constraints>
@@ -52,14 +53,14 @@
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8hU-wI-gnP">
-                    <rect key="frame" x="12" y="213" width="390" height="1"/>
+                    <rect key="frame" x="12" y="265" width="390" height="1"/>
                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="skR-gY-QiX"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jM-iu-cy6">
-                    <rect key="frame" x="127" y="341.5" width="160" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jM-iu-cy6">
+                    <rect key="frame" x="127" y="393.5" width="160" height="44"/>
                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="SWE-bo-NZP"/>
@@ -73,8 +74,8 @@
                         <action selector="loginAction:" destination="-1" eventType="touchUpInside" id="GOV-C6-K44"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ZV-po-mPU">
-                    <rect key="frame" x="127" y="409.5" width="160" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ZV-po-mPU">
+                    <rect key="frame" x="127" y="461.5" width="160" height="44"/>
                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="注销">
@@ -85,25 +86,26 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前IM复用状态：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCq-m5-XSs">
-                    <rect key="frame" x="109" y="250" width="108" height="16"/>
+                    <rect key="frame" x="109" y="302" width="108" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VjN-Rn-cpx">
-                    <rect key="frame" x="233" y="242.5" width="51" height="31"/>
+                    <rect key="frame" x="233" y="294.5" width="51" height="31"/>
                     <connections>
                         <action selector="imMulEnableAction:" destination="-1" eventType="valueChanged" id="c3H-nm-AUF"/>
                     </connections>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前IM状态：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhq-Gg-ttx">
-                    <rect key="frame" x="4" y="289.5" width="406" height="16"/>
+                    <rect key="frame" x="4" y="341.5" width="406" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="VjN-Rn-cpx" firstAttribute="centerY" secondItem="LCq-m5-XSs" secondAttribute="centerY" id="25p-vO-Mpx"/>
                 <constraint firstItem="xcJ-7H-xZ7" firstAttribute="trailing" secondItem="FiL-tG-Qno" secondAttribute="trailing" id="3ql-5e-pO8"/>
@@ -120,7 +122,7 @@
                 <constraint firstItem="4ZV-po-mPU" firstAttribute="centerX" secondItem="7jM-iu-cy6" secondAttribute="centerX" id="cDu-iu-dv1"/>
                 <constraint firstItem="JGW-qe-QLo" firstAttribute="leading" secondItem="FiL-tG-Qno" secondAttribute="leading" id="cmN-Ev-nhu"/>
                 <constraint firstItem="xcJ-7H-xZ7" firstAttribute="leading" secondItem="FiL-tG-Qno" secondAttribute="leading" id="dCX-DR-MQP"/>
-                <constraint firstItem="JGW-qe-QLo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="68" id="e2Z-hg-RSl"/>
+                <constraint firstItem="JGW-qe-QLo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="120" id="e2Z-hg-RSl"/>
                 <constraint firstItem="8hU-wI-gnP" firstAttribute="leading" secondItem="xcJ-7H-xZ7" secondAttribute="leading" id="eO3-MW-WKC"/>
                 <constraint firstItem="VjN-Rn-cpx" firstAttribute="leading" secondItem="LCq-m5-XSs" secondAttribute="trailing" constant="16" id="fid-Jy-5tr"/>
                 <constraint firstItem="fhq-Gg-ttx" firstAttribute="top" secondItem="VjN-Rn-cpx" secondAttribute="bottom" constant="16" id="ikb-vE-vt9"/>
@@ -133,8 +135,12 @@
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="FiL-tG-Qno" secondAttribute="trailing" constant="12" id="xcm-1v-RLR"/>
                 <constraint firstItem="RaX-Wm-OHX" firstAttribute="trailing" secondItem="FiL-tG-Qno" secondAttribute="trailing" id="y8t-D3-Loi"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="131.8840579710145" y="152.67857142857142"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

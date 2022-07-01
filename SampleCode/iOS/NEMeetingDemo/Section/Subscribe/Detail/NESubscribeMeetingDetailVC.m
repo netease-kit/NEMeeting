@@ -19,7 +19,8 @@
 @property (nonatomic, readonly) NEMeetingService *meetingService;
 
 @property (nonatomic, weak) UIAlertController *alertVC;
-
+/// 进入中
+@property (nonatomic, assign) BOOL isEntering;
 @end
 
 @implementation NESubscribeMeetingDetailVC
@@ -180,13 +181,13 @@
 
 - (void)updateWithMeetingStatus {
     switch (_item.status) {
-        case NEMeetingItemStatusInit:
-        case NEMeetingItemStatusStarted:{
+        case NEMeetingItemStatusInit: {
             _cancelMeetingBtn.hidden = NO;
             _joinMeetingBtn.hidden = NO;
             break;
         }
-        case NEMeetingItemStatusEnded:{
+        case NEMeetingItemStatusStarted:
+        case NEMeetingItemStatusEnded: {
             _cancelMeetingBtn.hidden = YES;
             _joinMeetingBtn.hidden = NO;
             break;
@@ -248,12 +249,16 @@
 }
 
 - (void)doJoinMeeting {
+    if (self.isEntering)  return;
+    self.isEntering = YES;
     NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
     params.displayName = [self displayName];
     params.meetingId = _item.meetingId;
+    params.password = _item.password;
     NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
     __weak typeof(self) weakSelf = self;
     [self.meetingService joinMeeting:params opts:options callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        weakSelf.isEntering = NO;
         if (resultCode != ERROR_CODE_SUCCESS) {
             NSString *msg = [NSString stringWithFormat:@"%@:%@", resultMsg, @(resultCode)];
             [weakSelf.view makeToast:msg
@@ -315,11 +320,11 @@
 }
 
 - (NEPreMeetingService *)preMeetingService {
-    return [NEMeetingSDK getInstance].getPreMeetingService;
+    return [NEMeetingKit getInstance].getPreMeetingService;
 }
 
 - (NEMeetingService *)meetingService {
-    return [NEMeetingSDK getInstance].getMeetingService;;
+    return [NEMeetingKit getInstance].getMeetingService;;
 }
 
 @end

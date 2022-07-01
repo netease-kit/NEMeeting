@@ -6,16 +6,18 @@ import NetEase.Meeting.RunningStatus 1.0
 import NetEase.Meeting.MeetingStatus 1.0
 
 Rectangle {
+    id: root
+    anchors.centerIn: parent
     Component.onCompleted: {
         meetingManager.isInitializd()
         checkAudio.checked = meetingManager.checkAudio()
         checkVideo.checked = meetingManager.checkVideo()
-//        let w = mainWindow.width;
-//        let h = mainWindow.height;
-//        mainWindow.width = 1300
-//        mainWindow.height = 800
-//        mainWindow.x -= (mainWindow.width - w) / 2
-//        mainWindow.y -= (mainWindow.height - h) / 2
+        //        let w = mainWindow.width;
+        //        let h = mainWindow.height;
+        //        mainWindow.width = 1300
+        //        mainWindow.height = 800
+        //        mainWindow.x -= (mainWindow.width - w) / 2
+        //        mainWindow.y -= (mainWindow.height - h) / 2
         mainWindow.showMaximized()
         Qt.callLater(function () {
             meetingManager.getIsSupportRecord()
@@ -39,6 +41,7 @@ Rectangle {
         ColumnLayout {
             Layout.preferredWidth: 500
             Layout.preferredHeight: 500
+            spacing: 0
             Label {
                 text: qsTr('Schedule Meeting')
                 font.pixelSize: 24
@@ -150,6 +153,16 @@ Rectangle {
                 }
             }
 
+            RowLayout {
+                Layout.fillWidth: true
+                TextField {
+                    id: preRoleBinds
+                    placeholderText: "roleBinds"
+                    selectByMouse: true
+                    enabled: true
+                    Layout.fillWidth: true
+                }
+            }
 
             Button {
                 id: btnSchedule
@@ -183,7 +196,8 @@ Rectangle {
                                                    idLiveAccessCheck.checked,
                                                    idRecord.checked,
                                                    preExtraData.text,
-                                                   controls)
+                                                   controls,
+                                                   preRoleBinds.text)
                 }
             }
             ListView {
@@ -297,6 +311,14 @@ Rectangle {
                                 id: editExtraData
                                 text: model.extraData
                             }
+                            TextField {
+                                id: editRoleBinds
+                                placeholderText: "roleBinds"
+                                text: model.roleBinds
+                                selectByMouse: true
+                                enabled: true
+                                Layout.fillWidth: true
+                            }
                         }
 
                         RowLayout {
@@ -357,6 +379,7 @@ Rectangle {
                                 text: qsTr('Join')
                                 onClicked: {
                                     meetingManager.invokeJoin(
+                                                false,
                                                 model.meetingId,
                                                 textNickname.text,
                                                 textTag.text, textTimeout.text,
@@ -364,7 +387,10 @@ Rectangle {
                                                 checkVideo.checked,
                                                 checkChatroom.checked,
                                                 checkInvitation.checked,
+                                                checkScreenShare.checked,
+                                                checkView.checked,
                                                 autoOpenWhiteboard.checked,
+                                                password2.text,
                                                 autorename.checked)
                                 }
                             }
@@ -409,7 +435,8 @@ Rectangle {
                                                 idLiveAccessCheckEdit.checked,
                                                 idOpenRecordEdit.checked,
                                                 editExtraData.text,
-                                                controls)
+                                                controls,
+                                                editRoleBinds.text)
                                 }
                             }
                         }
@@ -421,6 +448,7 @@ Rectangle {
             }
         }
         ColumnLayout {
+            spacing: 0
             RowLayout {
                 TextField {
                     id: textMeetingId
@@ -431,6 +459,38 @@ Rectangle {
                     Layout.fillWidth: true
                 }
 
+                ComboBox {
+                    id: displayOption
+                    Layout.fillWidth: true
+                    model: ListModel {
+                        id: displayModel
+                    }
+                    delegate: ItemDelegate {
+                        width: parent.width
+                        text: model.name
+                        onClicked: {
+                            displayOption.currentIndex = model.index
+                        }
+                    }
+                    Component.onCompleted: {
+                        displayModel.append({
+                                                "name": 'Display Short Only'
+                                            })
+                        displayModel.append({
+                                                "name": 'Display Long Only'
+                                            })
+                        displayModel.append({
+                                                "name": 'Display All'
+                                            })
+                        displayOption.currentIndex = 2
+                    }
+                }
+                ToolButton {
+                    id: idgetPMId
+                    Layout.topMargin: 10
+                    text: qsTr("getPMId")
+                    onClicked: { meetingManager.getPersonalMeetingId() }
+                }
                 ToolButton {
                     id: idSettings
                     Layout.topMargin: 10
@@ -440,15 +500,14 @@ Rectangle {
                 }
             }
 
-            TextField {
-                id: textNickname
-                text: qsTr('nickname')
-                placeholderText: qsTr('Your nickname')
-                selectByMouse: true
-                Layout.fillWidth: true
-            }
-
             RowLayout {
+                TextField {
+                    id: textNickname
+                    text: qsTr('nickname')
+                    placeholderText: qsTr('Your nickname')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
                 TextField {
                     id: textpassword
                     placeholderText: qsTr('meeting password')
@@ -479,40 +538,12 @@ Rectangle {
                     selectByMouse: true
                     Layout.fillWidth: true
                 }
-            }
 
-
-            TextField {
-                id: textScene
-                placeholderText: qsTr('scene setting')
-                selectByMouse: true
-                Layout.fillWidth: true
-            }
-
-            ComboBox {
-                id: displayOption
-                Layout.fillWidth: true
-                model: ListModel {
-                    id: displayModel
-                }
-                delegate: ItemDelegate {
-                    width: parent.width
-                    text: model.name
-                    onClicked: {
-                        displayOption.currentIndex = model.index
-                    }
-                }
-                Component.onCompleted: {
-                    displayModel.append({
-                                            "name": 'Display Short Only'
-                                        })
-                    displayModel.append({
-                                            "name": 'Display Long Only'
-                                        })
-                    displayModel.append({
-                                            "name": 'Display All'
-                                        })
-                    displayOption.currentIndex = 0
+                TextField {
+                    id: textScene
+                    placeholderText: qsTr('scene setting')
+                    selectByMouse: true
+                    Layout.fillWidth: true
                 }
             }
 
@@ -588,6 +619,18 @@ Rectangle {
                     text: qsTr("is AudioAINS")
                     checked: meetingManager.isAudioAINS
                     onClicked: meetingManager.isAudioAINS = checked
+                }
+
+                CheckBox {
+                    id: checkScreenShare
+                    checked: true
+                    text: qsTr('Enable ScreenShare')
+                }
+
+                CheckBox {
+                    id: checkView
+                    checked: true
+                    text: qsTr('Enable View')
                 }
             }
 
@@ -669,10 +712,48 @@ Rectangle {
                     checked: meetingManager.audodeviceAutoSelectType
                     onClicked: meetingManager.setAudodeviceAutoSelectType(checked);
                 }
+                CheckBox {
+                    id: idVirtualBackground
+                    text: qsTr("Show VB")
+                    checked: meetingManager.virtualBackground
+                    onClicked: meetingManager.virtualBackground = checked
+                }
+                Button {
+                    id: btnDefaultVB
+                    highlighted: true
+                    text: qsTr('Default VB')
+                    Layout.fillWidth: true
+                    onClicked: {
+                        meetingManager.getVirtualBackgroundList()
+                    }
+                }
+                TextField {
+                    id: vbList
+                    placeholderText: qsTr('vb path,vb path,vb path....')
+                    selectByMouse: true
+                    Layout.fillWidth: true
+                }
+                Button {
+                    id: btnSetVB
+                    highlighted: true
+                    text: qsTr('Set VB')
+                    Layout.fillWidth: true
+                    onClicked: {
+                        meetingManager.setVirtualBackgroundList(vbList.text)
+                    }
+                }
             }
-            ColumnLayout {
+            RowLayout {
                 Layout.fillWidth: true
-                spacing: 0
+                TextField {
+                    id: roleBinds
+                    placeholderText: "roleBinds"
+                    selectByMouse: true
+                    enabled: true
+                    Layout.fillWidth: true
+                }
+            }
+            RowLayout {
                 id: subscribeAudio
                 enabled: false
                 TextField {
@@ -682,26 +763,25 @@ Rectangle {
                     enabled: !all.checked
                     Layout.fillWidth: true
                 }
-                RowLayout {
-                    RadioButton {
-                        id: single
-                        text: qsTr('Single')
-                    }
-                    RadioButton {
-                        id: multiple
-                        text: qsTr('multiple')
-                        checked: true
-                    }
-                    RadioButton {
-                        id: all
-                        text: qsTr('all')
-                        onCheckedChanged: {
-                            if (checked) {
-                                accoundList.text = ''
-                            }
+                RadioButton {
+                    id: single
+                    text: qsTr('Single')
+                }
+                RadioButton {
+                    id: multiple
+                    text: qsTr('multiple')
+                    checked: true
+                }
+                RadioButton {
+                    id: all
+                    text: qsTr('all')
+                    onCheckedChanged: {
+                        if (checked) {
+                            accoundList.text = ''
                         }
                     }
                 }
+
                 RowLayout {
                     Button {
                         id: btnSubscribe
@@ -761,12 +841,13 @@ Rectangle {
                                     textpassword.text, textTimeout.text,
                                     checkAudio.checked, checkVideo.checked,
                                     checkChatroom.checked, checkInvitation.checked,
+                                    checkScreenShare.checked, checkView.checked,
                                     autoOpenWhiteboard.checked, autorename.checked,
                                     displayOption.currentIndex, idOpenRecord.checked,
                                     idOpenWhiteboard.checked, idAudioAINS.checked,
                                     checkSip.checked, idShowMemberTag.checked,
                                     extraData.text, controls, enableMuteAllVideo.checked,
-                                    enableMuteAllAudio.checked)
+                                    enableMuteAllAudio.checked, roleBinds.text)
                     }
                 }
                 Button {
@@ -776,7 +857,7 @@ Rectangle {
                     Layout.fillWidth: true
                     onClicked: {
                         btnJoin.enabled = false
-                        meetingManager.invokeJoin(textMeetingId.text,
+                        meetingManager.invokeJoin(false, textMeetingId.text.split("-").join(""),
                                                   textNickname.text,
                                                   textTag.text,
                                                   textTimeout.text,
@@ -784,6 +865,8 @@ Rectangle {
                                                   checkVideo.checked,
                                                   checkChatroom.checked,
                                                   checkInvitation.checked,
+                                                  checkScreenShare.checked,
+                                                  checkView.checked,
                                                   autoOpenWhiteboard.checked,
                                                   textpassword.text,
                                                   autorename.checked,
@@ -841,6 +924,35 @@ Rectangle {
                     text: qsTr('Get History Info')
                     onClicked: meetingManager.getHistoryMeetingItem()
                 }
+            }
+        }
+    }
+
+    Dialog {
+        id: showInfoDialog
+        standardButtons: Dialog.Cancel
+        property string tipInfo: ""
+
+        contentItem: Rectangle {
+            implicitHeight: 500
+            implicitWidth: 830
+            anchors.fill: parent
+            Text {
+                anchors.fill: parent
+                text: showInfoDialog.tipInfo
+                wrapMode: Text.Wrap
+                font.pixelSize: 16
+            }
+            Button {
+                anchors.bottom: parent.bottom
+                text: qsTr('exit')
+                onClicked: showInfoDialog.close()
+            }
+        }
+
+        onVisibleChanged: {
+            if (!visible) {
+                tipInfo = ""
             }
         }
     }
@@ -1029,12 +1141,29 @@ Rectangle {
         }
         onLeaveSignal: {
             toast.show('Leave meeting signal: ' + errorCode + ", " + errorMessage)
+
+            if(errorCode == 0) {
+                btnGet.enabled = false
+                btnCreate.enabled = true
+                btnJoin.enabled = true
+                btnLeave.enabled = false
+                btnFinish.enabled = false
+                subscribeAudio.enabled = false
+            }
         }
         onFinishSignal: {
             toast.show('Finsh meeting signal: ' + errorCode + ", " + errorMessage)
+            if(errorCode == 0) {
+                btnGet.enabled = false
+                btnCreate.enabled = true
+                btnJoin.enabled = true
+                btnLeave.enabled = false
+                btnFinish.enabled = false
+                subscribeAudio.enabled = false
+            }
         }
         onMeetingStatusChanged: {
-        toast.show(qsTr('MeetingStatus: ') + meetingStatus)
+            toast.show(qsTr('MeetingStatus: ') + meetingStatus)
             switch (meetingStatus) {
             case RunningStatus.MEETING_STATUS_CONNECTING:
                 break
@@ -1176,6 +1305,23 @@ Rectangle {
 
         onShowSettingsSignal: {
             idSettings.enabled = true
+        }
+
+        onVirtualBackgroundList: {
+            if (vbList === "") {
+                toast.show(qsTr("success"))
+            } else {
+                showInfoDialog.tipInfo = vbList
+                showInfoDialog.open()
+            }
+        }
+
+        onLogoutSignal: {
+            mainWindow.close()
+        }
+
+        onGetPersonalMeetingIdChanged: {
+            toast.show('GetPersonalMeetingId: ' + message)
         }
     }
 

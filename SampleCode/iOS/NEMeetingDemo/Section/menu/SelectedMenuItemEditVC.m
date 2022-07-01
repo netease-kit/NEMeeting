@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NEMeetingSDK/NEMeetingSDK.h>
+#import <NEMeetingKit/NEMeetingKit.h>
 #import "SelectedMenuItemEditVC.h"
 #import "CheckBox.h"
 #import "UIView+Toast.h"
@@ -122,6 +122,7 @@
             sItem.checkedStateItem.icon = @"checkbox_s";
         }
     }
+    if (self.menuItemSure) self.menuItemSure();
     [self.navigationController popViewControllerAnimated: YES];
 }
 

@@ -1,91 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/entranceFragment"
-    tools:context="com.netease.meetinglib.demo.view.EntranceFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFF2F3F5"
-        android:padding="15dp"
-        tools:context=".MainActivity">
+        android:id="@+id/entranceFragment"
+        tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.EntranceFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF2F3F5"
+            android:padding="15dp"
+            tools:context=".MainActivity">
 
         <Button
-            android:id="@+id/btn_login_with_ne_meeting"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/button_circle_shape"
-            android:text="登录(NEMeeting)"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_with_token"
-            app:layout_constraintHorizontal_bias="0.137"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintVertical_chainStyle="packed" />
+                android:id="@+id/btn_login_with_ne_meeting"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/button_circle_shape"
+                android:text="登录(NEMeeting)"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.137"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_login_with_token"
+                app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
-            android:id="@+id/btn_login_with_token"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/button_circle_shape"
-            android:text="登录(token)"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_with_sso"
-            app:layout_constraintHorizontal_bias="0.482"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_login_with_token"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <Button
-            android:id="@+id/btn_login_with_sso"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/button_circle_shape"
-            android:text="登录(SSO)"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_join_meeting"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@id/btn_login_with_token"/>
-
-        <Button
-            android:id="@+id/btn_join_meeting"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/button_circle_shape"
-            android:text="匿名入会"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_login_with_sso" />
+                android:id="@+id/btn_login_with_token"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/button_circle_shape"
+                android:text="登录(token)"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.482"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_login_with_ne_meeting"
+                />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

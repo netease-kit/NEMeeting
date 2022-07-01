@@ -66,7 +66,8 @@ class NEMeetingManager : public QObject,
                          public NEMeetingStatusListener,
                          public NEMeetingOnInjectedMenuItemClickListener,
                          public NEScheduleMeetingStatusListener,
-                         public NESettingsChangeNotifyHandler {
+                         public NESettingsChangeNotifyHandler,
+                         public NEAuthListener {
     Q_OBJECT
 public:
     explicit NEMeetingManager(QObject* parent = nullptr);
@@ -77,6 +78,7 @@ public:
     Q_PROPERTY(bool isAudioAINS READ isAudioAINS WRITE setIsAudioAINS NOTIFY isAudioAINSChanged)
     Q_PROPERTY(bool audodeviceAutoSelectType READ audodeviceAutoSelectType WRITE setAudodeviceAutoSelectType NOTIFY audodeviceAutoSelectTypeChanged)
     Q_PROPERTY(bool softwareRender READ softwareRender WRITE setSoftwareRender NOTIFY softwareRenderChanged)
+    Q_PROPERTY(bool virtualBackground READ virtualBackground WRITE setVirtualBackground NOTIFY virtualBackgroundChanged)
 
     Q_INVOKABLE void initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate);
     Q_INVOKABLE void initialize(const QString& strAppkey, int keepAliveInterval);
@@ -98,7 +100,8 @@ public:
                                      bool needLiveAuthentication = false,
                                      bool enableRecord = false,
                                      const QString& extraData = "",
-                                     const QJsonArray& controls = QJsonArray());
+                                     const QJsonArray& controls = QJsonArray(),
+                                     const QString& strRoleBinds = "");
     Q_INVOKABLE void cancelMeeting(const qint64& meetingUniqueId);
     Q_INVOKABLE void editMeeting(const qint64& meetingUniqueId,
                                  const QString& meetingId,
@@ -112,7 +115,8 @@ public:
                                  bool needLiveAuthentication = false,
                                  bool enableRecord = false,
                                  const QString& extraData = "",
-                                 const QJsonArray& controls = QJsonArray());
+                                 const QJsonArray& controls = QJsonArray(),
+                                 const QString& strRoleBinds = "");
     Q_INVOKABLE void getMeetingList();
     Q_INVOKABLE void invokeStart(const QString& meetingId,
                                  const QString& nickname,
@@ -124,6 +128,8 @@ public:
                                  bool video,
                                  bool enableChatroom = true,
                                  bool enableInvitation = true,
+                                 bool enableScreenShare = true,
+                                 bool enableView = true,
                                  bool autoOpenWhiteboard = false,
                                  bool rename = true,
                                  int displayOption = 0,
@@ -135,8 +141,10 @@ public:
                                  const QString& extraData = "",
                                  const QJsonArray& controls = QJsonArray(),
                                  bool enableMuteAllVideo = false,
-                                 bool enableMuteAllAudio = true);
-    Q_INVOKABLE void invokeJoin(const QString& meetingId,
+                                 bool enableMuteAllAudio = true,
+                                 const QString& strRoleBinds = "");
+    Q_INVOKABLE void invokeJoin(bool anonymous,
+                                const QString& meetingId,
                                 const QString& nickname,
                                 const QString& tag,
                                 int timeOut,
@@ -144,6 +152,8 @@ public:
                                 bool video,
                                 bool enableChatroom = true,
                                 bool enableInvitation = true,
+                                bool enableScreenShare = true,
+                                bool enableView = true,
                                 bool autoOpenWhiteboard = false,
                                 const QString& password = QString(),
                                 bool rename = true,
@@ -164,6 +174,11 @@ public:
     Q_INVOKABLE void getIsSupportLive();
     Q_INVOKABLE void getIsSupportRecord();
 
+    Q_INVOKABLE void getVirtualBackgroundList();
+    Q_INVOKABLE void setVirtualBackgroundList(const QString& vbList);
+
+    Q_INVOKABLE void getPersonalMeetingId();
+
     // override virtual functions
     virtual void onMeetingStatusChanged(int status, int code) override;
     virtual void onInjectedMenuItemClick(const NEMeetingMenuItem& meeting_menu_item) override;
@@ -183,6 +198,8 @@ public:
     virtual void OnAudioEnableStereoSettingsChange(bool status) override;
     virtual void OnRemoteVideoResolutionSettingsChange(RemoteVideoResolution enumRemoteVideoResolution) override;
     virtual void OnMyVideoResolutionSettingsChange(LocalVideoResolution enumLocalVideoResolution) override;
+    virtual void onKickOut() override;
+    virtual void onAuthInfoExpired() override{};
 
     bool isSupportRecord() const;
     void setIsSupportRecord(bool isSupportRecord);
@@ -196,6 +213,9 @@ public:
     bool audodeviceAutoSelectType() const { return m_audodeviceAutoSelectType; }
 
     bool softwareRender() const { return m_softwareRender; }
+
+    bool virtualBackground() const { return m_virtualBackground; }
+    void setVirtualBackground(bool virtualBackground);
 
 private:
     void pushSubmenus(std::vector<NEMeetingMenuItem>& items_list, int MenuIdIndex);
@@ -232,8 +252,10 @@ signals:
     void isAudioAINSChanged();
 
     void audodeviceAutoSelectTypeChanged(bool audodeviceAutoSelectType);
-
     void softwareRenderChanged(bool softwareRender);
+    void virtualBackgroundChanged(bool virtualBackground);
+    void virtualBackgroundList(const QString& vbList);
+    void getPersonalMeetingIdChanged(const QString& message);
 
 public slots:
     void onGetMeetingListUI();
@@ -263,6 +285,7 @@ private:
     bool m_bPrivate = false;
     bool m_audodeviceAutoSelectType = true;
     bool m_softwareRender = false;
+    bool m_virtualBackground = true;
 };
 
 #endif  // NEMEETINGMANAGER_H

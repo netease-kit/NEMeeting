@@ -626,10 +626,11 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
                                    const QJsonArray& controls,
                                    bool enableMuteAllVideo,
                                    bool enableMuteAllAudio,
-                                   const QString& strRoleBinds) {
+                                   const QString& strRoleBinds,
+                                   bool showRemainingTip) {
     qInfo() << "Start a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
             << ", display id: " << displayOption << "textScene: " << textScene << ", showMemberTag: " << showMemberTag << ", controls:" << controls
-            << ", strRoleBinds: " << strRoleBinds;
+            << ", strRoleBinds: " << strRoleBinds << "showRemainingTip: " << showRemainingTip;
 
     auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
     if (ipcMeetingService) {
@@ -732,6 +733,7 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
         options.noCloudRecord = !enableRecord;
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
         options.joinTimeout = timeOut;
+        options.showMeetingRemainingTip = showRemainingTip;
         // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
         ipcMeetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Start meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
@@ -760,9 +762,10 @@ void NEMeetingManager::invokeJoin(bool anonymous,
                                   bool sip,
                                   bool showMemberTag,
                                   bool enableMuteAllVideo,
-                                  bool enableMuteAllAudio) {
+                                  bool enableMuteAllAudio,
+                                  bool showRemainingTip) {
     qInfo() << "Join a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
-            << ", display id: " << displayOption << ", showMemberTag: " << showMemberTag;
+            << ", display id: " << displayOption << ", showMemberTag: " << showMemberTag << "showRemainingTip: " << showRemainingTip;;
 
     while (!m_initialized) {
         if (!m_initSuc)
@@ -797,6 +800,7 @@ void NEMeetingManager::invokeJoin(bool anonymous,
             options.noSip = !sip;
             options.noMuteAllVideo = !enableMuteAllVideo;
             options.noMuteAllAudio = !enableMuteAllAudio;
+            options.showMeetingRemainingTip = showRemainingTip;
             if (autoOpenWhiteboard) {
                 options.defaultWindowMode = WHITEBOARD_MODE;
             }

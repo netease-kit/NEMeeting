@@ -654,6 +654,11 @@ Rectangle {
                     id: idShowMemberTag
                     text: qsTr('Show MemberTag')
                 }
+
+                CheckBox {
+                    id: idShowRemainingTip
+                    text: qsTr('Show RemainingTip')
+                }
             }
 
             RowLayout {
@@ -847,7 +852,8 @@ Rectangle {
                                     idOpenWhiteboard.checked, idAudioAINS.checked,
                                     checkSip.checked, idShowMemberTag.checked,
                                     extraData.text, controls, enableMuteAllVideo.checked,
-                                    enableMuteAllAudio.checked, roleBinds.text)
+                                    enableMuteAllAudio.checked, roleBinds.text,
+                                    idShowRemainingTip.checked)
                     }
                 }
                 Button {
@@ -876,7 +882,8 @@ Rectangle {
                                                   checkSip.checked,
                                                   idShowMemberTag.checked,
                                                   enableMuteAllVideo.checked,
-                                                  enableMuteAllAudio.checked)
+                                                  enableMuteAllAudio.checked,
+                                                  idShowRemainingTip.checked)
                     }
                 }
                 Button {

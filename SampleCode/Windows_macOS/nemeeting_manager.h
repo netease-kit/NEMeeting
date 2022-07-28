@@ -142,7 +142,8 @@ public:
                                  const QJsonArray& controls = QJsonArray(),
                                  bool enableMuteAllVideo = false,
                                  bool enableMuteAllAudio = true,
-                                 const QString& strRoleBinds = "");
+                                 const QString& strRoleBinds = "",
+                                 bool showRemainingTip = false);
     Q_INVOKABLE void invokeJoin(bool anonymous,
                                 const QString& meetingId,
                                 const QString& nickname,
@@ -163,7 +164,9 @@ public:
                                 bool sip = false,
                                 bool showMemberTag = false,
                                 bool enableMuteAllVideo = false,
-                                bool enableMuteAllAudio = true);
+                                bool enableMuteAllAudio = true,
+                                bool showRemainingTip = false);
+
     Q_INVOKABLE void leaveMeeting(bool finish);
     Q_INVOKABLE int getMeetingStatus();
     Q_INVOKABLE void getMeetingInfo();

@@ -403,6 +403,7 @@ Request Body示例
     | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
     | shortId | String | 会议短号   |
     | valid | Boolean | 会议是否可用，true：可用，false：不可用   |
+    | avRoomCid |String | 音视频媒体房间id |
 
    `controls结构`
 

@@ -449,7 +449,7 @@ Request Body示例
     `以下是公共响应参数的ret属性内包含的参数`
     | 参数 | 类型 | 描述 |
     | :------: | :------: | :------: |
-    | meeting | Long | 进行中的会议：会议信息详情如下描述MeetingInfo |
+    | meeting | JsonObject | 进行中的会议：会议信息详情如下描述MeetingInfo |
     | historyMeeting   | JsonArray | 历史会议列表：会议信息详情如下描述MeetingInfo  |
     
     `MeetingInfo`

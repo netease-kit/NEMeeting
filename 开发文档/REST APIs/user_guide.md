@@ -413,6 +413,68 @@ Request Body示例
    | state | Integer | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
    | attendeeOff | Integer | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
    | allowSelfOn | Boolean | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
+   
+
+
+
+
+
+
+
+### 查询全部（meetingUniqueId）
+
+1. 接口描述  
+    按meetingUniqueId请求查询全部会议信息。
+    
+2. 接口请求地址
+    ```
+    POST https://{host}/v2/meeting/meetingInfo/listAll HTTP/1.1
+    Content-Type: application/json;charset=utf-8
+    ```
+3. 输入参数
+
+    | 参数 | 类型 | 必选 | 描述 |
+    | :------: | :------: | :------: | :------: |
+    | meetingUniqueId | Long | 是 | 会议唯一id（meetingUniqueId） |
+
+Request Body示例
+```json
+{
+  "meetingUniqueId": 1234567890
+}
+```
+
+4. 输出参数
+
+    `以下是公共响应参数的ret属性内包含的参数`
+    | 参数 | 类型 | 描述 |
+    | :------: | :------: | :------: |
+    | meeting | Long | 会议信息详情如下描述MeetingInfo |
+    | historyMeeting   | JsonArray | 元素：会议信息详情如下描述MeetingInfo  |
+    
+    `MeetingInfo`
+    | 参数 | 类型 | 描述 |
+    | :------: | :------: | :------: |
+    | meetingUniqueId | Long | 会议唯一id |
+    | meetingId   | String | 随机会议码,9位数字；个人会议码，10位数字   |
+    | subject | String | 预约会议主题 |
+    | startTime | Long | 预约开始时间，毫秒 |
+    | endTime | Long | 预约结束时间，毫秒，-1无限期 |
+    | password | String | 会议密码，无密码为空串 |
+    | settings | JsonObject | 会议设置 |
+    | status | int| 状态，0.无效，1.未开始，2.进行中，3.已终止，4.已取消，5.已回收 |
+    | shortId | String | 会议短号   |
+    | valid | Boolean | 会议是否可用，true：可用，false：不可用   |
+    | avRoomCid |String | 音视频媒体房间id |
+
+   `controls结构`
+
+   | 参数 | 类型 | 描述 |
+   | :------: | :------: | :------: |
+   | type | String | 控制类型，audio音频，video视频 |
+   | state | Integer | 全局控制状态，1：全体关闭控制，0：取消全体关闭控制|
+   | attendeeOff | Integer | 入会后自动关闭设置，0：无，1：关闭，2：关闭且不能自行操作，默认不操作|
+   | allowSelfOn | Boolean | 允许自行解除关闭控制，true：允许，false：不允许，默认允许|
 
 ### 修改会议
 

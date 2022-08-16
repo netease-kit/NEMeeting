@@ -35,13 +35,19 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
     private MutableLiveData<String> passWord;
 
     private MutableLiveData<String> tittle;
-    
-    public ScheduleMeetingAdapter(Context context, List<ScheduleMeetingItem> data, MutableLiveData<String> passWord,
-                                  MutableLiveData<String> tittle) {
+
+    private MutableLiveData<String> extraData;
+
+    public ScheduleMeetingAdapter(Context context, List<ScheduleMeetingItem> data,
+                                  MutableLiveData<String> passWord,
+                                  MutableLiveData<String> tittle,
+                                  MutableLiveData<String> extraData
+    ) {
         super(data);
         this.context = context;
         this.passWord = passWord;
         this.tittle = tittle;
+        this.extraData = extraData;
     }
 
     @Override
@@ -80,7 +86,11 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable != null) {
-                    tittle.setValue(editable.toString());
+                    if (data.getClickAction() == ScheduleMeetingItem.SET_EXTRA_DATA_ACTION) {
+                        extraData.setValue(editable.toString());
+                    } else {
+                        tittle.setValue(editable.toString());
+                    }
                 }
             }
         });
@@ -99,6 +109,10 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
                     edtMeetingTheme.setText(SdkAuthenticator.getAccount() + "的预约会议");
                 }
                 break;
+            case ScheduleMeetingItem.SET_EXTRA_DATA_ACTION:
+                edtMeetingTheme.setVisibility(View.VISIBLE);
+                edtMeetingTheme.setHint("");
+                break;
             case ScheduleMeetingItem.SET_START_TIME_ACTION:
             case ScheduleMeetingItem.SET_END_TIME_ACTION:
                 tvMeetingTime.setVisibility(View.VISIBLE);
@@ -109,8 +123,12 @@ public class ScheduleMeetingAdapter extends BaseAdapter<ScheduleMeetingItem, Ite
                     edtMeetingPwd.setText(String.valueOf((Math.random() * 9 + 1) * 100000).substring(0, 6));
                 }
                 break;
-            case ScheduleMeetingItem.ENABLE_MEETING_MUTE_ACTION:
+            case ScheduleMeetingItem.SET_AUDIO_MUTE_ACTION:
+            case ScheduleMeetingItem.SET_VIDEO_MUTE_ACTION:
+            case ScheduleMeetingItem.SET_ALLOW_AUDIO_ON_ACTION:
+            case ScheduleMeetingItem.SET_ALLOW_VIDEO_ON_ACTION:
                 sbMeetingSwitch.setVisibility(View.VISIBLE);
+                sbMeetingSwitch.setChecked(data.isSwitchOn());
                 tvMeetingSubTittle.setVisibility(View.VISIBLE);
                 break;
             case ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION:

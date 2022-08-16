@@ -12,6 +12,8 @@ public class ScheduleMeetingItem {
 
     private int clickAction;
 
+    private String extraData;
+
     public static final int EDIT_TEXT_TITLE_ACTION = 0;
 
     public static final int SET_START_TIME_ACTION = 1;
@@ -20,13 +22,21 @@ public class ScheduleMeetingItem {
 
     public static final int ENABLE_MEETING_PWD_ACTION = 3;
 
-    public static final int ENABLE_MEETING_MUTE_ACTION = 4;
+    public static final int SET_AUDIO_MUTE_ACTION = 4;
 
-    public static final int ENABLE_MEETING_LIVE_ACTION = 5;
+    public static final int SET_ALLOW_AUDIO_ON_ACTION = 5;
 
-    public static final int ENABLE_MEETING_LIVE_LEVEL_ACTION = 6;
+    public static final int SET_VIDEO_MUTE_ACTION = 6;
 
-    public static final int ENABLE_MEETING_RECORD_ACTION = 7;
+    public static final int SET_ALLOW_VIDEO_ON_ACTION = 7;
+
+    public static final int ENABLE_MEETING_LIVE_ACTION = 8;
+
+    public static final int ENABLE_MEETING_LIVE_LEVEL_ACTION = 9;
+
+    public static final int ENABLE_MEETING_RECORD_ACTION = 10;
+
+    public static final int SET_EXTRA_DATA_ACTION = 11;
 
     public ScheduleMeetingItem(String tittle, String subTittle, String timeTip, boolean isSwitchOn,
                                int clickAction) {
@@ -95,4 +105,11 @@ public class ScheduleMeetingItem {
         isSwitchOn = switchOn;
     }
 
+    public String getExtraData() {
+        return extraData;
+    }
+
+    public void setExtraData(String extraData) {
+        this.extraData = extraData;
+    }
 }

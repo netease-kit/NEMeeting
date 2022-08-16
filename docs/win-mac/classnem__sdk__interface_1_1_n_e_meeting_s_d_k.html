@@ -85,6 +85,8 @@ Public 类型</h2></td></tr>
 <tr class="separator:a3e3afb1d69c0224f10440fd5187a3948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac76addf98cdc5037e397c8dac9d040d4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ac76addf98cdc5037e397c8dac9d040d4">NEActiveWindowCallback</a> = <a class="el" href="namespacenem__sdk__interface.html#a1651522b555b313a6bc85f585169a5d0">NEEmptyCallback</a></td></tr>
 <tr class="separator:ac76addf98cdc5037e397c8dac9d040d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a252d915aaadaeb55e50182533d7a7e82"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a252d915aaadaeb55e50182533d7a7e82">NEBoolCallback</a> = <a class="el" href="namespacenem__sdk__interface.html#ab5c5919781dad99b1e16ea98418f8f4c">NECallback</a>&lt; bool &gt;</td></tr>
+<tr class="separator:a252d915aaadaeb55e50182533d7a7e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a976ded69f79ca64ed81ab1868a86e60d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a976ded69f79ca64ed81ab1868a86e60d">NEExceptionHandler</a> = std::function&lt; void(const <a class="el" href="classnem__sdk__interface_1_1_n_e_exception.html">NEException</a> &amp;)&gt;</td></tr>
 <tr class="separator:a976ded69f79ca64ed81ab1868a86e60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -105,6 +107,12 @@ Public 成员函数</h2></td></tr>
 <tr class="memitem:ac56756375419025d1428e027a09ede8d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ac56756375419025d1428e027a09ede8d">activeWindow</a> (const <a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ac76addf98cdc5037e397c8dac9d040d4">NEActiveWindowCallback</a> &amp;cb)=0</td></tr>
 <tr class="memdesc:ac56756375419025d1428e027a09ede8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">激活主窗口  <a href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ac56756375419025d1428e027a09ede8d">更多...</a><br /></td></tr>
 <tr class="separator:ac56756375419025d1428e027a09ede8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad96f0d1d2e75a5f55b0808c935581255"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ad96f0d1d2e75a5f55b0808c935581255">setSoftwareRender</a> (bool bSoftware, const <a class="el" href="namespacenem__sdk__interface.html#a1651522b555b313a6bc85f585169a5d0">NEEmptyCallback</a> &amp;cb)=0</td></tr>
+<tr class="memdesc:ad96f0d1d2e75a5f55b0808c935581255"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置SDK程序是否为软件渲染  <a href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#ad96f0d1d2e75a5f55b0808c935581255">更多...</a><br /></td></tr>
+<tr class="separator:ad96f0d1d2e75a5f55b0808c935581255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fbc7e8114fa6d39d33ac466c06f3ffb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a5fbc7e8114fa6d39d33ac466c06f3ffb">isSoftwareRender</a> (const <a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a252d915aaadaeb55e50182533d7a7e82">NEBoolCallback</a> &amp;cb)=0</td></tr>
+<tr class="memdesc:a5fbc7e8114fa6d39d33ac466c06f3ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取SDK程序是否为软件渲染  <a href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a5fbc7e8114fa6d39d33ac466c06f3ffb">更多...</a><br /></td></tr>
+<tr class="separator:a5fbc7e8114fa6d39d33ac466c06f3ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a073d02ac0cc3acc305e21a16cdc310d4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a073d02ac0cc3acc305e21a16cdc310d4">setExceptionHandler</a> (const <a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a976ded69f79ca64ed81ab1868a86e60d">NEExceptionHandler</a> &amp;handler)=0</td></tr>
 <tr class="memdesc:a073d02ac0cc3acc305e21a16cdc310d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置异常回调  <a href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a073d02ac0cc3acc305e21a16cdc310d4">更多...</a><br /></td></tr>
 <tr class="separator:a073d02ac0cc3acc305e21a16cdc310d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +172,22 @@ Public 成员函数</h2></td></tr>
 
 </div>
 </div>
+<a id="a252d915aaadaeb55e50182533d7a7e82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a252d915aaadaeb55e50182533d7a7e82">&#9670;&nbsp;</a></span>NEBoolCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a252d915aaadaeb55e50182533d7a7e82">nem_sdk_interface::NEMeetingSDK::NEBoolCallback</a> =  <a class="el" href="namespacenem__sdk__interface.html#ab5c5919781dad99b1e16ea98418f8f4c">NECallback</a>&lt;bool&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="meeting__sdk_8h_source.html">meeting_sdk.h</a> 第 <a class="el" href="meeting__sdk_8h_source.html#l00035">35</a> 行定义.</p>
+
+</div>
+</div>
 <a id="a976ded69f79ca64ed81ab1868a86e60d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a976ded69f79ca64ed81ab1868a86e60d">&#9670;&nbsp;</a></span>NEExceptionHandler</h2>
 
@@ -176,7 +200,7 @@ Public 成员函数</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">在文件 <a class="el" href="meeting__sdk_8h_source.html">meeting_sdk.h</a> 第 <a class="el" href="meeting__sdk_8h_source.html#l00035">35</a> 行定义.</p>
+<p class="definition">在文件 <a class="el" href="meeting__sdk_8h_source.html">meeting_sdk.h</a> 第 <a class="el" href="meeting__sdk_8h_source.html#l00036">36</a> 行定义.</p>
 
 </div>
 </div>
@@ -510,6 +534,42 @@ Public 成员函数</h2></td></tr>
 
 </div>
 </div>
+<a id="a5fbc7e8114fa6d39d33ac466c06f3ffb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fbc7e8114fa6d39d33ac466c06f3ffb">&#9670;&nbsp;</a></span>isSoftwareRender()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void nem_sdk_interface::NEMeetingSDK::isSoftwareRender </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classnem__sdk__interface_1_1_n_e_meeting_s_d_k.html#a252d915aaadaeb55e50182533d7a7e82">NEBoolCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取SDK程序是否为软件渲染 </p>
+<dl class="section note"><dt>注解</dt><dd>只在Windows下有效 </dd></dl>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
 <a id="a90a27748f49ac126b15460739173dacc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90a27748f49ac126b15460739173dacc">&#9670;&nbsp;</a></span>querySDKVersion()</h2>
 
@@ -611,8 +671,55 @@ Public 成员函数</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>注解</dt><dd>level的含义和取值有DEBUG = 0, INFO = 1, WARNING=2, ERROR=3, FATAL=4 </dd></dl>
+<dl class="section note"><dt>注解</dt><dd>level 日志级别 </dd></dl>
 <dl class="section attention"><dt>注意</dt><dd>只有少量的组件接口层关键日志 </dd></dl>
+<dl class="section return"><dt>返回</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="ad96f0d1d2e75a5f55b0808c935581255"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad96f0d1d2e75a5f55b0808c935581255">&#9670;&nbsp;</a></span>setSoftwareRender()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void nem_sdk_interface::NEMeetingSDK::setSoftwareRender </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bSoftware</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacenem__sdk__interface.html#a1651522b555b313a6bc85f585169a5d0">NEEmptyCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>设置SDK程序是否为软件渲染 </p>
+<dl class="section note"><dt>注解</dt><dd>只在Windows下有效，需要在初始化前调用 </dd></dl>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bSoftware</td><td>是否为软件渲染，true软件渲染，false默认方式 </td></tr>
+    <tr><td class="paramname">cb</td><td>回调 </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>返回</dt><dd>void </dd></dl>
 
 </div>

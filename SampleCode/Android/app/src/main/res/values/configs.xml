@@ -15,4 +15,16 @@
         <item>private</item>
     </string-array>
 
+    <string-array name="AudioProfileNames">
+        <item>默认</item>
+        <item>通话</item>
+        <item>音乐</item>
+    </string-array>
+
+    <string-array name="AudioProfileKeys">
+        <item>default</item>
+        <item>speech</item>
+        <item>music</item>
+    </string-array>
+
 </resources>

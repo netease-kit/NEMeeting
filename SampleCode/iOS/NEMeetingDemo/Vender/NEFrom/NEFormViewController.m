@@ -29,7 +29,7 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    _tableView.frame = self.view.bounds;
+    _tableView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.width, self.view.height - 100);
 }
 
 -(void)addHideKeyboard

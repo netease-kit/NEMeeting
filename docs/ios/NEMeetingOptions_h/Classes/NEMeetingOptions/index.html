@@ -289,11 +289,13 @@ function disclosure_triangle(elt) {
 <br><a name="HeaderDoc_props"></a>
 <h2 class="h2tight">Properties</h2>
 <dl>
-<dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled" target="_top">audioAINSEnabled</a></tt></dt>
+<dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/audioProfile" target="_top">audioProfile</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/defaultWindowMode" target="_top">defaultWindowMode</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE" target="_top">DEPRECATED_ATTRIBUTE</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0" target="_top">DEPRECATED_ATTRIBUTE</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/fullMoreMenuItems" target="_top">fullMoreMenuItems</a></tt></dt>
 <dd></dd>
@@ -315,6 +317,8 @@ function disclosure_triangle(elt) {
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/noRename" target="_top">noRename</a></tt></dt>
 <dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/noSip" target="_top">noSip</a></tt></dt>
+<dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/noSwitchAudioMode" target="_top">noSwitchAudioMode</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/noSwitchCamera" target="_top">noSwitchCamera</a></tt></dt>
@@ -325,19 +329,21 @@ function disclosure_triangle(elt) {
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/showMeetingTime" target="_top">showMeetingTime</a></tt></dt>
 <dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instp/NEMeetingOptions/showMemberTag" target="_top">showMemberTag</a></tt></dt>
+<dd></dd>
 </dl>
 <hr class="betweenAPIEntries">
-<!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled;   name=NEMeetingOptions::audioAINSEnabled -->
-<a name="//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled"></a>
-<h3><a name="audioAINSEnabled">audioAINSEnabled</a></h3>
+<!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/audioProfile;   name=NEMeetingOptions::audioProfile -->
+<a name="//apple_ref/occ/instp/NEMeetingOptions/audioProfile"></a>
+<h3><a name="audioProfile">audioProfile</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled;name=start -->@property(<span class="param">nonatomic</span>,
-    <span class="param">assign</span>) <!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/econst/audioAINSEnabled //apple_ref/occ/data/NEMeetingOptions/audioAINSEnabled //apple_ref/occ/data/audioAINSEnabled //apple_ref/occ/clconst/NEMeetingOptions/audioAINSEnabled " machineGenerated="true" --><span class="var">audioAINSEnabled</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/audioProfile;name=start -->@property (<span class="param">nonatomic</span>,
+    <span class="param">strong</span>) <a machinegenerated="true" href="../NEAudioProfile/index.html#//apple_ref/occ/cl/NEAudioProfile" logicalPath="//apple_ref/occ/cl/NEAudioProfile" target="_top"><span class="type">NEAudioProfile</span></a><span class="type">*</span> <!-- a logicalPath="//apple_ref/occ/econst/audioProfile //apple_ref/occ/data/NEMeetingOptions/audioProfile //apple_ref/occ/data/audioProfile //apple_ref/occ/clconst/NEMeetingOptions/audioProfile " machineGenerated="true" --><span class="var">audioProfile</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/audioProfile;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled;name=start --><p>&#37197;&#32622;&#26159;&#21542;&#22312;&#20250;&#35758;&#20013;&#24320;&#21551;&#35821;&#38899;&#26234;&#33021;&#38477;&#22122;&#65292;&#40664;&#35748;&#20026;YES
-<!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/audioAINSEnabled;name=end --><!-- end discussion -->
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/audioProfile;name=start --><p>&#35821;&#38899;&#30456;&#20851;&#21442;&#25968;
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/audioProfile;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/defaultWindowMode;   name=NEMeetingOptions::defaultWindowMode -->
@@ -359,11 +365,24 @@ function disclosure_triangle(elt) {
 <hr class="afterName">
 <div class="declaration_indent">
 <pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE;name=start -->@property(<span class="param">nonatomic</span>,
-    <span class="param">strong</span>) <!-- a logicalPath="//apple_ref/occ/cl/NSArray //apple_ref/occ/tdef/NSArray //apple_ref/occ/tag/NSArray //apple_ref/occ/struct/NSArray //apple_ref/occ/intf/NSArray //apple_ref/doc/anysymbol/NSArray" machineGenerated="true" --><span class="type">NSArray</span><!-- /a -->&lt;<span class="template">NEMeetingMenuItem</span> <span class="template">*</span>&gt; <span class="type">*</span><!-- a logicalPath="//apple_ref/occ/cl/injectedMoreMenuItems //apple_ref/occ/tdef/injectedMoreMenuItems //apple_ref/occ/tag/injectedMoreMenuItems //apple_ref/occ/struct/injectedMoreMenuItems //apple_ref/occ/intf/injectedMoreMenuItems //apple_ref/doc/anysymbol/injectedMoreMenuItems" machineGenerated="true" --><span class="type">injectedMoreMenuItems</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/econst/DEPRECATED_ATTRIBUTE //apple_ref/occ/data/NEMeetingOptions/DEPRECATED_ATTRIBUTE //apple_ref/occ/data/DEPRECATED_ATTRIBUTE //apple_ref/occ/clconst/NEMeetingOptions/DEPRECATED_ATTRIBUTE " machineGenerated="true" --><span class="var">DEPRECATED_ATTRIBUTE</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE;name=end --></pre>
+    <span class="param">assign</span>) <!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/cl/audioAINSEnabled //apple_ref/occ/tdef/audioAINSEnabled //apple_ref/occ/tag/audioAINSEnabled //apple_ref/occ/struct/audioAINSEnabled //apple_ref/occ/intf/audioAINSEnabled //apple_ref/doc/anysymbol/audioAINSEnabled" machineGenerated="true" --><span class="type">audioAINSEnabled</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/econst/DEPRECATED_ATTRIBUTE //apple_ref/occ/data/NEMeetingOptions/DEPRECATED_ATTRIBUTE //apple_ref/occ/data/DEPRECATED_ATTRIBUTE //apple_ref/occ/clconst/NEMeetingOptions/DEPRECATED_ATTRIBUTE " machineGenerated="true" --><span class="var">DEPRECATED_ATTRIBUTE</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE;name=start --><p>"&#26356;&#22810;"&#33756;&#21333;&#20013;&#30340;&#33258;&#23450;&#20041;&#27880;&#20837;&#33756;&#21333;&#39033;&#65292;&#20250;&#34987;&#28155;&#21152;&#21040;&#26356;&#22810;&#33756;&#21333;&#21015;&#34920;&#26411;&#23614;
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE;name=start --><p>&#37197;&#32622;&#26159;&#21542;&#22312;&#20250;&#35758;&#20013;&#24320;&#21551;&#35821;&#38899;&#26234;&#33021;&#38477;&#22122;&#65292;&#40664;&#35748;&#20026;YES&#12290;&#22914;&#26524; audioProfile &#19981;&#20026;&#31354;&#65292;&#21017;&#20248;&#20808;&#20351;&#29992; audioProfile &#20013;&#30340;&#20540;&#12290;
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0;   name=NEMeetingOptions::DEPRECATED_ATTRIBUTE -->
+<a name="//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0"></a>
+<h3><a name="DEPRECATED_ATTRIBUTE">DEPRECATED_ATTRIBUTE</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0;name=start -->@property(<span class="param">nonatomic</span>,
+    <span class="param">strong</span>) <!-- a logicalPath="//apple_ref/occ/cl/NSArray //apple_ref/occ/tdef/NSArray //apple_ref/occ/tag/NSArray //apple_ref/occ/struct/NSArray //apple_ref/occ/intf/NSArray //apple_ref/doc/anysymbol/NSArray" machineGenerated="true" --><span class="type">NSArray</span><!-- /a -->&lt;<span class="template">NEMeetingMenuItem</span> <span class="template">*</span>&gt; <span class="type">*</span><!-- a logicalPath="//apple_ref/occ/cl/injectedMoreMenuItems //apple_ref/occ/tdef/injectedMoreMenuItems //apple_ref/occ/tag/injectedMoreMenuItems //apple_ref/occ/struct/injectedMoreMenuItems //apple_ref/occ/intf/injectedMoreMenuItems //apple_ref/doc/anysymbol/injectedMoreMenuItems" machineGenerated="true" --><span class="type">injectedMoreMenuItems</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/econst/DEPRECATED_ATTRIBUTE //apple_ref/occ/data/NEMeetingOptions/DEPRECATED_ATTRIBUTE //apple_ref/occ/data/DEPRECATED_ATTRIBUTE //apple_ref/occ/clconst/NEMeetingOptions/DEPRECATED_ATTRIBUTE " machineGenerated="true" --><span class="var">DEPRECATED_ATTRIBUTE</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0;name=start --><p>"&#26356;&#22810;"&#33756;&#21333;&#20013;&#30340;&#33258;&#23450;&#20041;&#27880;&#20837;&#33756;&#21333;&#39033;&#65292;&#20250;&#34987;&#28155;&#21152;&#21040;&#26356;&#22810;&#33756;&#21333;&#21015;&#34920;&#26411;&#23614;
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/DEPRECATED_ATTRIBUTE_DONTLINK_0;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/fullMoreMenuItems;   name=NEMeetingOptions::fullMoreMenuItems -->
@@ -515,6 +534,19 @@ function disclosure_triangle(elt) {
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/noRename;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
+<!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/noSip;   name=NEMeetingOptions::noSip -->
+<a name="//apple_ref/occ/instp/NEMeetingOptions/noSip"></a>
+<h3><a name="noSip">noSip</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/noSip;name=start -->@property (<span class="param">nonatomic</span>,
+    <span class="param">assign</span>) <!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/econst/noSip //apple_ref/occ/data/NEMeetingOptions/noSip //apple_ref/occ/data/noSip //apple_ref/occ/clconst/NEMeetingOptions/noSip " machineGenerated="true" --><span class="var">noSip</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/noSip;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/noSip;name=start --><p>&#37197;&#32622;&#20250;&#35758;&#20013;&#26159;&#21542;&#26174;&#31034;"SIP"&#33756;&#21333;
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/noSip;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
 <!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/noSwitchAudioMode;   name=NEMeetingOptions::noSwitchAudioMode -->
 <a name="//apple_ref/occ/instp/NEMeetingOptions/noSwitchAudioMode"></a>
 <h3><a name="noSwitchAudioMode">noSwitchAudioMode</a></h3>
@@ -579,10 +611,28 @@ function disclosure_triangle(elt) {
 <!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/showMeetingTime;name=start --><p>&#37197;&#32622;&#26159;&#21542;&#22312;&#20250;&#35758;&#30028;&#38754;&#20013;&#26174;&#31034;&#20250;&#35758;&#26102;&#38271;&#65292;&#40664;&#35748;&#20026;NO&#65292;&#20837;&#20250;&#21069;&#35774;&#32622;&#65292;&#20250;&#35758;&#20013;&#26080;&#27861;&#35774;&#32622;
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/showMeetingTime;name=end --><!-- end discussion -->
 </p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instp;  uid=//apple_ref/occ/instp/NEMeetingOptions/showMemberTag;   name=NEMeetingOptions::showMemberTag -->
+<a name="//apple_ref/occ/instp/NEMeetingOptions/showMemberTag"></a>
+<h3><a name="showMemberTag">showMemberTag</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/showMemberTag;name=start -->@property(<span class="param">nonatomic</span>,
+    <span class="param">assign</span>) <!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a --> <!-- a logicalPath="//apple_ref/occ/econst/showMemberTag //apple_ref/occ/data/NEMeetingOptions/showMemberTag //apple_ref/occ/data/showMemberTag //apple_ref/occ/clconst/NEMeetingOptions/showMemberTag " machineGenerated="true" --><span class="var">showMemberTag</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instp/NEMeetingOptions/showMemberTag;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/showMemberTag;name=start --><p>&#37197;&#32622;&#26159;&#21542;&#22312;&#20250;&#35758;&#20013;&#26174;&#31034;&#29992;&#25143;&#35282;&#33394;tag&#65292;&#40664;&#35748;&#20026;NO
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instp/NEMeetingOptions/showMemberTag;name=end --><!-- end discussion -->
+</p>
+<p><b>See</b></p>
+<div class="list_indent"><dl>
+<dt><p><!-- a logicalPath="//apple_ref/occ/cl/NEMeetingParams/tag" -->tag<!-- /a --></p></dt>
+<dd></dd>
+</dl></div>
 <p class="gapBeforeFooter">&nbsp;</p>
 <hr class="afterFooter">
 <div class="hd_copyright_and_timestamp">
-<p class="hd_timestamp">Last Updated: Wednesday, September 29, 2021
+<p class="hd_timestamp">Last Updated: Tuesday, December 28, 2021
 </p>
 </div>
 </td>

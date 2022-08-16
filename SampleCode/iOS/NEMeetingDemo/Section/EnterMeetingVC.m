@@ -43,6 +43,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (nonatomic, readonly) BOOL disableCameraSwitch;
 @property (nonatomic, readonly) BOOL disableAudioModeSwitch;
 @property (nonatomic, readonly) BOOL disableRename;
+@property (nonatomic, readonly) BOOL disableSip;
+@property (nonatomic, readonly) BOOL showMemberTag;
 
 @property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
 
@@ -89,7 +91,10 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"关闭音频模式切换",
                                               @"显示白板窗口",
                                               @"隐藏白板菜单按钮",
-                                              @"关闭会中改名"]];
+                                              @"关闭会中改名",
+                                              @"隐藏Sip菜单",
+                                              @"显示用户角色标签"
+                                            ]];
     _settingCheckBox.delegate = self;
 }
 
@@ -127,13 +132,24 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.noSwitchAudioMode = [self disableAudioModeSwitch];
         options.noWhiteBoard = [self hideWhiteboardMenu];
         options.noRename = [self disableRename];
+        options.noSip = [self disableSip];
         options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
         options.audioAINSEnabled = [[[NEMeetingSDK getInstance] getSettingsService] isAudioAINSEnabled];
+        options.showMemberTag = [self showMemberTag];
         //白板相关设置
         if ([self showWhiteboard]) {
             //设置默认展示白板窗口
             options.defaultWindowMode = NEMeetingWindowModeWhiteBoard;
         }
+        if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
+            options.audioProfile = [NEAudioProfile createMusicAudioProfile];
+        } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
+            options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
+        }
+        if (options.audioProfile != nil) {
+            options.audioProfile.enableAINS = options.audioAINSEnabled;
+        }
+        
     }
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
     options.fullMoreMenuItems = _fullMoreMenuItems;
@@ -321,6 +337,14 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (BOOL)disableRename {
     return [_settingCheckBox getItemSelectedAtIndex:11];
+}
+
+- (BOOL)disableSip {
+    return [_settingCheckBox getItemSelectedAtIndex:12];
+}
+
+- (BOOL)showMemberTag {
+    return [_settingCheckBox getItemSelectedAtIndex:13];
 }
 
 @end

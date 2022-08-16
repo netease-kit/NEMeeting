@@ -96,7 +96,7 @@
         android:id="@+id/scheduleMeetingDetailFragment"
         android:name="com.netease.meetinglib.demo.view.ScheduleMeetingDetailFragment"
         android:label="ScheduleMeetingDetailFragment"
-        tools:layout="@layout/fragment_schedule_datail" />
+        tools:layout="@layout/fragment_schedule_detail" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.netease.meetinglib.demo.view.SettingsFragment"

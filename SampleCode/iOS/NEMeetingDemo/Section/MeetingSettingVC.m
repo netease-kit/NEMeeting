@@ -8,6 +8,7 @@
 #import "MeetingSettingVC.h"
 #import "MeetingConfigRepository.h"
 #import "Config.h"
+#import <Foundation/Foundation.h>
 
 NSString * const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";
 NSString * const kSettingsJoinMeetingOpenVideo = @"kSettingsJoinMeetingOpenVideo";
@@ -109,6 +110,26 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
         weakSelf.audioAINSEnabled = [newValue boolValue];
     };
     [section addFormRow:audioAINS];
+    
+    {
+        XLFormRowDescriptor *audioProfile = [XLFormRowDescriptor
+            formRowDescriptorWithTag:@"audioProfile"
+            rowType:XLFormRowDescriptorTypeSelectorActionSheet
+            title:@"音频模式"];
+        audioProfile.height = 60.0;
+        NSMutableArray * selectorOptions = [[NSMutableArray alloc] init];
+        for(id key in MeetingConfigRepository.audioProfiles) {
+            [selectorOptions addObject: [XLFormOptionsObject formOptionsObjectWithValue:key displayText:[MeetingConfigRepository.audioProfiles objectForKey:key]]];
+        }
+        audioProfile.selectorOptions = selectorOptions;
+        audioProfile.value = [XLFormOptionsObject formOptionsOptionForValue: [MeetingConfigRepository getInstance].audioProfile fromOptions:selectorOptions];
+        audioProfile.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+            if (newValue && (NSNull *)newValue != [NSNull null]) {
+                [[MeetingConfigRepository getInstance] setAudioProfile: [newValue formValue]];
+            }
+        };
+        [section addFormRow:audioProfile];
+    }
     
     return form;
 }

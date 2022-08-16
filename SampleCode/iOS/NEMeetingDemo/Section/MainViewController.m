@@ -13,6 +13,7 @@
 #import "TimerButton.h"
 #import "MeetingControlVC.h"
 #import "AppSettingsVC.h"
+#import "MeetingSettingVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
 
@@ -76,6 +77,11 @@
 
 - (IBAction)onAppSettings:(id)sender {
     AppSettingsVC *vc = [[AppSettingsVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)onMeetingSettings:(id)sender {
+    MeetingSettingVC *vc = [[MeetingSettingVC alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

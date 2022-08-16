@@ -14,4 +14,13 @@ object MeetingConfigRepository {
         get() = localStorage.getInt("joinTimeout", 45 * 1000)
         set(value) = localStorage.put("joinTimeout", value)
 
+    var audioProfile: String
+        get() = localStorage.getString("audioProfile", "default")
+        set(value) { localStorage.put("audioProfile", value) }
+
+    val isSpeechAudioMode: Boolean
+        get() = audioProfile == "speech"
+
+    val isMusicAudioMode: Boolean
+        get() = audioProfile == "music"
 }

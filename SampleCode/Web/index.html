@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>neWebMeeting demo</title>
-  <script src="./NeWebMeeting_V1.5.2.js"></script>
 </head>
 <body>
   <button onclick="init()">初始化</button>
@@ -17,7 +16,7 @@
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
-  
+  <script src="./NeWebMeeting_V2.2.5.js"></script>
   <script>
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
@@ -69,7 +68,7 @@
   function create() { // 创建
     neWebMeeting.actions.create({
       meetingId: 0, // 1随机0固定
-      nickName: '',
+      nickName: 'demo',
       video: 1,
       audio: 1,
       meetingIdDisplayOptions: 0,
@@ -82,7 +81,7 @@
     var meetingId = document.querySelector('.meeting-id').value;
     neWebMeeting.actions.join({
       meetingId,
-      nickName: '',
+      nickName: 'demo1',
       video: 1,
       audio: 1,
       password: '',

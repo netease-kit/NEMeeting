@@ -353,10 +353,35 @@ Rectangle {
                             textKeepAliveInterval.text.toString().trim(
                                 ).length === 0 ? 13566 : parseInt(
                                                      textKeepAliveInterval.text))
-                meetingManager.invokeJoin(true, textAccountId.text, nicknameAnon.text,
-                                          textTag.text, textTimeout.text,
-                                          false, false, true, true, true, true,
-                                          textPassword.text, rename.checked)
+
+                var meetinginfoObj = {}
+                meetinginfoObj["anonymous"] = true
+                meetinginfoObj["meetingId"] = textAccountId.text
+                meetinginfoObj["nickname"] = nicknameAnon.text
+                meetinginfoObj["tag"] = textTag.text
+                meetinginfoObj["timeOut"] = textTimeout.text
+                meetinginfoObj["audio"] = false
+                meetinginfoObj["video"] = false
+                meetinginfoObj["enableChatroom"] = true
+                meetinginfoObj["enableInvitation"] = true
+                meetinginfoObj["enableScreenShare"] = true
+                meetinginfoObj["enableView"] = true
+                meetinginfoObj["autoOpenWhiteboard"] = autoOpenWhiteboard.checked
+                meetinginfoObj["password"] = textpassword.text
+                meetinginfoObj["rename"] = rename.checked
+                meetinginfoObj["displayOption"] = 0
+                meetinginfoObj["enableRecord"] = true
+                meetinginfoObj["openWhiteboard"] = false
+                meetinginfoObj["audioAINS"] = true
+                meetinginfoObj["sip"] = true
+                meetinginfoObj["showMemberTag"] = false
+                meetinginfoObj["enableMuteAllVideo"] = false
+                meetinginfoObj["enableMuteAllAudio"] = true
+                meetinginfoObj["showRemainingTip"] = false
+                meetinginfoObj["enableFileMessage"] = false
+                meetinginfoObj["enableImageMessage"] = false
+
+                meetingManager.invokeJoin(meetinginfoObj)
             }
         }
     }

@@ -1,9 +1,6 @@
-//
-//  AppDelegate+MeetingExtension.m
-//  NEMeetingDevDemo
-//
-//  Created by Topredator on 2022/4/3.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "AppDelegate+MeetingExtension.h"
 
@@ -18,5 +15,31 @@
     UIViewController *vc = [storyBoard instantiateInitialViewController];
     UIApplication.sharedApplication.keyWindow.rootViewController = vc;
     [UIApplication.sharedApplication.keyWindow makeKeyAndVisible];
+}
+
+
+- (void)meeting_BeatyResource {
+    NSString *sourcePath = [NSBundle.mainBundle pathForResource:@"Beaty" ofType:@"bundle"];
+    NSArray *subPaths = [NSFileManager.defaultManager subpathsAtPath:[NSBundle.mainBundle pathForResource:@"Beaty" ofType:@"bundle"]];
+    for (NSString *subPath in subPaths) {
+        NSString *path = [sourcePath stringByAppendingPathComponent:subPath];
+        NSString *toPath = [[self documentPath] stringByAppendingPathComponent:subPath];
+        if ([self isExistFile:toPath]) {
+            BOOL isDelete = [NSFileManager.defaultManager removeItemAtPath:toPath error:nil];
+            NSLog(@"美颜资源删除%@", isDelete ? @"成功" : @"失败");
+        }
+        if ([self isExistFile:path]) {
+            BOOL isSuccess = [[NSFileManager defaultManager] copyItemAtPath:path toPath:toPath error:nil];
+            NSLog(@"美颜资源copy%@", isSuccess ? @"成功" : @"失败");
+        }
+    }
+}
+
+- (NSString *)documentPath {
+    return  [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+}
+
+- (BOOL)isExistFile:(NSString *)path {
+    return [NSFileManager.defaultManager fileExistsAtPath:path];
 }
 @end

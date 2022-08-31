@@ -1,3 +1,7 @@
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 package com.netease.yunxin.kit.meeting.sampleapp.data;
 
 public class ScheduleMeetingItem {
@@ -13,6 +17,8 @@ public class ScheduleMeetingItem {
     private int clickAction;
 
     private String extraData;
+
+    private String valueString; // 回填数据
 
     public static final int EDIT_TEXT_TITLE_ACTION = 0;
 
@@ -38,32 +44,42 @@ public class ScheduleMeetingItem {
 
     public static final int SET_EXTRA_DATA_ACTION = 11;
 
+    public static final int SET_ROLE_BIND = 12; // 设置成员绑定角色
+
     public ScheduleMeetingItem(String tittle, String subTittle, String timeTip, boolean isSwitchOn,
-                               int clickAction) {
+                               int clickAction,String valueString) {
         this.tittle = tittle;
         this.subTittle = subTittle;
         this.clickAction = clickAction;
         this.timeTip = timeTip;
         this.isSwitchOn = isSwitchOn;
+        this.valueString = valueString;
     }
 
-    public ScheduleMeetingItem(String tittle, int clickAction) {
-        this(tittle, "", "", false, clickAction);
+    public ScheduleMeetingItem(String tittle, int clickAction,String valueString) {
+        this(tittle, "", "", false, clickAction,valueString);
     }
 
     public ScheduleMeetingItem(String tittle, String subTittle, boolean isSwitchOn, int clickAction) {
-        this(tittle, subTittle, "", isSwitchOn, clickAction);
+        this(tittle, subTittle, "", isSwitchOn, clickAction,"");
     }
 
-    public ScheduleMeetingItem(String tittle, boolean isSwitchOn, int clickAction) {
-        this(tittle, "", "", isSwitchOn, clickAction);
+    public ScheduleMeetingItem(String tittle, boolean isSwitchOn, int clickAction,String valueString) {
+        this(tittle, "", "", isSwitchOn, clickAction,valueString);
     }
 
 
-    public ScheduleMeetingItem(String tittle, String timeTip, int clickAction) {
-        this(tittle, "", timeTip, false, clickAction);
+    public ScheduleMeetingItem(String tittle, String timeTip, int clickAction,String valueString) {
+        this(tittle, "", timeTip, false, clickAction,valueString);
     }
 
+    public String getValueString(){
+        return valueString;
+    }
+
+    public void setValueString(String valueString){
+        this.valueString = valueString;
+    }
 
     public String getTittle() {
         return tittle;
@@ -95,6 +111,7 @@ public class ScheduleMeetingItem {
 
     public void setTimeTip(String timeTip) {
         this.timeTip = timeTip;
+        this.valueString = timeTip;
     }
     
     public boolean isSwitchOn() {

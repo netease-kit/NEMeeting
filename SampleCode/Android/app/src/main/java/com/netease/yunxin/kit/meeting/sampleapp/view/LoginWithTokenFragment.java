@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -24,7 +23,6 @@ public class LoginWithTokenFragment extends BaseFragment<FragmentLoginWithTokenB
 
     @Override
     protected void initView() {
-
         binding.btnLoginWithSdkToken.setOnClickListener(view -> {
             if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(accountToken)) {
                 Toast.makeText(getActivity(), "账号或密码错误", Toast.LENGTH_SHORT).show();

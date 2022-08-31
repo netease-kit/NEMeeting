@@ -11,10 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StartMeetingVC">
             <connections>
+                <outlet property="coHostInput" destination="4rM-kd-1UT" id="Y1J-MO-yoU"/>
                 <outlet property="configCheckBox" destination="F15-my-g2s" id="xa1-Ng-qar"/>
+                <outlet property="extraInput" destination="s17-VQ-gVv" id="wak-lf-rd7"/>
                 <outlet property="meetingIdInput" destination="Jfc-T7-66b" id="nLq-kn-RQA"/>
-                <outlet property="menuIdInput" destination="4rM-kd-1UT" id="Cn6-TK-CY6"/>
-                <outlet property="menuTitleInput" destination="s17-VQ-gVv" id="ffg-VG-kgV"/>
                 <outlet property="nickInput" destination="7cy-0b-BqG" id="Oip-dc-DvA"/>
                 <outlet property="passwordInput" destination="9kc-hk-n8f" id="Qk6-Vm-B3s"/>
                 <outlet property="settingCheckBox" destination="MKt-2h-9Ht" id="Sdr-yn-F0a"/>
@@ -102,75 +102,16 @@
                         <constraint firstAttribute="height" constant="150" id="RB6-xA-8JW"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="按钮Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4rM-kd-1UT">
-                    <rect key="frame" x="16" y="816" width="80" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="80" id="IHL-9Z-UGR"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjx-eM-LpW">
-                    <rect key="frame" x="308" y="809" width="90" height="48"/>
-                    <color key="backgroundColor" systemColor="systemGray5Color"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="anp-FH-Zmr"/>
-                        <constraint firstAttribute="width" constant="90" id="t91-83-7v0"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="添加菜单">
-                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3e7-LZ-R6s">
-                    <rect key="frame" x="5" y="760" width="120" height="48"/>
-                    <color key="backgroundColor" systemColor="systemGray5Color"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="120" id="1nS-aZ-V2O"/>
-                        <constraint firstAttribute="height" constant="48" id="Jy4-MX-Ubv"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="自定义Toolbar菜单">
-                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="configToolbarMenuItems:" destination="-1" eventType="touchUpInside" id="bgc-iw-dkV"/>
-                    </connections>
-                </button>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="按钮文本/扩展字段" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s17-VQ-gVv">
-                    <rect key="frame" x="112" y="816" width="180" height="34"/>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="联席主持人配置" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4rM-kd-1UT">
+                    <rect key="frame" x="214.33333333333337" y="818" width="189.66666666666663" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OwW-lk-i1Y">
-                    <rect key="frame" x="142" y="760" width="120" height="48"/>
-                    <color key="backgroundColor" systemColor="systemGray5Color"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="120" id="Rv6-DT-f03"/>
-                        <constraint firstAttribute="height" constant="48" id="cRK-7t-h0V"/>
-                    </constraints>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="额外扩展字段" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s17-VQ-gVv">
+                    <rect key="frame" x="10" y="818" width="194.33333333333334" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="自定义更多菜单">
-                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="configMoreMenuItems:" destination="-1" eventType="touchUpInside" id="vSC-YV-1Q7"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZo-vE-IEB">
-                    <rect key="frame" x="308" y="760" width="90" height="48"/>
-                    <color key="backgroundColor" systemColor="systemGray5Color"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="90" id="lfz-Z5-7vz"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="入会配置">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="sceneSettings:" destination="-1" eventType="touchUpInside" id="pJU-2i-JWt"/>
-                    </connections>
-                </button>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="会议密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9kc-hk-n8f">
                     <rect key="frame" x="16" y="217" width="191" height="32"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -189,62 +130,87 @@
                         <action selector="doCloseMeeting:" destination="-1" eventType="touchUpInside" id="ach-E7-Ui0"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3e7-LZ-R6s">
+                    <rect key="frame" x="10" y="768" width="181.33333333333334" height="40"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="07D-c6-g5h"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="自定义Toolbar菜单">
+                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="configToolbarMenuItems:" destination="-1" eventType="touchUpInside" id="bgc-iw-dkV"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OwW-lk-i1Y">
+                    <rect key="frame" x="201.33333333333337" y="768" width="202.66666666666663" height="40"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="自定义更多菜单">
+                        <color key="titleColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="configMoreMenuItems:" destination="-1" eventType="touchUpInside" id="vSC-YV-1Q7"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Jdc-RQ-DhW" firstAttribute="width" secondItem="WRG-Pt-POL" secondAttribute="width" id="0cY-j6-8Zw"/>
+                <constraint firstItem="3e7-LZ-R6s" firstAttribute="height" secondItem="OwW-lk-i1Y" secondAttribute="height" id="2C2-LH-Mh9"/>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="leading" secondItem="Jfc-T7-66b" secondAttribute="leading" id="2yj-nV-cjO"/>
-                <constraint firstItem="4rM-kd-1UT" firstAttribute="top" secondItem="3e7-LZ-R6s" secondAttribute="bottom" constant="8" id="5po-b0-Z7N"/>
+                <constraint firstItem="3e7-LZ-R6s" firstAttribute="width" secondItem="OwW-lk-i1Y" secondAttribute="width" multiplier="0.894737" id="4B9-Hl-uS5"/>
                 <constraint firstItem="WRG-Pt-POL" firstAttribute="top" secondItem="MKt-2h-9Ht" secondAttribute="bottom" constant="16" id="6CD-PL-CK4"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="width" secondItem="9kc-hk-n8f" secondAttribute="width" id="8xb-5o-leS"/>
-                <constraint firstItem="kjx-eM-LpW" firstAttribute="centerY" secondItem="4rM-kd-1UT" secondAttribute="centerY" id="9qA-mU-Fbw"/>
                 <constraint firstItem="Jdc-RQ-DhW" firstAttribute="top" secondItem="WRG-Pt-POL" secondAttribute="top" id="C99-vp-DoD"/>
+                <constraint firstItem="s17-VQ-gVv" firstAttribute="bottom" secondItem="4rM-kd-1UT" secondAttribute="bottom" id="F1c-n0-5mo"/>
                 <constraint firstItem="CTz-SU-8uc" firstAttribute="leading" secondItem="7cy-0b-BqG" secondAttribute="leading" id="Fzn-pR-QSq"/>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="trailing" secondItem="Jfc-T7-66b" secondAttribute="trailing" id="JIs-xQ-XC7"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="bottom" secondItem="9kc-hk-n8f" secondAttribute="bottom" id="Jng-DL-608"/>
                 <constraint firstItem="ccp-Zb-V9e" firstAttribute="trailing" secondItem="0AT-Vn-itT" secondAttribute="trailing" id="Lo9-JY-heR"/>
                 <constraint firstItem="afo-Xb-gX8" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="16" id="MCd-K5-PAw"/>
                 <constraint firstItem="9kc-hk-n8f" firstAttribute="top" secondItem="7cy-0b-BqG" secondAttribute="bottom" constant="16" id="McW-jD-MgA"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="OwW-lk-i1Y" secondAttribute="trailing" constant="10" id="MhN-oC-9EZ"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="top" secondItem="9kc-hk-n8f" secondAttribute="top" id="MjM-Ix-fQp"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="height" secondItem="7cy-0b-BqG" secondAttribute="height" id="Mrv-oX-wdO"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="kjx-eM-LpW" secondAttribute="trailing" constant="16" id="MsG-Mc-dcZ"/>
-                <constraint firstItem="OwW-lk-i1Y" firstAttribute="baseline" secondItem="3e7-LZ-R6s" secondAttribute="baseline" id="Mxc-Gu-H78"/>
                 <constraint firstItem="MKt-2h-9Ht" firstAttribute="top" secondItem="F15-my-g2s" secondAttribute="bottom" constant="4" id="NHm-ae-lc4"/>
                 <constraint firstItem="7cy-0b-BqG" firstAttribute="top" secondItem="mEx-5R-qub" secondAttribute="bottom" constant="16" id="NeM-oa-h5w"/>
-                <constraint firstItem="s17-VQ-gVv" firstAttribute="leading" secondItem="4rM-kd-1UT" secondAttribute="trailing" constant="16" id="NoW-yB-ItV"/>
                 <constraint firstItem="Jfc-T7-66b" firstAttribute="leading" secondItem="afo-Xb-gX8" secondAttribute="leading" id="P1g-Jl-bWm"/>
+                <constraint firstItem="s17-VQ-gVv" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="10" id="QkH-tg-bJ1"/>
+                <constraint firstItem="OwW-lk-i1Y" firstAttribute="leading" secondItem="3e7-LZ-R6s" secondAttribute="trailing" constant="10" id="R4A-yi-fWq"/>
                 <constraint firstItem="CTz-SU-8uc" firstAttribute="trailing" secondItem="7cy-0b-BqG" secondAttribute="trailing" id="RDW-5l-4wV"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="4rM-kd-1UT" secondAttribute="bottom" constant="12" id="SAR-zM-BPz"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="leading" secondItem="9kc-hk-n8f" secondAttribute="trailing" id="SJX-Yb-OH0"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="4rM-kd-1UT" secondAttribute="trailing" constant="10" id="UNn-iq-W3B"/>
                 <constraint firstItem="7cy-0b-BqG" firstAttribute="leading" secondItem="Jfc-T7-66b" secondAttribute="leading" id="WOb-2X-plc"/>
                 <constraint firstItem="7cy-0b-BqG" firstAttribute="trailing" secondItem="Jfc-T7-66b" secondAttribute="trailing" id="WOq-HL-5a8"/>
-                <constraint firstItem="3e7-LZ-R6s" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="5" id="aEx-L2-oE2"/>
+                <constraint firstItem="3e7-LZ-R6s" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="10" id="WcW-Ff-sb9"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="trailing" secondItem="7cy-0b-BqG" secondAttribute="trailing" id="ajA-ol-QQg"/>
                 <constraint firstItem="Jdc-RQ-DhW" firstAttribute="bottom" secondItem="WRG-Pt-POL" secondAttribute="bottom" id="asF-qa-vai"/>
-                <constraint firstItem="bZo-vE-IEB" firstAttribute="top" secondItem="OwW-lk-i1Y" secondAttribute="top" id="avR-57-qlV"/>
                 <constraint firstItem="ccp-Zb-V9e" firstAttribute="leading" secondItem="0AT-Vn-itT" secondAttribute="leading" id="c61-8Y-FvF"/>
-                <constraint firstItem="bZo-vE-IEB" firstAttribute="bottom" secondItem="OwW-lk-i1Y" secondAttribute="bottom" id="dFH-Ge-GK7"/>
                 <constraint firstItem="MKt-2h-9Ht" firstAttribute="leading" secondItem="F15-my-g2s" secondAttribute="leading" id="dWs-yz-PuP"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="top" secondItem="ccp-Zb-V9e" secondAttribute="bottom" constant="1" id="fG1-UB-c65"/>
-                <constraint firstItem="s17-VQ-gVv" firstAttribute="centerY" secondItem="4rM-kd-1UT" secondAttribute="centerY" id="i9a-iO-2Hp"/>
+                <constraint firstItem="s17-VQ-gVv" firstAttribute="width" secondItem="4rM-kd-1UT" secondAttribute="width" multiplier="1.02395" id="gNb-ve-grs"/>
                 <constraint firstItem="MKt-2h-9Ht" firstAttribute="trailing" secondItem="F15-my-g2s" secondAttribute="trailing" id="iCk-vI-vto"/>
                 <constraint firstItem="CTz-SU-8uc" firstAttribute="top" secondItem="7cy-0b-BqG" secondAttribute="bottom" constant="4" id="k4h-xP-kfF"/>
-                <constraint firstItem="kjx-eM-LpW" firstAttribute="leading" secondItem="s17-VQ-gVv" secondAttribute="trailing" constant="16" id="khF-mZ-Ghr"/>
                 <constraint firstItem="WRG-Pt-POL" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="30" id="lZY-Xe-ghe"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="leading" secondItem="7cy-0b-BqG" secondAttribute="leading" id="lsS-c5-wQ5"/>
-                <constraint firstItem="4rM-kd-1UT" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="16" id="mvU-Bq-oTB"/>
                 <constraint firstItem="Jdc-RQ-DhW" firstAttribute="leading" secondItem="WRG-Pt-POL" secondAttribute="trailing" constant="20" id="nxF-3B-Lme"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="s17-VQ-gVv" secondAttribute="bottom" constant="10" id="qMW-6D-zz0"/>
                 <constraint firstItem="9kc-hk-n8f" firstAttribute="leading" secondItem="7cy-0b-BqG" secondAttribute="leading" id="qXr-ys-CPU"/>
                 <constraint firstItem="afo-Xb-gX8" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="r2m-g2-Aw3"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Jdc-RQ-DhW" secondAttribute="trailing" constant="30" id="r6j-lR-N9P"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="trailing" secondItem="7cy-0b-BqG" secondAttribute="trailing" id="sFJ-AX-xHH"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="bZo-vE-IEB" secondAttribute="trailing" constant="16" id="wB1-JD-zRB"/>
+                <constraint firstItem="s17-VQ-gVv" firstAttribute="top" secondItem="3e7-LZ-R6s" secondAttribute="bottom" constant="10" id="vyu-ML-eZA"/>
                 <constraint firstItem="Jfc-T7-66b" firstAttribute="top" secondItem="afo-Xb-gX8" secondAttribute="bottom" constant="24" id="xvy-2d-7wx"/>
                 <constraint firstItem="ccp-Zb-V9e" firstAttribute="top" secondItem="0AT-Vn-itT" secondAttribute="bottom" constant="1" id="yLQ-Jk-WIJ"/>
-                <constraint firstItem="OwW-lk-i1Y" firstAttribute="leading" secondItem="3e7-LZ-R6s" secondAttribute="trailing" constant="17" id="yTW-DM-tdh"/>
+                <constraint firstItem="s17-VQ-gVv" firstAttribute="height" secondItem="4rM-kd-1UT" secondAttribute="height" id="yRZ-sc-irH"/>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="top" secondItem="Jfc-T7-66b" secondAttribute="bottom" constant="4" id="yYn-vg-C7y"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Jfc-T7-66b" secondAttribute="trailing" constant="16" id="z72-VA-eAO"/>
+                <constraint firstItem="4rM-kd-1UT" firstAttribute="leading" secondItem="s17-VQ-gVv" secondAttribute="trailing" constant="10" id="zD1-OT-tOS"/>
+                <constraint firstItem="3e7-LZ-R6s" firstAttribute="bottom" secondItem="OwW-lk-i1Y" secondAttribute="bottom" id="zkL-4g-otg"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
         </view>

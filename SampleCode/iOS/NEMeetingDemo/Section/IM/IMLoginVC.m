@@ -1,9 +1,7 @@
-//
-//  IMLoginVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 
 #import "IMLoginVC.h"
 #import "LoginInfoManager.h"
@@ -12,11 +10,11 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #if ONLINE //线上环境
-NSString *const kIMAppKey = @"";
+NSString *const kIMAppKey = @"你的AppKey";
 #elif PRIVATE //私有化AppKey
-NSString *const kIMAppKey = @"";
+NSString *const kIMAppKey = @"你的AppKey";
 #else
-NSString *const kIMAppKey = @"";
+NSString *const kIMAppKey = @"你的AppKey";
 #endif
 
 @interface IMLoginVC ()
@@ -43,9 +41,20 @@ NSString *const kIMAppKey = @"";
 - (void)setupIMSDK {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[NIMSDK sharedSDK] registerWithAppID:kIMAppKey cerName:nil];
+        [[NIMSDK sharedSDK] registerWithAppID:[self IMAppKey] cerName:nil];
     });
 }
+- (NSString *)IMAppKey {
+    NSString *serverType = ServerConfig.serverType;
+    if ([serverType isEqualToString:@"test"]) {
+        return @"你的AppKey";
+    } else if ([serverType isEqualToString:@"online"]) {
+        return @"你的AppKey";
+    } else {
+        return @"你的AppKey";
+    }
+}
+
 
 - (void)setupUI {
     self.title = @"IM登录";

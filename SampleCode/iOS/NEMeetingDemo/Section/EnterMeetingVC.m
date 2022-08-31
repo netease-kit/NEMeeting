@@ -1,22 +1,19 @@
-//
-//  EnterMeetingVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "EnterMeetingVC.h"
 #import "CheckBox.h"
-#import "MeetingSettingVC.h"
 #import "MeetingMenuSelectVC.h"
 #import "MeetingConfigRepository.h"
-
+#import "MeetingConfigEnum.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
     MeetingMenuTypeToolbar = 1,
     MeetingMenuTypeMore = 2,
 };
+
 @interface EnterMeetingVC ()<CheckBoxDelegate, MeetingServiceListener,MeetingMenuSelectVCDelegate>
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
@@ -26,34 +23,12 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property (weak, nonatomic) IBOutlet UITextField *nickInput;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UIButton *enterBtn;
-@property (weak, nonatomic) IBOutlet UITextField *menuIdInput;
-@property (weak, nonatomic) IBOutlet UITextField *menuTitleInput;
 @property (weak, nonatomic) IBOutlet UITextField *passworkInput;
 @property (weak, nonatomic) IBOutlet UITextField *tagInput;
-@property (weak, nonatomic) IBOutlet UIButton *settingBtn;
-
-@property (nonatomic, readonly) BOOL openVideoWhenJoin;
-@property (nonatomic, readonly) BOOL openMicWhenJoin;
-@property (nonatomic, readonly) BOOL showMeetingTime;
-@property (nonatomic, readonly) BOOL useDefaultConfig;
-@property (nonatomic, readonly) BOOL disableChat;
-@property (nonatomic, readonly) BOOL disableInvite;
-@property (nonatomic, readonly) BOOL disableMinimize;
-@property (nonatomic, readonly) BOOL disableGallery;
-@property (nonatomic, readonly) BOOL disableCameraSwitch;
-@property (nonatomic, readonly) BOOL disableAudioModeSwitch;
-@property (nonatomic, readonly) BOOL disableRename;
-@property (nonatomic, readonly) BOOL disableSip;
-@property (nonatomic, readonly) BOOL showMemberTag;
-
-@property (nonatomic, strong) NSMutableArray <NEMeetingMenuItem *> *menuItems;
-
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
-
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullMoreMenuItems;
 // 自定义菜单类型：toolbar/更多
 @property (nonatomic, assign) MeetingMenuType currentType;
-
 @end
 
 @implementation EnterMeetingVC
@@ -91,7 +66,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                                               @"显示白板窗口",
                                               @"隐藏白板菜单按钮",
                                               @"关闭会中改名",
-//                                              @"隐藏Sip菜单",
+                                              @"隐藏Sip菜单",
                                               @"显示用户角色标签"
                                             ]];
     _settingCheckBox.delegate = self;
@@ -116,10 +91,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     params.tag = _tagInput.text;
     
     NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
-    if (![self useDefaultConfig]) {
-        options.noAudio = ![self openMicWhenJoin];
-        options.noVideo = ![self openVideoWhenJoin];
-        options.showMeetingTime = [self showMeetingTime];
+    // 默认会议配置
+    if (![self selectedSetting:MeetingSettingTypeDefaultSetting]) {
+        options.noAudio = ![self selectedConfig:MeetingConfigTypeJoinOnAudio];
+        options.noVideo = ![self selectedConfig:MeetingConfigTypeJoinOnVideo];
+        options.showMeetingTime = [self selectedConfig:MeetingConfigTypeShowTime];
     } else {
         NESettingsService *settingService = NEMeetingKit.getInstance.getSettingsService;
         options.noAudio = !settingService.isTurnOnMyAudioWhenJoinMeetingEnabled;
@@ -127,32 +103,27 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         options.showMeetingTime = settingService.isShowMyMeetingElapseTimeEnabled;
     }
     options.meetingIdDisplayOption = [self meetingIdDisplayOption];
-    options.noChat = [self disableChat];
-    options.noInvite = [self disableInvite];
-    options.noMinimize = [self disableMinimize];
-    options.noGallery = [self disableGallery];
-    options.noSwitchCamera = [self disableCameraSwitch];
-    options.noSwitchAudioMode = [self disableAudioModeSwitch];
-    options.noWhiteBoard = [self hideWhiteboardMenu];
-    options.noRename = [self disableRename];
-//    options.noSip = [self disableSip];
+    options.noChat = [self selectedSetting:MeetingSettingTypeJoinOffChatroom];
+    options.noInvite = [self selectedSetting:MeetingSettingTypeJoinOffInvitation];
+    options.noMinimize = [self selectedSetting:MeetingSettingTypeHideMini];
+    options.noGallery = [self selectedSetting:MeetingSettingTypeJoinOffGallery];
+    options.noSwitchCamera = [self selectedSetting:MeetingSettingTypeOffSwitchCamera];
+    options.noSwitchAudioMode = [self selectedSetting:MeetingSettingTypeOffSwitchAudio];
+    options.noWhiteBoard = [self selectedSetting:MeetingSettingTypeHiddenWhiteboardButton];
+    options.noRename = [self selectedSetting:MeetingSettingTypeOffReName];
+    options.noSip = [self selectedSetting:MeetingSettingTypeHiddenSip];
     options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
 //    options.audioAINSEnabled = [[[NEMeetingKit getInstance] getSettingsService] isAudioAINSEnabled];
-    options.showMemberTag = [self showMemberTag];
+    options.showMemberTag = [self selectedSetting:MeetingSettingTypeShowRoleLabel];
+    
     //白板相关设置
-    if ([self showWhiteboard]) {
-        //设置默认展示白板窗口
-        options.defaultWindowMode = NEMeetingWindowModeWhiteBoard;
-    }
+    options.defaultWindowMode = [self selectedSetting:MeetingSettingTypeShowWhiteboard] ? NEMeetingWindowModeWhiteBoard : NEMeetingWindowModeGallery;
+    
     if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
         options.audioProfile = [NEAudioProfile createMusicAudioProfile];
     } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
         options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
     }
-//    if (options.audioProfile != nil) {
-//        options.audioProfile.enableAINS = options.audioAINSEnabled;
-//    }
-    
     options.noMuteAllAudio = [MeetingConfigRepository getInstance].noMuteAllAudio;
     options.noMuteAllVideo = [MeetingConfigRepository getInstance].noMuteAllVideo;
     options.fullToolbarMenuItems = _fullToolbarMenuItems;
@@ -160,6 +131,21 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
     WEAK_SELF(weakSelf);
     [SVProgressHUD show];
+    // 匿名入会
+    if (self.type == EnterMeetingAnonymity) {
+        [NEMeetingKit.getInstance.getMeetingService anonymousJoinMeeting:params
+                                                                    opts:options
+                                                                callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+            [SVProgressHUD dismiss];
+            if (resultCode != ERROR_CODE_SUCCESS) {
+                [weakSelf showErrorCode:resultCode msg:resultMsg];
+            }else {
+                weakSelf.fullMoreMenuItems = nil;
+                weakSelf.fullToolbarMenuItems = nil;
+            }
+        }];
+        return;
+    } 
     [[[NEMeetingKit getInstance] getMeetingService] joinMeeting:params
                                                            opts:options
                                                        callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
@@ -173,20 +159,12 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     }];
 }
 
-- (IBAction)onEnterSettingAction:(id)sender {
-    MeetingSettingVC *vc = [[MeetingSettingVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
--(void)checkBoxItemdidSelected:(UIButton *)item
+- (void)checkBoxItemdidSelected:(UIButton *)item
                        atIndex:(NSUInteger)index
-                      checkBox:( CheckBox *)checkbox {
-    if (checkbox != _settingCheckBox) {
-        return;
-    }
+                      checkBox:(CheckBox *)checkbox {
+    if (checkbox != _settingCheckBox) return;
     if (index == 3) {
-        _configCheckBox.disableAllItems = [self useDefaultConfig];
-        _settingBtn.hidden = ![self useDefaultConfig];
+        _configCheckBox.disableAllItems = [self selectedSetting:MeetingSettingTypeDefaultSetting];
     }
 }
 
@@ -206,8 +184,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 
-- (IBAction)addMenuAction:(UIButton *)sender {
-}
 - (void)showSeletedItemResult:(NSArray *)menuItems {
     NSString *string = @"已选";
     for (NEMeetingMenuItem *item in menuItems) {
@@ -255,84 +231,25 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 #pragma mark - Setter && Getter
 - (void)setType:(EnterMeetingType)type {
     _type = type;
-    switch (type) {
-        case EnterMeetingNormal:
-        {
-            _titleLab.text = @"加入会议";
-            [_enterBtn setTitle:@"加入会议" forState:UIControlStateNormal];
-            break;
-        }
-        case EnterMeetingAnonymity:
-        default:
-            break;
-    }
+    NSString *title = type == EnterMeetingJoin ? @"加入会议" : @"匿名入会";
+    self.titleLab.text = title;
+    [self.enterBtn setTitle:title forState:UIControlStateNormal];
 }
 
-- (BOOL)openVideoWhenJoin {
-    return [_configCheckBox getItemSelectedAtIndex:0];
+- (BOOL)selectedConfig:(MeetingConfigType)configType {
+    return [self.configCheckBox getItemSelectedAtIndex:configType];
+}
+- (BOOL)selectedSetting:(MeetingSettingType)settingType {
+    return [self.settingCheckBox getItemSelectedAtIndex:settingType];
 }
 
-- (BOOL)openMicWhenJoin {
-    return [_configCheckBox getItemSelectedAtIndex:1];
-}
-
-- (BOOL)showMeetingTime {
-    return [_configCheckBox getItemSelectedAtIndex:2];
-}
-
-- (BOOL)disableChat {
-    return [_settingCheckBox getItemSelectedAtIndex:0];
-}
-
-- (BOOL)disableInvite {
-    return [_settingCheckBox getItemSelectedAtIndex:1];
-}
-
-- (BOOL)disableMinimize {
-    return [_settingCheckBox getItemSelectedAtIndex:2];
-}
-
-- (BOOL)useDefaultConfig {
-    return [_settingCheckBox getItemSelectedAtIndex:3];
-}
-
-- (BOOL)disableGallery {
-    return [_settingCheckBox getItemSelectedAtIndex:4];
-}
-
-- (NEMeetingIdDisplayOption) meetingIdDisplayOption {
-    if ([_settingCheckBox getItemSelectedAtIndex:5]) {
+- (NEMeetingIdDisplayOption)meetingIdDisplayOption {
+    if ([self selectedSetting:MeetingSettingTypeOnlyShowLongId]) {
         return DISPLAY_LONG_ID_ONLY;
-    } else if ([_settingCheckBox getItemSelectedAtIndex:6]) {
+    } else if ([self selectedSetting:MeetingSettingTypeOnlyShowShortId]) {
         return DISPLAY_SHORT_ID_ONLY;
     }
     return DISPLAY_ALL;
-}
-
-- (BOOL)disableCameraSwitch {
-    return [_settingCheckBox getItemSelectedAtIndex:7];
-}
-
-- (BOOL)disableAudioModeSwitch {
-    return [_settingCheckBox getItemSelectedAtIndex:8];
-}
-- (BOOL)showWhiteboard {
-    return [_settingCheckBox getItemSelectedAtIndex:9];
-}
-- (BOOL)hideWhiteboardMenu {
-    return [_settingCheckBox getItemSelectedAtIndex:10];
-}
-
-- (BOOL)disableRename {
-    return [_settingCheckBox getItemSelectedAtIndex:11];
-}
-//
-//- (BOOL)disableSip {
-//    return [_settingCheckBox getItemSelectedAtIndex:12];
-//}
-
-- (BOOL)showMemberTag {
-    return [_settingCheckBox getItemSelectedAtIndex:12];
 }
 
 @end

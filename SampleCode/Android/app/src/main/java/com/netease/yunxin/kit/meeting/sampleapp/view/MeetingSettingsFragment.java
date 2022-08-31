@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -14,10 +13,16 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceDataStore;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.netease.yunxin.kit.meeting.sampleapp.MeetingApplication;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.data.MeetingConfigRepository;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingVirtualBackground;
 import com.netease.yunxin.kit.meeting.sdk.NESettingsService;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeetingSettingsFragment extends PreferenceFragmentCompat {
 
@@ -39,6 +44,7 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
         private final static String ENABLE_AUDIO_AINS = "enable_audio_ains";
         private final static String JOIN_TIMEOUT = "join_timeout_millis";
         private final static String AUDIO_PROFILE = "audioProfile";
+        private final static String ENABLE_VIRTUAL_BACKGROUND = "enable_virtual_background";
 
         @Nullable
         @Override
@@ -84,6 +90,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                         value = settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();break;
                     case ENABLE_AUDIO_AINS:
                         value = settingsService.isAudioAINSEnabled();break;
+                    case ENABLE_VIRTUAL_BACKGROUND:
+                        value = settingsService.isVirtualBackgroundEnabled(); break;
                 }
             }
             Log.i(TAG, "getBoolean: " + key + '=' + value);
@@ -104,8 +112,36 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
                         settingsService.setTurnOnMyAudioWhenJoinMeeting(value);break;
                     case ENABLE_AUDIO_AINS:
                         settingsService.enableAudioAINS(value);break;
+                    case ENABLE_VIRTUAL_BACKGROUND:
+                        if(value){
+                            setVirtualBackgroundPic(settingsService);
+                        }
+                        settingsService.enableVirtualBackground(value);break;
                 }
             }
+        }
+
+        /**
+         * 设置虚拟背景 图片
+         * @param settingsService
+         */
+        private void setVirtualBackgroundPic(NESettingsService settingsService) {
+            List<NEMeetingVirtualBackground> virtualBackgrounds = new ArrayList<>();
+            String virtualPath = MeetingApplication.getInstance().getFilesDir().getPath()+"/virtual";
+            File virtualFile = new File(virtualPath);
+            int size = 0;
+            if(virtualFile.exists()){
+               size = virtualFile.listFiles().length;
+            }
+            for (int i=1;i<=size;i++){
+                String path = MeetingApplication.getInstance().getFilesDir().getPath()+"/virtual/"+i+".png";
+                File file = new File(path);
+                if(file.exists()) {
+                    NEMeetingVirtualBackground virtualBackground = new NEMeetingVirtualBackground(path);
+                    virtualBackgrounds.add(virtualBackground);
+                }
+            }
+            settingsService.setBuiltinVirtualBackgrounds(virtualBackgrounds);
         }
     }
 }

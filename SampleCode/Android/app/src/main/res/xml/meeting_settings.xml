@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2022 NetEase, Inc. All rights reserved. -->
+<!-- Use of this source code is governed by a MIT license that can be -->
+<!-- found in the LICENSE file. -->
+
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,6 +23,12 @@
     <SwitchPreferenceCompat
         app:key="enable_audio"
         app:title="入会时开启音频"
+        style="@style/MySwitchPreference"
+        />
+
+    <SwitchPreferenceCompat
+        app:key="enable_virtual_background"
+        app:title="使用虚拟背景"
         style="@style/MySwitchPreference"
         />
 

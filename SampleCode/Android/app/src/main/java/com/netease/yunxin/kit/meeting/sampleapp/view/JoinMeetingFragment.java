@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2014-2020 NetEase, Inc.
- * All right reserved.
- */
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 package com.netease.yunxin.kit.meeting.sampleapp.view;
 
@@ -31,6 +30,8 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
         usePersonalMeetingId.setEnabled(false);
         // 加入会议隐藏录制开关功能
         (getView().findViewById(R.id.noCloudRecord)).setVisibility(View.GONE);
+        // 加入会议隐藏绑定角色
+        (getView().findViewById(R.id.roleBindTips)).setVisibility(View.GONE);
         mViewModel = ViewModelProviders.of(this).get(JoinMeetingViewModel.class);
         initData();
     }
@@ -69,7 +70,11 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
         }
         NEJoinMeetingOptions options = (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
         showDialogProgress("正在加入会议...");
-        mViewModel.joinMeeting(params, options, new MeetingCallback());
+        if(isAnonymous()){
+            mViewModel.anonymousJoinMeeting(params,options,new MeetingCallback());
+        } else {
+            mViewModel.joinMeeting(params, options, new MeetingCallback());
+        }
     }
 
     private boolean isAnonymous() {

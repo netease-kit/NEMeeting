@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2022 NetEase, Inc. All rights reserved. -->
+<!-- Use of this source code is governed by a MIT license that can be -->
+<!-- found in the LICENSE file. -->
+
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -37,15 +41,6 @@
         android:name="com.netease.yunxin.kit.meeting.sampleapp.view.LoginWithTokenFragment"
         android:label="LoginWithTokenFragment"
         tools:layout="@layout/fragment_login_with_token">
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginWithSSOFragment"
-        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.LoginWithSSOFragment"
-        android:label="LoginWithSSOFragment"
-        tools:layout="@layout/fragment_login_with_sso">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -93,7 +88,11 @@
         android:id="@+id/scheduleMeetingDetailFragment"
         android:name="com.netease.yunxin.kit.meeting.sampleapp.view.ScheduleMeetingDetailFragment"
         android:label="ScheduleMeetingDetailFragment"
-        tools:layout="@layout/fragment_schedule_detail" />
+        tools:layout="@layout/fragment_schedule_detail" >
+        <action
+            android:id="@+id/action_scheduleMeetingDetailFragment_to_scheduleMeetingFragment"
+            app:destination="@id/scheduleMeetingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.netease.yunxin.kit.meeting.sampleapp.view.SettingsFragment"

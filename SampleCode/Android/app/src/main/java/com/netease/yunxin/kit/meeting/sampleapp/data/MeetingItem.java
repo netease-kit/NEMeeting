@@ -1,11 +1,17 @@
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 package com.netease.yunxin.kit.meeting.sampleapp.data;
 
 
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemLive;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemSetting;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemStatus;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingRoleType;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     /**
@@ -75,7 +81,17 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     private boolean isGroupFirst;
 
     private String extraData;
-    
+
+    private Map<String,NEMeetingRoleType> roleBinds;
+
+    public Map<String, NEMeetingRoleType> getRoleBinds() {
+        return roleBinds;
+    }
+
+    public void setRoleBinds(Map<String, NEMeetingRoleType> roleBinds) {
+        this.roleBinds = roleBinds;
+    }
+
     public NEMeetingItemStatus getStatus() {
         return status;
     }

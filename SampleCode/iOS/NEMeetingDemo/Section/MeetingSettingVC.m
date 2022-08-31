@@ -1,9 +1,6 @@
-//
-//  MeetingSettingVC.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "MeetingSettingVC.h"
 #import "MeetingConfigRepository.h"
@@ -154,10 +151,51 @@ NSString * const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
         };
         [section addFormRow:row];
     }
-
-    
+    XLFormRowDescriptor *row = [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingOpenAudio
+                                                                      rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                                        title:@"使用虚拟背景"];
+    row.height = 60.0;
+    row.value = @([NEMeetingKit.getInstance.getSettingsService isVirtualBackgroundEnabled]);
+    row.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
+        [NEMeetingKit.getInstance.getSettingsService enableVirtualBackground:[newValue boolValue]];
+        if ([newValue boolValue]) {
+            [NEMeetingKit.getInstance.getSettingsService setBuiltinVirtualBackgrounds:[self fetchArray]];
+        }
+    };
+    [section addFormRow:row];
     return form;
 }
+- (NSArray <NEMeetingVirtualBackground *> *)fetchArray {
+    NEMeetingVirtualBackground *source = [NEMeetingVirtualBackground new];
+    source.path = [self pathWithName:@"1"];
+
+    NEMeetingVirtualBackground *source1 = [NEMeetingVirtualBackground new];
+    source1.path = [self pathWithName:@"2"];
+    NEMeetingVirtualBackground *source2 = [NEMeetingVirtualBackground new];
+    source2.path = [self pathWithName:@"3"];
+
+    NEMeetingVirtualBackground *source3 = [NEMeetingVirtualBackground new];
+    source3.path = [self pathWithName:@"4"];
+    NEMeetingVirtualBackground *source4 = [NEMeetingVirtualBackground new];
+    source4.path = [self pathWithName:@"5"];
+    NEMeetingVirtualBackground *source5 = [NEMeetingVirtualBackground new];
+    source5.path = [self pathWithName:@"6"];
+    return @[source, source1, source2, source3, source4, source5];
+}
+- (NSString *)pathWithName:(NSString *)name {
+    NSString *sourcePath = [[NSBundle mainBundle] pathForResource:name ofType:@"png"];
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    return [self copyFile:sourcePath toPath:path];
+}
+- (NSString *)copyFile:(NSString *)sourcePath toPath:(NSString *)toPath {
+    BOOL retVal = YES; // If the file already exists, we'll return success…
+    NSString * finalLocation = [toPath stringByAppendingPathComponent:[sourcePath lastPathComponent]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:finalLocation]) {
+        retVal = [[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:finalLocation error:NULL];
+    }
+    return retVal ? finalLocation : @"";
+}
+
 
 #pragma mark - Getter
 - (BOOL)showMeetingTime {

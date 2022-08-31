@@ -1,9 +1,6 @@
-//
-//  LoginViewController.m
-//  NEMeetingDemo
-//
-//  Copyright (c) 2014-2020 NetEase, Inc. All rights reserved.
-//
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 #import "LoginViewController.h"
 #import "MeetingControlVC.h"
@@ -11,6 +8,7 @@
 #import "LoginInfoManager.h"
 
 @interface LoginViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextField *accountIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *accountTokenInput;
 @property (weak, nonatomic) IBOutlet UIButton *loginWithSDKBtn;
@@ -18,10 +16,6 @@
 @end
 
 @implementation LoginViewController
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +41,6 @@
     NSString *accountId = _accountIdInput.text;
     NSString *accountToken = _accountTokenInput.text;
     
-    WEAK_SELF(weakSelf);
     [SVProgressHUD showWithStatus:@"登录中"];
     [self doLogin:accountId
             accountToken:accountToken];

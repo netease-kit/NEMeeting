@@ -79,6 +79,8 @@ public:
     Q_PROPERTY(bool audodeviceAutoSelectType READ audodeviceAutoSelectType WRITE setAudodeviceAutoSelectType NOTIFY audodeviceAutoSelectTypeChanged)
     Q_PROPERTY(bool softwareRender READ softwareRender WRITE setSoftwareRender NOTIFY softwareRenderChanged)
     Q_PROPERTY(bool virtualBackground READ virtualBackground WRITE setVirtualBackground NOTIFY virtualBackgroundChanged)
+    Q_PROPERTY(bool beauty READ beauty WRITE setBeauty NOTIFY beautyChanged)
+    Q_PROPERTY(int beautyValue READ beautyValue WRITE setBeautyValue NOTIFY beautyValueChanged)
 
     Q_INVOKABLE void initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate);
     Q_INVOKABLE void initialize(const QString& strAppkey, int keepAliveInterval);
@@ -97,6 +99,7 @@ public:
                                      const QString& textScene,
                                      bool attendeeAudioOff,
                                      bool enableLive = false,
+                                     bool enableSip = false,
                                      bool needLiveAuthentication = false,
                                      bool enableRecord = false,
                                      const QString& extraData = "",
@@ -112,60 +115,16 @@ public:
                                  const QString& textScene,
                                  bool attendeeAudioOff,
                                  bool enableLive = false,
+                                 bool enableSip = false,
                                  bool needLiveAuthentication = false,
                                  bool enableRecord = false,
                                  const QString& extraData = "",
                                  const QJsonArray& controls = QJsonArray(),
                                  const QString& strRoleBinds = "");
     Q_INVOKABLE void getMeetingList();
-    Q_INVOKABLE void invokeStart(const QString& meetingId,
-                                 const QString& nickname,
-                                 const QString& tag,
-                                 const QString& textScene,
-                                 const QString& password,
-                                 int timeOut,
-                                 bool audio,
-                                 bool video,
-                                 bool enableChatroom = true,
-                                 bool enableInvitation = true,
-                                 bool enableScreenShare = true,
-                                 bool enableView = true,
-                                 bool autoOpenWhiteboard = false,
-                                 bool rename = true,
-                                 int displayOption = 0,
-                                 bool enableRecord = false,
-                                 bool openWhiteboard = false,
-                                 bool audioAINS = true,
-                                 bool sip = false,
-                                 bool showMemberTag = false,
-                                 const QString& extraData = "",
-                                 const QJsonArray& controls = QJsonArray(),
-                                 bool enableMuteAllVideo = false,
-                                 bool enableMuteAllAudio = true,
-                                 const QString& strRoleBinds = "",
-                                 bool showRemainingTip = false);
-    Q_INVOKABLE void invokeJoin(bool anonymous,
-                                const QString& meetingId,
-                                const QString& nickname,
-                                const QString& tag,
-                                int timeOut,
-                                bool audio,
-                                bool video,
-                                bool enableChatroom = true,
-                                bool enableInvitation = true,
-                                bool enableScreenShare = true,
-                                bool enableView = true,
-                                bool autoOpenWhiteboard = false,
-                                const QString& password = QString(),
-                                bool rename = true,
-                                int displayOption = 0,
-                                bool openWhiteboard = false,
-                                bool audioAINS = true,
-                                bool sip = false,
-                                bool showMemberTag = false,
-                                bool enableMuteAllVideo = false,
-                                bool enableMuteAllAudio = true,
-                                bool showRemainingTip = false);
+
+    Q_INVOKABLE void invokeStart(const QJsonObject& object);
+    Q_INVOKABLE void invokeJoin(const QJsonObject& object);
 
     Q_INVOKABLE void leaveMeeting(bool finish);
     Q_INVOKABLE int getMeetingStatus();
@@ -220,6 +179,10 @@ public:
     bool virtualBackground() const { return m_virtualBackground; }
     void setVirtualBackground(bool virtualBackground);
 
+    bool beauty() const { return m_beauty; }
+
+    int beautyValue() const { return m_beautyValue; }
+
 private:
     void pushSubmenus(std::vector<NEMeetingMenuItem>& items_list, int MenuIdIndex);
 
@@ -260,6 +223,10 @@ signals:
     void virtualBackgroundList(const QString& vbList);
     void getPersonalMeetingIdChanged(const QString& message);
 
+    void beautyChanged(bool beauty);
+
+    void beautyValueChanged(int beautyValue);
+
 public slots:
     void onGetMeetingListUI();
 
@@ -275,6 +242,9 @@ public slots:
     void setAudodeviceAutoSelectType(bool audodeviceAutoSelectType);
     void setSoftwareRender(bool softwareRender);
 
+    void setBeauty(bool beauty);
+    void setBeautyValue(int beautyValue);
+
 private:
     std::atomic_bool m_initialized;
     std::atomic_bool m_initSuc;
@@ -289,6 +259,8 @@ private:
     bool m_audodeviceAutoSelectType = true;
     bool m_softwareRender = false;
     bool m_virtualBackground = true;
+    bool m_beauty = false;
+    int m_beautyValue = 0;
 };
 
 #endif  // NEMEETINGMANAGER_H

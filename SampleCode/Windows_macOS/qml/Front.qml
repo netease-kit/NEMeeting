@@ -12,12 +12,12 @@ Rectangle {
         meetingManager.isInitializd()
         checkAudio.checked = meetingManager.checkAudio()
         checkVideo.checked = meetingManager.checkVideo()
-        //        let w = mainWindow.width;
-        //        let h = mainWindow.height;
-        //        mainWindow.width = 1300
-        //        mainWindow.height = 800
-        //        mainWindow.x -= (mainWindow.width - w) / 2
-        //        mainWindow.y -= (mainWindow.height - h) / 2
+        let w = mainWindow.width;
+        let h = mainWindow.height;
+        mainWindow.width = 1300
+        mainWindow.height = 800
+        mainWindow.x -= (mainWindow.width - w) / 2
+        mainWindow.y -= (mainWindow.height - h) / 2
         mainWindow.showMaximized()
         Qt.callLater(function () {
             meetingManager.getIsSupportRecord()
@@ -36,10 +36,11 @@ Rectangle {
     }
 
     RowLayout {
-        anchors.centerIn: parent
-        spacing: 30
+        //anchors.centerIn: parent
+        anchors.fill: parent
+        spacing: 10
         ColumnLayout {
-            Layout.preferredWidth: 500
+            Layout.preferredWidth: 300
             Layout.preferredHeight: 500
             spacing: 0
             Label {
@@ -97,6 +98,11 @@ Rectangle {
                     id: idRecord
                     visible: meetingManager.isSupportRecord
                     text: qsTr("is open record")
+                }
+                CheckBox {
+                    id: idSip
+                    checked: false
+                    text: qsTr('Enable sip')
                 }
             }
             CheckBox {
@@ -167,7 +173,8 @@ Rectangle {
             Button {
                 id: btnSchedule
                 highlighted: true
-                Layout.fillWidth: true
+                Layout.preferredWidth: 100
+                //Layout.fillWidth: true
                 text: qsTr('Schedule')
                 onClicked: {
                     var controls = []
@@ -193,6 +200,7 @@ Rectangle {
                                                    textScene.text,
                                                    muteCheckbox.checked,
                                                    idLiveSettingCheck.checked,
+                                                   idSip.checked,
                                                    idLiveAccessCheck.checked,
                                                    idRecord.checked,
                                                    preExtraData.text,
@@ -258,6 +266,11 @@ Rectangle {
                                 id: muteCheckbox2
                                 text: qsTr('Automatically mute after members join')
                                 checked: model.attendeeAudioOff
+                            }
+                            CheckBox {
+                                id: idSipEdit
+                                text: qsTr('Enable Sip')
+                                checked: model.enableSip
                             }
                         }
 
@@ -374,28 +387,34 @@ Rectangle {
                         RowLayout {
                             Layout.preferredWidth: 40
                             Button {
-                                Layout.fillWidth: true
+                                //Layout.fillWidth: true
+                                Layout.preferredWidth: 100
                                 Layout.preferredHeight: 30
                                 text: qsTr('Join')
                                 onClicked: {
-                                    meetingManager.invokeJoin(
-                                                false,
-                                                model.meetingId,
-                                                textNickname.text,
-                                                textTag.text, textTimeout.text,
-                                                checkAudio.checked,
-                                                checkVideo.checked,
-                                                checkChatroom.checked,
-                                                checkInvitation.checked,
-                                                checkScreenShare.checked,
-                                                checkView.checked,
-                                                autoOpenWhiteboard.checked,
-                                                password2.text,
-                                                autorename.checked)
+                                    var meetinginfoObj = {}
+                                    meetinginfoObj["anonymous"] = false
+                                    meetinginfoObj["meetingId"] = model.meetingId
+                                    meetinginfoObj["nickname"] = textNickname.text
+                                    meetinginfoObj["tag"] = textTag.text
+                                    meetinginfoObj["timeOut"] = textTimeout.text
+                                    meetinginfoObj["audio"] = checkAudio.checked
+                                    meetinginfoObj["video"] = checkVideo.checked
+                                    meetinginfoObj["enableChatroom"] = checkChatroom.checked
+                                    meetinginfoObj["enableInvitation"] = checkInvitation.checked
+                                    meetinginfoObj["enableScreenShare"] = checkScreenShare.checked
+                                    meetinginfoObj["enableView"] = checkView.checked
+                                    meetinginfoObj["autoOpenWhiteboard"] = autoOpenWhiteboard.checked
+                                    meetinginfoObj["password"] = password2.text
+                                    meetinginfoObj["rename"] = autorename.checked
+                                    meetinginfoObj["sip"] = idSipEdit.checked
+
+                                    meetingManager.invokeJoin(meetinginfoObj)
                                 }
                             }
                             Button {
-                                Layout.fillWidth: true
+                                //Layout.fillWidth: true
+                                Layout.preferredWidth: 100
                                 Layout.preferredHeight: 30
                                 text: qsTr('Cancel')
                                 onClicked: {
@@ -404,7 +423,8 @@ Rectangle {
                                 }
                             }
                             Button {
-                                Layout.fillWidth: true
+                                //Layout.fillWidth: true
+                                Layout.preferredWidth: 100
                                 Layout.preferredHeight: 30
                                 text: qsTr('Edit')
                                 onClicked: {
@@ -432,6 +452,7 @@ Rectangle {
                                                 password2.text, textScene.text,
                                                 muteCheckbox2.checked,
                                                 idLiveSettingCheckEdit.checked,
+                                                idSipEdit.checked,
                                                 idLiveAccessCheckEdit.checked,
                                                 idOpenRecordEdit.checked,
                                                 editExtraData.text,
@@ -626,12 +647,6 @@ Rectangle {
                     checked: true
                     text: qsTr('Enable ScreenShare')
                 }
-
-                CheckBox {
-                    id: checkView
-                    checked: true
-                    text: qsTr('Enable View')
-                }
             }
 
             RowLayout {
@@ -659,10 +674,26 @@ Rectangle {
                     id: idShowRemainingTip
                     text: qsTr('Show RemainingTip')
                 }
+
+                CheckBox {
+                    id: checkView
+                    checked: true
+                    text: qsTr('Enable View')
+                }
             }
 
             RowLayout {
                 Layout.fillWidth: true
+
+                CheckBox {
+                    id: idEnableFileMessage
+                    text: qsTr('Enable FileMessage')
+                }
+
+                CheckBox {
+                    id: idEnableImageMessage
+                    text: qsTr('Enable ImageMessage')
+                }
 
                 CheckBox {
                     id: idAudioCcontrol
@@ -683,6 +714,7 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
                     visible: idAudioCcontrol.checked
                 }
+
             }
 
             RowLayout {
@@ -718,6 +750,22 @@ Rectangle {
                     onClicked: meetingManager.setAudodeviceAutoSelectType(checked);
                 }
                 CheckBox {
+                    id: idBeauty
+                    text: qsTr("Show Beauty")
+                    checked: meetingManager.beauty
+                    onClicked: meetingManager.beauty = checked
+                }
+                TextField {
+                    id: idBeautyValue
+                    placeholderText: qsTr('Beauty Value')
+                    selectByMouse: true
+                    Layout.preferredWidth: 100
+                    maximumLength: 2
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    text: meetingManager.beautyValue
+                    onAccepted: meetingManager.beautyValue = parseInt(idBeautyValue.text)
+                }
+                CheckBox {
                     id: idVirtualBackground
                     text: qsTr("Show VB")
                     checked: meetingManager.virtualBackground
@@ -727,7 +775,8 @@ Rectangle {
                     id: btnDefaultVB
                     highlighted: true
                     text: qsTr('Default VB')
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     onClicked: {
                         meetingManager.getVirtualBackgroundList()
                     }
@@ -742,7 +791,8 @@ Rectangle {
                     id: btnSetVB
                     highlighted: true
                     text: qsTr('Set VB')
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     onClicked: {
                         meetingManager.setVirtualBackgroundList(vbList.text)
                     }
@@ -792,7 +842,8 @@ Rectangle {
                         id: btnSubscribe
                         highlighted: true
                         text: qsTr('Subscribe Audio')
-                        Layout.fillWidth: true
+                        //Layout.fillWidth: true
+                        Layout.preferredWidth: 150
                         onClicked: {
                             meetingManager.subcribeAudio(
                                         accoundList.text, true,
@@ -803,7 +854,8 @@ Rectangle {
                         id: btnUnSubscribe
                         highlighted: true
                         text: qsTr('UnSubscribe Audio')
-                        Layout.fillWidth: true
+                        //Layout.fillWidth: true
+                        Layout.preferredWidth: 170
                         onClicked: {
                             meetingManager.subcribeAudio(
                                         accoundList.text, false,
@@ -814,13 +866,14 @@ Rectangle {
             }
 
             RowLayout {
-                Layout.topMargin: 20
-                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 0
+                Layout.alignment: Qt.AlignLeft
                 Button {
                     id: btnCreate
                     highlighted: true
                     text: qsTr('Create')
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: 100
+                    //Layout.fillWidth: true
                     onClicked: {
                         btnCreate.enabled = false
 
@@ -840,57 +893,84 @@ Rectangle {
                             controls.push(videocontrol)
                         }
 
-                        meetingManager.invokeStart(
-                                    checkBox.checked ? meetingManager.personalMeetingId : '', textNickname.text,
-                                    textTag.text, textScene.text,
-                                    textpassword.text, textTimeout.text,
-                                    checkAudio.checked, checkVideo.checked,
-                                    checkChatroom.checked, checkInvitation.checked,
-                                    checkScreenShare.checked, checkView.checked,
-                                    autoOpenWhiteboard.checked, autorename.checked,
-                                    displayOption.currentIndex, idOpenRecord.checked,
-                                    idOpenWhiteboard.checked, idAudioAINS.checked,
-                                    checkSip.checked, idShowMemberTag.checked,
-                                    extraData.text, controls, enableMuteAllVideo.checked,
-                                    enableMuteAllAudio.checked, roleBinds.text,
-                                    idShowRemainingTip.checked)
+                        var meetinginfoObj = {}
+                        meetinginfoObj["meetingId"] = checkBox.checked ? meetingManager.personalMeetingId : ''
+                        meetinginfoObj["nickname"] = textNickname.text
+                        meetinginfoObj["tag"] = textTag.text
+                        meetinginfoObj["textScene"] = textScene.text
+                        meetinginfoObj["timeOut"] = textTimeout.text
+                        meetinginfoObj["audio"] = checkAudio.checked
+                        meetinginfoObj["video"] = checkVideo.checked
+                        meetinginfoObj["enableChatroom"] = checkChatroom.checked
+                        meetinginfoObj["enableInvitation"] = checkInvitation.checked
+                        meetinginfoObj["enableScreenShare"] = checkScreenShare.checked
+                        meetinginfoObj["enableView"] = checkView.checked
+                        meetinginfoObj["autoOpenWhiteboard"] = autoOpenWhiteboard.checked
+                        meetinginfoObj["rename"] = autorename.checked
+                        meetinginfoObj["displayOption"] = displayOption.currentIndex
+                        meetinginfoObj["enableRecord"] = idOpenRecord.checked
+                        meetinginfoObj["openWhiteboard"] = idOpenWhiteboard.checked
+                        meetinginfoObj["audioAINS"] = idAudioAINS.checked
+                        meetinginfoObj["sip"] = checkSip.checked
+                        meetinginfoObj["showMemberTag"] = idShowMemberTag.checked
+                        meetinginfoObj["extraData"] = extraData.text
+                        meetinginfoObj["controls"] = controls
+                        meetinginfoObj["enableMuteAllVideo"] = enableMuteAllVideo.checked
+                        meetinginfoObj["enableMuteAllAudio"] = enableMuteAllAudio.checked
+                        meetinginfoObj["strRoleBinds"] = roleBinds.text
+                        meetinginfoObj["showRemainingTip"] = idShowRemainingTip.checked
+                        meetinginfoObj["password"] = textpassword.text
+                        meetinginfoObj["enableFileMessage"] = idEnableFileMessage.checked
+                        meetinginfoObj["enableImageMessage"] = idEnableImageMessage.checked
+
+                        meetingManager.invokeStart(meetinginfoObj)
                     }
                 }
                 Button {
                     id: btnJoin
                     highlighted: true
                     text: qsTr('Join')
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     onClicked: {
                         btnJoin.enabled = false
-                        meetingManager.invokeJoin(false, textMeetingId.text.split("-").join(""),
-                                                  textNickname.text,
-                                                  textTag.text,
-                                                  textTimeout.text,
-                                                  checkAudio.checked,
-                                                  checkVideo.checked,
-                                                  checkChatroom.checked,
-                                                  checkInvitation.checked,
-                                                  checkScreenShare.checked,
-                                                  checkView.checked,
-                                                  autoOpenWhiteboard.checked,
-                                                  textpassword.text,
-                                                  autorename.checked,
-                                                  displayOption.currentIndex,
-                                                  idOpenWhiteboard.checked,
-                                                  idAudioAINS.checked,
-                                                  checkSip.checked,
-                                                  idShowMemberTag.checked,
-                                                  enableMuteAllVideo.checked,
-                                                  enableMuteAllAudio.checked,
-                                                  idShowRemainingTip.checked)
+
+                        var meetinginfoObj = {}
+                        meetinginfoObj["anonymous"] = false
+                        meetinginfoObj["meetingId"] = textMeetingId.text.split("-").join("")
+                        meetinginfoObj["nickname"] = textNickname.text
+                        meetinginfoObj["tag"] = textTag.text
+                        meetinginfoObj["timeOut"] = textTimeout.text
+                        meetinginfoObj["audio"] = checkAudio.checked
+                        meetinginfoObj["video"] = checkVideo.checked
+                        meetinginfoObj["enableChatroom"] = checkChatroom.checked
+                        meetinginfoObj["enableInvitation"] = checkInvitation.checked
+                        meetinginfoObj["enableScreenShare"] = checkScreenShare.checked
+                        meetinginfoObj["enableView"] = checkView.checked
+                        meetinginfoObj["autoOpenWhiteboard"] = autoOpenWhiteboard.checked
+                        meetinginfoObj["password"] = textpassword.text
+                        meetinginfoObj["rename"] = autorename.checked
+                        meetinginfoObj["displayOption"] = displayOption.currentIndex
+                        meetinginfoObj["enableRecord"] = idOpenRecord.checked
+                        meetinginfoObj["openWhiteboard"] = idOpenWhiteboard.checked
+                        meetinginfoObj["audioAINS"] = idAudioAINS.checked
+                        meetinginfoObj["sip"] = checkSip.checked
+                        meetinginfoObj["showMemberTag"] = idShowMemberTag.checked
+                        meetinginfoObj["enableMuteAllVideo"] = enableMuteAllVideo.checked
+                        meetinginfoObj["enableMuteAllAudio"] = enableMuteAllAudio.checked
+                        meetinginfoObj["showRemainingTip"] = idShowRemainingTip.checked
+                        meetinginfoObj["enableFileMessage"] = idEnableFileMessage.checked
+                        meetinginfoObj["enableImageMessage"] = idEnableImageMessage.checked
+
+                        meetingManager.invokeJoin(meetinginfoObj)
                     }
                 }
                 Button {
                     id: btnLeave
                     highlighted: true
                     text: qsTr('Leave')
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     enabled: false
                     onClicked: meetingManager.leaveMeeting(false)
                 }
@@ -898,26 +978,29 @@ Rectangle {
                     id: btnFinish
                     highlighted: true
                     text: qsTr('Finish')
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     enabled: false
                     onClicked: meetingManager.leaveMeeting(true)
                 }
             }
             RowLayout {
-                Layout.topMargin: 20
-                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 0
+                Layout.alignment: Qt.AlignLeft
                 Button {
                     id: btnGet
                     highlighted: true
                     enabled: false
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     text: qsTr('Get Info')
                     onClicked: meetingManager.getMeetingInfo()
                 }
                 Button {
                     id: getStatus
                     highlighted: true
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 100
                     text: qsTr('Get Status')
                     onClicked: {
                         toast.show('Current meeting status: ' + meetingManager.getMeetingStatus(
@@ -927,7 +1010,8 @@ Rectangle {
                 Button {
                     id: getHistoryMeeting
                     highlighted: true
-                    Layout.fillWidth: true
+                    //Layout.fillWidth: true
+                    Layout.preferredWidth: 150
                     text: qsTr('Get History Info')
                     onClicked: meetingManager.getHistoryMeetingItem()
                 }

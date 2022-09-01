@@ -55,6 +55,35 @@ NEMeetingManager::NEMeetingManager(QObject* parent)
                                 }
                             });
                     });
+
+                    std::thread tmp1([=]() {
+                        NEMeetingKit::getInstance()->getSettingsService()->GetBeautyFaceController()->isBeautyFaceEnabled(
+                            [=](NEErrorCode errorCode, const std::string& errorMessage, const bool& enabled) {
+                                qInfo() << "isBeautyFaceEnabled callback, error code: " << errorCode
+                                        << ", error message: " << QString::fromStdString(errorMessage) << ", enabled: " << enabled;
+                                if (ERROR_CODE_SUCCESS == errorCode) {
+                                    m_beauty = enabled;
+                                    emit beautyChanged(m_beauty);
+                                } else {
+                                    emit error(errorCode, QString::fromStdString(errorMessage));
+                                }
+                            });
+                    });
+                    tmp1.detach();
+                    std::thread tmp2([=]() {
+                        NEMeetingKit::getInstance()->getSettingsService()->GetBeautyFaceController()->getBeautyFaceValue(
+                            [this](NEErrorCode errorCode, const std::string& errorMessage, const int& beautyValue) {
+                                qInfo() << "getBeautyFaceValue callback, error code: " << errorCode
+                                        << ", error message: " << QString::fromStdString(errorMessage) << ", beautyValue: " << beautyValue;
+                                if (ERROR_CODE_SUCCESS == errorCode) {
+                                    m_beautyValue = beautyValue;
+                                    emit beautyValueChanged(m_beautyValue);
+                                } else {
+                                    emit error(errorCode, QString::fromStdString(errorMessage));
+                                }
+                            });
+                    });
+                    tmp2.detach();
                 });
         }
     });
@@ -296,6 +325,7 @@ void NEMeetingManager::scheduleMeeting(const QString& meetingSubject,
                                        const QString& textScene,
                                        bool attendeeAudioOff,
                                        bool enableLive,
+                                       bool enableSip,
                                        bool needLiveAuthentication,
                                        bool enableRecord,
                                        const QString& extraData,
@@ -322,6 +352,7 @@ void NEMeetingManager::scheduleMeeting(const QString& meetingSubject,
         item.liveWebAccessControlLevel = needLiveAuthentication ? LIVE_ACCESS_APP_TOKEN : LIVE_ACCESS_TOKEN;
         item.setting.cloudRecordOn = enableRecord;
         item.extraData = extraData.toStdString();
+        item.noSip = !enableSip;
 
         for (auto it : controls) {
             QJsonObject obj = it.toObject();
@@ -423,6 +454,7 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
                                    const QString& textScene,
                                    bool attendeeAudioOff,
                                    bool enableLive,
+                                   bool enableSip,
                                    bool needLiveAuthentication,
                                    bool enableRecord,
                                    const QString& extraData,
@@ -447,6 +479,7 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
         item.liveWebAccessControlLevel = needLiveAuthentication ? LIVE_ACCESS_APP_TOKEN : LIVE_ACCESS_TOKEN;
         item.setting.cloudRecordOn = enableRecord;
         item.extraData = extraData.toStdString();
+        item.noSip = !enableSip;
         for (auto it : controls) {
             QJsonObject obj = it.toObject();
             NEMeetingControl control;
@@ -559,6 +592,7 @@ void NEMeetingManager::getMeetingList() {
                         object["liveUrl"] = QString::fromStdString(item.liveUrl);
                         object["recordEnable"] = item.setting.cloudRecordOn;
                         object["extraData"] = QString::fromStdString(item.extraData);
+                        object["enableSip"] = !item.noSip;
 
                         for (auto it : item.setting.controls) {
                             QJsonObject obj;
@@ -602,35 +636,117 @@ void NEMeetingManager::getMeetingList() {
     }
 }
 
-void NEMeetingManager::invokeStart(const QString& meetingId,
-                                   const QString& nickname,
-                                   const QString& tag,
-                                   const QString& textScene,
-                                   const QString& password,
-                                   int timeOut,
-                                   bool audio,
-                                   bool video,
-                                   bool enableChatroom /* = true*/,
-                                   bool enableInvitation /* = true*/,
-                                   bool enableScreenShare /* = true*/,
-                                   bool enableView /* = true*/,
-                                   bool autoOpenWhiteboard,
-                                   bool rename,
-                                   int displayOption,
-                                   bool enableRecord,
-                                   bool openWhiteboard,
-                                   bool audioAINS,
-                                   bool sip,
-                                   bool showMemberTag,
-                                   const QString& extraData,
-                                   const QJsonArray& controls,
-                                   bool enableMuteAllVideo,
-                                   bool enableMuteAllAudio,
-                                   const QString& strRoleBinds,
-                                   bool showRemainingTip) {
-    qInfo() << "Start a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
-            << ", display id: " << displayOption << "textScene: " << textScene << ", showMemberTag: " << showMemberTag << ", controls:" << controls
-            << ", strRoleBinds: " << strRoleBinds << "showRemainingTip: " << showRemainingTip;
+void NEMeetingManager::invokeStart(const QJsonObject& object) {
+    QString meetingId;
+    QString nickname;
+    QString tag;
+    QString textScene;
+    QString password;
+    int timeOut = 0;
+    bool audio = false;
+    bool video = false;
+    bool enableChatroom = true;
+    bool enableInvitation = true;
+    bool enableScreenShare = true;
+    bool enableView = true;
+    bool autoOpenWhiteboard = false;
+    bool rename = true;
+    int displayOption = 0;
+    bool enableRecord = false;
+    bool openWhiteboard = false;
+    bool audioAINS = true;
+    bool sip = false;
+    bool showMemberTag = false;
+    QString extraData;
+    QJsonArray controls;
+    bool enableMuteAllVideo = false;
+    bool enableMuteAllAudio = true;
+    QString strRoleBinds;
+    bool showRemainingTip = false;
+    bool enableFileMessage = false;
+    bool enableImageMessage = false;
+
+    if (object.contains("meetingId")) {
+        meetingId = object["meetingId"].toString();
+    }
+    if (object.contains("nickname")) {
+        nickname = object["nickname"].toString();
+    }
+    if (object.contains("tag")) {
+        tag = object["tag"].toString();
+    }
+    if (object.contains("textScene")) {
+        textScene = object["textScene"].toString();
+    }
+    if (object.contains("password")) {
+        password = object["password"].toString();
+    }
+    if (object.contains("timeOut")) {
+        timeOut = object["timeOut"].toInt();
+    }
+    if (object.contains("audio")) {
+        audio = object["audio"].toBool();
+    }
+    if (object.contains("video")) {
+        video = object["video"].toBool();
+    }
+    if (object.contains("enableChatroom")) {
+        enableChatroom = object["enableChatroom"].toBool();
+    }
+    if (object.contains("enableInvitation")) {
+        enableInvitation = object["enableInvitation"].toBool();
+    }
+    if (object.contains("enableScreenShare")) {
+        enableScreenShare = object["enableScreenShare"].toBool();
+    }
+    if (object.contains("enableView")) {
+        enableView = object["enableView"].toBool();
+    }
+    if (object.contains("autoOpenWhiteboard")) {
+        autoOpenWhiteboard = object["autoOpenWhiteboard"].toBool();
+    }
+    if (object.contains("rename")) {
+        rename = object["rename"].toBool();
+    }
+    if (object.contains("displayOption")) {
+        displayOption = object["displayOption"].toInt();
+    }
+    if (object.contains("enableRecord")) {
+        enableRecord = object["enableRecord"].toBool();
+    }
+    if (object.contains("audioAINS")) {
+        audioAINS = object["audioAINS"].toBool();
+    }
+    if (object.contains("sip")) {
+        sip = object["sip"].toBool();
+    }
+    if (object.contains("showMemberTag")) {
+        showMemberTag = object["showMemberTag"].toBool();
+    }
+    if (object.contains("extraData")) {
+        extraData = object["extraData"].toString();
+    }
+    if (object.contains("controls")) {
+        controls = object["controls"].toArray();
+    }
+    if (object.contains("enableMuteAllVideo")) {
+        enableMuteAllVideo = object["enableMuteAllVideo"].toBool();
+    }
+    if (object.contains("enableMuteAllAudio")) {
+        enableMuteAllAudio = object["enableMuteAllAudio"].toBool();
+    }
+    if (object.contains("strRoleBinds")) {
+        strRoleBinds = object["strRoleBinds"].toString();
+    }
+    if (object.contains("showRemainingTip")) {
+        showRemainingTip = object["showRemainingTip"].toBool();
+    }
+    if (object.contains("enableFileMessage")) {
+        enableFileMessage = object["enableFileMessage"].toBool();
+    }
+    if (object.contains("enableImageMessage")) {
+        enableImageMessage = object["enableImageMessage"].toBool();
+    }
 
     auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
     if (ipcMeetingService) {
@@ -734,6 +850,9 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
         options.joinTimeout = timeOut;
         options.showMeetingRemainingTip = showRemainingTip;
+        options.chatroomConfig.enableFileMessage = enableFileMessage;
+        options.chatroomConfig.enableImageMessage = enableImageMessage;
+
         // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
         ipcMeetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Start meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
@@ -742,30 +861,106 @@ void NEMeetingManager::invokeStart(const QString& meetingId,
     }
 }
 
-void NEMeetingManager::invokeJoin(bool anonymous,
-                                  const QString& meetingId,
-                                  const QString& nickname,
-                                  const QString& tag,
-                                  int timeOut,
-                                  bool audio,
-                                  bool video,
-                                  bool enableChatroom /* = true*/,
-                                  bool enableInvitation /* = true*/,
-                                  bool enableScreenShare /* = true*/,
-                                  bool enableView /* = true*/,
-                                  bool autoOpenWhiteboard,
-                                  const QString& password,
-                                  bool rename,
-                                  int displayOption,
-                                  bool openWhiteboard,
-                                  bool audioAINS,
-                                  bool sip,
-                                  bool showMemberTag,
-                                  bool enableMuteAllVideo,
-                                  bool enableMuteAllAudio,
-                                  bool showRemainingTip) {
-    qInfo() << "Join a meeting with meeting ID:" << meetingId << ", nickname: " << nickname << ", audio: " << audio << ", video: " << video
-            << ", display id: " << displayOption << ", showMemberTag: " << showMemberTag << "showRemainingTip: " << showRemainingTip;;
+void NEMeetingManager::invokeJoin(const QJsonObject& object) {
+    bool anonymous = false;
+    QString meetingId;
+    QString nickname;
+    QString tag;
+    QString password;
+    int timeOut = 0;
+    bool audio = false;
+    bool video = false;
+    bool enableChatroom = true;
+    bool enableInvitation = true;
+    bool enableScreenShare = true;
+    bool enableView = true;
+    bool autoOpenWhiteboard = false;
+    bool rename = true;
+    int displayOption = 0;
+    bool enableRecord = false;
+    bool openWhiteboard = false;
+    bool audioAINS = true;
+    bool sip = false;
+    bool showMemberTag = false;
+    bool enableMuteAllVideo = false;
+    bool enableMuteAllAudio = true;
+    bool showRemainingTip = false;
+    bool enableFileMessage = false;
+    bool enableImageMessage = false;
+
+    if (object.contains("anonymous")) {
+        anonymous = object["anonymous"].toBool();
+    }
+
+    if (object.contains("meetingId")) {
+        meetingId = object["meetingId"].toString();
+    }
+    if (object.contains("nickname")) {
+        nickname = object["nickname"].toString();
+    }
+    if (object.contains("tag")) {
+        tag = object["tag"].toString();
+    }
+    if (object.contains("password")) {
+        password = object["password"].toString();
+    }
+    if (object.contains("timeOut")) {
+        timeOut = object["timeOut"].toInt();
+    }
+    if (object.contains("audio")) {
+        audio = object["audio"].toBool();
+    }
+    if (object.contains("video")) {
+        video = object["video"].toBool();
+    }
+    if (object.contains("enableChatroom")) {
+        enableChatroom = object["enableChatroom"].toBool();
+    }
+    if (object.contains("enableInvitation")) {
+        enableInvitation = object["enableInvitation"].toBool();
+    }
+    if (object.contains("enableScreenShare")) {
+        enableScreenShare = object["enableScreenShare"].toBool();
+    }
+    if (object.contains("enableView")) {
+        enableView = object["enableView"].toBool();
+    }
+    if (object.contains("autoOpenWhiteboard")) {
+        autoOpenWhiteboard = object["autoOpenWhiteboard"].toBool();
+    }
+    if (object.contains("rename")) {
+        rename = object["rename"].toBool();
+    }
+    if (object.contains("displayOption")) {
+        displayOption = object["displayOption"].toInt();
+    }
+    if (object.contains("enableRecord")) {
+        enableRecord = object["enableRecord"].toBool();
+    }
+    if (object.contains("audioAINS")) {
+        audioAINS = object["audioAINS"].toBool();
+    }
+    if (object.contains("sip")) {
+        sip = object["sip"].toBool();
+    }
+    if (object.contains("showMemberTag")) {
+        showMemberTag = object["showMemberTag"].toBool();
+    }
+    if (object.contains("enableMuteAllVideo")) {
+        enableMuteAllVideo = object["enableMuteAllVideo"].toBool();
+    }
+    if (object.contains("enableMuteAllAudio")) {
+        enableMuteAllAudio = object["enableMuteAllAudio"].toBool();
+    }
+    if (object.contains("showRemainingTip")) {
+        showRemainingTip = object["showRemainingTip"].toBool();
+    }
+    if (object.contains("enableFileMessage")) {
+        enableFileMessage = object["enableFileMessage"].toBool();
+    }
+    if (object.contains("enableImageMessage")) {
+        enableImageMessage = object["enableImageMessage"].toBool();
+    }
 
     while (!m_initialized) {
         if (!m_initSuc)
@@ -807,6 +1002,9 @@ void NEMeetingManager::invokeJoin(bool anonymous,
 
             options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
             options.joinTimeout = timeOut;
+            options.chatroomConfig.enableFileMessage = enableFileMessage;
+            options.chatroomConfig.enableImageMessage = enableImageMessage;
+
             // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
 
             if (anonymous) {
@@ -1375,6 +1573,40 @@ void NEMeetingManager::getPersonalMeetingId() {
                     << ", meetingId: " << QString::fromStdString(meetingId);
             if (ERROR_CODE_SUCCESS == errorCode) {
                 emit getPersonalMeetingIdChanged(QString::fromStdString(meetingId));
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+}
+
+void NEMeetingManager::setBeauty(bool beauty) {
+    if (m_beauty == beauty)
+        return;
+
+    NEMeetingKit::getInstance()->getSettingsService()->GetBeautyFaceController()->enableBeautyFace(
+        beauty, [=](NEErrorCode errorCode, const std::string& errorMessage, const bool& bSuc) {
+            qInfo() << "setBeautyFaceValue callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage)
+                    << ", bSuc: " << bSuc << ", beauty: " << beauty;
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                m_beauty = beauty;
+                emit beautyChanged(m_beauty);
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+}
+
+void NEMeetingManager::setBeautyValue(int beautyValue) {
+    if (m_beautyValue == beautyValue)
+        return;
+
+    NEMeetingKit::getInstance()->getSettingsService()->GetBeautyFaceController()->setBeautyFaceValue(
+        beautyValue, [=](NEErrorCode errorCode, const std::string& errorMessage, const bool& bSuc) {
+            qInfo() << "setBeautyFaceValue callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage)
+                    << ", bSuc: " << bSuc << ", beautyValue: " << beautyValue;
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                m_beautyValue = beautyValue;
+                emit beautyValueChanged(m_beautyValue);
             } else {
                 emit error(errorCode, QString::fromStdString(errorMessage));
             }

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 #include "nemeeting_manager.h"
 #include <QDebug>
 #include <QDesktopServices>
@@ -705,6 +709,9 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
     if (object.contains("autoOpenWhiteboard")) {
         autoOpenWhiteboard = object["autoOpenWhiteboard"].toBool();
     }
+    if (object.contains("openWhiteboard")) {
+        openWhiteboard = object["openWhiteboard"].toBool();
+    }
     if (object.contains("rename")) {
         rename = object["rename"].toBool();
     }
@@ -927,6 +934,9 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
     }
     if (object.contains("autoOpenWhiteboard")) {
         autoOpenWhiteboard = object["autoOpenWhiteboard"].toBool();
+    }
+    if (object.contains("openWhiteboard")) {
+        openWhiteboard = object["openWhiteboard"].toBool();
     }
     if (object.contains("rename")) {
         rename = object["rename"].toBool();

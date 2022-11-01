@@ -800,6 +800,15 @@ Rectangle {
             }
             RowLayout {
                 Layout.fillWidth: true
+                CheckBox {
+                    id: idAudioDeviceUseLastSelected
+                    text: qsTr('AudioDeviceUseLastSelected')
+                    Layout.alignment: Qt.AlignHCenter
+                    checked: meetingManager.audioDeviceUseLastSelected
+                    onClicked: {
+                        meetingManager.audioDeviceUseLastSelected = checked
+                    }
+                }
                 TextField {
                     id: roleBinds
                     placeholderText: "roleBinds"

@@ -366,8 +366,8 @@ Rectangle {
                 meetinginfoObj["enableInvitation"] = true
                 meetinginfoObj["enableScreenShare"] = true
                 meetinginfoObj["enableView"] = true
-                meetinginfoObj["autoOpenWhiteboard"] = autoOpenWhiteboard.checked
-                meetinginfoObj["password"] = textpassword.text
+                meetinginfoObj["autoOpenWhiteboard"] = false
+                meetinginfoObj["password"] = textPassword.text
                 meetinginfoObj["rename"] = rename.checked
                 meetinginfoObj["displayOption"] = 0
                 meetinginfoObj["enableRecord"] = true

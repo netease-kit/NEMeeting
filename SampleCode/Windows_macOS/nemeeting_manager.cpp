@@ -88,6 +88,20 @@ NEMeetingManager::NEMeetingManager(QObject* parent)
                             });
                     });
                     tmp2.detach();
+
+                    std::thread([=]() {
+                        NEMeetingKit::getInstance()->getSettingsService()->GetAudioController()->isMyAudioDeviceUseLastSelected(
+                            [this](NEErrorCode errorCode, const std::string& errorMessage, const int& bOn) {
+                                qInfo() << "getBeautyFaceValue callback, error code: " << errorCode
+                                        << ", error message: " << QString::fromStdString(errorMessage) << ", bOn: " << bOn;
+                                if (ERROR_CODE_SUCCESS == errorCode) {
+                                    m_audioDeviceUseLastSelected = bOn;
+                                    emit audioDeviceUseLastSelectedChanged(m_audioDeviceUseLastSelected);
+                                } else {
+                                    emit error(errorCode, QString::fromStdString(errorMessage));
+                                }
+                            });
+                    }).detach();
                 });
         }
     });
@@ -1617,6 +1631,23 @@ void NEMeetingManager::setBeautyValue(int beautyValue) {
             if (ERROR_CODE_SUCCESS == errorCode) {
                 m_beautyValue = beautyValue;
                 emit beautyValueChanged(m_beautyValue);
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+}
+
+void NEMeetingManager::setAudioDeviceUseLastSelected(bool audioDeviceUseLastSelected) {
+    if (m_audioDeviceUseLastSelected == audioDeviceUseLastSelected)
+        return;
+
+    NEMeetingKit::getInstance()->getSettingsService()->GetAudioController()->setMyAudioDeviceUseLastSelected(
+        audioDeviceUseLastSelected, [=](NEErrorCode errorCode, const std::string& errorMessage) {
+            qInfo() << "setMyAudioDeviceUseLastSelected callback, error code: " << errorCode
+                    << ", error message: " << QString::fromStdString(errorMessage);
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                m_audioDeviceUseLastSelected = audioDeviceUseLastSelected;
+                emit audioDeviceUseLastSelectedChanged(m_audioDeviceUseLastSelected);
             } else {
                 emit error(errorCode, QString::fromStdString(errorMessage));
             }

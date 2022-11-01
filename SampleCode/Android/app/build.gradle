@@ -42,7 +42,7 @@ android {
 
 dependencies {
     // meeting
-    implementation 'com.netease.yunxin.kit.meeting:meeting:3.4.0'
+    implementation 'com.netease.yunxin.kit.meeting:meeting:3.6.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'

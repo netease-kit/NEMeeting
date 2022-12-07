@@ -88,6 +88,20 @@ NEMeetingManager::NEMeetingManager(QObject* parent)
                             });
                     });
                     tmp2.detach();
+
+                    std::thread([=]() {
+                        NEMeetingKit::getInstance()->getSettingsService()->GetAudioController()->isMyAudioDeviceUseLastSelected(
+                            [this](NEErrorCode errorCode, const std::string& errorMessage, const int& bOn) {
+                                qInfo() << "getBeautyFaceValue callback, error code: " << errorCode
+                                        << ", error message: " << QString::fromStdString(errorMessage) << ", bOn: " << bOn;
+                                if (ERROR_CODE_SUCCESS == errorCode) {
+                                    m_audioDeviceUseLastSelected = bOn;
+                                    emit audioDeviceUseLastSelectedChanged(m_audioDeviceUseLastSelected);
+                                } else {
+                                    emit error(errorCode, QString::fromStdString(errorMessage));
+                                }
+                            });
+                    }).detach();
                 });
         }
     });
@@ -106,11 +120,12 @@ NEMeetingManager::NEMeetingManager(QObject* parent)
 #endif
 }
 
-void NEMeetingManager::initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate) {
+void NEMeetingManager::initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate, int uiLanguage) {
     m_strSdkLogPath = strSdkLogPath;
     m_sdkLogLevel = sdkLogLevel;
     m_bRunAdmin = bRunAdmin;
     m_bPrivate = bPrivate;
+    m_uiLanguage = uiLanguage;
 }
 
 void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]] int keepAliveInterval) {
@@ -141,6 +156,7 @@ void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]] int
     config.getLoggerConfig()->LoggerLevel((NELogLevel)m_sdkLogLevel);
     config.setRunAdmin(m_bRunAdmin);
     config.setUseAssetServerConfig(m_bPrivate);
+    config.setLanguage((NEMeetingLanguage)m_uiLanguage);
 
     auto pMeetingSDK = NEMeetingKit::getInstance();
     // level value: DEBUG = 0, INFO = 1, WARNING=2, ERROR=3, FATAL=4
@@ -165,6 +181,7 @@ void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]] int
                 qInfo() << log.c_str();
         }
     });
+
     pMeetingSDK->initialize(config, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         qInfo() << "Initialize callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
         if (ERROR_CODE_FAILED != errorCode) {
@@ -186,11 +203,11 @@ void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]] int
             if (ipcAuthService) {
                 ipcAuthService->addAuthListener(this);
             }
-
             NEMeetingKit::getInstance()->queryKitVersion(
                 []([[maybe_unused]] NEErrorCode errorCode, [[maybe_unused]] const std::string& errorMessage, const std::string& version) {
                     qInfo() << "sdk version: " << QString::fromStdString(version);
                 });
+
             m_initialized = true;
         }
         m_initSuc = ERROR_CODE_SUCCESS == errorCode;
@@ -669,6 +686,8 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
     bool showRemainingTip = false;
     bool enableFileMessage = false;
     bool enableImageMessage = false;
+    bool enableDetectMutedMic = true;
+    bool enableUnpubAudioOnMute = true;
 
     if (object.contains("meetingId")) {
         meetingId = object["meetingId"].toString();
@@ -753,6 +772,12 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
     }
     if (object.contains("enableImageMessage")) {
         enableImageMessage = object["enableImageMessage"].toBool();
+    }
+    if (object.contains("enableDetectMutedMic")) {
+        enableDetectMutedMic = object["enableDetectMutedMic"].toBool();
+    }
+    if (object.contains("enableUnpubAudioOnMute")) {
+        enableUnpubAudioOnMute = object["enableUnpubAudioOnMute"].toBool();
     }
 
     auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
@@ -857,6 +882,8 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
         options.meetingIdDisplayOption = (NEShowMeetingIdOption)displayOption;
         options.joinTimeout = timeOut;
         options.showMeetingRemainingTip = showRemainingTip;
+        options.detectMutedMic = enableDetectMutedMic;
+        options.unpubAudioOnMute = enableUnpubAudioOnMute;
         options.chatroomConfig.enableFileMessage = enableFileMessage;
         options.chatroomConfig.enableImageMessage = enableImageMessage;
 
@@ -894,6 +921,8 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
     bool showRemainingTip = false;
     bool enableFileMessage = false;
     bool enableImageMessage = false;
+    bool enableDetectMutedMic = true;
+    bool enableUnpubAudioOnMute = true;
 
     if (object.contains("anonymous")) {
         anonymous = object["anonymous"].toBool();
@@ -971,6 +1000,12 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
     if (object.contains("enableImageMessage")) {
         enableImageMessage = object["enableImageMessage"].toBool();
     }
+    if (object.contains("enableDetectMutedMic")) {
+        enableDetectMutedMic = object["enableDetectMutedMic"].toBool();
+    }
+    if (object.contains("enableUnpubAudioOnMute")) {
+        enableUnpubAudioOnMute = object["enableUnpubAudioOnMute"].toBool();
+    }
 
     while (!m_initialized) {
         if (!m_initSuc)
@@ -1006,6 +1041,8 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
             options.noMuteAllVideo = !enableMuteAllVideo;
             options.noMuteAllAudio = !enableMuteAllAudio;
             options.showMeetingRemainingTip = showRemainingTip;
+            options.detectMutedMic = enableDetectMutedMic;
+            options.unpubAudioOnMute = enableUnpubAudioOnMute;
             if (autoOpenWhiteboard) {
                 options.defaultWindowMode = WHITEBOARD_MODE;
             }
@@ -1512,7 +1549,7 @@ void NEMeetingManager::setSoftwareRender(bool softwareRender) {
 
     m_softwareRender = softwareRender;
     emit softwareRenderChanged(m_softwareRender);
-    NEMeetingKit::getInstance()->setSoftwareRender(m_softwareRender, [this, softwareRender](NEErrorCode errorCode, const std::string& errorMessage) {
+    NEMeetingKit::getInstance()->setSoftwareRender(m_softwareRender, [this](NEErrorCode errorCode, const std::string& errorMessage) {
         qInfo() << "setSoftwareRender callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
         if (errorCode != ERROR_CODE_SUCCESS) {
             m_softwareRender = !m_softwareRender;
@@ -1617,6 +1654,23 @@ void NEMeetingManager::setBeautyValue(int beautyValue) {
             if (ERROR_CODE_SUCCESS == errorCode) {
                 m_beautyValue = beautyValue;
                 emit beautyValueChanged(m_beautyValue);
+            } else {
+                emit error(errorCode, QString::fromStdString(errorMessage));
+            }
+        });
+}
+
+void NEMeetingManager::setAudioDeviceUseLastSelected(bool audioDeviceUseLastSelected) {
+    if (m_audioDeviceUseLastSelected == audioDeviceUseLastSelected)
+        return;
+
+    NEMeetingKit::getInstance()->getSettingsService()->GetAudioController()->setMyAudioDeviceUseLastSelected(
+        audioDeviceUseLastSelected, [=](NEErrorCode errorCode, const std::string& errorMessage) {
+            qInfo() << "setMyAudioDeviceUseLastSelected callback, error code: " << errorCode
+                    << ", error message: " << QString::fromStdString(errorMessage);
+            if (ERROR_CODE_SUCCESS == errorCode) {
+                m_audioDeviceUseLastSelected = audioDeviceUseLastSelected;
+                emit audioDeviceUseLastSelectedChanged(m_audioDeviceUseLastSelected);
             } else {
                 emit error(errorCode, QString::fromStdString(errorMessage));
             }

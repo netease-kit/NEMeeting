@@ -696,6 +696,18 @@ Rectangle {
                 }
 
                 CheckBox {
+                    id: idEnableDetectMutedMic
+                    checked: true
+                    text: qsTr('Enable DetectMutedMic')
+                }
+
+                CheckBox {
+                    id: idEnableUnpubAudioOnMute
+                    checked: true
+                    text: qsTr('Enable UnpubAudioOnMute')
+                }
+
+                CheckBox {
                     id: idAudioCcontrol
                     text: qsTr("use audio control")
                     Layout.alignment: Qt.AlignHCenter
@@ -800,6 +812,15 @@ Rectangle {
             }
             RowLayout {
                 Layout.fillWidth: true
+                CheckBox {
+                    id: idAudioDeviceUseLastSelected
+                    text: qsTr('AudioDeviceUseLastSelected')
+                    Layout.alignment: Qt.AlignHCenter
+                    checked: meetingManager.audioDeviceUseLastSelected
+                    onClicked: {
+                        meetingManager.audioDeviceUseLastSelected = checked
+                    }
+                }
                 TextField {
                     id: roleBinds
                     placeholderText: "roleBinds"
@@ -922,6 +943,8 @@ Rectangle {
                         meetinginfoObj["password"] = textpassword.text
                         meetinginfoObj["enableFileMessage"] = idEnableFileMessage.checked
                         meetinginfoObj["enableImageMessage"] = idEnableImageMessage.checked
+                        meetinginfoObj["enableDetectMutedMic"] = idEnableDetectMutedMic.checked
+                        meetinginfoObj["enableUnpubAudioOnMute"] = idEnableUnpubAudioOnMute.checked
 
                         meetingManager.invokeStart(meetinginfoObj)
                     }
@@ -961,6 +984,8 @@ Rectangle {
                         meetinginfoObj["showRemainingTip"] = idShowRemainingTip.checked
                         meetinginfoObj["enableFileMessage"] = idEnableFileMessage.checked
                         meetinginfoObj["enableImageMessage"] = idEnableImageMessage.checked
+                        meetinginfoObj["enableDetectMutedMic"] = idEnableDetectMutedMic.checked
+                        meetinginfoObj["enableUnpubAudioOnMute"] = idEnableUnpubAudioOnMute.checked
 
                         meetingManager.invokeJoin(meetinginfoObj)
                     }

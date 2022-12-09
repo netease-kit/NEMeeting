@@ -231,6 +231,12 @@ Rectangle {
                 selectByMouse: true
                 Layout.fillWidth: true
             }
+            ComboBox {
+                id: uiLanguage
+                model: ["system", "zh-CN", "en", "ja"]
+                currentIndex: 0
+                Layout.fillWidth: true
+            }
         }
 
         RowLayout {
@@ -328,17 +334,18 @@ Rectangle {
                 meetingManager.initializeParam(logPath.text,
                                                logLevel.currentIndex,
                                                runAdmin.checked,
-                                               privateConfig.checked)
+                                               privateConfig.checked,
+                                               uiLanguage.currentIndex)
                 if (!passwordLogin.checked) {
                     meetingManager.login(
-                            textAppKey.text, textAccountId.text,
-                            textPassword.text,
-                            textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                                textAppKey.text, textAccountId.text,
+                                textPassword.text,
+                                textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
                 } else {
                     meetingManager.loginByUsernamePassword(
-                            textAppKey.text, textAccountId.text,
-                            textPassword.text,
-                            textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                                textAppKey.text, textAccountId.text,
+                                textPassword.text,
+                                textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
                 }
             } else {
                 setting.setValue('sampleAnonAppkey', textAppKey.text)
@@ -347,7 +354,8 @@ Rectangle {
                 meetingManager.initializeParam(logPath.text,
                                                logLevel.currentIndex,
                                                runAdmin.checked,
-                                               privateConfig.checked)
+                                               privateConfig.checked,
+                                               uiLanguage.currentIndex)
                 meetingManager.initialize(
                             textAppKey.text,
                             textKeepAliveInterval.text.toString().trim(
@@ -366,8 +374,8 @@ Rectangle {
                 meetinginfoObj["enableInvitation"] = true
                 meetinginfoObj["enableScreenShare"] = true
                 meetinginfoObj["enableView"] = true
-                meetinginfoObj["autoOpenWhiteboard"] = autoOpenWhiteboard.checked
-                meetinginfoObj["password"] = textpassword.text
+                meetinginfoObj["autoOpenWhiteboard"] = false
+                meetinginfoObj["password"] = textPassword.text
                 meetinginfoObj["rename"] = rename.checked
                 meetinginfoObj["displayOption"] = 0
                 meetinginfoObj["enableRecord"] = true
@@ -380,6 +388,8 @@ Rectangle {
                 meetinginfoObj["showRemainingTip"] = false
                 meetinginfoObj["enableFileMessage"] = false
                 meetinginfoObj["enableImageMessage"] = false
+                meetinginfoObj["enableDetectMutedMic"] = true
+                meetinginfoObj["enableUnpubAudioOnMute"] = true
 
                 meetingManager.invokeJoin(meetinginfoObj)
             }

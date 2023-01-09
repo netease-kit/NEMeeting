@@ -41,7 +41,7 @@ macx {
     IPC_SERVER_SDK_FRAMEWORK.files = $$PWD/lib/nem_hosting_module.framework
     IPC_SERVER_SDK_FRAMEWORK.path = /Contents/Frameworks
 
-    NEM_UI_SDK_APP.files = $$PWD/bin/NetEaseMeetingHost.app
+    NEM_UI_SDK_APP.files = $$PWD/bin/NetEaseMeetingClient.app
     NEM_UI_SDK_APP.path = /Contents/Frameworks
 
     QMAKE_BUNDLE_DATA += IPC_SERVER_SDK_FRAMEWORK \

@@ -120,12 +120,18 @@ NEMeetingManager::NEMeetingManager(QObject* parent)
 #endif
 }
 
-void NEMeetingManager::initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate, int uiLanguage) {
+void NEMeetingManager::initializeParam(const QString& strSdkLogPath,
+                                       int sdkLogLevel,
+                                       bool bRunAdmin,
+                                       bool bPrivate,
+                                       int uiLanguage,
+                                       const QString& privateUrl) {
     m_strSdkLogPath = strSdkLogPath;
     m_sdkLogLevel = sdkLogLevel;
     m_bRunAdmin = bRunAdmin;
     m_bPrivate = bPrivate;
     m_uiLanguage = uiLanguage;
+    m_privateUrl = privateUrl;
 }
 
 void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]] int keepAliveInterval) {
@@ -157,6 +163,9 @@ void NEMeetingManager::initialize(const QString& strAppkey, [[maybe_unused]] int
     config.setRunAdmin(m_bRunAdmin);
     config.setUseAssetServerConfig(m_bPrivate);
     config.setLanguage((NEMeetingLanguage)m_uiLanguage);
+    if (!m_privateUrl.trimmed().isEmpty()) {
+        config.setServerUrl(m_privateUrl.toStdString());
+    }
 
     auto pMeetingSDK = NEMeetingKit::getInstance();
     // level value: DEBUG = 0, INFO = 1, WARNING=2, ERROR=3, FATAL=4
@@ -231,6 +240,8 @@ void NEMeetingManager::unInitialize() {
         emit unInitializeSignal(errorCode, QString::fromStdString(errorMessage));
         qInfo() << "Uninitialized successfull";
     });
+
+    m_builtinMenuItems.clear();
 }
 
 bool NEMeetingManager::isInitializd() {
@@ -688,7 +699,7 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
     bool enableImageMessage = false;
     bool enableDetectMutedMic = true;
     bool enableUnpubAudioOnMute = true;
-
+    bool customMenu = false;
     if (object.contains("meetingId")) {
         meetingId = object["meetingId"].toString();
     }
@@ -778,6 +789,9 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
     }
     if (object.contains("enableUnpubAudioOnMute")) {
         enableUnpubAudioOnMute = object["enableUnpubAudioOnMute"].toBool();
+    }
+    if (object.contains("customMenu")) {
+        customMenu = object["customMenu"].toBool();
     }
 
     auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
@@ -887,7 +901,31 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
         options.chatroomConfig.enableFileMessage = enableFileMessage;
         options.chatroomConfig.enableImageMessage = enableImageMessage;
 
-        // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
+        if (customMenu) {
+            qInfo() << "do customMenu";
+            std::atomic_bool getItemsFinish;
+            getItemsFinish = !m_builtinMenuItems.empty();
+            if (!getItemsFinish) {
+                ipcMeetingService->getBuiltinMenuItems(std::vector<int>{},
+                                                       [&](int code, const std::string& msg, std::vector<NEMeetingMenuItem> items) {
+                                                           m_builtinMenuItems = items;
+                                                           getItemsFinish = true;
+                                                       });
+
+                while (!getItemsFinish) {
+                    std::this_thread::yield();
+                }
+            }
+
+            for (auto& item : m_builtinMenuItems) {
+                if (item.itemId == kViewMenuId) {
+                    options.full_more_menu_items_.emplace_back(item);
+                } else {
+                    options.full_toolbar_menu_items_.emplace_back(item);
+                }
+            }
+        }
+
         ipcMeetingService->startMeeting(params, options, [this](NEErrorCode errorCode, const std::string& errorMessage) {
             qInfo() << "Start meeting callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
             emit startSignal(errorCode, QString::fromStdString(errorMessage));
@@ -923,6 +961,7 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
     bool enableImageMessage = false;
     bool enableDetectMutedMic = true;
     bool enableUnpubAudioOnMute = true;
+    bool customMenu = false;
 
     if (object.contains("anonymous")) {
         anonymous = object["anonymous"].toBool();
@@ -1006,7 +1045,9 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
     if (object.contains("enableUnpubAudioOnMute")) {
         enableUnpubAudioOnMute = object["enableUnpubAudioOnMute"].toBool();
     }
-
+    if (object.contains("customMenu")) {
+        customMenu = object["customMenu"].toBool();
+    }
     while (!m_initialized) {
         if (!m_initSuc)
             return;
@@ -1052,7 +1093,30 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
             options.chatroomConfig.enableFileMessage = enableFileMessage;
             options.chatroomConfig.enableImageMessage = enableImageMessage;
 
-            // pushSubmenus(options.full_more_menu_items_, kFirstinjectedMenuId);
+            if (customMenu) {
+                qInfo() << "do customMenu";
+                std::atomic_bool getItemsFinish;
+                getItemsFinish = !m_builtinMenuItems.empty();
+                if (!getItemsFinish) {
+                    ipcMeetingService->getBuiltinMenuItems(std::vector<int>{},
+                                                           [&](int code, const std::string& msg, std::vector<NEMeetingMenuItem> items) {
+                                                               m_builtinMenuItems = items;
+                                                               getItemsFinish = true;
+                                                           });
+
+                    while (!getItemsFinish) {
+                        std::this_thread::yield();
+                    }
+                }
+
+                for (auto& item : m_builtinMenuItems) {
+                    if (item.itemId == kViewMenuId) {
+                        options.full_more_menu_items_.emplace_back(item);
+                    } else {
+                        options.full_toolbar_menu_items_.emplace_back(item);
+                    }
+                }
+            }
 
             if (anonymous) {
                 qInfo() << "do anonymousJoinMeeting";
@@ -1624,6 +1688,16 @@ void NEMeetingManager::getPersonalMeetingId() {
                 emit error(errorCode, QString::fromStdString(errorMessage));
             }
         });
+}
+
+void NEMeetingManager::setVideoFramerate(const QString& framerate) {
+    auto framerateTmp = framerate.toInt();
+    if (-1 != framerateTmp) {
+        NEMeetingKit::getInstance()->getSettingsService()->GetVideoController()->setMyVideoFramerate(
+            (LocalVideoFramerate)framerateTmp, [this](NEErrorCode errorCode, const std::string& errorMessage) {
+                qInfo() << "setMyVideoFramerate callback, error code: " << errorCode << ", error message: " << QString::fromStdString(errorMessage);
+            });
+    }
 }
 
 void NEMeetingManager::setBeauty(bool beauty) {

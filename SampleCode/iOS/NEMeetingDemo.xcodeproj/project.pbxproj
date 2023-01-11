@@ -571,7 +571,6 @@
 				41F8C3A724B597580039301B /* Strip Archs */,
 				2DB8EC7026560BB300BB171E /* Embed App Extensions */,
 				26AAC44327001CD7002B8FC8 /* Embed Frameworks */,
-				D2B6A52EADEFF790EE4C0F2C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -677,23 +676,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/bin/sh \"${SRCROOT}/NEMeetingDemo/strip_archs.sh\"\n";
-		};
-		D2B6A52EADEFF790EE4C0F2C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NEMeetingDemo/Pods-NEMeetingDemo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		DC78D237D713B7DA319BEAAA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

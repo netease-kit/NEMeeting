@@ -30,7 +30,9 @@
         // IM私有化配置
       }
     }
-    NEMeetingKit.actions.init(800, 600, config);  // （width，height）单位px 建议比例4:3
+    NEMeetingKit.actions.init(800, 600, config, (e) => {
+      console.log('初始化完成')
+    });  // （width，height）单位px 建议比例4:3
     NEMeetingKit.actions.afterLeave(() => {
       console.log('离开会议回调')
     })

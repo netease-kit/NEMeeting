@@ -50,26 +50,24 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 }
 
 - (void)setupUI {
-    self.type = _type;
-    [_configCheckBox setItemTitleWithArray:@[@"入会时打开摄像头",
-                                             @"入会时打开麦克风",
-                                             @"显示会议持续时间"]];
-    [_settingCheckBox setItemTitleWithArray:@[@"入会时关闭聊天菜单",
-                                              @"入会时关闭邀请菜单",
-                                              @"入会时隐藏最小化",
-                                              @"使用默认会议设置",
-                                              @"入会时关闭画廊模式",
-                                              @"仅显示会议ID长号",
-                                              @"仅显示会议ID短号",
-                                              @"关闭摄像头切换",
-                                              @"关闭音频模式切换",
-                                              @"显示白板窗口",
-                                              @"隐藏白板菜单按钮",
-                                              @"关闭会中改名",
-                                              @"隐藏Sip菜单",
-                                              @"显示用户角色标签"
-                                            ]];
-    _settingCheckBox.delegate = self;
+  self.type = _type;
+  [_configCheckBox
+      setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风", @"显示会议持续时间" ]];
+  [_settingCheckBox setItemTitleWithArray:@[
+    @"入会时关闭聊天菜单", @"入会时关闭邀请菜单", @"入会时隐藏最小化", @"使用默认会议设置",
+    @"入会时关闭画廊模式", @"仅显示会议ID长号",   @"仅显示会议ID短号", @"关闭摄像头切换",
+    @"关闭音频模式切换",   @"显示白板窗口",       @"隐藏白板菜单按钮", @"关闭会中改名",
+    @"隐藏Sip菜单",        @"显示用户角色标签",   @"显示会议结束提醒", @"聊天室文件消息",
+    @"聊天室图片消息",     @"开启静音检测",       @"关闭静音包",       @"显示屏幕共享者画面",
+    @"显示白板共享者画面", @"显示麦克风浮窗"
+  ]];
+  _settingCheckBox.delegate = self;
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeChatroomEnableFile];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeChatroomEnableImage];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeDetectMutedMic];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeUnpubAudioOnMute];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowScreenShareUserVideo];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowFloatingMicrophone];
 }
 
 - (IBAction)onLeaveCurrentMeeting:(id)sender {
@@ -84,79 +82,113 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 #pragma mark - Action
 - (IBAction)onEnterMeetingAction:(id)sender {
-    NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
-    params.meetingId =  _meetingIdInput.text;
-    params.displayName = _nickInput.text;
-    params.password = _passworkInput.text;
-    params.tag = _tagInput.text;
-    
-    NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
-    // 默认会议配置
-    if (![self selectedSetting:MeetingSettingTypeDefaultSetting]) {
-        options.noAudio = ![self selectedConfig:MeetingConfigTypeJoinOnAudio];
-        options.noVideo = ![self selectedConfig:MeetingConfigTypeJoinOnVideo];
-        options.showMeetingTime = [self selectedConfig:MeetingConfigTypeShowTime];
-    } else {
-        NESettingsService *settingService = NEMeetingKit.getInstance.getSettingsService;
-        options.noAudio = !settingService.isTurnOnMyAudioWhenJoinMeetingEnabled;
-        options.noVideo = !settingService.isTurnOnMyVideoWhenJoinMeetingEnabled;
-        options.showMeetingTime = settingService.isShowMyMeetingElapseTimeEnabled;
-    }
-    options.meetingIdDisplayOption = [self meetingIdDisplayOption];
-    options.noChat = [self selectedSetting:MeetingSettingTypeJoinOffChatroom];
-    options.noInvite = [self selectedSetting:MeetingSettingTypeJoinOffInvitation];
-    options.noMinimize = [self selectedSetting:MeetingSettingTypeHideMini];
-    options.noGallery = [self selectedSetting:MeetingSettingTypeJoinOffGallery];
-    options.noSwitchCamera = [self selectedSetting:MeetingSettingTypeOffSwitchCamera];
-    options.noSwitchAudioMode = [self selectedSetting:MeetingSettingTypeOffSwitchAudio];
-    options.noWhiteBoard = [self selectedSetting:MeetingSettingTypeHiddenWhiteboardButton];
-    options.noRename = [self selectedSetting:MeetingSettingTypeOffReName];
-    options.noSip = [self selectedSetting:MeetingSettingTypeHiddenSip];
-    options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
-//    options.audioAINSEnabled = [[[NEMeetingKit getInstance] getSettingsService] isAudioAINSEnabled];
-    options.showMemberTag = [self selectedSetting:MeetingSettingTypeShowRoleLabel];
-    
-    //白板相关设置
-    options.defaultWindowMode = [self selectedSetting:MeetingSettingTypeShowWhiteboard] ? NEMeetingWindowModeWhiteBoard : NEMeetingWindowModeGallery;
-    
-    if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
-        options.audioProfile = [NEAudioProfile createMusicAudioProfile];
-    } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
-        options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
-    }
-    options.noMuteAllAudio = [MeetingConfigRepository getInstance].noMuteAllAudio;
-    options.noMuteAllVideo = [MeetingConfigRepository getInstance].noMuteAllVideo;
-    options.fullToolbarMenuItems = _fullToolbarMenuItems;
-    options.fullMoreMenuItems = _fullMoreMenuItems;
+  NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
+  params.meetingId = _meetingIdInput.text;
+  params.displayName = _nickInput.text;
+  params.password = _passworkInput.text;
+  params.tag = _tagInput.text;
 
-    WEAK_SELF(weakSelf);
-    [SVProgressHUD show];
-    // 匿名入会
-    if (self.type == EnterMeetingAnonymity) {
-        [NEMeetingKit.getInstance.getMeetingService anonymousJoinMeeting:params
-                                                                    opts:options
-                                                                callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
-            [SVProgressHUD dismiss];
-            if (resultCode != ERROR_CODE_SUCCESS) {
-                [weakSelf showErrorCode:resultCode msg:resultMsg];
-            }else {
-                weakSelf.fullMoreMenuItems = nil;
-                weakSelf.fullToolbarMenuItems = nil;
-            }
-        }];
-        return;
-    } 
-    [[[NEMeetingKit getInstance] getMeetingService] joinMeeting:params
-                                                           opts:options
-                                                       callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
-        [SVProgressHUD dismiss];
-        if (resultCode != ERROR_CODE_SUCCESS) {
-            [weakSelf showErrorCode:resultCode msg:resultMsg];
-        }else {
-            weakSelf.fullMoreMenuItems = nil;
-            weakSelf.fullToolbarMenuItems = nil;
-        }
-    }];
+  NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
+  // 默认会议配置
+  if (![self selectedSetting:MeetingSettingTypeDefaultSetting]) {
+    options.noAudio = ![self selectedConfig:MeetingConfigTypeJoinOnAudio];
+    options.noVideo = ![self selectedConfig:MeetingConfigTypeJoinOnVideo];
+    options.showMeetingTime = [self selectedConfig:MeetingConfigTypeShowTime];
+  } else {
+    NESettingsService *settingService = NEMeetingKit.getInstance.getSettingsService;
+    options.noAudio = !settingService.isTurnOnMyAudioWhenJoinMeetingEnabled;
+    options.noVideo = !settingService.isTurnOnMyVideoWhenJoinMeetingEnabled;
+    options.showMeetingTime = settingService.isShowMyMeetingElapseTimeEnabled;
+  }
+  options.meetingIdDisplayOption = [self meetingIdDisplayOption];
+  options.noChat = [self selectedSetting:MeetingSettingTypeJoinOffChatroom];
+  options.noInvite = [self selectedSetting:MeetingSettingTypeJoinOffInvitation];
+  options.noMinimize = [self selectedSetting:MeetingSettingTypeHideMini];
+  options.noGallery = [self selectedSetting:MeetingSettingTypeJoinOffGallery];
+  options.noSwitchCamera = [self selectedSetting:MeetingSettingTypeOffSwitchCamera];
+  options.noSwitchAudioMode = [self selectedSetting:MeetingSettingTypeOffSwitchAudio];
+  options.noWhiteBoard = [self selectedSetting:MeetingSettingTypeHiddenWhiteboardButton];
+  options.noRename = [self selectedSetting:MeetingSettingTypeOffReName];
+  options.noSip = [self selectedSetting:MeetingSettingTypeHiddenSip];
+  options.joinTimeout = [[MeetingConfigRepository getInstance] joinMeetingTimeout];
+  //    options.audioAINSEnabled = [[[NEMeetingKit getInstance] getSettingsService]
+  //    isAudioAINSEnabled];
+  options.showMemberTag = [self selectedSetting:MeetingSettingTypeShowRoleLabel];
+  options.showMeetingRemainingTip = [self selectedSetting:MeetingSettingTypeShowMeeingRemainingTip];
+  // 白板相关设置
+  options.defaultWindowMode = [self selectedSetting:MeetingSettingTypeShowWhiteboard]
+                                  ? NEMeetingWindowModeWhiteBoard
+                                  : NEMeetingWindowModeGallery;
+  // 聊天室 file、image消息收发
+  options.chatroomConfig.enableFileMessage =
+      [self selectedSetting:MeetingSettingTypeChatroomEnableFile];
+  options.chatroomConfig.enableImageMessage =
+      [self selectedSetting:MeetingSettingTypeChatroomEnableImage];
+
+  // 音频设置
+  BOOL isOpenAudioSettings = MeetingConfigRepository.getInstance.isOpenAudioSetting;
+  if (isOpenAudioSettings) {
+    NSString *profile = MeetingConfigRepository.getInstance.audioProfile;
+    NSString *scenario = MeetingConfigRepository.getInstance.audioScenario;
+    NEAudioProfile *audioProfile = [NEAudioProfile new];
+    audioProfile.profile = profile.integerValue;
+    audioProfile.scenario = scenario.integerValue;
+    options.audioProfile = audioProfile;
+  }
+  //  if ([MeetingConfigRepository getInstance].useMusicAudioProfile) {
+  //    options.audioProfile = [NEAudioProfile createMusicAudioProfile];
+  //  } else if ([MeetingConfigRepository getInstance].useSpeechAudioProfile) {
+  //    options.audioProfile = [NEAudioProfile createSpeechAudioProfile];
+  //  }
+  options.noMuteAllAudio = [MeetingConfigRepository getInstance].noMuteAllAudio;
+  options.noMuteAllVideo = [MeetingConfigRepository getInstance].noMuteAllVideo;
+  options.fullToolbarMenuItems = _fullToolbarMenuItems;
+  options.fullMoreMenuItems = _fullMoreMenuItems;
+
+  // 开启静音检测
+  options.detectMutedMic = [self selectedSetting:MeetingSettingTypeDetectMutedMic];
+  // 关闭静音包
+  options.unpubAudioOnMute = [self selectedSetting:MeetingSettingTypeUnpubAudioOnMute];
+
+  // 屏幕共享者摄像头画面显隐
+  options.showScreenShareUserVideo =
+      [self selectedSetting:MeetingSettingTypeShowScreenShareUserVideo];
+  // 白板共享者摄像头画面显隐
+  options.showWhiteboardShareUserVideo =
+      [self selectedSetting:MeetingSettingTypeShowWhiteboardShareUseVideo];
+  // 麦克风悬浮显隐
+  options.showFloatingMicrophone = [self selectedSetting:MeetingSettingTypeShowFloatingMicrophone];
+
+  WEAK_SELF(weakSelf);
+  [SVProgressHUD show];
+  // 匿名入会
+  if (self.type == EnterMeetingAnonymity) {
+    [NEMeetingKit.getInstance.getMeetingService
+        anonymousJoinMeeting:params
+                        opts:options
+                    callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+                      [SVProgressHUD dismiss];
+                      if (resultCode != ERROR_CODE_SUCCESS) {
+                        [weakSelf showErrorCode:resultCode msg:resultMsg];
+                      } else {
+                        weakSelf.fullMoreMenuItems = nil;
+                        weakSelf.fullToolbarMenuItems = nil;
+                      }
+                    }];
+    return;
+  }
+  [[[NEMeetingKit getInstance] getMeetingService]
+      joinMeeting:params
+             opts:options
+         callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+           [SVProgressHUD dismiss];
+           if (resultCode != ERROR_CODE_SUCCESS) {
+             [weakSelf showErrorCode:resultCode msg:resultMsg];
+           } else {
+             weakSelf.fullMoreMenuItems = nil;
+             weakSelf.fullToolbarMenuItems = nil;
+           }
+         }];
 }
 
 - (void)checkBoxItemdidSelected:(UIButton *)item

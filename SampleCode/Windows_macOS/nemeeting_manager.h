@@ -85,7 +85,12 @@ public:
     Q_PROPERTY(
         bool audioDeviceUseLastSelected READ audioDeviceUseLastSelected WRITE setAudioDeviceUseLastSelected NOTIFY audioDeviceUseLastSelectedChanged)
 
-    Q_INVOKABLE void initializeParam(const QString& strSdkLogPath, int sdkLogLevel, bool bRunAdmin, bool bPrivate, int uiLanguage);
+    Q_INVOKABLE void initializeParam(const QString& strSdkLogPath,
+                                     int sdkLogLevel,
+                                     bool bRunAdmin,
+                                     bool bPrivate,
+                                     int uiLanguage,
+                                     const QString& privateUrl);
     Q_INVOKABLE void initialize(const QString& strAppkey, int keepAliveInterval);
     Q_INVOKABLE void unInitialize();
     Q_INVOKABLE bool isInitializd();
@@ -143,6 +148,8 @@ public:
     Q_INVOKABLE void setVirtualBackgroundList(const QString& vbList);
 
     Q_INVOKABLE void getPersonalMeetingId();
+
+    Q_INVOKABLE void setVideoFramerate(const QString& framerate);
 
     // override virtual functions
     virtual void onMeetingStatusChanged(int status, int code) override;
@@ -272,6 +279,8 @@ private:
     int m_beautyValue = 0;
     bool m_audioDeviceUseLastSelected = false;
     int m_uiLanguage = 0;
+    std::vector<NEMeetingMenuItem> m_builtinMenuItems;
+    QString m_privateUrl;
 };
 
 #endif  // NEMEETINGMANAGER_H

@@ -237,6 +237,12 @@ Rectangle {
                 currentIndex: 0
                 Layout.fillWidth: true
             }
+            TextField {
+                id: privateUrl
+                placeholderText: qsTr('private url')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
         }
 
         RowLayout {
@@ -335,7 +341,8 @@ Rectangle {
                                                logLevel.currentIndex,
                                                runAdmin.checked,
                                                privateConfig.checked,
-                                               uiLanguage.currentIndex)
+                                               uiLanguage.currentIndex,
+                                               privateUrl.text)
                 if (!passwordLogin.checked) {
                     meetingManager.login(
                                 textAppKey.text, textAccountId.text,
@@ -355,7 +362,8 @@ Rectangle {
                                                logLevel.currentIndex,
                                                runAdmin.checked,
                                                privateConfig.checked,
-                                               uiLanguage.currentIndex)
+                                               uiLanguage.currentIndex,
+                                               privateUrl.text)
                 meetingManager.initialize(
                             textAppKey.text,
                             textKeepAliveInterval.text.toString().trim(

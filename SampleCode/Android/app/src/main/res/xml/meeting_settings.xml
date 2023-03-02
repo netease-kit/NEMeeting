@@ -3,34 +3,28 @@
 <!-- Use of this source code is governed by a MIT license that can be -->
 <!-- found in the LICENSE file. -->
 
-<PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreferenceCompat
-        app:key="enable_show_meeting_time"
-        app:title="显示会议持续时间"
-        style="@style/MySwitchPreference"
-        />
+            app:key="enable_show_meeting_time"
+            app:title="显示会议持续时间"
+            style="@style/MySwitchPreference" />
 
     <SwitchPreferenceCompat
-        app:key="enable_video"
-        app:title="入会时开启视频"
-        style="@style/MySwitchPreference"
-        />
+            app:key="enable_video"
+            app:title="入会时开启视频"
+            style="@style/MySwitchPreference" />
 
     <SwitchPreferenceCompat
-        app:key="enable_audio"
-        app:title="入会时开启音频"
-        style="@style/MySwitchPreference"
-        />
+            app:key="enable_audio"
+            app:title="入会时开启音频"
+            style="@style/MySwitchPreference" />
 
     <SwitchPreferenceCompat
-        app:key="enable_virtual_background"
-        app:title="使用虚拟背景"
-        style="@style/MySwitchPreference"
-        />
+            app:key="enable_virtual_background"
+            app:title="使用虚拟背景"
+            style="@style/MySwitchPreference" />
 
     <EditTextPreference
             app:key="join_timeout_millis"
@@ -40,20 +34,44 @@
             app:defaultValue="45000"
             style="@style/MyEditTextPreference" />
 
-    <SwitchPreferenceCompat
-            app:key="enable_audio_ains"
-            app:title="语音智能降噪"
-            style="@style/MySwitchPreference"
-            />
-
-    <ListPreference
-            app:key="audioProfile"
-            app:title="音频模式"
+    <PreferenceCategory
+            app:title="音频配置"
             app:allowDividerAbove="true"
-            app:entries="@array/AudioProfileNames"
-            app:entryValues="@array/AudioProfileKeys"
-            app:iconSpaceReserved="false"
-            app:useSimpleSummaryProvider="true"
-            />
+            app:allowDividerBelow="true"
+            app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+                app:key="enable_audio_options"
+                app:title="开启音频配置"
+                app:defaultValue="false"
+                style="@style/MySwitchPreference" />
+
+        <ListPreference
+                app:dependency="enable_audio_options"
+                app:key="audioScenario"
+                app:title="音频场景"
+                app:allowDividerAbove="true"
+                app:entries="@array/AudioScenarioNames"
+                app:entryValues="@array/AudioScenarioValues"
+                app:iconSpaceReserved="false"
+                app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+                app:dependency="enable_audio_options"
+                app:key="audioProfile"
+                app:title="音频属性"
+                app:allowDividerAbove="true"
+                app:entries="@array/AudioProfileNames"
+                app:entryValues="@array/AudioProfileValues"
+                app:iconSpaceReserved="false"
+                app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+                app:dependency="enable_audio_options"
+                app:key="enable_audio_ains"
+                app:title="语音智能降噪"
+                style="@style/MySwitchPreference" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

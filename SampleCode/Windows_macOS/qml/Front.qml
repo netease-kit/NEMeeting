@@ -813,6 +813,20 @@ Rectangle {
             RowLayout {
                 Layout.fillWidth: true
                 CheckBox {
+                    id: idCustomMenu
+                    text: qsTr('CustomMenu')
+                    Layout.alignment: Qt.AlignHCenter
+                    checked: false
+                }
+                ComboBox {
+                    id: idVideoFramerate
+                    model: ["-1", "0", "7", "10", "15", "24", "30", "60"]
+                    currentIndex: 0
+                    onCurrentTextChanged: {
+                        meetingManager.setVideoFramerate(currentText);
+                    }
+                }
+                CheckBox {
                     id: idAudioDeviceUseLastSelected
                     text: qsTr('AudioDeviceUseLastSelected')
                     Layout.alignment: Qt.AlignHCenter
@@ -945,7 +959,7 @@ Rectangle {
                         meetinginfoObj["enableImageMessage"] = idEnableImageMessage.checked
                         meetinginfoObj["enableDetectMutedMic"] = idEnableDetectMutedMic.checked
                         meetinginfoObj["enableUnpubAudioOnMute"] = idEnableUnpubAudioOnMute.checked
-
+                        meetinginfoObj["customMenu"] = idCustomMenu.checked
                         meetingManager.invokeStart(meetinginfoObj)
                     }
                 }
@@ -986,7 +1000,7 @@ Rectangle {
                         meetinginfoObj["enableImageMessage"] = idEnableImageMessage.checked
                         meetinginfoObj["enableDetectMutedMic"] = idEnableDetectMutedMic.checked
                         meetinginfoObj["enableUnpubAudioOnMute"] = idEnableUnpubAudioOnMute.checked
-
+                        meetinginfoObj["customMenu"] = idCustomMenu.checked
                         meetingManager.invokeJoin(meetinginfoObj)
                     }
                 }

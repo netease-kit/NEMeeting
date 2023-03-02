@@ -17,16 +17,52 @@
         <item>private</item>
     </string-array>
 
-    <string-array name="AudioProfileNames">
+    <string-array name="AudioScenarioNames">
         <item>默认</item>
         <item>通话</item>
         <item>音乐</item>
+        <item>语聊房</item>
     </string-array>
 
-    <string-array name="AudioProfileKeys">
-        <item>default</item>
-        <item>speech</item>
-        <item>music</item>
+    <string-array name="AudioScenarioValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="AudioProfileNames">
+        <item>DEFAULT</item>
+        <item>STANDARD</item>
+        <item>STANDARD_EXTEND</item>
+        <item>MIDDLE_QUALITY</item>
+        <item>MIDDLE_QUALITY_STEREO</item>
+        <item>HIGH_QUALITY</item>
+        <item>HIGH_QUALITY_STEREO</item>
+    </string-array>
+
+    <string-array name="AudioProfileValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="LanguageTypes">
+        <item>自动</item>
+        <item>中文</item>
+        <item>English</item>
+        <item>日本語</item>
+    </string-array>
+
+    <string-array name="LanguageValues">
+        <item>*</item>
+        <item>zh</item>
+        <item>en</item>
+        <item>ja</item>
     </string-array>
 
 </resources>

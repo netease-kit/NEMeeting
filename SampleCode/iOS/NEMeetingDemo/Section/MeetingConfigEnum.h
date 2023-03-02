@@ -8,51 +8,66 @@
 
 /// 配置选项类型
 typedef NS_ENUM(NSInteger, MeetingConfigType) {
-    MeetingConfigTypeJoinOnVideo = 0,
-    MeetingConfigTypeJoinOnAudio,
-    MeetingConfigTypeShowTime
+  MeetingConfigTypeJoinOnVideo = 0,
+  MeetingConfigTypeJoinOnAudio,
+  MeetingConfigTypeShowTime
 };
 /// 加入/匿名 入会设置选项类型
 typedef NS_ENUM(NSInteger, MeetingSettingType) {
-    MeetingSettingTypeJoinOffChatroom = 0,
-    MeetingSettingTypeJoinOffInvitation,
-    MeetingSettingTypeHideMini,
-    MeetingSettingTypeDefaultSetting,
-    MeetingSettingTypeJoinOffGallery,
-    MeetingSettingTypeOnlyShowLongId,
-    MeetingSettingTypeOnlyShowShortId,
-    MeetingSettingTypeOffSwitchCamera,
-    MeetingSettingTypeOffSwitchAudio,
-    MeetingSettingTypeShowWhiteboard,
-    MeetingSettingTypeHiddenWhiteboardButton,
-    MeetingSettingTypeOffReName,
-    MeetingSettingTypeHiddenSip,
-    MeetingSettingTypeShowRoleLabel
+  MeetingSettingTypeJoinOffChatroom = 0,
+  MeetingSettingTypeJoinOffInvitation,
+  MeetingSettingTypeHideMini,
+  MeetingSettingTypeDefaultSetting,
+  MeetingSettingTypeJoinOffGallery,
+  MeetingSettingTypeOnlyShowLongId,
+  MeetingSettingTypeOnlyShowShortId,
+  MeetingSettingTypeOffSwitchCamera,
+  MeetingSettingTypeOffSwitchAudio,
+  MeetingSettingTypeShowWhiteboard,
+  MeetingSettingTypeHiddenWhiteboardButton,
+  MeetingSettingTypeOffReName,
+  MeetingSettingTypeHiddenSip,
+  MeetingSettingTypeShowRoleLabel,
+  MeetingSettingTypeShowMeeingRemainingTip,
+  MeetingSettingTypeChatroomEnableFile,
+  MeetingSettingTypeChatroomEnableImage,
+  MeetingSettingTypeDetectMutedMic,
+  MeetingSettingTypeUnpubAudioOnMute,
+  MeetingSettingTypeShowScreenShareUserVideo,
+  MeetingSettingTypeShowWhiteboardShareUseVideo,
+  MeetingSettingTypeShowFloatingMicrophone
 };
 
 /// 创建会议设置选项类型
 typedef NS_ENUM(NSInteger, CreateMeetingSettingType) {
-    CreateMeetingSettingTypeJoinOffChatroom = 0,
-    CreateMeetingSettingTypeJoinOffInvitation,
-    CreateMeetingSettingTypeHideMini,
-    CreateMeetingSettingTypeUsePid,
-    CreateMeetingSettingTypeDefaultSetting,
-    CreateMeetingSettingTypeJoinOffGallery,
-    CreateMeetingSettingTypeOnlyShowLongId,
-    CreateMeetingSettingTypeOnlyShowShortId,
-    CreateMeetingSettingTypeOffSwitchCamera,
-    CreateMeetingSettingTypeOffSwitchAudio,
-    CreateMeetingSettingTypeShowWhiteboard,
-    CreateMeetingSettingTypeHiddenWhiteboardButton,
-    CreateMeetingSettingTypeOffReName,
-    CreateMeetingSettingTypeOpenCloudRecord,
-    CreateMeetingSettingTypeHiddenSip,
-    CreateMeetingSettingTypeShowRoleLabel,
-    CreateMeetingSettingTypeAutoMuteAudio,
-    CreateMeetingSettingTypeAutoMuteAudioNotRemove,
-    CreateMeetingSettingTypeAutoMuteVideo,
-    CreateMeetingSettingTypeAutoMuteVideoNotRemove
+  CreateMeetingSettingTypeJoinOffChatroom = 0,
+  CreateMeetingSettingTypeJoinOffInvitation,
+  CreateMeetingSettingTypeHideMini,
+  CreateMeetingSettingTypeUsePid,
+  CreateMeetingSettingTypeDefaultSetting,
+  CreateMeetingSettingTypeJoinOffGallery,
+  CreateMeetingSettingTypeOnlyShowLongId,
+  CreateMeetingSettingTypeOnlyShowShortId,
+  CreateMeetingSettingTypeOffSwitchCamera,
+  CreateMeetingSettingTypeOffSwitchAudio,
+  CreateMeetingSettingTypeShowWhiteboard,
+  CreateMeetingSettingTypeHiddenWhiteboardButton,
+  CreateMeetingSettingTypeOffReName,
+  CreateMeetingSettingTypeOpenCloudRecord,
+  CreateMeetingSettingTypeHiddenSip,
+  CreateMeetingSettingTypeShowRoleLabel,
+  CreateMeetingSettingTypeAutoMuteAudio,
+  CreateMeetingSettingTypeAutoMuteAudioNotRemove,
+  CreateMeetingSettingTypeAutoMuteVideo,
+  CreateMeetingSettingTypeAutoMuteVideoNotRemove,
+  CreateMeetingSettingTypeShowMeeingRemainingTip,
+  CreateMeetingSettingTypeChatroomEnableFile,
+  CreateMeetingSettingTypeChatroomEnableImage,
+  CreateMeetingSettingTypeDetectMutedMic,
+  CreateMeetingSettingTypeUnpubAudioOnMute,
+  CreateMeetingSettingTypeShowScreenShareUserVideo,
+  CreateMeetingSettingTypeShowWhiteboardShareUseVideo,
+  CreateMeetingSettingTypeShowFloatingMicrophone
 };
-
 
 #endif /* MeetingConfigEnum_h */

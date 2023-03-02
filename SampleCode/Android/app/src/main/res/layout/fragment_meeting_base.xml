@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2022 NetEase, Inc. All rights reserved. -->
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2022 NetEase, Inc. All rights reserved. -->
 <!-- Use of this source code is governed by a MIT license that can be -->
 <!-- found in the LICENSE file. -->
 
@@ -45,8 +44,8 @@
                     android:paddingRight="6dp"
                     android:text="自定义工具栏菜单"
                     android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@+id/noMuteAllVideo" />
+                    app:layout_constraintLeft_toLeftOf="@+id/checkbox_flow_1"
+                    app:layout_constraintTop_toBottomOf="@+id/checkbox_flow_2" />
 
             <Button
                     android:id="@+id/configMoreMenus"
@@ -74,233 +73,246 @@
                     android:id="@+id/videoOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="入会时打开摄像头"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/roleBind" />
+                    android:text="打开摄像头" />
 
             <CheckBox
                     android:id="@+id/audioOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="入会时打开麦克风"
-                    app:layout_constraintLeft_toRightOf="@id/videoOption"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/thirdEditor"
-                    app:layout_constraintTop_toTopOf="@id/videoOption" />
+                    android:text="打开麦克风" />
 
             <CheckBox
                     android:id="@+id/usePersonalMeetingId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:enabled="false"
-                    android:text="使用个人会议号"
-                    app:layout_constraintLeft_toLeftOf="@id/videoOption"
-                    app:layout_constraintTop_toBottomOf="@id/videoOption" />
+                    android:text="使用个人会议号" />
 
             <CheckBox
                     android:id="@+id/useDefaultOptions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="使用默认会议设置"
-                    app:layout_constraintLeft_toLeftOf="@id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/videoOption"
-                    tools:checked="false" />
+                    android:text="使用默认会议设置" />
 
             <CheckBox
                     android:id="@+id/noChatOptions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="入会时关闭聊天菜单"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/usePersonalMeetingId" />
+                    android:text="关闭聊天菜单" />
+
+            <CheckBox
+                    android:id="@+id/disableImageMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="不允许收发图片消息" />
+
+            <CheckBox
+                    android:id="@+id/disableFileMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="不允许收发文件消息" />
 
             <CheckBox
                     android:id="@+id/no_minimize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="入会时隐藏最小化"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/noChatOptions" />
+                    android:text="隐藏最小化" />
 
             <CheckBox
                     android:id="@+id/noInviteOptions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="入会时关闭邀请菜单"
-                    app:layout_constraintLeft_toLeftOf="@id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/useDefaultOptions" />
+                    android:text="关闭邀请菜单" />
 
             <CheckBox
                     android:id="@+id/show_meeting_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="显示会议持续时间"
-                    app:layout_constraintLeft_toLeftOf="@id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/noInviteOptions" />
+                    android:text="显示会议持续时间" />
 
             <CheckBox
                     android:id="@+id/showLongMeetingIdOnly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="仅显示会议ID长号"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/no_minimize" />
+                    android:text="仅显示会议ID长号" />
 
             <CheckBox
                     android:id="@+id/showShortMeetingIdOnly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="仅显示会议ID短号"
-                    app:layout_constraintLeft_toLeftOf="@id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/show_meeting_time" />
+                    android:text="仅显示会议ID短号" />
 
             <CheckBox
                     android:id="@+id/noGalleryOptions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="入会时关闭画廊模式"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/showLongMeetingIdOnly" />
+                    android:text="关闭画廊模式" />
 
             <CheckBox
                     android:id="@+id/noSwitchCamera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="关闭切换摄像头"
-                    app:layout_constraintLeft_toLeftOf="@id/audioOption"
-                    app:layout_constraintTop_toBottomOf="@id/showShortMeetingIdOnly" />
+                    android:text="关闭切换摄像头" />
 
             <CheckBox
                     android:id="@+id/noSwitchAudioMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="关闭听筒扬声器切换"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+                    android:text="关闭听筒扬声器切换" />
 
             <CheckBox
                     android:id="@+id/noRename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="关闭会中改名"
-                    app:layout_constraintLeft_toLeftOf="@id/usePersonalMeetingId"
-                    app:layout_constraintTop_toBottomOf="@id/noSwitchAudioMode" />
+                    android:text="关闭会中改名" />
+
             <CheckBox
-                android:id="@+id/noCloudRecord"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="开启云录制"
-                app:layout_constraintLeft_toRightOf="@id/noRename"
-                app:layout_constraintBottom_toBottomOf="@id/noRename" />
+                    android:id="@+id/noCloudRecord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开启云录制" />
 
             <CheckBox
                     android:id="@+id/noSip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="关闭Sip功能"
-                    app:layout_constraintLeft_toRightOf="@id/noCloudRecord"
-                    app:layout_constraintBottom_toBottomOf="@id/noRename" />
+                    android:text="关闭Sip功能" />
 
             <CheckBox
                     android:id="@+id/noWhiteBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="关闭白板"
-                    app:layout_constraintLeft_toRightOf="@id/noSwitchAudioMode"
-                    app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+                    android:text="关闭白板" />
 
 
             <CheckBox
                     android:id="@+id/defaultWhiteBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="默认开白板"
-                    app:layout_constraintLeft_toRightOf="@id/noWhiteBoard"
-                    app:layout_constraintTop_toBottomOf="@id/noGalleryOptions" />
+                    android:text="默认开白板" />
 
             <CheckBox
                     android:id="@+id/showMemberTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="显示成员标签"
-                    app:layout_constraintLeft_toLeftOf="@id/noRename"
-                    app:layout_constraintTop_toBottomOf="@id/noRename" />
+                    android:text="显示成员标签" />
+
+            <CheckBox
+                    android:id="@+id/showMeetingRemainingTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="显示会议结束提醒" />
 
             <CheckBox
                     android:id="@+id/audioOffAllowSelfOn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="自动静音(可自行解除)"
-                    app:layout_constraintLeft_toLeftOf="@id/noRename"
-                    app:layout_constraintTop_toBottomOf="@id/showMemberTag" />
+                    android:text="自动静音(可自行解除)" />
 
             <CheckBox
                     android:id="@+id/audioOffNotAllowSelfOn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="自动静音(不可自行解除)"
-                    app:layout_constraintLeft_toLeftOf="@id/noRename"
-                    app:layout_constraintTop_toBottomOf="@id/audioOffAllowSelfOn"
-                     />
+                    android:text="自动静音(不可自行解除)" />
 
             <CheckBox
                     android:id="@+id/videoOffAllowSelfOn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="自动关闭视频(可自行解除)"
-                    app:layout_constraintLeft_toLeftOf="@id/noRename"
-                    app:layout_constraintTop_toBottomOf="@id/audioOffNotAllowSelfOn" />
+                    android:text="自动关闭视频(可自行解除)" />
 
             <CheckBox
                     android:id="@+id/videoOffNotAllowSelfOn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="自动关闭视频(不可自行解除)"
-                    app:layout_constraintLeft_toLeftOf="@id/noRename"
-                    app:layout_constraintTop_toBottomOf="@id/videoOffAllowSelfOn" />
+                    android:text="自动关闭视频(不可自行解除)" />
 
             <CheckBox
-                android:id="@+id/noMuteAllVideo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="入会时不显示全体关闭/打开视频"
-                android:checked="true"
-                app:layout_constraintLeft_toLeftOf="@id/noRename"
-                app:layout_constraintTop_toBottomOf="@id/noMuteAllAudio" />
+                    android:id="@+id/noMuteAllVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="不显示全体关闭/打开视频"
+                    android:checked="true" />
 
             <CheckBox
-                android:id="@+id/noMuteAllAudio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="入会时不显示全体禁音/解除全体静音"
-                android:checked="false"
-                app:layout_constraintLeft_toLeftOf="@id/noRename"
-                app:layout_constraintTop_toBottomOf="@id/videoOffNotAllowSelfOn" />
+                    android:id="@+id/noMuteAllAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="不显示全体禁音/解除全体静音"
+                    android:checked="false" />
+
+            <CheckBox
+                    android:id="@+id/detectMutedMic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开启静音检测"
+                    android:checked="true" />
+
+            <CheckBox
+                    android:id="@+id/unpubAudioOnMute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关闭静音包"
+                    android:checked="true" />
+
+            <CheckBox
+                    android:id="@+id/showScreenShareUserVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="显示屏幕共享者画面"
+                    android:checked="true" />
+
+            <CheckBox
+                    android:id="@+id/showWhiteboardShareUserVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="显示白板共享者画面"
+                    android:checked="false" />
+
+            <CheckBox
+                    android:id="@+id/showFloatingMicrophone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="显示麦克风浮窗"
+                    android:checked="true" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/checkbox_flow_1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/checkbox_flow_2"
+                    app:layout_constraintTop_toBottomOf="@+id/roleBind"
+                    app:layout_constraintBottom_toTopOf="@+id/configToolbarMenus"
+                    app:flow_wrapMode="none"
+                    app:flow_verticalGap="8dp"
+                    app:flow_horizontalGap="8dp"
+                    app:flow_horizontalAlign="start"
+                    app:flow_maxElementsWrap="1"
+                    app:flow_verticalStyle="packed"
+                    app:flow_verticalAlign="top"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingId,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename," />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/checkbox_flow_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toRightOf="@+id/checkbox_flow_1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/checkbox_flow_1"
+                    app:flow_wrapMode="none"
+                    app:flow_verticalGap="8dp"
+                    app:flow_horizontalGap="8dp"
+                    app:flow_horizontalAlign="start"
+                    app:flow_maxElementsWrap="1"
+                    app:flow_verticalStyle="packed"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:constraint_referenced_ids="noCloudRecord,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone" />
 
 
 
@@ -337,15 +349,15 @@
                     app:layout_constraintTop_toBottomOf="@id/secondEditor" />
 
             <EditText
-                android:id="@+id/fourthEditor"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_margin="10dp"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:hint="个人TAG"
-                app:layout_constraintTop_toBottomOf="@id/thirdEditor" />
+                    android:id="@+id/fourthEditor"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:hint="个人TAG"
+                    app:layout_constraintTop_toBottomOf="@id/thirdEditor" />
 
             <EditText
                     android:id="@+id/fifthEditor"
@@ -357,28 +369,31 @@
                     app:layout_constraintRight_toRightOf="parent"
                     tools:hint="扩展字段"
                     app:layout_constraintTop_toBottomOf="@id/fourthEditor" />
+
             <TextView
-                android:id="@+id/roleBindTips"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:text="会议成员角色绑定0:主持人，1:联席主持人，2：成员"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fifthEditor" />
+                    android:id="@+id/roleBindTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:text="会议成员角色绑定0:主持人，1:联席主持人，2：成员"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fifthEditor" />
 
             <EditText
-                android:id="@+id/roleBind"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_margin="10dp"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:hint="成员角色指定json结构uid-role"
-                app:layout_constraintTop_toBottomOf="@id/roleBindTips" />
+                    android:id="@+id/roleBind"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:hint="成员角色指定json结构uid-role"
+                    app:layout_constraintTop_toBottomOf="@id/roleBindTips"
+                    app:layout_constraintBottom_toTopOf="@id/checkbox_flow_1"
+                    />
 
             <TextView
                     android:id="@+id/title"

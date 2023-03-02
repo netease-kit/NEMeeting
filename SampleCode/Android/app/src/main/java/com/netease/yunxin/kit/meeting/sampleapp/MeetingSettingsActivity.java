@@ -10,30 +10,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.netease.yunxin.kit.meeting.sampleapp.view.MeetingSettingsFragment;
 
 public class MeetingSettingsActivity extends AppCompatActivity {
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, MeetingSettingsActivity.class);
-        context.startActivity(starter);
-    }
+  public static void start(Context context) {
+    Intent starter = new Intent(context, MeetingSettingsActivity.class);
+    context.startActivity(starter);
+  }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        FrameLayout frameLayout = new FrameLayout(this);
-        frameLayout.setId(View.generateViewId());
-        setContentView(frameLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    FrameLayout frameLayout = new FrameLayout(this);
+    frameLayout.setId(View.generateViewId());
+    setContentView(
+        frameLayout,
+        new ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(frameLayout.getId(), new MeetingSettingsFragment())
-                .commit();
-    }
+    getSupportFragmentManager()
+        .beginTransaction()
+        .replace(frameLayout.getId(), new MeetingSettingsFragment())
+        .commit();
+  }
 }

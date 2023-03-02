@@ -66,4 +66,35 @@
             style="@style/MySwitchPreference"
             />
 
+    <ListPreference
+            app:key="meeting-language"
+            app:title="语言"
+            app:allowDividerAbove="true"
+            app:entries="@array/LanguageTypes"
+            app:entryValues="@array/LanguageValues"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            />
+
+    <PreferenceCategory
+            app:title="音视频自定义加密"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true"
+            app:iconSpaceReserved="false"
+            >
+
+        <SwitchPreferenceCompat
+                app:key="enable-meeting-audio-encrypt"
+                app:title="音频加密"
+                app:defaultValue="false"
+                style="@style/MySwitchPreference" />
+
+        <SwitchPreferenceCompat
+                app:key="enable-meeting-video-encrypt"
+                app:title="视频加密"
+                app:defaultValue="false"
+                style="@style/MySwitchPreference" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

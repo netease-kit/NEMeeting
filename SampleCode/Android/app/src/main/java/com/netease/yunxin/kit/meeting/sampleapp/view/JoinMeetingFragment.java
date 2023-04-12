@@ -24,7 +24,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    usePersonalMeetingId.setEnabled(false);
+    usePersonalMeetingNum.setEnabled(false);
     // 加入会议隐藏录制开关功能
     (getView().findViewById(R.id.noCloudRecord)).setEnabled(false);
     // 加入会议隐藏绑定角色
@@ -52,7 +52,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
   @Override
   protected void performAction(String first, String second, String third, String fourth) {
     NEJoinMeetingParams params = new NEJoinMeetingParams();
-    params.meetingId = first;
+    params.meetingNum = first;
     params.displayName = second;
     params.password = third;
     if (!TextUtils.isEmpty(tag)) {

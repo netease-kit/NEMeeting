@@ -62,7 +62,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             for (int j = 0; j < len; j++) {
               MeetingItem changeItem = neMeetingItems.get(i);
               MeetingItem originalItem = mAdapter.getData().get(j);
-              if (changeItem.getMeetingUniqueId() == originalItem.getMeetingUniqueId()) {
+              if (changeItem.getMeetingId() == originalItem.getMeetingId()) {
                 switch (changeItem.getStatus()) {
                   case init:
                   case started:

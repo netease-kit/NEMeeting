@@ -88,7 +88,7 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
     binding.btnJoinScheduleMeeting.setOnClickListener(
         view -> {
           NEJoinMeetingParams params = new NEJoinMeetingParams();
-          params.meetingId = item.getMeetingId();
+          params.meetingNum = item.getMeetingNum();
           params.password = item.getPassword();
           params.displayName = SdkAuthenticator.getAccount();
           mViewModel.joinMeeting(params, null, new ToastCallback<>(getActivity(), "加入会议"));
@@ -96,7 +96,7 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
     binding.btnCancelScheduleMeeting.setOnClickListener(
         view -> {
           mViewModel.cancelMeeting(
-              item.getMeetingUniqueId(),
+              item.getMeetingId(),
               new ToastCallback<Void>(getActivity(), "scheduleMeeting") {
 
                 @Override
@@ -141,7 +141,7 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
     dataList.add(
         new ScheduleMeetingDetailItem(
             "会议ID",
-            String.valueOf(item.getMeetingId()),
+            String.valueOf(item.getMeetingNum()),
             "复制",
             ScheduleMeetingDetailItem.COPY_MEETING_ID_ACTION));
     dataList.add(new ScheduleMeetingDetailItem("开始时间", "", String.valueOf(item.getStartTime()), 0));

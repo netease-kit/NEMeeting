@@ -36,7 +36,7 @@ public class MeetingListAdapter extends BaseAdapter<MeetingItem, ItemMeetingList
     String month = startTime.substring(5, 7);
     String day = startTime.substring(8, 10);
     binding.tvMeetingListTittle.setText(data.getSubject());
-    binding.tvMeetingId.setText(" |  会议ID：" + data.getMeetingId());
+    binding.tvMeetingId.setText(" |  会议号：" + data.getMeetingNum());
     binding.tvMeetingTimeMonth.setText(month + obtainDayTip(day));
     binding.tvMeetingTimeHh.setText(hourAndMin);
     binding.tvMeetingListDay.setText(day);

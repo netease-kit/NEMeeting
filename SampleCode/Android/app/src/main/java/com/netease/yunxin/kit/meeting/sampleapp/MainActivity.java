@@ -4,15 +4,13 @@
 
 package com.netease.yunxin.kit.meeting.sampleapp;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,10 +18,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import com.netease.yunxin.kit.meeting.sampleapp.base.BaseActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.ActivityMainBinding;
-import com.netease.yunxin.kit.meeting.sampleapp.dialog.ActionSheetDialog;
-import com.netease.yunxin.kit.meeting.sampleapp.dialog.EditDialog;
-import com.netease.yunxin.kit.meeting.sampleapp.dialog.ItemClickListerAdapter;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
+import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMAuthService;
+import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMLoginActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.MainViewModel;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingInfo;
@@ -33,16 +30,18 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingService;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuClickInfo;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuStateController;
-import com.permissionx.guolindev.PermissionX;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   private final String TAG = MainActivity.class.getSimpleName() + '@' + hashCode();
 
   private MainViewModel mViewModel;
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    checkAppKey();
+  }
 
   @Override
   protected void onRestart() {
@@ -68,7 +67,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
       return;
     }
 
-    requestPermissions();
+    // requestPermissions();
 
     mViewModel.observeStateLiveData(
         this,
@@ -100,32 +99,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     return ActivityMainBinding.inflate(getLayoutInflater());
   }
 
-  private void requestPermissions() {
-    PermissionX.init(this)
-        .permissions(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)
-        .onExplainRequestReason(
-            (scope, deniedList) ->
-                scope.showRequestReasonDialog(deniedList, "即将申请的权限是程序必须依赖的权限", "我已明白"))
-        .onForwardToSettings(
-            (scope, deniedList) ->
-                scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "我已明白"))
-        .request(
-            (allGranted, grantedList, deniedList) -> {
-              if (!allGranted) {
-                Toast.makeText(MainActivity.this, "应用未被授予以下权限：" + deniedList, Toast.LENGTH_SHORT)
-                    .show();
-              }
-            });
-  }
-
   private void onInitialized(int initializeIndex) {
     mViewModel.setOnInjectedMenuItemClickListener(new OnCustomMenuListener(mViewModel));
   }
 
-  public static class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
+  public class OnCustomMenuListener implements NEMeetingOnInjectedMenuItemClickListener {
 
-    private MainViewModel viewModel;
+    private final MainViewModel viewModel;
 
     public OnCustomMenuListener(MainViewModel viewModel) {
       this.viewModel = viewModel;
@@ -142,13 +122,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
           "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
       if (clickInfo.getItemId() == 100) {
         MeetingSettingsActivity.start(context);
-      } else if (clickInfo.getItemId() == 102) {
-        handleAudioManager(context);
+      } else if (clickInfo.getItemId() == 101) {
+        minimizeCurrentMeeting();
       } else {
         AlertDialogUtil.setAlertDialog(
             new AlertDialog.Builder(context)
                 .setTitle("菜单项被点击了")
-                .setMessage(clickInfo.toString() + "\n" + meetingInfo.toString())
+                .setMessage(clickInfo + "\n" + meetingInfo)
                 .setPositiveButton(
                     "确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
                 .setNegativeButton(
@@ -162,135 +142,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
       }
     }
 
-    private void handleAudioManager(Context context) {
-      final ActionSheetDialog dialog = new ActionSheetDialog(context);
-      dialog.setTitle(context.getString(R.string.audioSubscribeManager));
-      dialog.addAction(0, context.getString(R.string.audioSubscribeAll));
-      dialog.addAction(1, context.getString(R.string.audioUnSubscribeAll));
-      dialog.addAction(2, context.getString(R.string.audioSubscribe));
-      dialog.addAction(3, context.getString(R.string.audioUnSubscribe));
-      dialog.addAction(4, context.getString(R.string.audioSubscribes));
-      dialog.addAction(5, context.getString(R.string.audioUnSubscribes));
-      dialog.setOnItemClickListener(
-          new ItemClickListerAdapter<ActionSheetDialog.ActionItem>() {
-            @Override
-            public void onClick(View v, int pos, ActionSheetDialog.ActionItem data) {
-              dialog.dismiss();
-              switch (data.action) {
-                case 0:
-                  subscribeAllRemoteAudioStreams(context, true);
-                  break;
-                case 1:
-                  subscribeAllRemoteAudioStreams(context, false);
-                  break;
-                case 2:
-                  subscribeRemoteAudioStream(context, true);
-                  break;
-                case 3:
-                  subscribeRemoteAudioStream(context, false);
-                  break;
-                case 4:
-                  subscribeRemoteAudioStreams(context, true);
-                  break;
-                case 5:
-                  subscribeRemoteAudioStreams(context, false);
-                  break;
-              }
-            }
-          });
-      dialog.show();
-    }
-
-    private void subscribeAllRemoteAudioStreams(Context context, boolean subscribe) {
-      viewModel.subscribeAllRemoteAudioStreams(
-          subscribe,
-          (resultCode, resultMsg, resultData) ->
-              Toast.makeText(context, "code=" + resultCode + " msg" + resultMsg, Toast.LENGTH_LONG)
-                  .show());
-    }
-
-    private void subscribeRemoteAudioStream(Context context, boolean subscribe) {
-      EditDialog.show(
-          context,
-          context.getString(R.string.audioSubscribeManager),
-          context.getString(R.string.inputSubscribeId),
-          "请输入用户accountId",
-          true,
-          true,
-          content -> {
-            viewModel.subscribeRemoteAudioStream(
-                content,
-                subscribe,
-                (resultCode, resultMsg, resultData) ->
-                    Toast.makeText(
-                            context, "code=" + resultCode + " msg" + resultMsg, Toast.LENGTH_LONG)
-                        .show());
-          });
-    }
-
-    private void subscribeRemoteAudioStreams(Context context, boolean subscribe) {
-      EditDialog.show(
-          context,
-          context.getString(R.string.audioSubscribeManager),
-          context.getString(R.string.inputSubscribeIds),
-          "请输入用户accountId用英文逗号分割",
-          true,
-          true,
-          content -> {
-            List<String> ids = Arrays.asList(content.split(","));
-            viewModel.subscribeRemoteAudioStreams(
-                ids,
-                subscribe,
-                (resultCode, resultMsg, resultData) ->
-                    Toast.makeText(
-                            context,
-                            "code="
-                                + resultCode
-                                + " msg"
-                                + resultMsg
-                                + " data "
-                                + (resultData != null ? resultData.toString() : ""),
-                            Toast.LENGTH_LONG)
-                        .show());
-          });
-    }
-
-    private static void didMenuItemStateTransition(
-        NEMenuStateController controller, boolean didTransition) {
-      if (controller != null) {
-        controller.didStateTransition(didTransition, null);
-      }
-    }
-  }
-
-  public static class OnControlCustomInjectedMenuListener
-      implements NEMeetingOnInjectedMenuItemClickListener {
-    @Override
-    public void onInjectedMenuItemClick(
-        Context context,
-        NEMenuClickInfo clickInfo,
-        NEMeetingInfo meetingInfo,
-        NEMenuStateController stateController) {
-      Log.d(
-          "OnCustomMenuListener",
-          "onInjectedMenuItemClicked:menuItem " + clickInfo + "#" + meetingInfo.toString());
-      AlertDialogUtil.setAlertDialog(
-          new AlertDialog.Builder(context)
-              .setTitle("菜单项被点击了")
-              .setMessage(clickInfo.toString() + "\n" + meetingInfo.toString())
-              .setPositiveButton(
-                  "确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
-              .setNegativeButton(
-                  "取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
-              .setNeutralButton("忽略", (dialog, which) -> {})
-              .setCancelable(false)
-              .create());
-      if (AlertDialogUtil.getAlertDialog() != null) {
-        AlertDialogUtil.getAlertDialog().show();
-      }
-    }
-
-    private static void didMenuItemStateTransition(
+    private void didMenuItemStateTransition(
         NEMenuStateController controller, boolean didTransition) {
       if (controller != null) {
         controller.didStateTransition(didTransition, null);
@@ -306,6 +158,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
+    MenuItem item = menu.findItem(R.id.im_login);
+    if (item != null) {
+      item.setVisible(NIMAuthService.getInstance().isReuseNIMEnabled());
+    }
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -315,6 +171,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     switch (itemId) {
       case R.id.app_settings:
         AppSettingsActivity.start(this);
+        break;
+      case R.id.im_login:
+        NIMLoginActivity.start(this);
+        break;
+      case R.id.minimize_meeting:
+        minimizeCurrentMeeting();
         break;
       case R.id.leave_meeting:
         leaveCurrentMeeting(false);
@@ -326,6 +188,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         return super.onOptionsItemSelected(item);
     }
     return true;
+  }
+
+  private void minimizeCurrentMeeting() {
+    NEMeetingService meetingService = NEMeetingKit.getInstance().getMeetingService();
+    if (meetingService != null) {
+      meetingService.minimizeCurrentMeeting(new ToastCallback<>(this, "最小化会议"));
+    }
   }
 
   private void leaveCurrentMeeting(boolean closeIfHost) {
@@ -368,5 +237,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   private void updateMeetingTime(String timeText) {
     binding.meetingTime.setText(timeText);
+  }
+
+  private void checkAppKey() {
+    String appKey = getString(R.string.appkey);
+    if ("Your AppKey".equals(appKey)) {
+    new AlertDialog.Builder(this)
+            .setTitle("检测到AppKey未设置")
+            .setMessage("请在'appkey.xml'文件中填入正确的AppKey")
+            .setPositiveButton("OK", null)
+            .setCancelable(false)
+            .create()
+            .show();
+    }
   }
 }

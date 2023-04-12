@@ -56,7 +56,7 @@ public class HomeViewModel extends ViewModel {
       for (int i = 0; i < resultData.size(); i++) {
         MeetingItem item = new MeetingItem();
         NEMeetingItem neMeetingItem = resultData.get(i);
-        item.setMeetingId(neMeetingItem.getMeetingId());
+        item.setMeetingNum(neMeetingItem.getMeetingNum());
         item.setPassword(neMeetingItem.getPassword());
         item.setStartTime(neMeetingItem.getStartTime());
         item.setEndTime(neMeetingItem.getEndTime());
@@ -64,7 +64,7 @@ public class HomeViewModel extends ViewModel {
         item.setStatus(neMeetingItem.getStatus());
         item.setUpdateTime(neMeetingItem.getUpdateTime());
         item.setCreateTime(neMeetingItem.getCreateTime());
-        item.setMeetingUniqueId(neMeetingItem.getMeetingUniqueId());
+        item.setMeetingId(neMeetingItem.getMeetingId());
         String startTime = DateUtil.stampToDate(neMeetingItem.getStartTime());
         item.setHourAndMin(startTime.substring(11, 16));
         item.setMonth(startTime.substring(5, 7));

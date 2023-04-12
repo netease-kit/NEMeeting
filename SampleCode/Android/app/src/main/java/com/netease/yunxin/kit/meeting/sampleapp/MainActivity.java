@@ -6,6 +6,7 @@ package com.netease.yunxin.kit.meeting.sampleapp;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.netease.yunxin.kit.meeting.sampleapp.base.BaseActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.ActivityMainBinding;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
+import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMAuthService;
+import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMLoginActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.MainViewModel;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingInfo;
@@ -33,6 +36,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   private final String TAG = MainActivity.class.getSimpleName() + '@' + hashCode();
 
   private MainViewModel mViewModel;
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    checkAppKey();
+  }
 
   @Override
   protected void onRestart() {
@@ -149,6 +158,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
+    MenuItem item = menu.findItem(R.id.im_login);
+    if (item != null) {
+      item.setVisible(NIMAuthService.getInstance().isReuseNIMEnabled());
+    }
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -158,6 +171,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     switch (itemId) {
       case R.id.app_settings:
         AppSettingsActivity.start(this);
+        break;
+      case R.id.im_login:
+        NIMLoginActivity.start(this);
         break;
       case R.id.minimize_meeting:
         minimizeCurrentMeeting();
@@ -221,5 +237,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   private void updateMeetingTime(String timeText) {
     binding.meetingTime.setText(timeText);
+  }
+
+  private void checkAppKey() {
+    String appKey = getString(R.string.appkey);
+    if ("Your AppKey".equals(appKey)) {
+    new AlertDialog.Builder(this)
+            .setTitle("检测到AppKey未设置")
+            .setMessage("请在'appkey.xml'文件中填入正确的AppKey")
+            .setPositiveButton("OK", null)
+            .setCancelable(false)
+            .create()
+            .show();
+    }
   }
 }

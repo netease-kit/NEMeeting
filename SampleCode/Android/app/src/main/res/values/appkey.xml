@@ -7,6 +7,6 @@
 
     <!--TODO-->
     <!--Replace With Your AppKey Here-->
-    <string name="appkey" translatable="false"></string>
+    <string name="appkey" translatable="false">Your AppKey</string>
 
 </resources>

@@ -68,4 +68,5 @@ dependencies {
     implementation 'com.manu:MDatePicker:1.0.1'
 
     compileOnly 'com.netease.yunxin:nertc-full:4.6.13'
+    compileOnly 'com.netease.nimlib:basesdk:9.6.4'
 }

@@ -77,7 +77,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         R.id.noMuteAllAudio
       };
 
-  protected CheckBox usePersonalMeetingId;
+  protected CheckBox usePersonalMeetingNum;
   private final CheckBox[] checkBoxes = new CheckBox[checkBoxIds.length];
   private CheckBox useDefaultMeetingOptions;
 
@@ -115,7 +115,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
       checkBoxes[index] = view.findViewById(checkBoxIds[index]);
     }
 
-    usePersonalMeetingId = view.findViewById(R.id.usePersonalMeetingId);
+    usePersonalMeetingNum = view.findViewById(R.id.usePersonalMeetingId);
     useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
 
     String[] labels = getEditorLabel();
@@ -314,7 +314,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
                               if (resultData != null && resultData.size() > 0) {
                                 NEHistoryMeetingItem history = resultData.get(0);
                                 Log.d("MeetingCommonFragment", "getHistoryMeetingItem: " + history);
-                                if (history.getMeetingId().equals(getFirstEditTextContent())) {
+                                if (history.getMeetingNum().equals(getFirstEditTextContent())) {
                                   getEditor(1).setText(history.getNickname());
                                 }
                               }

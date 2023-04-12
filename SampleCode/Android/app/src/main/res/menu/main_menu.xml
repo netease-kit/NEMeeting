@@ -14,12 +14,15 @@
     <item
             android:id="@+id/im_login"
             android:title="NIM登录"
-            android:visible="false"
             app:showAsAction="never" />
     <item
             android:id="@+id/open_flutter_page"
             android:title="打开Flutter页面"
-            android:visible="false"
+            app:showAsAction="never" />
+
+    <item
+            android:id="@+id/minimize_meeting"
+            android:title="最小化会议"
             app:showAsAction="never" />
 
     <item

@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class MeetingItem implements Comparable<MeetingItem>, Serializable {
   /** 会议唯一Id，服务器生成 */
-  private long meetingUniqueId;
+  private long meetingId;
 
   /** 会议唯一id */
-  private String meetingId;
+  private String meetingNum;
 
   /** 会议主题 */
   private String subject;
@@ -74,20 +74,20 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     this.status = status;
   }
 
-  public long getMeetingUniqueId() {
-    return meetingUniqueId;
-  }
-
-  public void setMeetingUniqueId(long meetingUniqueId) {
-    this.meetingUniqueId = meetingUniqueId;
-  }
-
-  public String getMeetingId() {
+  public long getMeetingId() {
     return meetingId;
   }
 
-  public void setMeetingId(String meetingId) {
+  public void setMeetingId(long meetingId) {
     this.meetingId = meetingId;
+  }
+
+  public String getMeetingNum() {
+    return meetingNum;
+  }
+
+  public void setMeetingNum(String meetingNum) {
+    this.meetingNum = meetingNum;
   }
 
   public String getSubject() {
@@ -215,9 +215,9 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
   public String toString() {
     return "MeetingItem{"
         + "meetingUniqueId="
-        + meetingUniqueId
-        + ", meetingId='"
         + meetingId
+        + ", meetingId='"
+        + meetingNum
         + '\''
         + ", subject='"
         + subject

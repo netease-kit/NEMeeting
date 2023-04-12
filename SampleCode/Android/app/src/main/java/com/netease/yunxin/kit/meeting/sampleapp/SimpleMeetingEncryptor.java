@@ -66,13 +66,13 @@ public class SimpleMeetingEncryptor extends NEGlobalEventListener
   }
 
   @Override
-  public void beforeRtcEngineInitialize(String meetingId, NERtcWrapper rtcWrapper) {
-    Log.d(TAG, "beforeRtcEngineInitialize: meetingId=" + meetingId);
+  public void beforeRtcEngineInitialize(String meetingNum, NERtcWrapper rtcWrapper) {
+    Log.d(TAG, "beforeRtcEngineInitialize: meetingNum=" + meetingNum);
   }
 
   @Override
-  public void afterRtcEngineInitialize(String meetingId, NERtcWrapper rtcWrapper) {
-    Log.d(TAG, "afterRtcEngineInitialize: meetingId=" + meetingId);
+  public void afterRtcEngineInitialize(String meetingNum, NERtcWrapper rtcWrapper) {
+    Log.d(TAG, "afterRtcEngineInitialize: meetingNum=" + meetingNum);
     // if (enableAudioEncryption || enableVideoEncryption) {
     //   NERtcEx rtcEngine = rtcWrapper.getRtcEngine();
     //   int result = rtcEngine.registerPacketObserver(new PacketObserver());
@@ -81,8 +81,8 @@ public class SimpleMeetingEncryptor extends NEGlobalEventListener
   }
 
   @Override
-  public void beforeRtcEngineRelease(String meetingId, NERtcWrapper rtcWrapper) {
-    Log.d(TAG, "beforeRtcEngineRelease: meetingId=" + meetingId);
+  public void beforeRtcEngineRelease(String meetingNum, NERtcWrapper rtcWrapper) {
+    Log.d(TAG, "beforeRtcEngineRelease: meetingNum=" + meetingNum);
     // int result = rtcWrapper.getRtcEngine().registerPacketObserver(null);
     // LogUtil.log(TAG, "unregisterPacketObserver result: " + result);
   }

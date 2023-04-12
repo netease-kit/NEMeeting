@@ -40,9 +40,9 @@ public class ScheduleViewModel extends ViewModel {
     meetingItem.setSubject(item.getSubject());
     meetingItem.setRoleBinds(item.getRoleBinds());
     meetingItem.setStartTime(item.getStartTime());
-    meetingItem.setMeetingId(item.getMeetingId());
+    meetingItem.setMeetingNum(item.getMeetingNum());
     meetingItem.setNoSip(item.isNoSip());
-    meetingItem.setMeetingUniqueId(item.getMeetingUniqueId());
+    meetingItem.setMeetingId(item.getMeetingId());
     itemMutableLiveData.setValue(meetingItem);
   }
 

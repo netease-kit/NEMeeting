@@ -126,13 +126,13 @@ public class MeetingDataRepository {
     NEMeetingKit.getInstance().getPreMeetingService().editMeeting(item, callback);
   }
 
-  public void cancelMeeting(long meetingUniqueId, NECallback<Void> callback) {
-    NEMeetingKit.getInstance().getPreMeetingService().cancelMeeting(meetingUniqueId, callback);
+  public void cancelMeeting(long meetingId, NECallback<Void> callback) {
+    NEMeetingKit.getInstance().getPreMeetingService().cancelMeeting(meetingId, callback);
   }
 
-  public void deleteMeeting(int meetingUniqueId, NECallback<Void> callback) {}
+  public void deleteMeeting(int meetingId, NECallback<Void> callback) {}
 
-  public void getMeetingItemById(int meetingUniqueId, NECallback<NEMeetingItem> callback) {}
+  public void getMeetingItemById(int meetingId, NECallback<NEMeetingItem> callback) {}
 
   public void getMeetingList(
       List<NEMeetingItemStatus> status, NECallback<List<NEMeetingItem>> callback) {

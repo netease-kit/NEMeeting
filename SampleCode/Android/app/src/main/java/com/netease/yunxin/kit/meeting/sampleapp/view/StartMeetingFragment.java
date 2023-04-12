@@ -32,8 +32,8 @@ import org.json.JSONObject;
 
 public class StartMeetingFragment extends MeetingCommonFragment {
   private static final String TAG = StartMeetingFragment.class.getSimpleName();
-  private String meetingId;
-  private String currentMeetingId;
+  private String meetingNum;
+  private String currentMeetingNum;
   private String content;
   private String tag;
   private JSONObject jsonScene;
@@ -43,10 +43,10 @@ public class StartMeetingFragment extends MeetingCommonFragment {
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     mViewModel = ViewModelProviders.of(this).get(StartMeetingViewModel.class);
-    usePersonalMeetingId.setEnabled(true);
-    usePersonalMeetingId.setOnCheckedChangeListener(
+    usePersonalMeetingNum.setEnabled(true);
+    usePersonalMeetingNum.setOnCheckedChangeListener(
         (buttonView, isChecked) -> {
-          determineMeetingId();
+          determineMeetingNum();
         });
     initData();
   }
@@ -80,9 +80,9 @@ public class StartMeetingFragment extends MeetingCommonFragment {
   @Override
   protected void performAction(String first, String second, String third, String fourth) {
     NEStartMeetingParams params = new NEStartMeetingParams();
-    params.meetingId =
-        usePersonalMeetingId.isChecked() && !TextUtils.isEmpty(currentMeetingId)
-            ? currentMeetingId
+    params.meetingNum =
+        usePersonalMeetingNum.isChecked() && !TextUtils.isEmpty(currentMeetingNum)
+            ? currentMeetingNum
             : first;
     params.displayName = second;
     if (!TextUtils.isEmpty(third)) {
@@ -138,44 +138,44 @@ public class StartMeetingFragment extends MeetingCommonFragment {
     mViewModel.startMeeting(params, options, new MeetingCallback());
   }
 
-  private void determineMeetingId() {
-    if (usePersonalMeetingId.isChecked()) {
-      currentMeetingId = meetingId;
+  private void determineMeetingNum() {
+    if (usePersonalMeetingNum.isChecked()) {
+      currentMeetingNum = meetingNum;
       if (!TextUtils.isEmpty(content)) {
         getEditor(0).setText(content);
         return;
       }
       NEAccountService accountService = NEMeetingKit.getInstance().getAccountService();
       if (accountService == null) {
-        onGetPersonalMeetingIdError();
+        onGetPersonalMeetingNumError();
       } else {
         accountService.getAccountInfo(
             (resultCode, resultMsg, resultData) -> {
               if (!isAdded()) return;
               if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS && resultData != null) {
-                meetingId = resultData.meetingId;
-                currentMeetingId = meetingId;
+                meetingNum = resultData.meetingNum;
+                currentMeetingNum = meetingNum;
                 content =
-                    meetingId
-                        + (!TextUtils.isEmpty(resultData.shortMeetingId)
-                            ? "(短号：" + resultData.shortMeetingId + ")"
+                    meetingNum
+                        + (!TextUtils.isEmpty(resultData.shortMeetingNum)
+                            ? "(短号：" + resultData.shortMeetingNum + ")"
                             : "");
                 getEditor(0).setText(content);
               } else {
-                onGetPersonalMeetingIdError();
+                onGetPersonalMeetingNumError();
               }
             });
       }
     } else {
-      currentMeetingId = null;
+      currentMeetingNum = null;
       getEditor(0).setText("");
     }
   }
 
-  private void onGetPersonalMeetingIdError() {
+  private void onGetPersonalMeetingNumError() {
     content = null;
-    currentMeetingId = null;
-    usePersonalMeetingId.setChecked(false);
+    currentMeetingNum = null;
+    usePersonalMeetingNum.setChecked(false);
     Toast.makeText(getActivity(), "获取个人会议号失败", Toast.LENGTH_SHORT).show();
   }
 

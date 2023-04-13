@@ -20,7 +20,7 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     static NSDictionary *configs;
     if (configs == nil) {
         configs = @{
-            @"online": [[ServerConfig alloc] init: kAppKey sdkServerUrl: @"你的sdkServerUrl"],
+            @"online": [[ServerConfig alloc] init:kAppKey sdkServerUrl:@""],
         };
     }
     return configs;
@@ -42,10 +42,10 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     if (currentConfig == nil) {
         ServerConfig* candicate = [ServerConfig servers][[ServerConfig serverType]];
         
-        NSString* appKey = [ServerConfig ifEmpty:[ServerConfig customAppKey] fallback: candicate.appKey];
+        NSString* appKey = [ServerConfig ifEmpty:[ServerConfig customAppKey] fallback:candicate.appKey];
         NSString* sdkServerUrl = [ServerConfig ifEmpty:[ServerConfig customSDKServerUrl] fallback:candicate.sdkServerUrl];
         
-        currentConfig = [[ServerConfig alloc] init: appKey sdkServerUrl: sdkServerUrl];
+        currentConfig = [[ServerConfig alloc] init:appKey sdkServerUrl:sdkServerUrl];
         
         NSLog(@"Select server config: appKey: %@, sdkServerUrl: %@", appKey, sdkServerUrl);
     }
@@ -53,7 +53,7 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     return currentConfig;
 }
 
-+ (NSString *) ifEmpty: (NSString*) value fallback: (nonnull NSString*) fallback  {
++ (NSString *)ifEmpty:(NSString*)value fallback:(nonnull NSString*)fallback {
     if (value == nil || value.length == 0) {
         return fallback;
     }

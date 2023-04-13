@@ -34,23 +34,13 @@ static NSString * const prefixName = @"meetingdemo://";
 }
 
 - (void)doSetupMeetingSdk {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"developerMode" : @(YES)}];
     NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
     config.serverUrl = ServerConfig.current.sdkServerUrl;
     config.reuseIM = [LoginInfoManager shareInstance].reuseNIM;
-//    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
     config.broadcastAppGroup = @"xxxx";
-    NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
-    // 默认等级
-    loggerConfig.level = NELogLevelInfo;
-    // Document路径
-    NSString *sdkDir =
-        [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    loggerConfig.path = [sdkDir stringByAppendingString:@"/log"];
-    config.loggerConfig = loggerConfig;
-    //  config.useAssetServerConfig = [ServerConfig.serverType isEqual:@"private"];
+    
 
     [SVProgressHUD showWithStatus:@"初始化..."];
     [[NEMeetingKit getInstance]

@@ -24,8 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *appKey;
 
-@property (nonatomic, copy) NSString *appServerUrl;
-
 @property (nonatomic, copy) NSString *sdkServerUrl;
 
 @end

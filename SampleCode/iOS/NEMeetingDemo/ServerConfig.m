@@ -20,22 +20,18 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     static NSDictionary *configs;
     if (configs == nil) {
         configs = @{
-            @"online": [[ServerConfig alloc] init: kAppKey
-                                   appServerUrl: @"你的appServerUrl"
-                                   sdkServerUrl: @"你的sdkServerUrl"],
+            @"online": [[ServerConfig alloc] init:kAppKey sdkServerUrl:@""],
         };
     }
     return configs;
 }
 
 - (instancetype)init: (NSString*) appkey
-        appServerUrl: (NSString*) appServerUrl
         sdkServerUrl: (NSString*) sdkServerUrl
 {
     self = [super init];
     if (self) {
         self.appKey = appkey;
-        self.appServerUrl = appServerUrl;
         self.sdkServerUrl = sdkServerUrl;
     }
     return self;
@@ -46,21 +42,18 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     if (currentConfig == nil) {
         ServerConfig* candicate = [ServerConfig servers][[ServerConfig serverType]];
         
-        NSString* appKey = [ServerConfig ifEmpty:[ServerConfig customAppKey] fallback: candicate.appKey];
-        NSString* appServerUrl = [ServerConfig ifEmpty:[ServerConfig customAppServerUrl] fallback:candicate.appServerUrl];
+        NSString* appKey = [ServerConfig ifEmpty:[ServerConfig customAppKey] fallback:candicate.appKey];
         NSString* sdkServerUrl = [ServerConfig ifEmpty:[ServerConfig customSDKServerUrl] fallback:candicate.sdkServerUrl];
         
-        currentConfig = [[ServerConfig alloc] init: appKey
-                                      appServerUrl: appServerUrl
-                                      sdkServerUrl: sdkServerUrl];
+        currentConfig = [[ServerConfig alloc] init:appKey sdkServerUrl:sdkServerUrl];
         
-        NSLog(@"Select server config: appKey: %@, appServerUrl: %@, sdkServerUrl: %@", appKey, appServerUrl, sdkServerUrl);
+        NSLog(@"Select server config: appKey: %@, sdkServerUrl: %@", appKey, sdkServerUrl);
     }
     
     return currentConfig;
 }
 
-+ (NSString *) ifEmpty: (NSString*) value fallback: (nonnull NSString*) fallback  {
++ (NSString *)ifEmpty:(NSString*)value fallback:(nonnull NSString*)fallback {
     if (value == nil || value.length == 0) {
         return fallback;
     }
@@ -103,7 +96,7 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     return [[NSUserDefaults standardUserDefaults] stringForKey: kCustomSDKServerUrl];
 }
 
-+ (void)setcustomSDKServerUrl:(NSString *)customSDKServerUrl {
++ (void)setCustomSDKServerUrl:(NSString *)customSDKServerUrl {
     if (customSDKServerUrl && (NSNull *)customSDKServerUrl != [NSNull null]) {
         [[NSUserDefaults standardUserDefaults] setValue:customSDKServerUrl forKey:kCustomSDKServerUrl];
     } else {

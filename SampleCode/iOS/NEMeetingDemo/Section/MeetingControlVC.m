@@ -12,7 +12,7 @@
 #import "MeetingActionVC.h"
 #import "NEMeetingLoginViewController.h"
 #import "MainViewController.h"
-@interface MeetingControlVC ()<NEAuthListener>
+@interface MeetingControlVC ()<NEMeetingAuthListener, NEGlobalEventListener>
 
 @property (weak, nonatomic) IBOutlet UIView *subscribeListContainer;
 @property (strong, nonatomic) SubscribeMeetingListVC *subscribeListVC;
@@ -24,6 +24,7 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NEMeetingKit getInstance] removeAuthListener:self];
+    [[NEMeetingKit getInstance] removeGlobalEventListener:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNEMeetingEditSubscribeDone object:nil];
 }
 
@@ -31,6 +32,7 @@
     [super viewDidLoad];
     [self setupUI];
     [[NEMeetingKit getInstance] addAuthListener:self];
+    [[NEMeetingKit getInstance] addGlobalEventListener:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editDone) name:kNEMeetingEditSubscribeDone object:nil];
 }
 - (void)editDone {
@@ -132,6 +134,19 @@
     }
     [preVC presentViewController:alert animated:YES completion:nil];
     
+}
+#pragma mark - NEGlobalEventListener
+- (void)beforeRtcEngineReleaseWithRoomUuid:(NSString *)roomUuid
+                                rtcWrapper:(NERtcWrapper *)rtcWrapper {
+  NSLog(@"Rtc销毁前操作. RoomUuid: %@", roomUuid);
+}
+- (void)beforeRtcEngineInitializeWithRoomUuid:(NSString *)roomUuid
+                                   rtcWrapper:(NERtcWrapper *)rtcWrapper {
+  NSLog(@"Rtc初始化之前操作");
+}
+- (void)afterRtcEngineInitializeWithRoomUuid:(NSString *)roomUuid
+                                  rtcWrapper:(NERtcWrapper *)rtcWrapper {
+  NSLog(@"Rtc初始化之后操作");
 }
 
 #pragma mark - Getter

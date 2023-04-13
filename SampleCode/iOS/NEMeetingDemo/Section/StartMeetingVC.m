@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 /// 会议主题输入框
 @property(weak, nonatomic) IBOutlet UITextField *subjectInput;
 
-@property(nonatomic, copy) NSString *meetingId;
+@property(nonatomic, copy) NSString *meetingNum;
 @property(nonatomic, assign) BOOL audioOffAllowSelfOn;
 @property(nonatomic, assign) BOOL audioOffNotAllowSelfOn;
 @property(nonatomic, assign) BOOL videoOffAllowSelfOn;
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   // 昵称
   params.displayName = _nickInput.text;
   // 会议号
-  params.meetingId = self.meetingId ?: _meetingIdInput.text;
+  params.meetingNum = self.meetingNum ?: _meetingIdInput.text;
   // 会议密码
   params.password = _passwordInput.text.length ? _passwordInput.text : nil;
   // 标签
@@ -258,13 +258,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         } else {
           if (![result isKindOfClass:[NEAccountInfo class]] || result == nil) return;
           NEAccountInfo *accountInfo = result;
-          self.meetingId = accountInfo.meetingId;
-          NSString *meetingId = accountInfo.meetingId;
-          if (accountInfo.shortMeetingId) {
-            meetingId =
-                [NSString stringWithFormat:@"%@(短号:%@)", meetingId, accountInfo.shortMeetingId];
+          self.meetingNum = accountInfo.meetingNum;
+          NSString *meetingNum = accountInfo.meetingNum;
+          if (accountInfo.shortMeetingNum) {
+            meetingNum =
+                [NSString stringWithFormat:@"%@(短号:%@)", meetingNum, accountInfo.shortMeetingNum];
           }
-          weakSelf.meetingIdInput.text = meetingId;
+          weakSelf.meetingIdInput.text = meetingNum;
         };
       }];
 }
@@ -276,7 +276,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
                               NSArray<NEHistoryMeetingItem *> *items) {
         if (items && items.count > 0) {
           NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
-          if ([items[0].meetingId isEqualToString:weakSelf.meetingIdInput.text]) {
+          if ([items[0].meetingNum isEqualToString:weakSelf.meetingIdInput.text]) {
             weakSelf.nickInput.text = items[0].nickname;
           }
         }
@@ -337,7 +337,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
             [self doGetUserMeetingId];
         }else {
             self.meetingIdInput.text = @"";
-            self.meetingId = @"";
+            self.meetingNum = @"";
         }
     } else if (index == 4) {
         _configCheckBox.disableAllItems = [self selectedSetting:CreateMeetingSettingTypeDefaultSetting];

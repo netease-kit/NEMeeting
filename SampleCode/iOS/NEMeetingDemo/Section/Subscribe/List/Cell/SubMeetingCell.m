@@ -33,7 +33,7 @@
     NSDateComponents *dateComponents = [self dateComponentsWithTimestamp:item.startTime/1000];
     _startTimeLabel.text = [NSString stringWithFormat:@"%d:%02d",
                             (int)dateComponents.hour, (int)dateComponents.minute];
-    _meetingIdLabel.text = [NSString stringWithFormat:@"会议ID：%@", item.meetingId];
+    _meetingIdLabel.text = [NSString stringWithFormat:@"会议号：%@", item.meetingNum];
     _meetingNameLabel.text = item.subject ?: @"";
     _statusLabel.text = [self meetingStatusContent];
 }

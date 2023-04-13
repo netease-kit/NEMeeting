@@ -103,7 +103,7 @@ NSString * const kCustomSDKServerUrl = @"customSDKServerUrl";
     return [[NSUserDefaults standardUserDefaults] stringForKey: kCustomSDKServerUrl];
 }
 
-+ (void)setcustomSDKServerUrl:(NSString *)customSDKServerUrl {
++ (void)setCustomSDKServerUrl:(NSString *)customSDKServerUrl {
     if (customSDKServerUrl && (NSNull *)customSDKServerUrl != [NSNull null]) {
         [[NSUserDefaults standardUserDefaults] setValue:customSDKServerUrl forKey:kCustomSDKServerUrl];
     } else {

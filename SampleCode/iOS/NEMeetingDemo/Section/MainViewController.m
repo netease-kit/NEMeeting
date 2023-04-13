@@ -148,7 +148,26 @@
                     meetingInfo:(NEMeetingInfo *)meetingInfo
                 stateController:(NEMenuStateController)stateController {
     if (clickInfo.itemId == 100) {
-    } else {
+    } else if (clickInfo.itemId == 111) {
+        [NEMeetingKit.getInstance.getMeetingService
+            minimizeCurrentMeeting:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+              if (resultCode == 0) {
+                [NEMeetingKit.getInstance.getMeetingService
+                    getCurrentMeetingInfo:^(NSInteger resultCode, NSString *_Nonnull resultMsg,
+                                            NEMeetingInfo *_Nonnull info) {
+                      if (!info) {
+                        NSLog(@"meetingNum: %@ meetingId: %llu", info.meetingNum, info.meetingId);
+                        self.restoreMeetingBtn.neTitle = info.subject;
+                        int64_t interval = info.duration / 1000;
+                        if (interval > 0) {
+                          self.restoreMeetingBtn.startTime = interval;
+                        }
+                        self.restoreMeetingBtn.hidden = NO;
+                      }
+                    }];
+              }
+            }];
+      } else {
         _alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
         [_alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             stateController(NO,nil);
@@ -169,7 +188,7 @@
     NEMeetingStatus status = [[NEMeetingKit getInstance] getMeetingService].getMeetingStatus;
     if (status != MEETING_STATUS_INMEETING_MINIMIZED) return;
 
-    NSLog(@"meetingId: %@ meetingUniqueId: %llu", info.meetingId, info.meetingUniqueId);
+    NSLog(@"meetingNum: %@ meetingId: %llu", info.meetingNum, info.meetingId);
     _restoreMeetingBtn.neTitle = info.subject;
     int64_t interval = info.duration/1000;
     if (interval > 0) {

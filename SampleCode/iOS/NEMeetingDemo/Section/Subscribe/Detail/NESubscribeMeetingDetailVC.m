@@ -122,9 +122,9 @@
 }
 - (NEFromGroup *)meetingIDGroup {
     NEFromGroup *group = [NEFromGroup new];
-    NEFromRow *meetingIdRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingId"];
-    meetingIdRow.title = @"会议ID";
-    meetingIdRow.value = self.item.meetingId;
+    NEFromRow *meetingIdRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kMeetingNum"];
+    meetingIdRow.title = @"会议号";
+    meetingIdRow.value = self.item.meetingNum;
     meetingIdRow.userInteractionEnabled = NO;
     [group.rows addObject:meetingIdRow];
     return group;
@@ -267,7 +267,7 @@
 #pragma mark - Function
 - (void)doCancelMeeting {
     __weak typeof(self) weakSelf = self;
-    [[self preMeetingService] cancelMeeting:_item.meetingUniqueId callback:^(NSInteger resultCode, NSString *resultMsg) {
+    [[self preMeetingService] cancelMeeting:_item.meetingId callback:^(NSInteger resultCode, NSString *resultMsg) {
         if (resultCode == ERROR_CODE_SUCCESS) {
             [[UIApplication sharedApplication].keyWindow makeToast:@"取消预定会议成功"
                                                           duration:2
@@ -287,7 +287,7 @@
     self.isEntering = YES;
     NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
     params.displayName = [self displayName];
-    params.meetingId = _item.meetingId;
+    params.meetingNum = _item.meetingNum;
     params.password = _item.password;
     NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
     __weak typeof(self) weakSelf = self;

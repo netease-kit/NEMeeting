@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildToolsVersion "29.0.3"
 
     viewBinding {
@@ -12,9 +12,9 @@ android {
     defaultConfig {
         applicationId "com.netease.yunxin.kit.meeting.sampleapp"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 30000
-        versionName "3.0.0"
+        targetSdkVersion 31
+        versionCode 31000
+        versionName "3.10.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,7 +42,7 @@ android {
 
 dependencies {
     // meeting
-    implementation 'com.netease.yunxin.kit.meeting:meeting:3.3.2'
+    implementation 'com.netease.yunxin.kit.meeting:meeting:3.10.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
@@ -66,4 +66,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
     implementation 'com.manu:MDatePicker:1.0.1'
+
+    compileOnly 'com.netease.yunxin:nertc-full:4.6.13'
+    compileOnly 'com.netease.nimlib:basesdk:9.6.4'
 }

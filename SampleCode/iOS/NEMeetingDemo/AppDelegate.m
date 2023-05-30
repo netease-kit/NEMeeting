@@ -34,35 +34,31 @@ static NSString * const prefixName = @"meetingdemo://";
 }
 
 - (void)doSetupMeetingSdk {
-    [[NSUserDefaults standardUserDefaults] registerDefaults: @{@"developerMode": @(YES)}];
     NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
-    config.extras = @{
-        @"serverUrl": ServerConfig.current.sdkServerUrl,
-        @"debugMode": [[NSUserDefaults standardUserDefaults] boolForKey:@"developerMode"] ? @(1) : @(0)
-    };
+    config.serverUrl = ServerConfig.current.sdkServerUrl;
     config.reuseIM = [LoginInfoManager shareInstance].reuseNIM;
-//    config.enableDebugLog = YES;
     config.appName = @"测试APP Name";
     config.broadcastAppGroup = @"xxxx";
-    NELoggerConfig *loggerConfig = [[NELoggerConfig alloc] init];
-    //默认等级
-    loggerConfig.level = NELogLevelInfo;
-    // Document路径
-    NSString *sdkDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    loggerConfig.path = [sdkDir stringByAppendingString: @"/log"];
-    config.loggerConfig = loggerConfig;
-    config.useAssetServerConfig = [ServerConfig.serverType isEqual: @"private"];
     
+
     [SVProgressHUD showWithStatus:@"初始化..."];
-    [[NEMeetingKit getInstance] initialize:config
-                                  callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
-        NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
-        [SVProgressHUD dismiss];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNEMeetingInitCompletionNotication
-                                                            object:nil];
-    }];
-}
+    [[NEMeetingKit getInstance]
+        initialize:config
+          callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+            NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
+            [SVProgressHUD dismiss];
+            [[NSNotificationCenter defaultCenter]
+                postNotificationName:kNEMeetingInitCompletionNotication
+                              object:nil];
+            NSString *type = [[NSUserDefaults standardUserDefaults] valueForKey:@"languageType"];
+            [[NEMeetingKit getInstance]
+                switchLanguage:[self defaultLanguage:type]
+                      callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+                        NSLog(@"defaultLanguage: %@", type);
+                      }];
+          }];
+  }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
@@ -80,10 +76,36 @@ static NSString * const prefixName = @"meetingdemo://";
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    
-    [[[NEMeetingKit getInstance] getMeetingService] stopBroadcastExtension];
-
+  [[[NEMeetingKit getInstance] getMeetingService] stopBroadcastExtension];
 }
 
-
+- (NEMeetingLanguage)defaultLanguage:(NSString *)type {
+  NEMeetingLanguage language = AUTOMATIC;
+  if (!type) {
+    NSString *deviceLanguage =
+        [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"][0];
+    if ([deviceLanguage containsString:@"ja"]) {
+      type = @"日本语";
+      language = JAPANESE;
+    } else if ([deviceLanguage containsString:@"zh"]) {
+      type = @"中文";
+      language = CHINESE;
+    } else {
+      type = @"English";
+      language = ENGLISH;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:type forKey:@"languageType"];
+  } else {
+    if ([type isEqualToString:@"日本语"]) {
+      language = JAPANESE;
+    } else if ([type isEqualToString:@"中文"]) {
+      language = CHINESE;
+    } else if ([type isEqualToString:@"English"]) {
+      language = ENGLISH;
+    } else {
+      language = AUTOMATIC;
+    }
+  }
+  return language;
+}
 @end

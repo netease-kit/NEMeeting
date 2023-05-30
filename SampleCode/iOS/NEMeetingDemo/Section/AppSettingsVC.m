@@ -41,6 +41,40 @@
     };
     [appSection addFormRow:serverType];
     
+    XLFormRowDescriptor *languageType =
+        [XLFormRowDescriptor formRowDescriptorWithTag:@"languageType"
+                                              rowType:XLFormRowDescriptorTypeSelectorActionSheet
+                                                title:@"语言环境"];
+    serverType.height = 60.0;
+    NSDictionary *langSelectorMap =
+        @{@"Auto" : @(0), @"中文" : @(1), @"English" : @(2), @"日本语" : @(3)};
+    NSMutableArray *langSelectorOptions = @[].mutableCopy;
+    for (id key in langSelectorMap) {
+      [langSelectorOptions addObject:[XLFormOptionsObject formOptionsObjectWithValue:key
+                                                                         displayText:key]];
+    }
+    NSString *type = [[NSUserDefaults standardUserDefaults] valueForKey:@"languageType"];
+    languageType.selectorOptions = langSelectorOptions;
+    languageType.value = [XLFormOptionsObject formOptionsOptionForValue:type
+                                                            fromOptions:langSelectorOptions];
+    languageType.onChangeBlock =
+        ^(id _Nullable oldValue, id _Nullable newValue, XLFormRowDescriptor *_Nonnull rowDescriptor) {
+          if (newValue && (NSNull *)newValue != [NSNull null]) {
+            [[NEMeetingKit getInstance]
+                switchLanguage:[[langSelectorMap valueForKey:[newValue formValue]] integerValue]
+                      callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+                        if (resultCode != ERROR_CODE_SUCCESS) {
+                          NSLog(@"语言切换失败");
+                        } else {
+                          NSLog(@"语言切换成功");
+                          [[NSUserDefaults standardUserDefaults] setObject:[newValue formValue]
+                                                                    forKey:@"languageType"];
+                        }
+                      }];
+          }
+        };
+    [appSection addFormRow:languageType];
+    
     XLFormRowDescriptor *customAppKey = [XLFormRowDescriptor
         formRowDescriptorWithTag:@"customAppKey"
         rowType:XLFormRowDescriptorTypeText
@@ -71,17 +105,6 @@
         ServerConfig.customSDKServerUrl = newValue;
     };
     [appSection addFormRow:customSDKServerUrl];
-    
-    XLFormRowDescriptor *developerMode = [XLFormRowDescriptor formRowDescriptorWithTag:@"developerMode"
-        rowType:XLFormRowDescriptorTypeBooleanSwitch
-        title:@"开发者模式"
-    ];
-    developerMode.height = 60.0;
-    developerMode.value =  @([[NSUserDefaults standardUserDefaults] boolForKey:@"developerMode"]);
-    developerMode.onChangeBlock = ^(id  _Nullable oldValue, id  _Nullable newValue, XLFormRowDescriptor * _Nonnull rowDescriptor) {
-        [[NSUserDefaults standardUserDefaults] setBool:[newValue boolValue] forKey:@"developerMode"];
-    };
-    [appSection addFormRow:developerMode];
     
     return form;
 }

@@ -15,23 +15,26 @@
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
-  <script src="./NEMeetingKit_v3.3.0.js"></script>
+  <script src="./NEMeetingKit_v3.10.0.js"></script>
   <script>
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
    * 然后执行登陆，获取登陆人员信息
    * 此时，根据需要，可以进行会议的创建或加入
-   */  
-  
+   */
   function init() {
     const config = {
       appKey: '', //云信服务appkey
-      meetingServerDomain: '', //会议服务器地址，支持私有化部署
-      NIMconf: {
-        // IM私有化配置
-      }
     }
-    NEMeetingKit.actions.init(800, 600, config);  // （width，height）单位px 建议比例4:3
+    /* 初始化
+      * @param width：宽度(px)，为0则表示100%
+      * @param height：高度(px)，为0则表示100%
+      * @param config：入会配置
+      * @param callback： 回调
+    */
+    NEMeetingKit.actions.init(0, 0, config, (e) => {
+      console.log('初始化完成')
+    });  // （width，height）单位px 建议比例4:3
     NEMeetingKit.actions.afterLeave(() => {
       console.log('离开会议回调')
     })
@@ -61,25 +64,23 @@
   
   function create() { // 创建
     NEMeetingKit.actions.create({
-      meetingId: 2, // 1随机2固定
+      meetingNum: 'xxx', // 个人会议号可以在登录完成后通过NEMeetingKit.actions.accountInfo.meetingNum获取。为空表示创建随机会议
       nickName: 'demo',
       video: 1,
       audio: 1,
-      meetingIdDisplayOptions: 0,
     }, function(e) {
       console.log(e)
     })
   }
   
-  function join(params) {
-    var meetingId = document.querySelector('.meeting-id').value;
+  function join() {
+    var meetingNum = document.querySelector('.meeting-id').value;
     NEMeetingKit.actions.join({
-      meetingId,
+      meetingNum,
       nickName: 'demo1',
       video: 1,
       audio: 1,
       password: '',
-      meetingIdDisplayOptions: 0,
       appKey: '',
     }, function(e) {
       console.log(e)

@@ -5,40 +5,45 @@
 package com.netease.yunxin.kit.meeting.sampleapp;
 
 import android.app.Application;
-
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfig;
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfigs;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.FileUtils;
 
 public class MeetingApplication extends Application {
-    private static MeetingApplication instance;
 
-    private ServerConfig serverConfig;
+  private static final String TAG = "MeetingApplication";
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        instance = this;
-        LogUtil.init(this);
+  private static MeetingApplication instance;
 
-        serverConfig = ServerConfigs.INSTANCE.determineServerConfig(getString(R.string.appkey));
-        LogUtil.log("MeetingApplication", serverConfig.toString());
+  private ServerConfig serverConfig;
 
-        //初始化会议SDK登录状态监听
-        SdkAuthenticator.getInstance().initialize(this);
-        //初始化会议SDK
-        SdkInitializer.getInstance().startInitialize(this);
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    instance = this;
+    LogUtil.init(this);
 
-        new Thread(() -> FileUtils.INSTANCE.copyAssetsToDst(instance,"virtual", getFilesDir().getPath()+"/virtual")).start();
+    serverConfig = ServerConfigs.INSTANCE.determineServerConfig(getString(R.string.appkey));
+    LogUtil.log(TAG, serverConfig.toString());
 
-    }
+    //初始化会议SDK登录状态监听
+    SdkAuthenticator.getInstance().initialize(this);
+    //初始化会议SDK
+    SdkInitializer.getInstance().startInitialize(this);
 
-    public static MeetingApplication getInstance() {
-        return instance;
-    }
+    new Thread(
+            () ->
+                FileUtils.INSTANCE.copyAssetsToDst(
+                    instance, "virtual", getFilesDir().getPath() + "/virtual"))
+        .start();
+  }
 
-    public ServerConfig getServerConfig() {
-        return serverConfig;
-    }
+  public static MeetingApplication getInstance() {
+    return instance;
+  }
+
+  public ServerConfig getServerConfig() {
+    return serverConfig;
+  }
 }

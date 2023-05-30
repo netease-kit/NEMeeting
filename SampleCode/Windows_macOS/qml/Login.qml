@@ -231,6 +231,18 @@ Rectangle {
                 selectByMouse: true
                 Layout.fillWidth: true
             }
+            ComboBox {
+                id: uiLanguage
+                model: ["system", "zh-CN", "en", "ja"]
+                currentIndex: 0
+                Layout.fillWidth: true
+            }
+            TextField {
+                id: privateUrl
+                placeholderText: qsTr('private url')
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
         }
 
         RowLayout {
@@ -328,17 +340,19 @@ Rectangle {
                 meetingManager.initializeParam(logPath.text,
                                                logLevel.currentIndex,
                                                runAdmin.checked,
-                                               privateConfig.checked)
+                                               privateConfig.checked,
+                                               uiLanguage.currentIndex,
+                                               privateUrl.text)
                 if (!passwordLogin.checked) {
                     meetingManager.login(
-                            textAppKey.text, textAccountId.text,
-                            textPassword.text,
-                            textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                                textAppKey.text, textAccountId.text,
+                                textPassword.text,
+                                textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
                 } else {
                     meetingManager.loginByUsernamePassword(
-                            textAppKey.text, textAccountId.text,
-                            textPassword.text,
-                            textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
+                                textAppKey.text, textAccountId.text,
+                                textPassword.text,
+                                textKeepAliveInterval.text.toString().trim().length === 0 ? 13566 : parseInt(textKeepAliveInterval.text))
                 }
             } else {
                 setting.setValue('sampleAnonAppkey', textAppKey.text)
@@ -347,16 +361,45 @@ Rectangle {
                 meetingManager.initializeParam(logPath.text,
                                                logLevel.currentIndex,
                                                runAdmin.checked,
-                                               privateConfig.checked)
+                                               privateConfig.checked,
+                                               uiLanguage.currentIndex,
+                                               privateUrl.text)
                 meetingManager.initialize(
                             textAppKey.text,
                             textKeepAliveInterval.text.toString().trim(
                                 ).length === 0 ? 13566 : parseInt(
                                                      textKeepAliveInterval.text))
-                meetingManager.invokeJoin(true, textAccountId.text, nicknameAnon.text,
-                                          textTag.text, textTimeout.text,
-                                          false, false, true, true, true, true,
-                                          textPassword.text, rename.checked)
+
+                var meetinginfoObj = {}
+                meetinginfoObj["anonymous"] = true
+                meetinginfoObj["meetingId"] = textAccountId.text
+                meetinginfoObj["nickname"] = nicknameAnon.text
+                meetinginfoObj["tag"] = textTag.text
+                meetinginfoObj["timeOut"] = textTimeout.text
+                meetinginfoObj["audio"] = false
+                meetinginfoObj["video"] = false
+                meetinginfoObj["enableChatroom"] = true
+                meetinginfoObj["enableInvitation"] = true
+                meetinginfoObj["enableScreenShare"] = true
+                meetinginfoObj["enableView"] = true
+                meetinginfoObj["autoOpenWhiteboard"] = false
+                meetinginfoObj["password"] = textPassword.text
+                meetinginfoObj["rename"] = rename.checked
+                meetinginfoObj["displayOption"] = 0
+                meetinginfoObj["enableRecord"] = true
+                meetinginfoObj["openWhiteboard"] = false
+                meetinginfoObj["audioAINS"] = true
+                meetinginfoObj["sip"] = true
+                meetinginfoObj["showMemberTag"] = false
+                meetinginfoObj["enableMuteAllVideo"] = false
+                meetinginfoObj["enableMuteAllAudio"] = true
+                meetinginfoObj["showRemainingTip"] = false
+                meetinginfoObj["enableFileMessage"] = false
+                meetinginfoObj["enableImageMessage"] = false
+                meetinginfoObj["enableDetectMutedMic"] = true
+                meetinginfoObj["enableUnpubAudioOnMute"] = true
+
+                meetingManager.invokeJoin(meetinginfoObj)
             }
         }
     }

@@ -4,32 +4,28 @@
 
 package com.netease.yunxin.kit.meeting.sampleapp.viewmodel;
 
-
 import android.app.Application;
 import android.content.Context;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
-
 import com.netease.yunxin.kit.meeting.sampleapp.data.MeetingDataRepository;
 import com.netease.yunxin.kit.meeting.sdk.NECallback;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingParams;
 
-
 public class StartMeetingViewModel extends AndroidViewModel {
 
-    private MeetingDataRepository mRepository = MeetingDataRepository.getInstance();
+  private MeetingDataRepository mRepository = MeetingDataRepository.getInstance();
 
-    private Context context;
+  private Context context;
 
-    public StartMeetingViewModel(Application application) {
-        super(application);
-        this.context = application.getApplicationContext();
-    }
+  public StartMeetingViewModel(Application application) {
+    super(application);
+    this.context = application.getApplicationContext();
+  }
 
-
-    public void startMeeting(NEStartMeetingParams param, @Nullable NEStartMeetingOptions opts, NECallback<Void> callback) {
-        mRepository.startMeeting(context, param, opts, callback);
-    }
+  public void startMeeting(
+      NEStartMeetingParams param, @Nullable NEStartMeetingOptions opts, NECallback<Void> callback) {
+    mRepository.startMeeting(context, param, opts, callback);
+  }
 }

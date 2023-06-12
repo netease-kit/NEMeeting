@@ -477,8 +477,8 @@ void NEMeetingManager::cancelMeeting(const qint64& meetingUniqueId) {
     }
 }
 
-void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
-                                   const QString& meetingId,
+void NEMeetingManager::editMeeting(const qint64& meetingId,
+                                   const QString& meetingNum,
                                    const QString& meetingSubject,
                                    qint64 startTime,
                                    qint64 endTime,
@@ -493,15 +493,15 @@ void NEMeetingManager::editMeeting(const qint64& meetingUniqueId,
                                    const QJsonArray& controls,
                                    const QString& strRoleBinds) {
     QString strPassword = password.isEmpty() ? "null" : "no null";
-    qInfo() << "Edit a meeting with meeting subject:" << meetingSubject << ", meetingUniqueId: " << meetingUniqueId << ", meetingId: " << meetingId
+    qInfo() << "Edit a meeting with meeting subject:" << meetingSubject << ", meetingId: " << meetingId << ", meetingNum: " << meetingNum
             << ", startTime: " << startTime << ", endTime: " << endTime << ", attendeeAudioOff: " << attendeeAudioOff << ", password: " << strPassword
             << ", textScene: " << textScene << ", strRoleBinds " << strRoleBinds;
 
     auto ipcPreMeetingService = NEMeetingKit::getInstance()->getPremeetingService();
     if (ipcPreMeetingService) {
         NEMeetingItem item;
-        item.meetingUniqueId = meetingUniqueId;
-        item.meetingId = meetingId.toUtf8().data();
+        item.meetingId = meetingId;
+        item.meetingNum = meetingNum.toUtf8().data();
         item.subject = meetingSubject.toUtf8().data();
         item.startTime = startTime;
         item.endTime = endTime;
@@ -602,15 +602,15 @@ void NEMeetingManager::getMeetingList() {
                 QJsonArray jsonArray;
                 if (errorCode == ERROR_CODE_SUCCESS) {
                     for (auto& item : meetingItems) {
-                        qInfo() << "Got meeting list, unique meeting ID: " << item.meetingUniqueId
-                                << ", meeting ID: " << QString::fromStdString(item.meetingId) << ", topic: " << QString::fromStdString(item.subject)
+                        qInfo() << "Got meeting list, unique meeting ID: " << item.meetingId
+                                << ", meeting ID: " << QString::fromStdString(item.meetingNum) << ", topic: " << QString::fromStdString(item.subject)
                                 << ", start time: " << item.startTime << ", end time: " << item.endTime << ", create time: " << item.createTime
                                 << ", update time: " << item.updateTime << ", status: " << item.status
                                 << ", mute after member join: " << item.setting.attendeeAudioOff
                                 << ", extraData: " << QString::fromStdString(item.extraData) << ", controls:" << item.setting.controls.size();
                         QJsonObject object;
-                        object["uniqueMeetingId"] = item.meetingUniqueId;
-                        object["meetingId"] = QString::fromStdString(item.meetingId);
+                        object["meetingId"] = item.meetingId;
+                        object["meetingNum"] = QString::fromStdString(item.meetingNum);
                         object["topic"] = QString::fromStdString(item.subject);
                         object["startTime"] = item.startTime;
                         object["endTime"] = item.endTime;
@@ -669,7 +669,7 @@ void NEMeetingManager::getMeetingList() {
 }
 
 void NEMeetingManager::invokeStart(const QJsonObject& object) {
-    QString meetingId;
+    QString meetingNum;
     QString nickname;
     QString tag;
     QString textScene;
@@ -700,8 +700,8 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
     bool enableDetectMutedMic = true;
     bool enableUnpubAudioOnMute = true;
     bool customMenu = false;
-    if (object.contains("meetingId")) {
-        meetingId = object["meetingId"].toString();
+    if (object.contains("meetingNum")) {
+        meetingNum = object["meetingNum"].toString();
     }
     if (object.contains("nickname")) {
         nickname = object["nickname"].toString();
@@ -796,11 +796,11 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
 
     auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
     if (ipcMeetingService) {
-        QByteArray byteMeetingId = meetingId.toUtf8();
+        QByteArray byteMeetingNum = meetingNum.toUtf8();
         QByteArray byteNickname = nickname.toUtf8();
 
         NEStartMeetingParams params;
-        params.meetingId = byteMeetingId.data();
+        params.meetingNum = byteMeetingNum.data();
         params.displayName = byteNickname.data();
         params.tag = tag.toStdString();
         params.password = password.toStdString();
@@ -935,7 +935,7 @@ void NEMeetingManager::invokeStart(const QJsonObject& object) {
 
 void NEMeetingManager::invokeJoin(const QJsonObject& object) {
     bool anonymous = false;
-    QString meetingId;
+    QString meetingNum;
     QString nickname;
     QString tag;
     QString password;
@@ -967,8 +967,8 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
         anonymous = object["anonymous"].toBool();
     }
 
-    if (object.contains("meetingId")) {
-        meetingId = object["meetingId"].toString();
+    if (object.contains("meetingNum")) {
+        meetingNum = object["meetingNum"].toString();
     }
     if (object.contains("nickname")) {
         nickname = object["nickname"].toString();
@@ -1058,11 +1058,11 @@ void NEMeetingManager::invokeJoin(const QJsonObject& object) {
         qInfo() << "start Join a meeting";
         auto ipcMeetingService = NEMeetingKit::getInstance()->getMeetingService();
         if (ipcMeetingService) {
-            QByteArray byteMeetingId = meetingId.toUtf8();
+            QByteArray byteMeetingNum = meetingNum.toUtf8();
             QByteArray byteNickname = nickname.toUtf8();
 
             NEJoinMeetingParams params;
-            params.meetingId = byteMeetingId.data();
+            params.meetingNum = byteMeetingNum.data();
             params.displayName = byteNickname.data();
             params.password = password.toUtf8().data();
             params.tag = tag.toUtf8().data();
@@ -1165,9 +1165,9 @@ void NEMeetingManager::getMeetingInfo() {
         ipcMeetingService->getCurrentMeetingInfo([this](NEErrorCode errorCode, const std::string& errorMessage, const NEMeetingInfo& meetingInfo) {
             if (errorCode == ERROR_CODE_SUCCESS) {
                 QJsonObject obj;
-                obj["meetingUniqueId"] = meetingInfo.meetingUniqueId;
-                obj["meetingId"] = QString::fromStdString(meetingInfo.meetingId);
-                obj["shortMeetingId"] = QString::fromStdString(meetingInfo.shortMeetingId);
+                obj["meetingId"] = meetingInfo.meetingId;
+                obj["meetingNum"] = QString::fromStdString(meetingInfo.meetingNum);
+                obj["shortMeetingNum"] = QString::fromStdString(meetingInfo.shortMeetingNum);
                 obj["subject"] = QString::fromStdString(meetingInfo.subject);
                 obj["password"] = QString::fromStdString(meetingInfo.password);
                 obj["isHost"] = meetingInfo.isHost;
@@ -1206,8 +1206,8 @@ void NEMeetingManager::getHistoryMeetingItem() {
                 if (errorCode == ERROR_CODE_SUCCESS) {
                     if (!listItem.empty()) {
                         auto item = listItem.front();
-                        emit getHistoryMeetingInfo(item.meetingUniqueId, QString::fromStdString(item.meetingId),
-                                                   QString::fromStdString(item.shortMeetingId), QString::fromStdString(item.subject),
+                        emit getHistoryMeetingInfo(item.meetingId, QString::fromStdString(item.meetingNum),
+                                                   QString::fromStdString(item.shortMeetingNum), QString::fromStdString(item.subject),
                                                    QString::fromStdString(item.password), QString::fromStdString(item.nickname),
                                                    QString::fromStdString(item.sipId));
                     } else {

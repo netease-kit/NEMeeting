@@ -85,7 +85,7 @@
     NSMutableArray *targetItems = [NSMutableArray array];
     
     for (NEMeetingItem *changeItem in datas) {
-        NEMeetingItem *item = [self itemWithMeetingUniqueId:changeItem.meetingUniqueId];
+        NEMeetingItem *item = [self itemWithMeetingId:changeItem.meetingId];
         if (item) { //存在则删除原有的
             [_items removeObject:item];
         }
@@ -140,10 +140,10 @@
     [self.listView reloadData];
 }
 
-- (NEMeetingItem *)itemWithMeetingUniqueId:(uint64_t)uniqueId {
+- (NEMeetingItem *)itemWithMeetingId:(uint64_t)meetingId {
     __block NEMeetingItem *ret = nil;
     [_items enumerateObjectsUsingBlock:^(NEMeetingItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.meetingUniqueId == uniqueId) {
+        if (obj.meetingId == meetingId) {
             ret = obj;
             *stop = YES;
         }

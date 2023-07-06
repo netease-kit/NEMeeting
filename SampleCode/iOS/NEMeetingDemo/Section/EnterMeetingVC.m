@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 #pragma mark - Action
 - (IBAction)onEnterMeetingAction:(id)sender {
   NEJoinMeetingParams *params = [[NEJoinMeetingParams alloc] init];
-  params.meetingId = _meetingIdInput.text;
+  params.meetingNum = _meetingIdInput.text;
   params.displayName = _nickInput.text;
   params.password = _passworkInput.text;
   params.tag = _tagInput.text;
@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     [[NEMeetingKit getInstance].getSettingsService getHistoryMeetingItem:^(NSInteger resultCode, NSString* resultMsg, NSArray<NEHistoryMeetingItem *> * items) {
         if (items && items.count > 0) {
             NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
-            if ([items[0].meetingId isEqualToString: weakSelf.meetingIdInput.text]) {
+            if ([items[0].meetingNum isEqualToString: weakSelf.meetingIdInput.text]) {
                 weakSelf.nickInput.text = items[0].nickname;
             }
         }

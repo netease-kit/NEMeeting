@@ -49,7 +49,7 @@
     <!-- 预留一个dom用于挂载会议组件 -->
     <div id="ne-web-meeting"></div>
     <!-- 引入会议组件sdk -->
-    <script src="./NEMeetingKit_h5_3.9.0.js"></script>
+    <script src="./NEMeetingKit_h5_v3.12.0.js"></script>
     <script>
         /**
          * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
@@ -67,34 +67,23 @@
             const config = {
                 appKey: "", //云信服务appkey
             };
-            NEMeetingKit.actions.init(0, 0, config, () => {
-                console.log('init回调')
+          // 检测浏览器兼容性 返回true表示支持，否则可能存在兼容问题
+          const result = NEMeetingKit.actions.checkSystemRequirements()
+          // 初始化会议组件
+          NEMeetingKit.actions.init(0, 0, config, () => {
+              console.log('init回调')
+              // 事件监听
+              NEMeetingKit.actions.on("peerJoin", (members) => {
+                  console.log("成员加入回调", members);
+              });
+              NEMeetingKit.actions.on("peerLeave", (uuids) => {
+                  console.log("成员离开回调", uuids);
+              });
+              NEMeetingKit.actions.on("roomEnded", (reason) => {
+                  console.log("房间被关闭", reason);
+              });
 
-                // 检测浏览器兼容性
-                NEMeetingKit.actions.checkSystemRequirements(
-                    function (err, result) {
-                        let str = ''
-                        if (err) {
-                            str = err
-                        } else {
-                            str = result ? "支持" : "不支持"
-                        }
-                        console.log('浏览器兼容性检测结果：', str)
-                    }
-                )
-
-                // 事件监听
-                NEMeetingKit.actions.on("peerJoin", (members) => {
-                    console.log("成员加入回调", members);
-                });
-                NEMeetingKit.actions.on("peerLeave", (uuids) => {
-                    console.log("成员离开回调", uuids);
-                });
-                NEMeetingKit.actions.on("roomEnded", (reason) => {
-                    console.log("房间被关闭", reason);
-                });
-
-            });
+          });
 
             // 获取会议相关信息
             const NEMeetingInfo = NEMeetingKit.actions.NEMeetingInfo // 会议基本信息
@@ -134,23 +123,22 @@
         }
 
         function join(params) {
-            var meetingId = document.querySelector(".meeting-id").value;
+            var meetingNum = document.querySelector(".meeting-id").value;
             var nickname = document.getElementById("meeting-nick").value;
             var audio = document.getElementById("audio").checked;
             var video = document.getElementById("video").checked;
 
-            console.log("meetingId", meetingId);
             console.log("加入参数：", {
-            meetingId,
+            meetingNum,
             nickName: nickname,
             video: video ? 1 : 0,
             audio: audio ? 1 : 0,
             });
             NEMeetingKit.actions.join({
-                meetingId: meetingId, // 会议号
+                meetingNum, // 会议号
                 nickName: nickname, // 会中昵称
-                video: 1, // 视频开关，1为打开2为关闭
-                audio: 1, // 音频开关，1为打开2为关闭
+                video, // 视频开关，1为打开2为关闭
+                audio, // 音频开关，1为打开2为关闭
             },
             function (e) {
                 console.log('加入会议回调', e);

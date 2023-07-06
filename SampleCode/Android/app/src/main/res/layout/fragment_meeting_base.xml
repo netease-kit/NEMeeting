@@ -277,6 +277,33 @@
                     android:text="显示麦克风浮窗"
                     android:checked="true" />
 
+            <CheckBox
+                    android:id="@+id/enableTransparentWhiteboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置白板透明" />
+
+            <CheckBox
+                    android:id="@+id/enableFrontCameraMirror"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="前置摄像头镜像" />
+
+            <CheckBox
+                    android:id="@+id/enableAudioShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="音频共享" />
+
+             <CheckBox
+                    android:id="@+id/noLive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关闭直播"
+                    android:checked="false" />
+
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_1"
                     android:layout_width="0dp"
@@ -296,7 +323,7 @@
                     app:flow_verticalStyle="packed"
                     app:flow_verticalAlign="top"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingId,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename," />
+                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingId,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive" />
 
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_2"
@@ -313,7 +340,7 @@
                     app:flow_maxElementsWrap="1"
                     app:flow_verticalStyle="packed"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="noCloudRecord,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone" />
+                    app:constraint_referenced_ids="noCloudRecord,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare" />
 
 
 

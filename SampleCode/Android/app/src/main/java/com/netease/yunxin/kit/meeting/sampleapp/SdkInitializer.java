@@ -13,7 +13,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.netease.yunxin.kit.meeting.R;
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfig;
-import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMAuthService;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.SPUtils;
 import com.netease.yunxin.kit.meeting.sdk.NELogLevel;
 import com.netease.yunxin.kit.meeting.sdk.NELoggerConfig;
@@ -118,7 +117,6 @@ public class SdkInitializer {
     ServerConfig serverConfig = MeetingApplication.getInstance().getServerConfig();
     NEMeetingKitConfig config = new NEMeetingKitConfig();
     config.appKey = serverConfig.getAppKey();
-    config.reuseIM = NIMAuthService.getInstance().isReuseNIMEnabled();
     config.language = getSelectLanguage();
     config.appName = context.getString(R.string.app_name);
     config.serverUrl = serverConfig.getServerUrl();

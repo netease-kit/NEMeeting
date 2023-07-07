@@ -11,10 +11,13 @@
 #import <NIMSDK/NIMSDK.h>
 #import "NSString+Demo.h"
 #import "AppDelegate+MeetingExtension.h"
+#import "Reachability.h"
 static NSString * const prefixName = @"meetingdemo://";
 
 @interface AppDelegate ()
-
+@property(nonatomic, strong) Reachability *reachability;
+/// 是否已经初始化
+@property(nonatomic, assign) BOOL isInitialized;
 @end
 
 @implementation AppDelegate
@@ -25,21 +28,39 @@ static NSString * const prefixName = @"meetingdemo://";
     [self doSetupMeetingSdk];
     [self meeting_BeatyResource];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    
+    [self monitorNetwork];
     return YES;
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
+- (void)monitorNetwork {
+  // 添加监听器
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(reachabilityChanged:)
+                                               name:kReachabilityChangedNotification
+                                             object:nil];
+  // 开始监听
+  [self.reachability startNotifier];
+}
+- (void)reachabilityChanged:(NSNotification *)notification {
+  Reachability *reachability = (Reachability *)notification.object;
+  NetworkStatus status = [reachability currentReachabilityStatus];
+  // 使用WiFi网络 或 蜂窝数据网络
+  if (status == ReachableViaWiFi || status == ReachableViaWWAN) {
+    [self doSetupMeetingSdk];
+  }
+}
+
 
 - (void)doSetupMeetingSdk {
+    if (self.isInitialized) return;
     NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
     config.appKey = ServerConfig.current.appKey;
     config.serverUrl = ServerConfig.current.sdkServerUrl;
-    config.reuseIM = [LoginInfoManager shareInstance].reuseNIM;
-    config.appName = @"测试APP Name";
-    config.broadcastAppGroup = @"xxxx";
+    config.appName = @"your_app_name";
+    config.broadcastAppGroup = @"your_app_group";
     
 
     [SVProgressHUD showWithStatus:@"初始化..."];
@@ -47,6 +68,7 @@ static NSString * const prefixName = @"meetingdemo://";
         initialize:config
           callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
             NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
+        if (resultCode == 0) self.isInitialized = YES;
             [SVProgressHUD dismiss];
             [[NSNotificationCenter defaultCenter]
                 postNotificationName:kNEMeetingInitCompletionNotication
@@ -107,5 +129,12 @@ static NSString * const prefixName = @"meetingdemo://";
     }
   }
   return language;
+}
+
+- (Reachability *)reachability {
+  if (!_reachability) {
+    _reachability = [Reachability reachabilityForInternetConnection];
+  }
+  return _reachability;
 }
 @end

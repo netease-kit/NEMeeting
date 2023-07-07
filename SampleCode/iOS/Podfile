@@ -10,8 +10,8 @@ target 'NEMeetingDemo' do
   pod 'XLForm', '~> 4.1.0'
   pod 'IQKeyboardManager', '~> 6.5.6'
   pod 'Masonry', '~> 1.1.0'
+  pod 'Reachability'
   
-  
-  pod 'NEMeetingKit', '~> 3.10.0'
+  pod 'NEMeetingKit', '~> 3.14.0'
 end
 

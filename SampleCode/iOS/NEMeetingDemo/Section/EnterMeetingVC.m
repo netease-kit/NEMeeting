@@ -59,7 +59,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"关闭音频模式切换",   @"显示白板窗口",       @"隐藏白板菜单按钮", @"关闭会中改名",
     @"隐藏Sip菜单",        @"显示用户角色标签",   @"显示会议结束提醒", @"聊天室文件消息",
     @"聊天室图片消息",     @"开启静音检测",       @"关闭静音包",       @"显示屏幕共享者画面",
-    @"显示白板共享者画面", @"显示麦克风浮窗"
+    @"显示白板共享者画面", @"设置白板透明", @"前置摄像头镜像",  @"显示麦克风浮窗",
+    @"入会时隐藏直播菜单", @"开启音频共享"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeChatroomEnableFile];
@@ -68,6 +69,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeUnpubAudioOnMute];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowScreenShareUserVideo];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowFloatingMicrophone];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeEnableFrontCameraMirror];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeJoinOffLive];
 }
 
 - (IBAction)onLeaveCurrentMeeting:(id)sender {
@@ -102,6 +105,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   }
   options.meetingIdDisplayOption = [self meetingIdDisplayOption];
   options.noChat = [self selectedSetting:MeetingSettingTypeJoinOffChatroom];
+  // 是否显示直播按钮
+  options.noLive = [self selectedSetting:MeetingSettingTypeJoinOffLive];
   options.noInvite = [self selectedSetting:MeetingSettingTypeJoinOffInvitation];
   options.noMinimize = [self selectedSetting:MeetingSettingTypeHideMini];
   options.noGallery = [self selectedSetting:MeetingSettingTypeJoinOffGallery];
@@ -156,9 +161,16 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   // 白板共享者摄像头画面显隐
   options.showWhiteboardShareUserVideo =
       [self selectedSetting:MeetingSettingTypeShowWhiteboardShareUseVideo];
+  // 是否开启透明白板模式
+  options.enableTransparentWhiteboard =
+        [self selectedSetting:MeetingSettingTypeEnableTransparentWhiteboard];
+  // 前置摄像头镜像
+  options.enableFrontCameraMirror =
+        [self selectedSetting:MeetingSettingTypeEnableFrontCameraMirror];
   // 麦克风悬浮显隐
   options.showFloatingMicrophone = [self selectedSetting:MeetingSettingTypeShowFloatingMicrophone];
-
+  // 开启音频共享
+  options.enableAudioShare = [self selectedSetting:MeetingSettingTypeEnabeAudioShare];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   // 匿名入会

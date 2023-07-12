@@ -19,7 +19,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.netease.yunxin.kit.meeting.sampleapp.base.BaseActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.ActivityMainBinding;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
-import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMAuthService;
 import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMLoginActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.MainViewModel;
@@ -38,7 +37,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   private MainViewModel mViewModel;
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     checkAppKey();
   }
@@ -157,15 +156,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   }
 
   @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    MenuItem item = menu.findItem(R.id.im_login);
-    if (item != null) {
-      item.setVisible(NIMAuthService.getInstance().isReuseNIMEnabled());
-    }
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     int itemId = item.getItemId();
     switch (itemId) {
@@ -240,7 +230,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   }
 
   private void checkAppKey() {
-    String appKey = getString(R.string.appkey);
+    String appKey = MeetingApplication.getInstance().getServerConfig().getAppKey();
     if ("Your AppKey".equals(appKey)) {
     new AlertDialog.Builder(this)
             .setTitle("检测到AppKey未设置")

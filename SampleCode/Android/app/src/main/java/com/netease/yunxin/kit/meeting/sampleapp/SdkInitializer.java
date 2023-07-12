@@ -118,7 +118,6 @@ public class SdkInitializer {
     ServerConfig serverConfig = MeetingApplication.getInstance().getServerConfig();
     NEMeetingKitConfig config = new NEMeetingKitConfig();
     config.appKey = serverConfig.getAppKey();
-    config.reuseIM = NIMAuthService.getInstance().isReuseNIMEnabled();
     config.language = getSelectLanguage();
     config.appName = context.getString(R.string.app_name);
     config.serverUrl = serverConfig.getServerUrl();

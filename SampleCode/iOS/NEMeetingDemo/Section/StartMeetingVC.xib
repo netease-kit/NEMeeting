@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -83,7 +83,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WRG-Pt-POL">
-                    <rect key="frame" x="30" y="462" width="167" height="46"/>
+                    <rect key="frame" x="20" y="530" width="167" height="46"/>
                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="RvS-H5-f6P"/>
@@ -96,10 +96,10 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKt-2h-9Ht" customClass="CheckBox">
-                    <rect key="frame" x="16" y="296" width="382" height="150"/>
+                    <rect key="frame" x="16" y="296" width="382" height="219"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="150" id="RB6-xA-8JW"/>
+                        <constraint firstAttribute="height" constant="219" id="RB6-xA-8JW"/>
                     </constraints>
                 </view>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="联席主持人配置" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4rM-kd-1UT">
@@ -117,19 +117,6 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdc-RQ-DhW">
-                    <rect key="frame" x="217" y="462" width="167" height="46"/>
-                    <color key="backgroundColor" systemColor="systemGray5Color"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="46" id="ryr-c4-5ZJ"/>
-                    </constraints>
-                    <state key="normal" title="结束会议">
-                        <color key="titleColor" systemColor="darkTextColor"/>
-                    </state>
-                    <connections>
-                        <action selector="doCloseMeeting:" destination="-1" eventType="touchUpInside" id="ach-E7-Ui0"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3e7-LZ-R6s">
                     <rect key="frame" x="10" y="768" width="181.33333333333334" height="40"/>
                     <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -155,6 +142,19 @@
                         <action selector="configMoreMenuItems:" destination="-1" eventType="touchUpInside" id="vSC-YV-1Q7"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdc-RQ-DhW">
+                    <rect key="frame" x="227" y="530" width="167" height="46"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="ryr-c4-5ZJ"/>
+                    </constraints>
+                    <state key="normal" title="结束会议">
+                        <color key="titleColor" systemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="doCloseMeeting:" destination="-1" eventType="touchUpInside" id="ach-E7-Ui0"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -163,7 +163,7 @@
                 <constraint firstItem="3e7-LZ-R6s" firstAttribute="height" secondItem="OwW-lk-i1Y" secondAttribute="height" id="2C2-LH-Mh9"/>
                 <constraint firstItem="mEx-5R-qub" firstAttribute="leading" secondItem="Jfc-T7-66b" secondAttribute="leading" id="2yj-nV-cjO"/>
                 <constraint firstItem="3e7-LZ-R6s" firstAttribute="width" secondItem="OwW-lk-i1Y" secondAttribute="width" multiplier="0.894737" id="4B9-Hl-uS5"/>
-                <constraint firstItem="WRG-Pt-POL" firstAttribute="top" secondItem="MKt-2h-9Ht" secondAttribute="bottom" constant="16" id="6CD-PL-CK4"/>
+                <constraint firstItem="WRG-Pt-POL" firstAttribute="top" secondItem="MKt-2h-9Ht" secondAttribute="bottom" constant="15" id="6CD-PL-CK4"/>
                 <constraint firstItem="0AT-Vn-itT" firstAttribute="width" secondItem="9kc-hk-n8f" secondAttribute="width" id="8xb-5o-leS"/>
                 <constraint firstItem="Jdc-RQ-DhW" firstAttribute="top" secondItem="WRG-Pt-POL" secondAttribute="top" id="C99-vp-DoD"/>
                 <constraint firstItem="s17-VQ-gVv" firstAttribute="bottom" secondItem="4rM-kd-1UT" secondAttribute="bottom" id="F1c-n0-5mo"/>
@@ -195,13 +195,13 @@
                 <constraint firstItem="s17-VQ-gVv" firstAttribute="width" secondItem="4rM-kd-1UT" secondAttribute="width" multiplier="1.02395" id="gNb-ve-grs"/>
                 <constraint firstItem="MKt-2h-9Ht" firstAttribute="trailing" secondItem="F15-my-g2s" secondAttribute="trailing" id="iCk-vI-vto"/>
                 <constraint firstItem="CTz-SU-8uc" firstAttribute="top" secondItem="7cy-0b-BqG" secondAttribute="bottom" constant="4" id="k4h-xP-kfF"/>
-                <constraint firstItem="WRG-Pt-POL" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="30" id="lZY-Xe-ghe"/>
+                <constraint firstItem="WRG-Pt-POL" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="lZY-Xe-ghe"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="leading" secondItem="7cy-0b-BqG" secondAttribute="leading" id="lsS-c5-wQ5"/>
-                <constraint firstItem="Jdc-RQ-DhW" firstAttribute="leading" secondItem="WRG-Pt-POL" secondAttribute="trailing" constant="20" id="nxF-3B-Lme"/>
+                <constraint firstItem="Jdc-RQ-DhW" firstAttribute="leading" secondItem="WRG-Pt-POL" secondAttribute="trailing" constant="40" id="nxF-3B-Lme"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="s17-VQ-gVv" secondAttribute="bottom" constant="10" id="qMW-6D-zz0"/>
                 <constraint firstItem="9kc-hk-n8f" firstAttribute="leading" secondItem="7cy-0b-BqG" secondAttribute="leading" id="qXr-ys-CPU"/>
                 <constraint firstItem="afo-Xb-gX8" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="r2m-g2-Aw3"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Jdc-RQ-DhW" secondAttribute="trailing" constant="30" id="r6j-lR-N9P"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Jdc-RQ-DhW" secondAttribute="trailing" constant="20" id="r6j-lR-N9P"/>
                 <constraint firstItem="F15-my-g2s" firstAttribute="trailing" secondItem="7cy-0b-BqG" secondAttribute="trailing" id="sFJ-AX-xHH"/>
                 <constraint firstItem="s17-VQ-gVv" firstAttribute="top" secondItem="3e7-LZ-R6s" secondAttribute="bottom" constant="10" id="vyu-ML-eZA"/>
                 <constraint firstItem="Jfc-T7-66b" firstAttribute="top" secondItem="afo-Xb-gX8" secondAttribute="bottom" constant="24" id="xvy-2d-7wx"/>

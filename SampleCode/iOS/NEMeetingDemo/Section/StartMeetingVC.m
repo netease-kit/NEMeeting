@@ -81,7 +81,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"自动静音(不可解除)", @"自动关视频(可解除)", @"自动关视频(不可解除)",
     @"显示会议结束提醒",   @"聊天室文件消息",     @"聊天室图片消息",
     @"开启静音检测",       @"关闭静音包",         @"显示屏幕共享者画面",
-    @"显示白板共享者画面", @"显示麦克风浮窗"
+    @"显示白板共享者画面", @"设置白板透明",   @"前置摄像头镜像",
+    @"显示麦克风浮窗",  @"入会时隐藏直播菜单", @"开启音频共享"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableFile];
@@ -90,6 +91,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeUnpubAudioOnMute];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowScreenShareUserVideo];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowFloatingMicrophone];
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeEnableFrontCameraMirror];
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeJoinOffLive];
 }
 #pragma mark-----------------------------  自定义toolbar/更多 菜单  -----------------------------
 
@@ -167,6 +170,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   options.meetingIdDisplayOption = [self meetingIdDisplayOption];
   options.noInvite = [self selectedSetting:CreateMeetingSettingTypeJoinOffInvitation];
   options.noChat = [self selectedSetting:CreateMeetingSettingTypeJoinOffChatroom];
+  // 是否显示直播按钮
+  options.noLive = [self selectedSetting:CreateMeetingSettingTypeJoinOffLive];
   options.noMinimize = [self selectedSetting:CreateMeetingSettingTypeHideMini];
   options.noGallery = [self selectedSetting:CreateMeetingSettingTypeJoinOffGallery];
   options.noSwitchCamera = [self selectedSetting:CreateMeetingSettingTypeOffSwitchCamera];
@@ -222,10 +227,17 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   // 白板共享者摄像头画面显隐
   options.showWhiteboardShareUserVideo =
       [self selectedSetting:CreateMeetingSettingTypeShowWhiteboardShareUseVideo];
+  // 是否开启透明白板模式
+  options.enableTransparentWhiteboard =
+        [self selectedSetting:CreateMeetingSettingTypeEnableTransparentWhiteboard];
+  // 是否开启前置摄像头视频镜像
+  options.enableFrontCameraMirror =
+        [self selectedSetting:CreateMeetingSettingTypeEnableFrontCameraMirror];
   // 麦克风悬浮显隐
   options.showFloatingMicrophone =
       [self selectedSetting:CreateMeetingSettingTypeShowFloatingMicrophone];
-
+  // 开启音频共享
+  options.enableAudioShare = [self selectedSetting:CreateMeetingSettingTypeEnabeAudioShare];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   [[NEMeetingKit getInstance].getMeetingService

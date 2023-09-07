@@ -18,6 +18,7 @@ import com.netease.nimlib.sdk.msg.MessageBuilder;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.yunxin.kit.meeting.sampleapp.MeetingApplication;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
+import com.netease.yunxin.kit.meeting.sampleapp.ToastCallback;
 
 public class NIMLoginActivity extends AppCompatActivity {
 
@@ -38,9 +39,6 @@ public class NIMLoginActivity extends AppCompatActivity {
     accountEdx = findViewById(R.id.firstEditor);
     pwdEdx = findViewById(R.id.secondEditor);
 
-    imReuseSwitch = findViewById(R.id.toggleIMReuse);
-    imReuseSwitch.setChecked(NIMAuthService.getInstance().isReuseNIMEnabled());
-
     loginState = findViewById(R.id.imLoginState);
     NIMAuthService.getInstance().getStatusLiveData().observe(this, this::refreshOnlineStatus);
 
@@ -52,7 +50,8 @@ public class NIMLoginActivity extends AppCompatActivity {
     final String account = accountEdx.getText().toString();
     final String token = pwdEdx.getText().toString();
     if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
-      NIMAuthService.getInstance().login(getAppKey(), account, token);
+      NIMAuthService.getInstance()
+          .login(getAppKey(), account, token, new ToastCallback<>(this, "nim login"));
     }
   }
 

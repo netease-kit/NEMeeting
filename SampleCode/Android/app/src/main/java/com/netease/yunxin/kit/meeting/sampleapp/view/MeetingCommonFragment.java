@@ -203,21 +203,25 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.meetingIdDisplayOption = getMeetingIdDisplayOption();
     options.noGallery = isChecked(8);
     options.noSwitchCamera = isChecked(9);
+    options.enableFrontCameraMirror = isCheckedById(R.id.enableFrontCameraMirror);
     options.noSwitchAudioMode = isChecked(10);
     options.noWhiteBoard = isChecked(11);
     options.noSip = isCheckedById(R.id.noSip);
     options.defaultWindowMode = isChecked(12) ? NEWindowMode.whiteBoard : NEWindowMode.normal;
     options.noRename = isCheckedById(R.id.noRename);
+    options.noLive = isCheckedById(R.id.noLive);
     options.showMemberTag = isCheckedById(R.id.showMemberTag);
     options.showMeetingRemainingTip = isCheckedById(R.id.showMeetingRemainingTip);
     if (MeetingConfigRepository.INSTANCE.getEnableAudioOptions()) {
       options.audioProfile =
           new NEAudioProfile(
               parseIntCatching(
-                  MeetingConfigRepository.INSTANCE.getAudioProfile(), NEAudioProfileType.DEFAULT),
+                  MeetingConfigRepository.INSTANCE.getAudioProfile(),
+                  NEAudioProfileType.UNSPECIFIED),
               parseIntCatching(
-                  MeetingConfigRepository.INSTANCE.getAudioScenario(), NEAudioScenarioType.DEFAULT),
-              true);
+                  MeetingConfigRepository.INSTANCE.getAudioScenario(),
+                  NEAudioScenarioType.UNSPECIFIED),
+              NEMeetingKit.getInstance().getSettingsService().isAudioAINSEnabled());
     }
     // 如果是创建会议判断是否需要录制
     if (options instanceof NEStartMeetingOptions) {
@@ -232,6 +236,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.showScreenShareUserVideo = isCheckedById(R.id.showScreenShareUserVideo);
     options.showWhiteboardShareUserVideo = isCheckedById(R.id.showWhiteboardShareUserVideo);
     options.showFloatingMicrophone = isCheckedById(R.id.showFloatingMicrophone);
+    options.enableTransparentWhiteboard = isCheckedById(R.id.enableTransparentWhiteboard);
+    options.enableAudioShare = isCheckedById(R.id.enableAudioShare);
     return options;
   }
 

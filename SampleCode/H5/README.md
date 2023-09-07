@@ -1,6 +1,6 @@
 # NEMeetingKit 使用说明
 
-NEMeetingKit会议组件H5版
+NEMeetingKit 会议组件 H5 版
 
 ### 1. 权限申请
 
@@ -12,10 +12,10 @@ NEMeetingKit会议组件H5版
 
 ### 2. 集成
 
-#### 方式1：sdk直接集成
+#### 方式 1：sdk 直接集成
 
 ```js
-import NEMeetingKit from './NEMeetingKit_1.0.0.umd.js'
+import NEMeetingKit from "./NEMeetingKit_1.0.0.umd.js";
 ```
 
 或者
@@ -24,16 +24,20 @@ import NEMeetingKit from './NEMeetingKit_1.0.0.umd.js'
 <script src="./NEMeetingKit_1.0.0.umd.js"></script>
 ```
 
-#### 方式2：npm包集成
+#### 方式 2：npm 包集成
 
 1. 安装依赖
+
 ```sh
 npm install nemeeting-web-sdk --save
 ```
+
 2. 集成
+
 ```js
-import NEMeetingKit from 'nemeeting-web-sdk'
+import NEMeetingKit from "nemeeting-web-sdk";
 ```
+
 ### 3.使用
 
 ```html
@@ -48,78 +52,80 @@ import NEMeetingKit from 'nemeeting-web-sdk'
  * @param height：高度(px)，为0则表示100%
  * @param config：入会配置
  * @param callback： 回调
-*/
+ */
 const config = {
-    appKey: '', //云信服务appkey
-}
+  appKey: "", //云信服务appkey
+};
 NEMeetingKit.actions.init(0, 0, config, () => {
-    console.log('init回调')
+  console.log("init回调");
 
-    // 检测浏览器兼容性
-    NEMeetingKit.actions.checkSystemRequirements(
-        function (err, result) {
-            let str = ''
-            if (err) {
-                str = err
-            } else {
-                str = result ? "支持" : "不支持"
-            }
-            console.log('浏览器兼容性检测结果：', str)
-        }
-    )
+  // 检测浏览器兼容性
+  NEMeetingKit.actions.checkSystemRequirements(function (err, result) {
+    let str = "";
+    if (err) {
+      str = err;
+    } else {
+      str = result ? "支持" : "不支持";
+    }
+    console.log("浏览器兼容性检测结果：", str);
+  });
 
-    // 事件监听
-    NEMeetingKit.actions.on("peerJoin", (members) => {
-        console.log("成员加入回调", members);
-    });
-    NEMeetingKit.actions.on("peerLeave", (uuids) => {
-        console.log("成员离开回调", uuids);
-    });
-    NEMeetingKit.actions.on("roomEnded", (reason) => {
-        console.log("房间被关闭", reason);
-    });
+  // 事件监听
+  NEMeetingKit.actions.on("peerJoin", (members) => {
+    console.log("成员加入回调", members);
+  });
+  NEMeetingKit.actions.on("peerLeave", (uuids) => {
+    console.log("成员离开回调", uuids);
+  });
+  NEMeetingKit.actions.on("roomEnded", (reason) => {
+    console.log("房间被关闭", reason);
+  });
+  NEMeetingKit.actions.addMeetingStatusListener({
+    onMeetingStatusChanged: (status, arg, obj) => {
+      console.log("会议状态变更了: ", status, arg, obj);
+    },
+  });
 
-    // 获取会议相关信息
-    const NEMeetingInfo = NEMeetingKit.actions.NEMeetingInfo // 会议基本信息
-    const memberInfo = NEMeetingKit.actions.memberInfo // 当前成员信息
-    const joinMemberInfo = NEMeetingKit.actions.joinMemberInfo // 入会成员信息
-
-})
+  // 获取会议相关信息
+  const NEMeetingInfo = NEMeetingKit.actions.NEMeetingInfo; // 会议基本信息
+  const memberInfo = NEMeetingKit.actions.memberInfo; // 当前成员信息
+  const joinMemberInfo = NEMeetingKit.actions.joinMemberInfo; // 入会成员信息
+});
 
 // token登录
-NEMeetingKit.actions.login({
-        accountId: accountId, // 账号
-        accountToken: accountToken, // token
-    },
-    function (e) {
-        console.log('login回调', e)
-    }
+NEMeetingKit.actions.login(
+  {
+    accountId: accountId, // 账号
+    accountToken: accountToken, // token
+  },
+  function (e) {
+    console.log("login回调", e);
+  }
 );
 
 // 加入会议，需要先进行token登录
-NEMeetingKit.actions.join({
-        meetingId: meetingId, // 会议号
-        nickName: nickName, // 会中昵称
-        video: 1, // 视频开关，1为打开2为关闭
-        audio: 1, // 音频开关，1为打开2为关闭
-    },
-    function (e) {
-        console.log('加入会议回调', e);
-    }
+NEMeetingKit.actions.join(
+  {
+    meetingId: meetingId, // 会议号
+    nickName: nickName, // 会中昵称
+    video: 1, // 视频开关，1为打开2为关闭
+    audio: 1, // 音频开关，1为打开2为关闭
+  },
+  function (e) {
+    console.log("加入会议回调", e);
+  }
 );
 
 // 登出
-NEMeetingKit.actions.logout(
-    function (e) {
-        console.log('logout回调', e)
-    }
-)
-
+NEMeetingKit.actions.logout(function (e) {
+  console.log("logout回调", e);
+});
 
 // 取消监听
-NEMeetingKit.actions.off("peerJoin")
-NEMeetingKit.actions.off("peerLeave")
-NEMeetingKit.actions.off("roomEnded")
+NEMeetingKit.actions.off("peerJoin");
+NEMeetingKit.actions.off("peerLeave");
+NEMeetingKit.actions.off("roomEnded");
+NEMeetingKit.actions.removeMeetingStatusListener();
 
 // 销毁sdk
 NEMeetingKit.actions.destroy(); // 销毁

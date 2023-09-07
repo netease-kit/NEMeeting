@@ -82,6 +82,11 @@
               NEMeetingKit.actions.on("roomEnded", (reason) => {
                   console.log("房间被关闭", reason);
               });
+              NEMeetingKit.actions.addMeetingStatusListener({
+                onMeetingStatusChanged: (status, arg, obj) => {
+                  console.log('会议状态变更了: ', status, arg, obj)
+                },
+              })
 
           });
 
@@ -118,6 +123,7 @@
             NEMeetingKit.actions.off("peerJoin");
             NEMeetingKit.actions.off("peerLeave");
             NEMeetingKit.actions.off("roomEnded");
+            NEMeetingKit.actions.removeMeetingStatusListener();
             // 销毁
             NEMeetingKit.actions.destroy(); 
         }

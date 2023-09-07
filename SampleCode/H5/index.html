@@ -49,7 +49,7 @@
     <!-- 预留一个dom用于挂载会议组件 -->
     <div id="ne-web-meeting"></div>
     <!-- 引入会议组件sdk -->
-    <script src="./NEMeetingKit_h5_v3.14.1.js"></script>
+    <script src="./NEMeetingKit_h5_v3.16.0.js"></script>
     <script>
         /**
          * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
@@ -82,6 +82,11 @@
               NEMeetingKit.actions.on("roomEnded", (reason) => {
                   console.log("房间被关闭", reason);
               });
+              NEMeetingKit.actions.addMeetingStatusListener({
+                onMeetingStatusChanged: (status, arg, obj) => {
+                  console.log('会议状态变更了: ', status, arg, obj)
+                },
+              })
 
           });
 
@@ -118,6 +123,7 @@
             NEMeetingKit.actions.off("peerJoin");
             NEMeetingKit.actions.off("peerLeave");
             NEMeetingKit.actions.off("roomEnded");
+            NEMeetingKit.actions.removeMeetingStatusListener();
             // 销毁
             NEMeetingKit.actions.destroy(); 
         }

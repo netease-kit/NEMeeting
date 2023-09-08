@@ -1,4 +1,5 @@
 # NEMeetingKit ChangeLog
+
 ## v3.16.1(SEP 8, 2023)
 - 适配Android 版本低于8.0无法使用画中画功能，默认以最小化
 

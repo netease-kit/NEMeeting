@@ -74,7 +74,8 @@ public abstract class MeetingCommonFragment extends CommonFragment {
         R.id.videoOffAllowSelfOn,
         R.id.videoOffNotAllowSelfOn,
         R.id.noMuteAllVideo,
-        R.id.noMuteAllAudio
+        R.id.noMuteAllAudio,
+        R.id.cb_encryption,
       };
 
   protected CheckBox usePersonalMeetingNum;
@@ -124,8 +125,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     addEditorArray(1, R.id.secondEditor, labels);
     addEditorArray(2, R.id.thirdEditor, labels);
     addEditorArray(3, R.id.fourthEditor, labels);
-    addEditorArray(4, R.id.fifthEditor, labels);
-    addEditorArray(5, R.id.roleBind, labels);
+    addEditorArray(4, R.id.et_encryption, labels);
+    addEditorArray(5, R.id.fifthEditor, labels);
+    addEditorArray(6, R.id.roleBind, labels);
     Button configToolbarMenu = getView().findViewById(R.id.configToolbarMenus);
     configToolbarMenu.setOnClickListener(
         v -> {
@@ -238,6 +240,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.showFloatingMicrophone = isCheckedById(R.id.showFloatingMicrophone);
     options.enableTransparentWhiteboard = isCheckedById(R.id.enableTransparentWhiteboard);
     options.enableAudioShare = isCheckedById(R.id.enableAudioShare);
+    //    options.enablePictureInPicture = isCheckedById(R.id.enablePictureInPicture);
     return options;
   }
 
@@ -287,7 +290,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
       } else if (resultCode == NEMeetingError.ERROR_CODE_MEETING_ALREADY_EXIST) {
         Toast.makeText(context, "会议创建失败，该会议还在进行中", Toast.LENGTH_SHORT).show();
         dissMissDialogProgress();
-      } else {
+      } else if (resultCode != NEMeetingError.ERROR_CODE_SUCCESS) {
         super.onResult(resultCode, resultMsg, resultData);
       }
     }

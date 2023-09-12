@@ -324,7 +324,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
     dataList.add(
         new ScheduleMeetingItem(
             "会议密码",
-            (item != null && !item.getPassword().isEmpty()),
+            (item != null && isUsePwd),
             ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION,
             item != null ? item.getPassword() : ""));
     handleAudioSetting();
@@ -468,7 +468,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
       binding.btnStartScheduleMeeting.setText("编辑会议");
       startTime = item.getStartTime();
       endTime = item.getEndTime();
-      isUsePwd = !item.getPassword().isEmpty();
+      isUsePwd = !TextUtils.isEmpty(item.getPassword());
       mViewModel.passWord.setValue(item.getPassword());
       mViewModel.tittle.setValue(item.getSubject());
       mViewModel.extraData.setValue(item.getExtraData());

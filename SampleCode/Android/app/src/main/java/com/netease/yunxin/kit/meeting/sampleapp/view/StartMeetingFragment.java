@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.StartMeetingViewModel;
 import com.netease.yunxin.kit.meeting.sdk.NEAccountService;
+import com.netease.yunxin.kit.meeting.sdk.NEEncryptionConfig;
+import com.netease.yunxin.kit.meeting.sdk.NEEncryptionMode;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingAttendeeOffType;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingAudioControl;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingControl;
@@ -68,7 +70,13 @@ public class StartMeetingFragment extends MeetingCommonFragment {
   @Override
   protected String[] getEditorLabel() {
     return new String[] {
-      "会议号(留空或使用个人会议号)", "昵称", "请输入密码", "个人TAG", "扩展字段", "json结构uid-role:{\"dew323esd23ew23e3r\":1}"
+      "会议号(留空或使用个人会议号)",
+      "昵称",
+      "请输入密码",
+      "个人TAG",
+      "媒体流加密密钥",
+      "扩展字段",
+      "json结构uid-role:{\"dew323esd23ew23e3r\":1}"
     };
   }
 
@@ -94,11 +102,11 @@ public class StartMeetingFragment extends MeetingCommonFragment {
     if (!TextUtils.isEmpty(fourth)) {
       params.tag = fourth;
     }
-    String extraData = getEditorText(4);
+    String extraData = getEditorText(5);
     if (!TextUtils.isEmpty(extraData)) {
       params.extraData = extraData;
     }
-    String roleBindsStr = getEditorText(5);
+    String roleBindsStr = getEditorText(6);
     if (!TextUtils.isEmpty(roleBindsStr)) {
       try {
         JSONObject roleBindJson = new JSONObject(roleBindsStr);
@@ -129,6 +137,10 @@ public class StartMeetingFragment extends MeetingCommonFragment {
     }
     if (controls.size() > 0) {
       params.controls = controls;
+    }
+    if (isCheckedById(R.id.cb_encryption)) {
+      params.encryptionConfig =
+          new NEEncryptionConfig(NEEncryptionMode.GMCryptoSM4ECB, getEditorText(4));
     }
 
     NEStartMeetingOptions options =

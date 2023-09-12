@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "29.0.3"
 
     viewBinding {
         enabled = true
@@ -13,8 +12,8 @@ android {
         applicationId "com.netease.yunxin.kit.meeting.sampleapp"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 31000
-        versionName "3.10.0"
+        versionCode 31600
+        versionName "3.16.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,10 +38,12 @@ android {
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
 }
-
+repositories {
+    flatDir dirs: 'libs'
+}
 dependencies {
     // meeting
-    implementation 'com.netease.yunxin.kit.meeting:meeting:3.15.0'
+    implementation 'com.netease.yunxin.kit.meeting:meeting:3.16.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'

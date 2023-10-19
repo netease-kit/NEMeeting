@@ -18,6 +18,7 @@
     </string-array>
 
     <string-array name="AudioScenarioNames">
+        <item>未设置</item>
         <item>默认</item>
         <item>通话</item>
         <item>音乐</item>
@@ -25,6 +26,7 @@
     </string-array>
 
     <string-array name="AudioScenarioValues">
+        <item>-1</item>
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -32,6 +34,7 @@
     </string-array>
 
     <string-array name="AudioProfileNames">
+        <item>未设置</item>
         <item>DEFAULT</item>
         <item>STANDARD</item>
         <item>STANDARD_EXTEND</item>
@@ -42,6 +45,7 @@
     </string-array>
 
     <string-array name="AudioProfileValues">
+        <item>-1</item>
         <item>0</item>
         <item>1</item>
         <item>2</item>

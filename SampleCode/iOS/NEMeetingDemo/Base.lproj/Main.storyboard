@@ -119,7 +119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-191.30434782608697" y="119.86607142857142"/>
+            <point key="canvasLocation" x="-29" y="96"/>
         </scene>
         <!--网易会议Demo-->
         <scene sceneID="K1h-Jj-JLh">
@@ -643,6 +643,17 @@
                                     <action selector="onLeaveCurrentMeeting:" destination="chG-oq-e3a" eventType="touchUpInside" id="46E-kl-MGL"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="流媒体加密密钥" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lI8-td-lfP">
+                                <rect key="frame" x="16" y="731" width="382" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eju-Sw-TxT">
+                                <rect key="frame" x="16" y="765" width="382" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ks5-zp-udT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -660,6 +671,7 @@
                     <navigationItem key="navigationItem" title="网易会议" id="6xJ-VD-2cX"/>
                     <connections>
                         <outlet property="configCheckBox" destination="peJ-8z-lnX" id="DUM-Rw-k47"/>
+                        <outlet property="encryptionKeyInput" destination="lI8-td-lfP" id="ZYM-PV-JX8"/>
                         <outlet property="enterBtn" destination="Wbf-5g-AtC" id="Epk-8k-PO1"/>
                         <outlet property="meetingIdInput" destination="hUm-RV-4u6" id="f88-Y3-893"/>
                         <outlet property="nickInput" destination="IHf-Fa-kfF" id="aeH-Dq-6TT"/>

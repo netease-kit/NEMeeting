@@ -214,6 +214,7 @@
 		41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAuthHelper.m; sourceTree = "<group>"; };
 		5354C499286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEditSubscribeMeetingVC.m; sourceTree = "<group>"; };
 		5354C49A286EEDDB000F5193 /* NSEditSubscribeMeetingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditSubscribeMeetingVC.h; sourceTree = "<group>"; };
+		537437482ADFD7110058ECBB /* MeetingConfigEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingConfigEnum.h; sourceTree = "<group>"; };
 		7F47C73E59370BEEAE7064C7 /* Pods-NEMeetingDemo-Broadcaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo-Broadcaster/Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; sourceTree = "<group>"; };
 		9E451CEF25B041BF00E69CDE /* MeetingMenuSelectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingMenuSelectVC.h; sourceTree = "<group>"; };
 		9E451CF025B041BF00E69CDE /* MeetingMenuSelectVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingMenuSelectVC.m; sourceTree = "<group>"; };
@@ -266,6 +267,7 @@
 		410B434224AC665600017FA6 /* Section */ = {
 			isa = PBXGroup;
 			children = (
+				537437482ADFD7110058ECBB /* MeetingConfigEnum.h */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
 				41E9117925010E6900E63D80 /* CustomViewController.m */,
 				410B431B24AB295B00017FA6 /* EnterMeetingVC.h */,

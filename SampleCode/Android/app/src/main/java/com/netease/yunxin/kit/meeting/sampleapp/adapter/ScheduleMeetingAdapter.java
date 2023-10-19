@@ -124,7 +124,7 @@ public class ScheduleMeetingAdapter
         sbMeetingSwitch.setVisibility(View.GONE);
         if (TextUtils.isEmpty(edtMeetingTheme.getText())) {
           edtMeetingTheme.setText(
-              data.getValueString().isEmpty()
+              TextUtils.isEmpty(data.getValueString())
                   ? SdkAuthenticator.getAccount() + "的预约会议"
                   : data.getValueString());
         }
@@ -132,7 +132,7 @@ public class ScheduleMeetingAdapter
       case ScheduleMeetingItem.SET_EXTRA_DATA_ACTION:
         edtMeetingTheme.setVisibility(View.VISIBLE);
         edtMeetingTheme.setHint("");
-        if (!data.getValueString().isEmpty()) {
+        if (!TextUtils.isEmpty(data.getValueString())) {
           edtMeetingTheme.setText(data.getValueString());
         }
         break;
@@ -140,9 +140,9 @@ public class ScheduleMeetingAdapter
         edtMeetingTheme.setVisibility(View.VISIBLE);
         sbMeetingSwitch.setVisibility(View.GONE);
         edtMeetingTheme.setHint("{\"dew323esd23ew23e3r\":1}");
-        if (!data.getValueString().isEmpty()) {
+        if (!TextUtils.isEmpty(data.getValueString())) {
           edtMeetingTheme.setText(data.getValueString());
-        } else if (roleBindData.getValue() != null && !roleBindData.getValue().isEmpty()) {
+        } else if (!TextUtils.isEmpty(roleBindData.getValue())) {
           edtMeetingTheme.setText(roleBindData.getValue());
         } else {
           edtMeetingTheme.setText("");
@@ -152,7 +152,7 @@ public class ScheduleMeetingAdapter
       case ScheduleMeetingItem.SET_END_TIME_ACTION:
         tvMeetingTime.setVisibility(View.VISIBLE);
         sbMeetingSwitch.setVisibility(View.GONE);
-        if (!data.getValueString().isEmpty()) {
+        if (!TextUtils.isEmpty(data.getValueString())) {
           tvMeetingTime.setText(data.getValueString());
         } else {
           tvMeetingTime.setText(data.getTimeTip());
@@ -161,7 +161,7 @@ public class ScheduleMeetingAdapter
       case ScheduleMeetingItem.ENABLE_MEETING_PWD_ACTION:
         sbMeetingSwitch.setVisibility(View.VISIBLE);
 
-        if (!data.getValueString().isEmpty()) {
+        if (!TextUtils.isEmpty(data.getValueString())) {
           sbMeetingSwitch.setChecked(data.isSwitchOn());
           edtMeetingPwd.setText(data.getValueString());
         }

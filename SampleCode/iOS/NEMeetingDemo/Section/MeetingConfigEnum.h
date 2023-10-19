@@ -39,7 +39,8 @@ typedef NS_ENUM(NSInteger, MeetingSettingType) {
   MeetingSettingTypeEnableFrontCameraMirror,
   MeetingSettingTypeShowFloatingMicrophone,
   MeetingSettingTypeJoinOffLive,
-  MeetingSettingTypeEnabeAudioShare
+  MeetingSettingTypeEnabeAudioShare,
+  MeetingSettingTypeEnableEncryption
 };
 
 /// 创建会议设置选项类型
@@ -75,7 +76,8 @@ typedef NS_ENUM(NSInteger, CreateMeetingSettingType) {
   CreateMeetingSettingTypeEnableFrontCameraMirror,
   CreateMeetingSettingTypeShowFloatingMicrophone,
   CreateMeetingSettingTypeJoinOffLive,
-  CreateMeetingSettingTypeEnabeAudioShare
+  CreateMeetingSettingTypeEnabeAudioShare,
+  CreateMeetingSettingTypeEnableEncryption
 };
 
 #endif /* MeetingConfigEnum_h */

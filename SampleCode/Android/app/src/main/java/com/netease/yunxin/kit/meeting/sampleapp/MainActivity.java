@@ -19,7 +19,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.netease.yunxin.kit.meeting.sampleapp.base.BaseActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.ActivityMainBinding;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
-import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMAuthService;
 import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMLoginActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.MainViewModel;
@@ -30,6 +29,7 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingService;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuClickInfo;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuStateController;
+import java.lang.reflect.Method;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   private MainViewModel mViewModel;
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     checkAppKey();
   }
@@ -157,15 +157,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   }
 
   @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    MenuItem item = menu.findItem(R.id.im_login);
-    if (item != null) {
-      item.setVisible(NIMAuthService.getInstance().isReuseNIMEnabled());
-    }
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     int itemId = item.getItemId();
     switch (itemId) {
@@ -174,6 +165,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         break;
       case R.id.im_login:
         NIMLoginActivity.start(this);
+        break;
+      case R.id.open_flutter_page:
+        try {
+          Class<?> clz =
+              Class.forName("com.example.flutter_module_library.FlutterContainerActivity");
+          Method startCached = clz.getDeclaredMethod("startCached", Context.class);
+          startCached.setAccessible(true);
+          startCached.invoke(null, this);
+        } catch (Throwable e) {
+          e.printStackTrace();
+        }
         break;
       case R.id.minimize_meeting:
         minimizeCurrentMeeting();
@@ -240,15 +242,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
   }
 
   private void checkAppKey() {
-    String appKey = getString(R.string.appkey);
+    String appKey = MeetingApplication.getInstance().getServerConfig().getAppKey();
     if ("Your AppKey".equals(appKey)) {
-    new AlertDialog.Builder(this)
-            .setTitle("检测到AppKey未设置")
-            .setMessage("请在'appkey.xml'文件中填入正确的AppKey")
-            .setPositiveButton("OK", null)
-            .setCancelable(false)
-            .create()
-            .show();
+      new AlertDialog.Builder(this)
+          .setTitle("检测到AppKey未设置")
+          .setMessage("请在'appkey.xml'文件中填入正确的AppKey")
+          .setPositiveButton("OK", null)
+          .setCancelable(false)
+          .create()
+          .show();
     }
   }
 }

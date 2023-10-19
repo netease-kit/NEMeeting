@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property(weak, nonatomic) IBOutlet UITextField *passwordInput;
 /// 会议主题输入框
 @property(weak, nonatomic) IBOutlet UITextField *subjectInput;
+@property (strong, nonatomic) IBOutlet UITextField *encryptionKeyInput;
 
 @property(nonatomic, copy) NSString *meetingNum;
 @property(nonatomic, assign) BOOL audioOffAllowSelfOn;
@@ -82,7 +83,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"显示会议结束提醒",   @"聊天室文件消息",     @"聊天室图片消息",
     @"开启静音检测",       @"关闭静音包",         @"显示屏幕共享者画面",
     @"显示白板共享者画面", @"设置白板透明",   @"前置摄像头镜像",
-    @"显示麦克风浮窗",  @"入会时隐藏直播菜单", @"开启音频共享"
+    @"显示麦克风浮窗",  @"入会时隐藏直播菜单", @"开启音频共享",
+    @"开启加密"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableFile];
@@ -131,6 +133,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   params.extraData = _extraInput.text.length ? _extraInput.text : nil;
   // 会议主题
   params.subject = _subjectInput.text;
+    // 是否开启媒体流加密
+    if ([self selectedSetting:CreateMeetingSettingTypeEnableEncryption]) {
+      NEEncryptionConfig *encryptionConfig = [[NEEncryptionConfig alloc] init];
+      encryptionConfig.encryptionMode = GMCryptoSM4ECB;
+      encryptionConfig.encryptKey = _encryptionKeyInput.text;
+      params.encryptionConfig = encryptionConfig;
+    }
   // 联席主持人配置
   if (_coHostInput.text.length) {
     NSString *cohostText = _coHostInput.text;

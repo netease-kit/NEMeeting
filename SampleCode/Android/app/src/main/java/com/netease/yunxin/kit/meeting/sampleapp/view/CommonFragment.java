@@ -25,7 +25,7 @@ public abstract class CommonFragment extends Fragment {
     super(contentLayoutId);
   }
 
-  private EditText[] editorArray = new EditText[6];
+  private EditText[] editorArray = new EditText[7];
 
   protected abstract String getActionLabel();
 

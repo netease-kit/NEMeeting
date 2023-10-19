@@ -133,13 +133,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   params.extraData = _extraInput.text.length ? _extraInput.text : nil;
   // 会议主题
   params.subject = _subjectInput.text;
-    // 是否开启媒体流加密
-    if ([self selectedSetting:CreateMeetingSettingTypeEnableEncryption]) {
-      NEEncryptionConfig *encryptionConfig = [[NEEncryptionConfig alloc] init];
-      encryptionConfig.encryptionMode = GMCryptoSM4ECB;
-      encryptionConfig.encryptKey = _encryptionKeyInput.text;
-      params.encryptionConfig = encryptionConfig;
-    }
+  // 是否开启媒体流加密
+  if ([self selectedSetting:CreateMeetingSettingTypeEnableEncryption]) {
+    NEEncryptionConfig *encryptionConfig = [[NEEncryptionConfig alloc] init];
+    encryptionConfig.encryptionMode = GMCryptoSM4ECB;
+    encryptionConfig.encryptKey = _encryptionKeyInput.text;
+    params.encryptionConfig = encryptionConfig;
+  }
   // 联席主持人配置
   if (_coHostInput.text.length) {
     NSString *cohostText = _coHostInput.text;

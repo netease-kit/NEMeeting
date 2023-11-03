@@ -16,7 +16,7 @@
 * Kotlin
 ```
 dependencies {
-    val meetingkit_version = "3.16.0"
+    val meetingkit_version = "3.17.0"
     implementation("com.netease.yunxin.kit.meeting:meeting:$meetingkit_version")
 }
 ```
@@ -24,7 +24,7 @@ dependencies {
 * Groovy
 ```
 dependencies {
-    def meetingkit_version = "3.16.0"
+    def meetingkit_version = "3.17.0"
     implementation "com.netease.yunxin.kit.meeting:meeting:$meetingkit_version"
 }
 ```

@@ -60,6 +60,9 @@
             android:id="@+id/action_homeFragment_to_scheduleMeetingFragment"
             app:destination="@id/scheduleMeetingFragment" />
         <action
+            android:id="@+id/action_homeFragment_to_screenSharingFragment"
+            app:destination="@id/screenSharingFragment" />
+        <action
             android:id="@+id/action_homeFragment_to_scheduleMeetingDetailFragment"
             app:destination="@id/scheduleMeetingDetailFragment" />
         <action
@@ -84,6 +87,11 @@
         android:name="com.netease.yunxin.kit.meeting.sampleapp.view.ScheduleMeetingFragment"
         android:label="ScheduleMeetingFragment"
         tools:layout="@layout/fragment_schedule" />
+    <fragment
+        android:id="@+id/screenSharingFragment"
+        android:name="com.netease.yunxin.kit.meeting.sampleapp.view.ScreenSharingFragment"
+        android:label="ScreenSharingFragment"
+        tools:layout="@layout/fragment_screen_share" />
     <fragment
         android:id="@+id/scheduleMeetingDetailFragment"
         android:name="com.netease.yunxin.kit.meeting.sampleapp.view.ScheduleMeetingDetailFragment"

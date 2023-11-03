@@ -117,6 +117,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         v ->
             Navigation.findNavController(getView())
                 .navigate(R.id.action_homeFragment_to_scheduleMeetingFragment));
+    binding.btnScreenSharing.setOnClickListener(
+        v ->
+            Navigation.findNavController(getView())
+                .navigate(R.id.action_homeFragment_to_screenSharingFragment));
     binding.btnSetting.setOnClickListener(
         v ->
             Navigation.findNavController(getView())

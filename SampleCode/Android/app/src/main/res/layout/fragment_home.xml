@@ -77,9 +77,25 @@
             app:itb_text_size="14sp"
             app:layout_constraintBottom_toBottomOf="@id/btn_start_meeting"
             app:layout_constraintLeft_toRightOf="@+id/btn_join_meeting"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_screen_sharing"
             app:layout_constraintTop_toTopOf="@+id/btn_start_meeting" />
 
+        <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
+            android:id="@+id/btn_screen_sharing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:itb_bg="@color/white"
+            app:itb_icon="@drawable/share_screen"
+            app:itb_icon_position="bottom"
+            app:itb_icon_size="74dp"
+            app:itb_radius="3dp"
+            app:itb_text="屏幕共享"
+            app:itb_text_color="@color/black"
+            app:itb_text_size="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_start_meeting"
+            app:layout_constraintLeft_toRightOf="@+id/btn_schedule_meeting"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_start_meeting" />
 
         <com.netease.yunxin.kit.meeting.sampleapp.widget.ImageTextButton
             android:id="@+id/btn_start_meeting"

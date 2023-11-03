@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2022 NetEase, Inc. All rights reserved. -->
+<!-- Use of this source code is governed by a MIT license that can be -->
+<!-- found in the LICENSE file. -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/screenSharingFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.ScheduleMeetingFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF2F3F5"
+        tools:context=".MainActivity">
+        <EditText
+            android:id="@+id/edt_screen_sharing_code"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="22dp"
+            android:gravity="left|center"
+            android:hint="请输入投屏码"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:textColor="#FF999999"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/edt_screen_sharing_name"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="22dp"
+            android:gravity="left|center"
+            android:hint="请输入投屏昵称"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:textColor="#FF999999"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_screen_sharing_code" />
+        <CheckBox
+            android:id="@+id/checkbox_screen_share_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_screen_sharing_name"
+            android:text="音频共享" />
+        <Button
+            android:id="@+id/btn_screen_sharing"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/button_circle_shape"
+            android:text="投屏共享"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -3,12 +3,11 @@
 // found in the LICENSE file.
 
 #import "StartMeetingVC.h"
-#import "MeetingSettingVC.h"
 #import "CheckBox.h"
 #import "MeetingMenuSelectVC.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <NEMeetingKit/NEMeetingKit.h>
-#import <YYModel/YYModel.h>
+#import <NEJsonModel/NEJsonModel.h>
 #import "MeetingConfigRepository.h"
 #import "MeetingConfigEnum.h"
 

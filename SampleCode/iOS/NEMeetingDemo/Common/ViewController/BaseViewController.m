@@ -28,8 +28,13 @@
         self.navigationController.navigationBar.scrollEdgeAppearance = navBar;
         self.navigationController.navigationBar.standardAppearance = navBar;
     }
+    [self setupSubviews];
+    [self makeConstraints];
 }
-
+- (void)setupSubviews {
+}
+- (void)makeConstraints {
+}
 - (void)hiddenBackButton {
     [self.navigationController.navigationItem setHidesBackButton:YES];
     [self.navigationItem setHidesBackButton:YES];

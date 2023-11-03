@@ -5,7 +5,7 @@
 #import "NESubscribeMeetingConfigVC.h"
 #import "UIView+Toast.h"
 #import "NEFromDatePicker.h"
-#import <YYModel/YYModel.h>
+#import <NEJsonModel/NEJsonModel.h>
 
 @interface NESubscribeMeetingConfigVC ()
 
@@ -172,7 +172,7 @@
     NEFromGroup *group = [NEFromGroup new];
     NEFromRow *cohostRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kCohostTitle"];
     cohostRow.title = @"角色绑定";
-    cohostRow.value =  [_item.roleBinds yy_modelToJSONString];
+    cohostRow.value =  [_item.roleBinds ne_modelToJSONString];
 //    cohostRow.value = @"{\"42ea43e7df3512e117fa8330\":0,\"9f9071de70e7be411abf716e\":1}";
     cohostRow.config = @{
         @"placeholder" : @"请输入配置",

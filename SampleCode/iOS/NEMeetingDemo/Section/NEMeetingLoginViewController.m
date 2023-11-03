@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 #import "NEMeetingLoginViewController.h"
-#import "MeetingControlVC.h"
 #import "ServerConfig.h"
 #import "LoginInfoManager.h"
+#import "homePageVC.h"
 
 @interface NEMeetingLoginViewController ()
 
@@ -48,7 +48,7 @@
         } else {
             [[LoginInfoManager shareInstance] saveLoginInfo:weakSelf.accountInput.text
                                                    password:weakSelf.passwordInput.text];
-            MeetingControlVC *vc = [[MeetingControlVC alloc] init];
+            HomePageVC *vc = [[HomePageVC alloc] init];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
     }];

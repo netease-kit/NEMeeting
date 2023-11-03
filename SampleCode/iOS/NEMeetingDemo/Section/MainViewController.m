@@ -8,7 +8,7 @@
 #import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
-#import "MeetingControlVC.h"
+#import "HomePageVC.h"
 #import "AppSettingsVC.h"
 #import "MeetingSettingVC.h"
 
@@ -42,7 +42,7 @@
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         } else {
-            MeetingControlVC *vc = [[MeetingControlVC alloc] init];
+            HomePageVC *vc = [[HomePageVC alloc] init];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
     }];

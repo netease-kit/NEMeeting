@@ -1,5 +1,33 @@
 # NEMeetingKit ChangeLog
+## v3.17.0 (Oct 31, 2023)
+
+### New Features
+
+- 新增屏幕共享服务接口 `NEScreenSharingService`
+  - 开启屏幕共享 `startScreenShare`
+  - 停止屏幕共享 `stopScreenShare`
+  - 添加监听 `addScreenSharingStatusListener`
+  - 移除监听 `removeScreenSharingStatusListener`
+  - 屏幕状态变更回调 `onScreenSharingStatusChanged`
+- 新增屏幕共享状态变更模型 `NEScreenSharingEvent`
+  - 当前共享状态 `NEScreenSharingStatus`
+  - 额外附带参数 `arg`
+  - 额外附带数据对象 `obj`
+- 新增屏幕共享时配置信息类 `NEScreenSharingOptions`
+  - 开启/关闭音频功能 `enableAudioShare`
+- 新增屏幕共享时基本参数类 `NEScreenSharingParams`
+  - 用户昵称 `displayName`
+  - 共享码 `sharingCode`
+- `NEMeetingKit` 新增获取共享屏幕服务接口 `getScreenSharingService`
+
+### Compatibility
+
+* 兼容 `NERoom` 1.21.0 版本
+* 兼容 `NIM` 9.12.0 版本
+* 兼容 `NERtcSDK_Special` 5.5.203 版本
+
 ## v3.16.1(SEP 8, 2023)
+
 - 适配Android 版本低于8.0无法使用画中画功能，默认以最小化
 
 ## v3.16.0(SEP 6, 2023)

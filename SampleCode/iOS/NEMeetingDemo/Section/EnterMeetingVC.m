@@ -18,13 +18,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 @property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
 @property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
-
 @property (weak, nonatomic) IBOutlet UITextField *meetingIdInput;
 @property (weak, nonatomic) IBOutlet UITextField *nickInput;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UIButton *enterBtn;
 @property (weak, nonatomic) IBOutlet UITextField *passworkInput;
 @property (weak, nonatomic) IBOutlet UITextField *tagInput;
+@property (strong, nonatomic) IBOutlet UITextField *encryptionKeyInput;
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
 @property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullMoreMenuItems;
 // 自定义菜单类型：toolbar/更多
@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"隐藏Sip菜单",        @"显示用户角色标签",   @"显示会议结束提醒", @"聊天室文件消息",
     @"聊天室图片消息",     @"开启静音检测",       @"关闭静音包",       @"显示屏幕共享者画面",
     @"显示白板共享者画面", @"设置白板透明", @"前置摄像头镜像",  @"显示麦克风浮窗",
-    @"入会时隐藏直播菜单", @"开启音频共享"
+    @"入会时隐藏直播菜单", @"开启音频共享", @"开启加密"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeChatroomEnableFile];
@@ -91,6 +91,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   params.password = _passworkInput.text;
   params.tag = _tagInput.text;
 
+  // 是否开启媒体流加密
+  if ([self selectedSetting:MeetingSettingTypeEnableEncryption]) {
+    NEEncryptionConfig *encryptionConfig = [[NEEncryptionConfig alloc] init];
+    encryptionConfig.encryptionMode = GMCryptoSM4ECB;
+    encryptionConfig.encryptKey = _encryptionKeyInput.text;
+    params.encryptionConfig = encryptionConfig;
+  }
   NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
   // 默认会议配置
   if (![self selectedSetting:MeetingSettingTypeDefaultSetting]) {

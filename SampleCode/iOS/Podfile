@@ -12,6 +12,6 @@ target 'NEMeetingDemo' do
   pod 'Masonry', '~> 1.1.0'
   pod 'Reachability'
   
-  pod 'NEMeetingKit', '~> 3.15.0'
+  pod 'NEMeetingKit', '~> 3.16.1'
 end
 

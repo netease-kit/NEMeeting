@@ -13,7 +13,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.netease.yunxin.kit.meeting.R;
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfig;
-import com.netease.yunxin.kit.meeting.sampleapp.nim.NIMAuthService;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.SPUtils;
 import com.netease.yunxin.kit.meeting.sdk.NELogLevel;
 import com.netease.yunxin.kit.meeting.sdk.NELoggerConfig;
@@ -119,6 +118,13 @@ public class SdkInitializer {
     NEMeetingKitConfig config = new NEMeetingKitConfig();
     config.appKey = serverConfig.getAppKey();
     config.language = getSelectLanguage();
+    /// to remove start
+//    config.extras =
+//        new HashMap<String, Object>() {
+//          {
+//            put("debugMode", serverConfig.isDebugMode() ? 1 : 0);
+//          }
+//        };
     config.appName = context.getString(R.string.app_name);
     config.serverUrl = serverConfig.getServerUrl();
     config.useAssetServerConfig = serverConfig.getUseAssetServerConfig();

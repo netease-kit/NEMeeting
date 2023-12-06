@@ -6,7 +6,6 @@
 #import "LoginInfoManager.h"
 
 NSString *const kAppKey = @"Your_Meeting_App_Key";
-
 NSString * const kServerType = @"serverType";
 NSString * const kCustomAppKey = @"customAppKey";
 NSString * const kCustomAppServerUrl = @"customAppServerUrl";

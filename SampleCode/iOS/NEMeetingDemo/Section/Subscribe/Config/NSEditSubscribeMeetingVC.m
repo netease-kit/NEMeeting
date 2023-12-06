@@ -205,7 +205,7 @@
     NEFromGroup *group = [NEFromGroup new];
     NEFromRow *cohostRow = [NEFromRow rowWithType:NEFromRowTypeTitleInput tag:@"kCohostTitle"];
     cohostRow.title = @"角色绑定";
-    cohostRow.value = [_item.roleBinds yy_modelToJSONString];
+    cohostRow.value = [_item.roleBinds ne_modelToJSONString];
     cohostRow.config = @{
         @"placeholder" : @"请输入配置",
         @"disableCopy" : @(YES),

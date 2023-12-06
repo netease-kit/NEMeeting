@@ -5,12 +5,12 @@ package com.netease.yunxin.kit.meeting.sampleapp.data;
 
 public class SDKAuthInfo {
 
-    public SDKAuthInfo(String account, String token) {
-        this.account = account;
-        this.token = token;
-    }
+  public SDKAuthInfo(String account, String token) {
+    this.account = account;
+    this.token = token;
+  }
 
-    public final String account;
+  public final String account;
 
-    public final String token;
+  public final String token;
 }

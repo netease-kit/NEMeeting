@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -69,6 +69,11 @@
 		41F8C3A624B5971E0039301B /* strip_archs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 41F8C3A524B5971E0039301B /* strip_archs.sh */; };
 		41FE2B9224AD8F5800624342 /* SystemAuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */; };
 		5354C49B286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5354C499286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m */; };
+		53AC393E2AF4D4F300A5D42A /* HomePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AC39392AF4D4F300A5D42A /* HomePageVC.m */; };
+		53AC393F2AF4D4F300A5D42A /* HomeItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AC393B2AF4D4F300A5D42A /* HomeItemCell.m */; };
+		53AC39402AF4D4F300A5D42A /* HomeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AC393D2AF4D4F300A5D42A /* HomeItem.m */; };
+		53AC39442AF4D54200A5D42A /* NEMeetingSafeArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AC39432AF4D54200A5D42A /* NEMeetingSafeArea.m */; };
+		53AC39472AF4D56900A5D42A /* ScreenShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AC39462AF4D56900A5D42A /* ScreenShareVC.m */; };
 		9E451CF125B041BF00E69CDE /* MeetingMenuSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E451CF025B041BF00E69CDE /* MeetingMenuSelectVC.m */; };
 		9E451CF625B04C3100E69CDE /* MeetingMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E451CF525B04C3100E69CDE /* MeetingMenuItemCell.m */; };
 		F97D528B8E70D69CC58B6CC9 /* Pods_NEMeetingDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B417BBB81DD9FF5688ED5537 /* Pods_NEMeetingDemo.framework */; };
@@ -214,6 +219,17 @@
 		41FE2B9124AD8F5800624342 /* SystemAuthHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAuthHelper.m; sourceTree = "<group>"; };
 		5354C499286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEditSubscribeMeetingVC.m; sourceTree = "<group>"; };
 		5354C49A286EEDDB000F5193 /* NSEditSubscribeMeetingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditSubscribeMeetingVC.h; sourceTree = "<group>"; };
+		537437482ADFD7110058ECBB /* MeetingConfigEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingConfigEnum.h; sourceTree = "<group>"; };
+		53AC39382AF4D4F300A5D42A /* HomeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeItem.h; sourceTree = "<group>"; };
+		53AC39392AF4D4F300A5D42A /* HomePageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageVC.m; sourceTree = "<group>"; };
+		53AC393A2AF4D4F300A5D42A /* HomeItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeItemCell.h; sourceTree = "<group>"; };
+		53AC393B2AF4D4F300A5D42A /* HomeItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeItemCell.m; sourceTree = "<group>"; };
+		53AC393C2AF4D4F300A5D42A /* HomePageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageVC.h; sourceTree = "<group>"; };
+		53AC393D2AF4D4F300A5D42A /* HomeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeItem.m; sourceTree = "<group>"; };
+		53AC39422AF4D54200A5D42A /* NEMeetingSafeArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEMeetingSafeArea.h; sourceTree = "<group>"; };
+		53AC39432AF4D54200A5D42A /* NEMeetingSafeArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEMeetingSafeArea.m; sourceTree = "<group>"; };
+		53AC39452AF4D56900A5D42A /* ScreenShareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenShareVC.h; sourceTree = "<group>"; };
+		53AC39462AF4D56900A5D42A /* ScreenShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenShareVC.m; sourceTree = "<group>"; };
 		7F47C73E59370BEEAE7064C7 /* Pods-NEMeetingDemo-Broadcaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo-Broadcaster/Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; sourceTree = "<group>"; };
 		9E451CEF25B041BF00E69CDE /* MeetingMenuSelectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingMenuSelectVC.h; sourceTree = "<group>"; };
 		9E451CF025B041BF00E69CDE /* MeetingMenuSelectVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingMenuSelectVC.m; sourceTree = "<group>"; };
@@ -255,6 +271,7 @@
 		410B431E24AB2B7500017FA6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				53AC39412AF4D54200A5D42A /* SafeArea */,
 				410B435B24AC8E5E00017FA6 /* ViewController */,
 				410B435A24AC8E5000017FA6 /* View */,
 				410B435924AC8E4800017FA6 /* Catagories */,
@@ -266,6 +283,10 @@
 		410B434224AC665600017FA6 /* Section */ = {
 			isa = PBXGroup;
 			children = (
+				53AC39452AF4D56900A5D42A /* ScreenShareVC.h */,
+				53AC39462AF4D56900A5D42A /* ScreenShareVC.m */,
+				53AC39372AF4D4CC00A5D42A /* Home */,
+				537437482ADFD7110058ECBB /* MeetingConfigEnum.h */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
 				41E9117925010E6900E63D80 /* CustomViewController.m */,
 				410B431B24AB295B00017FA6 /* EnterMeetingVC.h */,
@@ -532,6 +553,28 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		53AC39372AF4D4CC00A5D42A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				53AC39382AF4D4F300A5D42A /* HomeItem.h */,
+				53AC393D2AF4D4F300A5D42A /* HomeItem.m */,
+				53AC393A2AF4D4F300A5D42A /* HomeItemCell.h */,
+				53AC393B2AF4D4F300A5D42A /* HomeItemCell.m */,
+				53AC393C2AF4D4F300A5D42A /* HomePageVC.h */,
+				53AC39392AF4D4F300A5D42A /* HomePageVC.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		53AC39412AF4D54200A5D42A /* SafeArea */ = {
+			isa = PBXGroup;
+			children = (
+				53AC39422AF4D54200A5D42A /* NEMeetingSafeArea.h */,
+				53AC39432AF4D54200A5D42A /* NEMeetingSafeArea.m */,
+			);
+			path = SafeArea;
+			sourceTree = "<group>";
+		};
 		9B38B1500FB22AF9DA704F66 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,10 +750,13 @@
 				5354C49B286EEDDB000F5193 /* NSEditSubscribeMeetingVC.m in Sources */,
 				410B432524AB2FF800017FA6 /* MeetingControlVC.m in Sources */,
 				410B433F24AC5F1100017FA6 /* BaseViewController.m in Sources */,
+				53AC39472AF4D56900A5D42A /* ScreenShareVC.m in Sources */,
 				410B435524AC81F500017FA6 /* NSData+Demo.m in Sources */,
+				53AC393F2AF4D4F300A5D42A /* HomeItemCell.m in Sources */,
 				419EE4CE2508ABA3004F8984 /* SubMeetingCell.m in Sources */,
 				41937CAE24B4611C00A06BF2 /* SVIndefiniteAnimatedView.m in Sources */,
 				410B431124AB289600017FA6 /* CheckBox.m in Sources */,
+				53AC393E2AF4D4F300A5D42A /* HomePageVC.m in Sources */,
 				419EE5192509F413004F8984 /* NEFromTitleInputCell.m in Sources */,
 				3AAF4F422559733700EB25E5 /* NEMeetingLoginViewController.m in Sources */,
 				41A1C98C24A302F9003369D3 /* MainViewController.m in Sources */,
@@ -742,6 +788,7 @@
 				414EF1EC251AE73F00F9D91A /* MeetingActionVC.m in Sources */,
 				410B431A24AB294100017FA6 /* LoginViewController.m in Sources */,
 				410B432124AB2DB000017FA6 /* UIView+Toast.m in Sources */,
+				53AC39402AF4D4F300A5D42A /* HomeItem.m in Sources */,
 				2DA99BEC27FDEE8500D4CE12 /* AppDelegate+MeetingExtension.m in Sources */,
 				41937CAD24B4611C00A06BF2 /* SVProgressHUD.m in Sources */,
 				41937CB324B4626100A06BF2 /* LoginInfoManager.m in Sources */,
@@ -752,6 +799,7 @@
 				419EE4D42508BA23004F8984 /* SubscribeMeetingListVC.m in Sources */,
 				2D38F24825837EC800406DCC /* SelectedMenuItemCell.m in Sources */,
 				419EE5142509C547004F8984 /* NEFromTitleDateCell.m in Sources */,
+				53AC39442AF4D54200A5D42A /* NEMeetingSafeArea.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,9 +946,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NEMeetingDemo/NEMeetingDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 11000;
-				DEVELOPMENT_TEAM = 569GNZ5392;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7C9A6NRV5L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -917,9 +967,10 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.hawk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Meeting_Dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
 			};
@@ -932,9 +983,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NEMeetingDemo/NEMeetingDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 11000;
-				DEVELOPMENT_TEAM = 569GNZ5392;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7C9A6NRV5L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -948,9 +1001,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.hawk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Meeting_Dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
 			};
@@ -1021,9 +1075,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NEMeetingDemo/NEMeetingDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 11000;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7C9A6NRV5L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1037,9 +1093,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.meetinglib.sdk.NEMeetingDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.hawk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Meeting_Dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
 			};

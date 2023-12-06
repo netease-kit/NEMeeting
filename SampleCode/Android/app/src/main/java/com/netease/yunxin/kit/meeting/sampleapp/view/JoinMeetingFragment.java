@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.SdkAuthenticator;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.JoinMeetingViewModel;
+import com.netease.yunxin.kit.meeting.sdk.NEEncryptionConfig;
+import com.netease.yunxin.kit.meeting.sdk.NEEncryptionMode;
 import com.netease.yunxin.kit.meeting.sdk.NEJoinMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEJoinMeetingParams;
 
@@ -41,7 +43,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
 
   @Override
   protected String[] getEditorLabel() {
-    return new String[] {"会议号", "昵称", "请输入密码", "个人TAG"};
+    return new String[] {"会议号", "昵称", "请输入密码", "个人TAG", "媒体流加密密钥"};
   }
 
   @Override
@@ -60,6 +62,10 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
     }
     if (!TextUtils.isEmpty(fourth)) {
       params.tag = fourth;
+    }
+    if (isCheckedById(R.id.cb_encryption)) {
+      params.encryptionConfig =
+          new NEEncryptionConfig(NEEncryptionMode.GMCryptoSM4ECB, getEditorText(4));
     }
     NEJoinMeetingOptions options =
         (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());

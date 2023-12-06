@@ -8,14 +8,12 @@
 #import "IMLoginVC.h"
 #import "CustomViewController.h"
 #import "TimerButton.h"
-#import "MeetingControlVC.h"
+#import "HomePageVC.h"
 #import "AppSettingsVC.h"
 #import "MeetingSettingVC.h"
 
 @interface MainViewController ()<MeetingServiceListener>
-
 @property (nonatomic, strong) UIButton *mulIMBtn;
-@property (nonatomic, strong) TimerButton *restoreMeetingBtn;
 @property (nonatomic, strong) UIViewController *preVC;
 @property (nonatomic, strong) UIAlertController *alert;
 @end
@@ -31,16 +29,6 @@
                                                object:nil];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    if (@available(iOS 11.0, *)) {
-        _restoreMeetingBtn.frame = CGRectMake(0, self.view.safeAreaInsets.top, self.view.width, 20);
-    } else {
-        _restoreMeetingBtn.frame = CGRectMake(0, 64, self.view.width, 20);
-    }
-}
-
 - (void)onMeetingInitAction:(NSNotification *)note {
     [[NEMeetingKit getInstance].getMeetingService addListener:self];
     [self autoLogin];
@@ -54,7 +42,7 @@
         if (resultCode != ERROR_CODE_SUCCESS) {
             [weakSelf showErrorCode:resultCode msg:resultMsg];
         } else {
-            MeetingControlVC *vc = [[MeetingControlVC alloc] init];
+            HomePageVC *vc = [[HomePageVC alloc] init];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
     }];
@@ -63,13 +51,6 @@
 - (void)onEnterMulAction:(UIButton *)sender {
     IMLoginVC *vc = [[IMLoginVC alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)onRestoreMeetingAction:(UIButton *)sender {
-    BOOL ret = [[NEMeetingKit getInstance].getMeetingService returnToMeeting];
-    if (ret) {
-        sender.hidden = YES;
-    }
 }
 
 - (IBAction)onAppSettings:(id)sender {
@@ -98,7 +79,6 @@
 #endif
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.mulIMBtn];
     self.navigationItem.rightBarButtonItem = item;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.restoreMeetingBtn];
 }
 
 - (UIButton *)mulIMBtn {
@@ -150,23 +130,7 @@
     if (clickInfo.itemId == 100) {
     } else if (clickInfo.itemId == 111) {
         [NEMeetingKit.getInstance.getMeetingService
-            minimizeCurrentMeeting:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
-              if (resultCode == 0) {
-                [NEMeetingKit.getInstance.getMeetingService
-                    getCurrentMeetingInfo:^(NSInteger resultCode, NSString *_Nonnull resultMsg,
-                                            NEMeetingInfo *_Nonnull info) {
-                      if (!info) {
-                        NSLog(@"meetingNum: %@ meetingId: %llu", info.meetingNum, info.meetingId);
-                        self.restoreMeetingBtn.neTitle = info.subject;
-                        int64_t interval = info.duration / 1000;
-                        if (interval > 0) {
-                          self.restoreMeetingBtn.startTime = interval;
-                        }
-                        self.restoreMeetingBtn.hidden = NO;
-                      }
-                    }];
-              }
-            }];
+            minimizeCurrentMeeting:^(NSInteger resultCode, NSString *resultMsg, id resultData) {}];
       } else {
         _alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@-%@",clickInfo,meetingInfo] preferredStyle:UIAlertControllerStyleAlert];
         [_alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -184,41 +148,19 @@
         [_preVC presentViewController:_alert animated:YES completion:nil];
     }
 }
-- (void)updateMeetingBtnWithInfo:(NEMeetingInfo *)info {
-    NEMeetingStatus status = [[NEMeetingKit getInstance] getMeetingService].getMeetingStatus;
-    if (status != MEETING_STATUS_INMEETING_MINIMIZED) return;
-
-    NSLog(@"meetingNum: %@ meetingId: %llu", info.meetingNum, info.meetingId);
-    _restoreMeetingBtn.neTitle = info.subject;
-    int64_t interval = info.duration/1000;
-    if (interval > 0) {
-        _restoreMeetingBtn.startTime = interval;
-    }
-    _restoreMeetingBtn.hidden = NO;
-}
 
 - (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
-    if (event.status == MEETING_STATUS_INMEETING_MINIMIZED) {
-        __weak typeof(self) weakSelf = self;
-        [[[NEMeetingKit getInstance] getMeetingService] getCurrentMeetingInfo:^(NSInteger resultCode, NSString * _Nonnull resultMsg, NEMeetingInfo * _Nonnull info) {
-            if (info) {
-                [weakSelf updateMeetingBtnWithInfo:info];
-            }
-        }];
-    }else{
-        if(event.status == MEETING_STATUS_DISCONNECTING && _preVC != nil){
-            [_preVC dismissViewControllerAnimated:YES completion:nil];
-        }
-        _restoreMeetingBtn.hidden = YES;
-        
-        if(event.status == MEETING_STATUS_DISCONNECTING){
-            NSString *toastString = [NSString stringWithFormat:@"onMeetingDisconnected: %@", [self stringifyDisconnectedReason: event.arg]];
-            [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:CSToastPositionCenter];
-        }
+    if (event.status == MEETING_STATUS_DISCONNECTING && _preVC != nil) {
+        [_preVC dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+    if (event.status == MEETING_STATUS_DISCONNECTING) {
+        NSString *toastString = [NSString stringWithFormat:@"onMeetingDisconnected: %@", [self stringifyDisconnectedReason: event.arg]];
+        [[UIApplication sharedApplication].keyWindow makeToast:toastString duration:2 position:CSToastPositionCenter];
     }
 }
 
-- (NSString *) stringifyDisconnectedReason:(NSInteger)disconnectCode {
+- (NSString *)stringifyDisconnectedReason:(NSInteger)disconnectCode {
     switch (disconnectCode) {
         case MEETING_DISCONNECTING_BY_HOST:
              return @"remove_by_host";
@@ -249,15 +191,5 @@
     }
 }
 
-- (UIButton *)restoreMeetingBtn {
-    if (!_restoreMeetingBtn) {
-        _restoreMeetingBtn = [TimerButton buttonWithType:UIButtonTypeCustom];
-        _restoreMeetingBtn.hidden = YES;
-        [_restoreMeetingBtn addTarget:self
-                               action:@selector(onRestoreMeetingAction:)
-                     forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _restoreMeetingBtn;
-}
 
 @end

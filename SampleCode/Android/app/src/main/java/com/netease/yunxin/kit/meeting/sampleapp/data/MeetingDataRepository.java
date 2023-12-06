@@ -5,6 +5,7 @@
 package com.netease.yunxin.kit.meeting.sampleapp.data;
 
 import android.content.Context;
+import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.netease.yunxin.kit.meeting.sdk.NECallback;
@@ -19,6 +20,9 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingService;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatusListener;
 import com.netease.yunxin.kit.meeting.sdk.NEScheduleMeetingStatusListener;
+import com.netease.yunxin.kit.meeting.sdk.NEScreenSharingOptions;
+import com.netease.yunxin.kit.meeting.sdk.NEScreenSharingParams;
+import com.netease.yunxin.kit.meeting.sdk.NEScreenSharingStatusListener;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingParams;
 import java.util.List;
@@ -174,6 +178,25 @@ public class MeetingDataRepository {
 
   public void setBeautyFaceValue(int beautyFaceValue) {
     //         NEMeetingKit.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
+  }
+
+  public void startScreenSharing(
+      Context context,
+      Intent data,
+      @NonNull NEScreenSharingParams param,
+      @Nullable NEScreenSharingOptions opts,
+      NECallback<Void> callback) {
+    NEMeetingKit.getInstance()
+        .getScreenSharingService()
+        .startScreenShare(context, data, param, opts, callback);
+  }
+
+  public void stopScreenShare(Context context, NECallback<Void> callback) {
+    NEMeetingKit.getInstance().getScreenSharingService().stopScreenShare(callback);
+  }
+
+  public void addScreenSharingStatusListener(NEScreenSharingStatusListener listener) {
+    NEMeetingKit.getInstance().getScreenSharingService().addScreenSharingStatusListener(listener);
   }
 
   /////////////////////////////////////////////////

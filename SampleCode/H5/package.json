@@ -1,8 +1,8 @@
 {
   "name": "nemeeting-h5",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "本示例项目演示了基本集成H5会议组件的流程与方式，并进行了部分基础演示的说明",
-  "main": "NEMeetingKit_1.0.0.umd.js",
+  "main": "NEMeetingKit_h5_v4.0.0.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

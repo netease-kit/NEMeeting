@@ -15,7 +15,7 @@
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
-  <script src="./NEMeetingKit_v3.18.0.js"></script>
+  <script src="./NEMeetingKit_v4.2.1.js"></script>
   <script>
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
@@ -35,14 +35,14 @@
     NEMeetingKit.actions.init(0, 0, config, (e) => {
       console.log('初始化完成')
     });  // （width，height）单位px 建议比例4:3
-    NEMeetingKit.actions.afterLeave(() => {
+    NEMeetingKit.actions.on('roomEnded', (reason) => {
       console.log('离开会议回调')
     })
   }
   function destory() {
-    NEMeetingKit.actions.destory(); // 销毁
+    NEMeetingKit.actions.destroy(); // 销毁
   }
-  
+
   function login() {
     NEMeetingKit.actions.login({ // 登陆
       accountId: 0,
@@ -54,14 +54,14 @@
   }
 
   function loginWithNEMeeting() { // 账号密码登陆
-    const account = '',password = '';
-    NEMeetingKit.actions.loginWithNEMeeting(account, password, function(e) {
+    const username = '',password = '';
+    NEMeetingKit.actions.loginWithPassword({username, password}, function(e) {
       console.log(e)
     })
   }
 
-  
-  
+
+
   function create() { // 创建
     NEMeetingKit.actions.create({
       meetingNum: 'xxx', // 个人会议号可以在登录完成后通过NEMeetingKit.actions.accountInfo.meetingNum获取。为空表示创建随机会议
@@ -72,7 +72,7 @@
       console.log(e)
     })
   }
-  
+
   function join() {
     var meetingNum = document.querySelector('.meeting-id').value;
     NEMeetingKit.actions.join({
@@ -86,7 +86,7 @@
       console.log(e)
     })
   }
-  
+
   </script>
 </body>
 </html>

@@ -7,8 +7,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MeetingMenuItemCell : UICollectionViewCell
-@property (nonatomic,strong)UILabel *titleLabel;
-@property (nonatomic,strong)NEMeetingMenuItem *item;
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) NEMeetingMenuItem *item;
 @end
 
 NS_ASSUME_NONNULL_END

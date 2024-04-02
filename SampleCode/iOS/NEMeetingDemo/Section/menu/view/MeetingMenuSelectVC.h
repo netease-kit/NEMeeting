@@ -10,8 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface MeetingMenuSelectVC : BaseViewController
-@property (nonatomic, strong) NSArray<NEMeetingMenuItem *> *seletedItems;
-@property (nonatomic, weak) id delegate;
+@property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *seletedItems;
+@property(nonatomic, weak) id delegate;
 
 @end
 

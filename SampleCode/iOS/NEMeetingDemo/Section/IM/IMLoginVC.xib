@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IMLoginVC">
             <connections>
                 <outlet property="imAccidInput" destination="FiL-tG-Qno" id="iMg-G2-TtQ"/>
-                <outlet property="imMulEnableSwitcher" destination="VjN-Rn-cpx" id="qdY-9N-EUP"/>
                 <outlet property="imStateLab" destination="fhq-Gg-ttx" id="u47-bD-lah"/>
                 <outlet property="imTokenInput" destination="xcJ-7H-xZ7" id="XUx-0E-8Mj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -29,7 +28,7 @@
                     <color key="textColor" red="0.49150674519999998" green="0.22835482509999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9f9071de70e7be411abf716e" placeholder="IM账号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FiL-tG-Qno">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="c742046031150d6637005ed9" placeholder="IM账号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FiL-tG-Qno">
                     <rect key="frame" x="12" y="176" width="390" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="iSp-9D-MzV"/>
@@ -44,7 +43,7 @@
                         <constraint firstAttribute="height" constant="1" id="YlO-AH-4Xk"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="P6UWPPSV75OVFI8HU6O26WTR" placeholder="IM密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xcJ-7H-xZ7">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="280ZTP833W6LYDNRQJLQOD3J" placeholder="IM密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xcJ-7H-xZ7">
                     <rect key="frame" x="12" y="229" width="390" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="EeI-NL-ox7"/>
@@ -85,18 +84,6 @@
                         <action selector="logoutAction:" destination="-1" eventType="touchUpInside" id="jZX-L7-MWu"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前IM复用状态：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCq-m5-XSs">
-                    <rect key="frame" x="109" y="302" width="108" height="16"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VjN-Rn-cpx">
-                    <rect key="frame" x="233" y="294.5" width="51" height="31"/>
-                    <connections>
-                        <action selector="imMulEnableAction:" destination="-1" eventType="valueChanged" id="c3H-nm-AUF"/>
-                    </connections>
-                </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前IM状态：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhq-Gg-ttx">
                     <rect key="frame" x="4" y="341.5" width="406" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -107,15 +94,13 @@
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="VjN-Rn-cpx" firstAttribute="centerY" secondItem="LCq-m5-XSs" secondAttribute="centerY" id="25p-vO-Mpx"/>
                 <constraint firstItem="xcJ-7H-xZ7" firstAttribute="trailing" secondItem="FiL-tG-Qno" secondAttribute="trailing" id="3ql-5e-pO8"/>
                 <constraint firstItem="4ZV-po-mPU" firstAttribute="top" secondItem="7jM-iu-cy6" secondAttribute="bottom" constant="24" id="4Fh-tQ-LTh"/>
                 <constraint firstItem="RaX-Wm-OHX" firstAttribute="top" secondItem="FiL-tG-Qno" secondAttribute="bottom" constant="4" id="5Ga-yH-Jqp"/>
                 <constraint firstItem="7jM-iu-cy6" firstAttribute="top" secondItem="fhq-Gg-ttx" secondAttribute="bottom" constant="36" id="6L7-qn-ZSp"/>
                 <constraint firstItem="4ZV-po-mPU" firstAttribute="height" secondItem="7jM-iu-cy6" secondAttribute="height" id="7Ao-Bk-BuC"/>
                 <constraint firstItem="xcJ-7H-xZ7" firstAttribute="top" secondItem="RaX-Wm-OHX" secondAttribute="bottom" constant="16" id="DcG-Ox-XXP"/>
-                <constraint firstItem="LCq-m5-XSs" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" constant="-44" id="G4B-dA-fBa"/>
-                <constraint firstItem="LCq-m5-XSs" firstAttribute="top" secondItem="8hU-wI-gnP" secondAttribute="bottom" constant="36" id="NeW-U3-fEy"/>
+                <constraint firstItem="fhq-Gg-ttx" firstAttribute="top" secondItem="8hU-wI-gnP" secondAttribute="bottom" constant="75.5" id="GkC-0c-4N1"/>
                 <constraint firstItem="7jM-iu-cy6" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="RSY-Kk-Ato"/>
                 <constraint firstItem="FiL-tG-Qno" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="12" id="SHD-PJ-jw1"/>
                 <constraint firstItem="fhq-Gg-ttx" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="4" id="XUN-ku-ji8"/>
@@ -124,8 +109,6 @@
                 <constraint firstItem="xcJ-7H-xZ7" firstAttribute="leading" secondItem="FiL-tG-Qno" secondAttribute="leading" id="dCX-DR-MQP"/>
                 <constraint firstItem="JGW-qe-QLo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="120" id="e2Z-hg-RSl"/>
                 <constraint firstItem="8hU-wI-gnP" firstAttribute="leading" secondItem="xcJ-7H-xZ7" secondAttribute="leading" id="eO3-MW-WKC"/>
-                <constraint firstItem="VjN-Rn-cpx" firstAttribute="leading" secondItem="LCq-m5-XSs" secondAttribute="trailing" constant="16" id="fid-Jy-5tr"/>
-                <constraint firstItem="fhq-Gg-ttx" firstAttribute="top" secondItem="VjN-Rn-cpx" secondAttribute="bottom" constant="16" id="ikb-vE-vt9"/>
                 <constraint firstItem="FiL-tG-Qno" firstAttribute="top" secondItem="JGW-qe-QLo" secondAttribute="bottom" constant="24" id="oAD-1v-dWo"/>
                 <constraint firstItem="RaX-Wm-OHX" firstAttribute="leading" secondItem="FiL-tG-Qno" secondAttribute="leading" id="qXp-O5-vcH"/>
                 <constraint firstItem="8hU-wI-gnP" firstAttribute="trailing" secondItem="xcJ-7H-xZ7" secondAttribute="trailing" id="tiV-Yu-PE0"/>

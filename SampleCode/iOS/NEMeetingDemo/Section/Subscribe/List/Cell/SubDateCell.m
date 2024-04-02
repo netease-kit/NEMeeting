@@ -6,36 +6,37 @@
 
 @interface SubDateCell ()
 
-@property (nonatomic, strong) NEDateItem *item;
-@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
+@property(nonatomic, strong) NEDateItem *item;
+@property(weak, nonatomic) IBOutlet UILabel *dayLabel;
+@property(weak, nonatomic) IBOutlet UILabel *monthLabel;
 
 @end
 
 @implementation SubDateCell
 
 - (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+  [super awakeFromNib];
+  // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+  [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+  // Configure the view for the selected state
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.userInteractionEnabled = NO;
-    }
-    return self;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style
+              reuseIdentifier:(NSString *)reuseIdentifier {
+  if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    self.userInteractionEnabled = NO;
+  }
+  return self;
 }
 
 - (void)refreshWithDateItem:(NEDateItem *)item {
-    _item = item;
-    _dayLabel.text = @(item.day).stringValue;
-    _monthLabel.text = @(item.month).stringValue;
+  _item = item;
+  _dayLabel.text = @(item.day).stringValue;
+  _monthLabel.text = @(item.month).stringValue;
 }
 
 @end

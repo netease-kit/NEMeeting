@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-
 #ifndef MeetingConfigEnum_h
 #define MeetingConfigEnum_h
 
@@ -39,8 +38,11 @@ typedef NS_ENUM(NSInteger, MeetingSettingType) {
   MeetingSettingTypeEnableFrontCameraMirror,
   MeetingSettingTypeShowFloatingMicrophone,
   MeetingSettingTypeJoinOffLive,
-  MeetingSettingTypeEnabeAudioShare,
-  MeetingSettingTypeEnableEncryption
+  MeetingSettingTypeEnableAudioShare,
+  MeetingSettingTypeEnableEncryption,
+  MeetingSettingTypeShowCloudRecordMenuItem,
+  MeetingSettingTypeShowCloudRecordingUI,
+  MeetingSettingTypeEnableAudioDeviceSwitch
 };
 
 /// 创建会议设置选项类型
@@ -76,8 +78,12 @@ typedef NS_ENUM(NSInteger, CreateMeetingSettingType) {
   CreateMeetingSettingTypeEnableFrontCameraMirror,
   CreateMeetingSettingTypeShowFloatingMicrophone,
   CreateMeetingSettingTypeJoinOffLive,
-  CreateMeetingSettingTypeEnabeAudioShare,
-  CreateMeetingSettingTypeEnableEncryption
+  CreateMeetingSettingTypeEnableAudioShare,
+  CreateMeetingSettingTypeEnableEncryption,
+  CreateMeetingSettingTypeShowCloudRecordMenuItem,
+  CreateMeetingSettingTypeShowCloudRecordingUI,
+  CreateMeetingSettingTypeEnableWaitingRoom,
+  CreateMeetingSettingTypeEnableAudioDeviceSwitch
 };
 
 #endif /* MeetingConfigEnum_h */

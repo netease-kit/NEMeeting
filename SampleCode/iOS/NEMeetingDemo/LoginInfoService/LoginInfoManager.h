@@ -4,8 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * _Nonnull const kNEMeetingLoginInfoCleanNotication;
-extern NSString * _Nonnull const kNEMeetingDidGetSSOToken;
+extern NSString *_Nonnull const kNEMeetingLoginInfoCleanNotication;
+extern NSString *_Nonnull const kNEMeetingDidGetSSOToken;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,17 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shareInstance;
 
-@property (readonly) NSString *account;
+@property(readonly) NSString *account;
 
-@property (readonly) NSString *password;
+@property(readonly) NSString *password;
 
-@property (nonatomic, copy) NSString *nickName;
+@property(nonatomic, copy) NSString *nickName;
 
-//是否复用IM
-@property (nonatomic, assign) BOOL reuseNIM;
-
-- (void)saveLoginInfo:(NSString *)account
-             password:(NSString *)password ;
+- (void)saveLoginInfo:(NSString *)account password:(NSString *)password;
 
 - (void)loadLoginInfo;
 

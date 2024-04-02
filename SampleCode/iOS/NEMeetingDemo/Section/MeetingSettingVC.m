@@ -158,6 +158,8 @@ NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
     [NEMeetingKit.getInstance.getSettingsService enableVirtualBackground:[newValue boolValue]];
     if ([newValue boolValue]) {
       [NEMeetingKit.getInstance.getSettingsService setBuiltinVirtualBackgrounds:[self fetchArray]];
+    } else {
+      [NEMeetingKit.getInstance.getSettingsService setBuiltinVirtualBackgrounds:[NSArray new]];
     }
   };
   [section addFormRow:row];

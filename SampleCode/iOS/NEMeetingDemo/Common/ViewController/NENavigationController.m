@@ -11,12 +11,12 @@
 @implementation NENavigationController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
+  // Do any additional setup after loading the view.
 }
 
 - (BOOL)shouldAutorotate {
-    return [self.viewControllers.lastObject shouldAutorotate];
+  return [self.viewControllers.lastObject shouldAutorotate];
 }
 
 @end

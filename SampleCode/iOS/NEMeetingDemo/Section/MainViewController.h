@@ -7,4 +7,3 @@
 @interface MainViewController : BaseViewController
 
 @end
-

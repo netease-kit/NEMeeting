@@ -3,16 +3,16 @@
 // found in the LICENSE file.
 
 #import "AppDelegate.h"
-#import "ServerConfig.h"
-#import "SystemAuthHelper.h"
-#import "LoginInfoManager.h"
+#import <NIMSDK/NIMSDK.h>
+#import "AppDelegate+MeetingExtension.h"
 #import "BaseViewController.h"
 #import "IMLoginVC.h"
-#import <NIMSDK/NIMSDK.h>
+#import "LoginInfoManager.h"
 #import "NSString+Demo.h"
-#import "AppDelegate+MeetingExtension.h"
 #import "Reachability.h"
-static NSString * const prefixName = @"meetingdemo://";
+#import "ServerConfig.h"
+#import "SystemAuthHelper.h"
+static NSString *const prefixName = @"meetingdemo://";
 
 @interface AppDelegate ()
 @property(nonatomic, strong) Reachability *reachability;
@@ -22,18 +22,19 @@ static NSString * const prefixName = @"meetingdemo://";
 
 @implementation AppDelegate
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self meeting_addNotification];
-    [self doSetupMeetingSdk];
-    [self meeting_BeatyResource];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    [self monitorNetwork];
-    return YES;
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [self meeting_addNotification];
+  [self doSetupMeetingSdk];
+  [self meeting_BeatyResource];
+  [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+  [self monitorNetwork];
+  return YES;
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-    return UIInterfaceOrientationMaskAllButUpsideDown;
+- (UIInterfaceOrientationMask)application:(UIApplication *)application
+    supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 - (void)monitorNetwork {
   // 添加监听器
@@ -53,48 +54,48 @@ static NSString * const prefixName = @"meetingdemo://";
   }
 }
 
-
 - (void)doSetupMeetingSdk {
-    if (self.isInitialized) return;
-    NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
-    config.appKey = ServerConfig.current.appKey;
-    config.serverUrl = ServerConfig.current.sdkServerUrl;
-    config.appName = @"your_app_name";
-    config.broadcastAppGroup = @"your_app_group";
-    
+  if (self.isInitialized) return;
+  NEMeetingKitConfig *config = [[NEMeetingKitConfig alloc] init];
+  config.appKey = ServerConfig.current.appKey;
+  config.serverUrl = ServerConfig.current.sdkServerUrl;
+  config.appName = @"your_app_name";
+  config.broadcastAppGroup = @"your_app_group";
 
-    [SVProgressHUD showWithStatus:@"初始化..."];
-    [[NEMeetingKit getInstance]
-        initialize:config
-          callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
-            NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
-        if (resultCode == 0) self.isInitialized = YES;
-            [SVProgressHUD dismiss];
-            [[NSNotificationCenter defaultCenter]
-                postNotificationName:kNEMeetingInitCompletionNotication
-                              object:nil];
-            NSString *type = [[NSUserDefaults standardUserDefaults] valueForKey:@"languageType"];
-            [[NEMeetingKit getInstance]
-                switchLanguage:[self defaultLanguage:type]
-                      callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
-                        NSLog(@"defaultLanguage: %@", type);
-                      }];
-          }];
+  [SVProgressHUD showWithStatus:@"初始化..."];
+  [[NEMeetingKit getInstance]
+      initialize:config
+        callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+          NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
+          if (resultCode == 0) self.isInitialized = YES;
+          [SVProgressHUD dismiss];
+          [[NSNotificationCenter defaultCenter]
+              postNotificationName:kNEMeetingInitCompletionNotication
+                            object:nil];
+          NSString *type = [[NSUserDefaults standardUserDefaults] valueForKey:@"languageType"];
+          [[NEMeetingKit getInstance]
+              switchLanguage:[self defaultLanguage:type]
+                    callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+                      NSLog(@"defaultLanguage: %@", type);
+                    }];
+        }];
+}
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+  if ([url.absoluteString containsString:prefixName]) {
+    NSDictionary *dic = [url.absoluteString queryParametersFromURLString];
+    NSLog(@"dic:%@", dic);
+    NSString *ssoToken = [dic objectForKey:@"ssoToken"] ?: @"";
+    NSString *appKey = [dic objectForKey:@"appKey"] ?: @"";
+    NSDictionary *ssoDict = @{@"appKey" : appKey, @"ssoToken" : ssoToken};
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNEMeetingDidGetSSOToken
+                                                        object:ssoDict];
+    return YES;
   }
-
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
-    if ([url.absoluteString containsString:prefixName]) {
-        NSDictionary *dic = [url.absoluteString queryParametersFromURLString];
-        NSLog(@"dic:%@",dic);
-        NSString *ssoToken = [dic objectForKey:@"ssoToken"]?:@"";
-        NSString *appKey = [dic objectForKey:@"appKey"]?:@"";
-        NSDictionary *ssoDict = @{@"appKey":appKey,@"ssoToken":ssoToken};
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNEMeetingDidGetSSOToken object:ssoDict];
-        return YES;
-    }
-    return NO;
+  return NO;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

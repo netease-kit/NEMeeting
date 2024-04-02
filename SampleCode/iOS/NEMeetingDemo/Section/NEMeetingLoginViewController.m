@@ -3,60 +3,61 @@
 // found in the LICENSE file.
 
 #import "NEMeetingLoginViewController.h"
-#import "ServerConfig.h"
+#import "HomePageVC.h"
 #import "LoginInfoManager.h"
-#import "homePageVC.h"
+#import "ServerConfig.h"
 
 @interface NEMeetingLoginViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *accountInput;
-@property (weak, nonatomic) IBOutlet UITextField *passwordInput;
-@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property(weak, nonatomic) IBOutlet UITextField *accountInput;
+@property(weak, nonatomic) IBOutlet UITextField *passwordInput;
+@property(weak, nonatomic) IBOutlet UIButton *loginBtn;
 
 @end
 
 @implementation NEMeetingLoginViewController
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    [self initNotications];
+  [super viewDidLoad];
+  [self initNotications];
 }
 
 - (void)initNotications {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onCleanLoginInfoAction:)
-                                                 name:kNEMeetingLoginInfoCleanNotication
-                                               object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(onCleanLoginInfoAction:)
+                                               name:kNEMeetingLoginInfoCleanNotication
+                                             object:nil];
 }
 
 - (IBAction)onLoginAction:(id)sender {
-    NSString *account = _accountInput.text;
-    NSString *password = _passwordInput.text;
-    
-    WEAK_SELF(weakSelf);
-    [SVProgressHUD showWithStatus:@"登录中"];
-    [[NEMeetingKit getInstance] loginWithNEMeeting:account
-                                password:password
-                             callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
-        [SVProgressHUD dismiss];
-        if (resultCode != ERROR_CODE_SUCCESS) {
-            [weakSelf showErrorCode:resultCode msg:resultMsg];
-        } else {
-            [[LoginInfoManager shareInstance] saveLoginInfo:weakSelf.accountInput.text
-                                                   password:weakSelf.passwordInput.text];
-            HomePageVC *vc = [[HomePageVC alloc] init];
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-        }
-    }];
+  NSString *account = _accountInput.text;
+  NSString *password = _passwordInput.text;
+
+  WEAK_SELF(weakSelf);
+  [SVProgressHUD showWithStatus:@"登录中"];
+  [[NEMeetingKit getInstance]
+      loginWithNEMeeting:account
+                password:password
+                callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
+                  [SVProgressHUD dismiss];
+                  if (resultCode != ERROR_CODE_SUCCESS) {
+                    [weakSelf showErrorCode:resultCode msg:resultMsg];
+                  } else {
+                    [[LoginInfoManager shareInstance] saveLoginInfo:weakSelf.accountInput.text
+                                                           password:weakSelf.passwordInput.text];
+                    HomePageVC *vc = [[HomePageVC alloc] init];
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                  }
+                }];
 }
 
 - (void)onCleanLoginInfoAction:(NSNotification *)note {
-    _passwordInput.text = @"";
-    _accountInput.text = @"";
+  _passwordInput.text = @"";
+  _accountInput.text = @"";
 }
 
 @end

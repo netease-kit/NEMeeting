@@ -20,21 +20,20 @@
 
 @interface HomePageVC () <UICollectionViewDataSource,
                           UICollectionViewDelegate,
-                          NEMeetingAuthListener,
-                          NEGlobalEventListener>
+                          NEMeetingAuthListener>
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UIView *subscribeListContainer;
 @property(nonatomic, strong) UIButton *settingBtn;
 @property(nonatomic, strong) UIView *line;
 @property(nonatomic, strong) SubscribeMeetingListVC *subscribeListVC;
 @property(nonatomic, copy) NSArray<HomeItem *> *items;
+
 @end
 
 @implementation HomePageVC
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[NEMeetingKit getInstance] removeAuthListener:self];
-  [[NEMeetingKit getInstance] removeGlobalEventListener:self];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kNEMeetingEditSubscribeDone
                                                 object:nil];
@@ -44,7 +43,6 @@
   [self setupUI];
   // Do any additional setup after loading the view.
   [[NEMeetingKit getInstance] addAuthListener:self];
-  [[NEMeetingKit getInstance] addGlobalEventListener:self];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(editDone)
                                                name:kNEMeetingEditSubscribeDone
@@ -196,20 +194,6 @@
     preVC = keyWindow.rootViewController;
   }
   [preVC presentViewController:alert animated:YES completion:nil];
-}
-
-#pragma mark------------------------ NEGlobalEventListener ------------------------
-- (void)beforeRtcEngineReleaseWithRoomUuid:(NSString *)roomUuid
-                                rtcWrapper:(NERtcWrapper *)rtcWrapper {
-  NSLog(@"Rtc销毁前操作. RoomUuid: %@", roomUuid);
-}
-- (void)beforeRtcEngineInitializeWithRoomUuid:(NSString *)roomUuid
-                                   rtcWrapper:(NERtcWrapper *)rtcWrapper {
-  NSLog(@"Rtc初始化之前操作");
-}
-- (void)afterRtcEngineInitializeWithRoomUuid:(NSString *)roomUuid
-                                  rtcWrapper:(NERtcWrapper *)rtcWrapper {
-  NSLog(@"Rtc初始化之后操作");
 }
 #pragma mark------------------------ UICollectionViewDataSource ------------------------
 - (NSInteger)collectionView:(UICollectionView *)collectionView

@@ -6,14 +6,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, EnterMeetingType){
-    EnterMeetingAnonymity = 0,
-    EnterMeetingJoin
-};
+typedef NS_ENUM(NSInteger, EnterMeetingType) { EnterMeetingAnonymity = 0, EnterMeetingJoin };
 
 @interface EnterMeetingVC : BaseViewController
 
-@property (nonatomic, assign) EnterMeetingType type;
+@property(nonatomic, assign) EnterMeetingType type;
 
 @end
 

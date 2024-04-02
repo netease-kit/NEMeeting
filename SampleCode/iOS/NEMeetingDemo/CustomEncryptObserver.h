@@ -2,11 +2,12 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-#import "BaseViewController.h"
+#import <Foundation/Foundation.h>
+#import <NERtcSDK/NERtcSDK.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MeetingControlVC : BaseViewController
+@interface CustomEncryptObserver : NSObject <NERtcEnginePacketObserver>
 
 @end
 

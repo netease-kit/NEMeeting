@@ -8,9 +8,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NEDateItem : NSObject
 
-@property (nonatomic, assign) NSInteger year;
-@property (nonatomic, assign) NSInteger month;
-@property (nonatomic, assign) NSInteger day;
+@property(nonatomic, assign) NSInteger year;
+@property(nonatomic, assign) NSInteger month;
+@property(nonatomic, assign) NSInteger day;
 
 - (instancetype)initWithTimestamp:(uint64_t)timestamp;
 

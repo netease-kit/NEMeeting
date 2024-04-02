@@ -12,20 +12,17 @@
 @implementation CustomViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
+  // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self.view makeToast:_msg
-                duration:2
-                position:CSToastPositionCenter];
+  [super viewDidAppear:animated];
+  [self.view makeToast:_msg duration:2 position:CSToastPositionCenter];
 }
 
 - (IBAction)doExitAction:(id)sender {
-    [self dismissViewControllerAnimated:YES
-                             completion:nil];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

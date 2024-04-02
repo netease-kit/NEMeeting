@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomViewController : UIViewController
 
-@property (nonatomic, copy) NSString *msg;
+@property(nonatomic, copy) NSString *msg;
 
 @end
 

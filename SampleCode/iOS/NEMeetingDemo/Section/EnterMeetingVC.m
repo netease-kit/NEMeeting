@@ -3,50 +3,52 @@
 // found in the LICENSE file.
 
 #import "EnterMeetingVC.h"
-#import "CheckBox.h"
-#import "MeetingMenuSelectVC.h"
-#import "MeetingConfigRepository.h"
-#import "MeetingConfigEnum.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import "CheckBox.h"
+#import "LoginInfoManager.h"
+#import "MeetingConfigEnum.h"
+#import "MeetingConfigRepository.h"
+#import "MeetingMenuSelectVC.h"
 
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
-    MeetingMenuTypeToolbar = 1,
-    MeetingMenuTypeMore = 2,
+  MeetingMenuTypeToolbar = 1,
+  MeetingMenuTypeMore = 2,
 };
 
-@interface EnterMeetingVC ()<CheckBoxDelegate, MeetingServiceListener,MeetingMenuSelectVCDelegate>
+@interface EnterMeetingVC () <CheckBoxDelegate, MeetingServiceListener, MeetingMenuSelectVCDelegate>
 
-@property (weak, nonatomic) IBOutlet CheckBox *configCheckBox;
-@property (weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
-@property (weak, nonatomic) IBOutlet UITextField *meetingIdInput;
-@property (weak, nonatomic) IBOutlet UITextField *nickInput;
-@property (weak, nonatomic) IBOutlet UILabel *titleLab;
-@property (weak, nonatomic) IBOutlet UIButton *enterBtn;
-@property (weak, nonatomic) IBOutlet UITextField *passworkInput;
-@property (weak, nonatomic) IBOutlet UITextField *tagInput;
-@property (strong, nonatomic) IBOutlet UITextField *encryptionKeyInput;
-@property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullToolbarMenuItems;
-@property (nonatomic, strong) NSArray <NEMeetingMenuItem *> *fullMoreMenuItems;
+@property(weak, nonatomic) IBOutlet CheckBox *configCheckBox;
+@property(weak, nonatomic) IBOutlet CheckBox *settingCheckBox;
+
+@property(weak, nonatomic) IBOutlet UITextField *meetingIdInput;
+@property(weak, nonatomic) IBOutlet UITextField *nickInput;
+@property(weak, nonatomic) IBOutlet UILabel *titleLab;
+@property(weak, nonatomic) IBOutlet UIButton *enterBtn;
+@property(weak, nonatomic) IBOutlet UITextField *passworkInput;
+@property(weak, nonatomic) IBOutlet UITextField *tagInput;
+@property(weak, nonatomic) IBOutlet UITextField *encryptionKeyInput;
+@property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *fullToolbarMenuItems;
+@property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *fullMoreMenuItems;
 // 自定义菜单类型：toolbar/更多
-@property (nonatomic, assign) MeetingMenuType currentType;
+@property(nonatomic, assign) MeetingMenuType currentType;
 @end
 
 @implementation EnterMeetingVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    [self setupUI];
-    [[NEMeetingKit getInstance].getMeetingService addListener:self];
+  [super viewDidLoad];
+  [self setupUI];
+  [[NEMeetingKit getInstance].getMeetingService addListener:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [IQKeyboardManager sharedManager].enable = YES;
+  [super viewDidAppear:animated];
+  [IQKeyboardManager sharedManager].enable = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [IQKeyboardManager sharedManager].enable = NO;
+  [super viewDidDisappear:animated];
+  [IQKeyboardManager sharedManager].enable = NO;
 }
 
 - (void)setupUI {
@@ -59,8 +61,9 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"关闭音频模式切换",   @"显示白板窗口",       @"隐藏白板菜单按钮", @"关闭会中改名",
     @"隐藏Sip菜单",        @"显示用户角色标签",   @"显示会议结束提醒", @"聊天室文件消息",
     @"聊天室图片消息",     @"开启静音检测",       @"关闭静音包",       @"显示屏幕共享者画面",
-    @"显示白板共享者画面", @"设置白板透明", @"前置摄像头镜像",  @"显示麦克风浮窗",
-    @"入会时隐藏直播菜单", @"开启音频共享", @"开启加密"
+    @"显示白板共享者画面", @"设置白板透明",       @"前置摄像头镜像",   @"显示麦克风浮窗",
+    @"入会时隐藏直播菜单", @"开启音频共享",       @"开启加密",         @"显示云录制菜单按钮",
+    @"显示云录制过程UI",   @"允许音频设备切换"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeChatroomEnableFile];
@@ -71,17 +74,21 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowFloatingMicrophone];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeEnableFrontCameraMirror];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeJoinOffLive];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowCloudRecordingUI];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowCloudRecordMenuItem];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeEnableAudioDeviceSwitch];
 }
 
 - (IBAction)onLeaveCurrentMeeting:(id)sender {
-    WEAK_SELF(weakSelf);
-    [[NEMeetingKit.getInstance getMeetingService] leaveCurrentMeeting:NO callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
-        if (resultCode != ERROR_CODE_SUCCESS) {
-            [weakSelf showErrorCode:resultCode msg:resultMsg];
-        }
-    }];
+  WEAK_SELF(weakSelf);
+  [[NEMeetingKit.getInstance getMeetingService]
+      leaveCurrentMeeting:NO
+                 callback:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+                   if (resultCode != ERROR_CODE_SUCCESS) {
+                     [weakSelf showErrorCode:resultCode msg:resultMsg];
+                   }
+                 }];
 }
-
 
 #pragma mark - Action
 - (IBAction)onEnterMeetingAction:(id)sender {
@@ -90,7 +97,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   params.displayName = _nickInput.text;
   params.password = _passworkInput.text;
   params.tag = _tagInput.text;
-
   // 是否开启媒体流加密
   if ([self selectedSetting:MeetingSettingTypeEnableEncryption]) {
     NEEncryptionConfig *encryptionConfig = [[NEEncryptionConfig alloc] init];
@@ -98,7 +104,13 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     encryptionConfig.encryptKey = _encryptionKeyInput.text;
     params.encryptionConfig = encryptionConfig;
   }
+
+  NEWatermarkConfig *watermarkConfig = [[NEWatermarkConfig alloc] init];
+  watermarkConfig.name = [self accountName:params.displayName];
+  params.watermarkConfig = watermarkConfig;
+
   NEJoinMeetingOptions *options = [[NEJoinMeetingOptions alloc] init];
+
   // 默认会议配置
   if (![self selectedSetting:MeetingSettingTypeDefaultSetting]) {
     options.noAudio = ![self selectedConfig:MeetingConfigTypeJoinOnAudio];
@@ -112,7 +124,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   }
   options.meetingIdDisplayOption = [self meetingIdDisplayOption];
   options.noChat = [self selectedSetting:MeetingSettingTypeJoinOffChatroom];
-  // 是否显示直播按钮
   options.noLive = [self selectedSetting:MeetingSettingTypeJoinOffLive];
   options.noInvite = [self selectedSetting:MeetingSettingTypeJoinOffInvitation];
   options.noMinimize = [self selectedSetting:MeetingSettingTypeHideMini];
@@ -170,14 +181,22 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
       [self selectedSetting:MeetingSettingTypeShowWhiteboardShareUseVideo];
   // 是否开启透明白板模式
   options.enableTransparentWhiteboard =
-        [self selectedSetting:MeetingSettingTypeEnableTransparentWhiteboard];
+      [self selectedSetting:MeetingSettingTypeEnableTransparentWhiteboard];
   // 前置摄像头镜像
   options.enableFrontCameraMirror =
-        [self selectedSetting:MeetingSettingTypeEnableFrontCameraMirror];
+      [self selectedSetting:MeetingSettingTypeEnableFrontCameraMirror];
   // 麦克风悬浮显隐
   options.showFloatingMicrophone = [self selectedSetting:MeetingSettingTypeShowFloatingMicrophone];
   // 开启音频共享
-  options.enableAudioShare = [self selectedSetting:MeetingSettingTypeEnabeAudioShare];
+  options.enableAudioShare = [self selectedSetting:MeetingSettingTypeEnableAudioShare];
+  // 配置是否展示云录制菜单按钮
+  options.showCloudRecordMenuItem =
+      [self selectedSetting:MeetingSettingTypeShowCloudRecordMenuItem];
+  // 配置是否展示云录制过程中的UI提示
+  options.showCloudRecordingUI = [self selectedSetting:MeetingSettingTypeShowCloudRecordingUI];
+  // 配置是否允许音频设备切换
+  options.enableAudioDeviceSwitch =
+      [self selectedSetting:MeetingSettingTypeEnableAudioDeviceSwitch];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   // 匿名入会
@@ -210,97 +229,104 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
          }];
 }
 
+- (NSString *)accountName:(NSString *)defaultName {
+  NSString *ret = [LoginInfoManager shareInstance].account;
+  if (ret.length == 0) ret = defaultName;
+  return ret;
+}
+
 - (void)checkBoxItemdidSelected:(UIButton *)item
-                       atIndex:(NSUInteger)index
-                      checkBox:(CheckBox *)checkbox {
-    if (checkbox != _settingCheckBox) return;
-    if (index == 3) {
-        _configCheckBox.disableAllItems = [self selectedSetting:MeetingSettingTypeDefaultSetting];
-    }
+                        atIndex:(NSUInteger)index
+                       checkBox:(CheckBox *)checkbox {
+  if (checkbox != _settingCheckBox) return;
+  if (index == 3) {
+    _configCheckBox.disableAllItems = [self selectedSetting:MeetingSettingTypeDefaultSetting];
+  }
 }
 
 - (IBAction)configToolbarMenuItems:(UIButton *)sender {
-    self.currentType = MeetingMenuTypeToolbar;
-    [self enterMenuVC:_fullToolbarMenuItems];
+  self.currentType = MeetingMenuTypeToolbar;
+  [self enterMenuVC:_fullToolbarMenuItems];
 }
 
 - (IBAction)configMoreMenuItems:(UIButton *)sender {
-    self.currentType = MeetingMenuTypeMore;
-    [self enterMenuVC:_fullMoreMenuItems];
+  self.currentType = MeetingMenuTypeMore;
+  [self enterMenuVC:_fullMoreMenuItems];
 }
 - (void)enterMenuVC:(NSArray *)items {
-    MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
-    menuSeletedVC.seletedItems = items;
-    menuSeletedVC.delegate = self;
-    [self.navigationController pushViewController:menuSeletedVC animated:YES];
+  MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
+  menuSeletedVC.seletedItems = items;
+  menuSeletedVC.delegate = self;
+  [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 
 - (void)showSeletedItemResult:(NSArray *)menuItems {
-    NSString *string = @"已选";
-    for (NEMeetingMenuItem *item in menuItems) {
-        if ([item isKindOfClass:[NESingleStateMenuItem class]]) {
-            NESingleStateMenuItem *single = (NESingleStateMenuItem *)item;
-            [string stringByAppendingFormat:@"%@ ",single.singleStateItem.text];
-        }else {
-            NECheckableMenuItem *checkableItem = (NECheckableMenuItem *)item;
-            [string stringByAppendingFormat:@"%@ ",checkableItem.checkedStateItem.text];
-        }
+  NSString *string = @"已选";
+  for (NEMeetingMenuItem *item in menuItems) {
+    if ([item isKindOfClass:[NESingleStateMenuItem class]]) {
+      NESingleStateMenuItem *single = (NESingleStateMenuItem *)item;
+      [string stringByAppendingFormat:@"%@ ", single.singleStateItem.text];
+    } else {
+      NECheckableMenuItem *checkableItem = (NECheckableMenuItem *)item;
+      [string stringByAppendingFormat:@"%@ ", checkableItem.checkedStateItem.text];
     }
-    [self.view makeToast:string];
+  }
+  [self.view makeToast:string];
 }
 
 - (void)updateNickname {
-    WEAK_SELF(weakSelf);
-    [[NEMeetingKit getInstance].getSettingsService getHistoryMeetingItem:^(NSInteger resultCode, NSString* resultMsg, NSArray<NEHistoryMeetingItem *> * items) {
+  WEAK_SELF(weakSelf);
+  [[NEMeetingKit getInstance].getSettingsService
+      getHistoryMeetingItem:^(NSInteger resultCode, NSString *resultMsg,
+                              NSArray<NEHistoryMeetingItem *> *items) {
         if (items && items.count > 0) {
-            NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
-            if ([items[0].meetingNum isEqualToString: weakSelf.meetingIdInput.text]) {
-                weakSelf.nickInput.text = items[0].nickname;
-            }
+          NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
+          if ([items[0].meetingNum isEqualToString:weakSelf.meetingIdInput.text]) {
+            weakSelf.nickInput.text = items[0].nickname;
+          }
         }
-    }];
+      }];
 }
 
 #pragma mark - MeetingServiceListener
 - (void)onMeetingStatusChanged:(NEMeetingEvent *)event {
-    if (event.arg == MEETING_WAITING_VERIFY_PASSWORD) {
-        [SVProgressHUD dismiss];
-    }
-    if (event.status == MEETING_STATUS_DISCONNECTING) {
-        [self updateNickname];
-    }
+  if (event.arg == MEETING_WAITING_VERIFY_PASSWORD) {
+    [SVProgressHUD dismiss];
+  }
+  if (event.status == MEETING_STATUS_DISCONNECTING) {
+    [self updateNickname];
+  }
 }
 
 - (void)didSelectedItems:(NSArray<NEMeetingMenuItem *> *)menuItems {
-    if (self.currentType == MeetingMenuTypeToolbar) {
-        self.fullToolbarMenuItems = menuItems;
-    }else {
-        self.fullMoreMenuItems = menuItems;
-    }
-    [self showSeletedItemResult:menuItems];
+  if (self.currentType == MeetingMenuTypeToolbar) {
+    self.fullToolbarMenuItems = menuItems;
+  } else {
+    self.fullMoreMenuItems = menuItems;
+  }
+  [self showSeletedItemResult:menuItems];
 }
 #pragma mark - Setter && Getter
 - (void)setType:(EnterMeetingType)type {
-    _type = type;
-    NSString *title = type == EnterMeetingJoin ? @"加入会议" : @"匿名入会";
-    self.titleLab.text = title;
-    [self.enterBtn setTitle:title forState:UIControlStateNormal];
+  _type = type;
+  NSString *title = type == EnterMeetingJoin ? @"加入会议" : @"匿名入会";
+  self.titleLab.text = title;
+  [self.enterBtn setTitle:title forState:UIControlStateNormal];
 }
 
 - (BOOL)selectedConfig:(MeetingConfigType)configType {
-    return [self.configCheckBox getItemSelectedAtIndex:configType];
+  return [self.configCheckBox getItemSelectedAtIndex:configType];
 }
 - (BOOL)selectedSetting:(MeetingSettingType)settingType {
-    return [self.settingCheckBox getItemSelectedAtIndex:settingType];
+  return [self.settingCheckBox getItemSelectedAtIndex:settingType];
 }
 
 - (NEMeetingIdDisplayOption)meetingIdDisplayOption {
-    if ([self selectedSetting:MeetingSettingTypeOnlyShowLongId]) {
-        return DISPLAY_LONG_ID_ONLY;
-    } else if ([self selectedSetting:MeetingSettingTypeOnlyShowShortId]) {
-        return DISPLAY_SHORT_ID_ONLY;
-    }
-    return DISPLAY_ALL;
+  if ([self selectedSetting:MeetingSettingTypeOnlyShowLongId]) {
+    return DISPLAY_LONG_ID_ONLY;
+  } else if ([self selectedSetting:MeetingSettingTypeOnlyShowShortId]) {
+    return DISPLAY_SHORT_ID_ONLY;
+  }
+  return DISPLAY_ALL;
 }
-
 @end

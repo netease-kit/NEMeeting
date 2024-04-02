@@ -15,13 +15,13 @@ NEMeetingKit 会议组件 H5 版
 #### 方式 1：sdk 直接集成
 
 ```js
-import NEMeetingKit from "./NEMeetingKit_1.0.0.umd.js";
+import NEMeetingKit from "./NEMeetingKit_h5_v4.0.0.js";
 ```
 
 或者
 
 ```html
-<script src="./NEMeetingKit_1.0.0.umd.js"></script>
+<script src="./NEMeetingKit_h5_v4.0.0.js"></script>
 ```
 
 #### 方式 2：npm 包集成

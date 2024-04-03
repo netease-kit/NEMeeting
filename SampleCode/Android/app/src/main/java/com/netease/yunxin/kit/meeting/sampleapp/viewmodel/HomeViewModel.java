@@ -71,9 +71,11 @@ public class HomeViewModel extends ViewModel {
         item.setDay(startTime.substring(8, 10));
         item.setSetting(neMeetingItem.getSetting());
         item.setLive(neMeetingItem.getLive());
+        item.setRecurringRule(neMeetingItem.getRecurringRule());
         item.setExtraData(neMeetingItem.getExtraData());
         item.setRoleBinds(neMeetingItem.getRoleBinds());
         item.setNoSip(neMeetingItem.noSip());
+        item.setWaitingRoomEnabled(neMeetingItem.isWaitingRoomEnabled());
         items.add(item);
       }
       Collections.sort(items);

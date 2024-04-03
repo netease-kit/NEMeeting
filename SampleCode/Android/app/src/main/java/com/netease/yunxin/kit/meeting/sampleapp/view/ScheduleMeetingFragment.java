@@ -57,7 +57,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
   private long startTime, endTime;
   private Boolean isAttendeeAudioOff, isAllowAttendeeAudioSelfOn;
   private Boolean isAttendeeVideoOff, isAllowAttendeeVideoSelfOn;
-  private boolean isUsePwd, isLiveOn, isLiveLevelOpen, isOpenRecord, isEnableSip;
+  private boolean isUsePwd, isLiveOn, isLiveLevelOpen, isOpenRecord, isEnableSip, enableWaitingRoom;
   private NESettingsService settingsService;
   private boolean isEditMeeting = false;
   private MeetingItem item = null;
@@ -177,6 +177,9 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
               case ScheduleMeetingItem.ENABLE_MEETING_NO_SIP_ACTION:
                 isEnableSip = enable;
                 break;
+              case ScheduleMeetingItem.ENABLE_MEETING_WAITING_ROOM:
+                enableWaitingRoom = enable;
+                break;
             }
           }
         });
@@ -247,6 +250,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                   isLiveLevelOpen ? NEMeetingLiveAuthLevel.appToken : NEMeetingLiveAuthLevel.token);
               neMeetingItem.setLive(live);
               neMeetingItem.setNoSip(!isEnableSip);
+              neMeetingItem.setWaitingRoomEnabled(enableWaitingRoom);
               if (isEditMeeting) {
                 mViewModel.editMeeting(
                     neMeetingItem,
@@ -341,6 +345,12 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
             "开启SIP",
             (item != null && !item.isNoSip()),
             ScheduleMeetingItem.ENABLE_MEETING_NO_SIP_ACTION,
+            ""));
+    dataList.add(
+        new ScheduleMeetingItem(
+            "开启等候室",
+            (item != null && item.isWaitingRoomEnabled()),
+            ScheduleMeetingItem.ENABLE_MEETING_WAITING_ROOM,
             ""));
     dataList.add(
         new ScheduleMeetingItem(

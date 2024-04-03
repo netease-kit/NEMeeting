@@ -128,7 +128,8 @@ public class MainViewModel extends ViewModel
     LogUtil.log(TAG, "onMeetingStatusChanged: " + status + "==" + minimizedLiveData.getValue());
     Boolean value =
         status == NEMeetingStatus.MEETING_STATUS_INMEETING_MINIMIZED
-            || status == NEMeetingStatus.MEETING_STATUS_INMEETING;
+            || status == NEMeetingStatus.MEETING_STATUS_INMEETING
+            || status == NEMeetingStatus.MEETING_STATUS_IN_WAITING_ROOM;
     if (minimizedLiveData.getValue() != value) {
       minimizedLiveData.setValue(value);
     }

@@ -4,7 +4,6 @@
 package com.netease.yunxin.kit.meeting.sampleapp.adapter;
 
 import android.content.Context;
-import android.os.Build;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.netease.yunxin.kit.meeting.sampleapp.SdkAuthenticator;
@@ -65,7 +63,6 @@ public class ScheduleMeetingAdapter
     return VIEW_TYPE;
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
   public void convert(ScheduleMeetingItem data, int position, VH<ItemScheduleMeetingBinding> vh) {
     final ItemScheduleMeetingBinding binding = vh.viewBinding;
@@ -125,7 +122,7 @@ public class ScheduleMeetingAdapter
         if (TextUtils.isEmpty(edtMeetingTheme.getText())) {
           edtMeetingTheme.setText(
               TextUtils.isEmpty(data.getValueString())
-                  ? SdkAuthenticator.getAccount() + "的预约会议"
+                  ? SdkAuthenticator.getAccount(null, 4) + "的预约会议"
                   : data.getValueString());
         }
         break;
@@ -186,6 +183,7 @@ public class ScheduleMeetingAdapter
         break;
       case ScheduleMeetingItem.ENABLE_MEETING_NO_SIP_ACTION:
       case ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION:
+      case ScheduleMeetingItem.ENABLE_MEETING_WAITING_ROOM:
         sbMeetingSwitch.setVisibility(View.VISIBLE);
         sbMeetingSwitch.setChecked(data.isSwitchOn());
         break;

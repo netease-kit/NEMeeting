@@ -30,6 +30,7 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingError;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemStatus;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingLiveAuthLevel;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingVideoControl;
+import com.netease.yunxin.kit.meeting.sdk.NEWatermarkConfig;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +92,8 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
           params.meetingNum = item.getMeetingNum();
           params.password = item.getPassword();
           params.displayName = SdkAuthenticator.getAccount();
+          params.watermarkConfig =
+              new NEWatermarkConfig(SdkAuthenticator.getAccount(), null, null, null);
           mViewModel.joinMeeting(params, null, new ToastCallback<>(getActivity(), "加入会议"));
         });
     binding.btnCancelScheduleMeeting.setOnClickListener(

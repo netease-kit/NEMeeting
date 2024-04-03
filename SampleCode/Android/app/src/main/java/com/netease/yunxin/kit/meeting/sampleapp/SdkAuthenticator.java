@@ -229,11 +229,24 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
   }
 
   public static String getAccount() {
+    return getAccount(null, null);
+  }
+
+  public static String getAccount(String defaultAccount) {
+    return getAccount(defaultAccount, null);
+  }
+
+  public static String getAccount(String defaultAccount, Integer maxLength) {
+    if (defaultAccount == null || defaultAccount.length() == 0) {
+      defaultAccount = "xxxx";
+    }
     String nickName;
     nickName = SPUtils.getInstance().getString(KEY_NICK_NAME);
     if (TextUtils.isEmpty(nickName)) {
-      nickName = SPUtils.getInstance().getString(KEY_ACCOUNT, "xxxx");
-      nickName = nickName.substring(Math.max(nickName.length() - 4, 0));
+      nickName = SPUtils.getInstance().getString(KEY_ACCOUNT, defaultAccount);
+      if (maxLength != null) {
+        nickName = nickName.substring(Math.max(nickName.length() - maxLength, 0));
+      }
     }
     return nickName;
   }

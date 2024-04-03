@@ -9,19 +9,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.netease.yunxin.kit.meeting.sampleapp.R;
+import com.netease.yunxin.kit.meeting.sampleapp.MeetingSettingsActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.SdkAuthenticator;
 import com.netease.yunxin.kit.meeting.sampleapp.ToastCallback;
 import com.netease.yunxin.kit.meeting.sampleapp.data.MeetingConfigRepository;
+import com.netease.yunxin.kit.meeting.sampleapp.databinding.FragmentMeetingBaseBinding;
 import com.netease.yunxin.kit.meeting.sampleapp.menu.InjectMenuArrangeActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.menu.InjectMenuContainer;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
@@ -41,48 +42,25 @@ import com.netease.yunxin.kit.meeting.sdk.media.NEAudioProfile;
 import com.netease.yunxin.kit.meeting.sdk.media.NEAudioProfileType;
 import com.netease.yunxin.kit.meeting.sdk.media.NEAudioScenarioType;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMeetingMenuItem;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public abstract class MeetingCommonFragment extends CommonFragment {
 
-  MeetingCommonFragment() {
-    super(R.layout.fragment_meeting_base);
+  FragmentMeetingBaseBinding binding;
+
+  @Nullable
+  @Override
+  public View onCreateView(
+      @NonNull LayoutInflater inflater,
+      @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
+    binding = FragmentMeetingBaseBinding.inflate(inflater, container, false);
+    initView();
+    return binding.getRoot();
   }
 
-  private final int[] checkBoxIds =
-      new int[] {
-        R.id.videoOption,
-        R.id.audioOption,
-        R.id.noChatOptions,
-        R.id.noInviteOptions,
-        R.id.no_minimize,
-        R.id.show_meeting_time,
-        R.id.showLongMeetingIdOnly,
-        R.id.showShortMeetingIdOnly,
-        R.id.noGalleryOptions,
-        R.id.noSwitchCamera,
-        R.id.noSwitchAudioMode,
-        R.id.noWhiteBoard,
-        R.id.defaultWhiteBoard,
-        R.id.noRename,
-        R.id.noCloudRecord,
-        R.id.showMemberTag,
-        R.id.audioOffAllowSelfOn,
-        R.id.audioOffNotAllowSelfOn,
-        R.id.videoOffAllowSelfOn,
-        R.id.videoOffNotAllowSelfOn,
-        R.id.noMuteAllVideo,
-        R.id.noMuteAllAudio,
-        R.id.cb_encryption,
-      };
-
-  protected CheckBox usePersonalMeetingNum;
-  private final CheckBox[] checkBoxes = new CheckBox[checkBoxIds.length];
-  private CheckBox useDefaultMeetingOptions;
-
-  private EditText injectedMenuIdEdx, injectedMenuTitleEdx;
+  protected abstract String getActionLabel();
 
   private List<NEMeetingMenuItem> toolbarMenu;
 
@@ -106,63 +84,61 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             }
           });
 
-  protected abstract String[] getEditorLabel();
+  void initView() {
+    binding.etNickname.setHint("昵称");
+    binding.etPassword.setHint("请输入密码");
+    binding.etPersonalTag.setHint("个人TAG");
+    binding.etEncryption.setHint("媒体流加密密钥");
+    binding.etNickname.setSingleLine();
+    binding.etPassword.setSingleLine();
+    binding.etPersonalTag.setSingleLine();
+    binding.etEncryption.setSingleLine();
+    binding.etRoleBind.setSingleLine();
+    binding.etExtra.setSingleLine();
+    binding.etMeetingNum.setSingleLine();
+    binding.title.setText(getActionLabel());
+    binding.actionBtn.setText(getActionLabel());
+    binding.actionBtn.setOnClickListener(
+        v ->
+            performAction(
+                binding.etMeetingNum.getText().toString(),
+                binding.etNickname.getText().toString(),
+                binding.etPassword.getText().toString(),
+                binding.etPersonalTag.getText().toString()));
 
-  @Override
-  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    View view = getView();
-    for (int index = 0; index < checkBoxIds.length; index++) {
-      checkBoxes[index] = view.findViewById(checkBoxIds[index]);
-    }
-
-    usePersonalMeetingNum = view.findViewById(R.id.usePersonalMeetingId);
-    useDefaultMeetingOptions = view.findViewById(R.id.useDefaultOptions);
-
-    String[] labels = getEditorLabel();
-
-    addEditorArray(0, R.id.firstEditor, labels);
-    addEditorArray(1, R.id.secondEditor, labels);
-    addEditorArray(2, R.id.thirdEditor, labels);
-    addEditorArray(3, R.id.fourthEditor, labels);
-    addEditorArray(4, R.id.et_encryption, labels);
-    addEditorArray(5, R.id.fifthEditor, labels);
-    addEditorArray(6, R.id.roleBind, labels);
-    Button configToolbarMenu = getView().findViewById(R.id.configToolbarMenus);
-    configToolbarMenu.setOnClickListener(
+    binding.actionToMeetingSettings.setOnClickListener(
+        v -> MeetingSettingsActivity.start(getActivity()));
+    binding.configToolbarMenus.setOnClickListener(
         v -> {
           InjectMenuContainer.setSelectedMenu(toolbarMenu);
           configToolbarMenuResult.launch(
               new Intent(getActivity(), InjectMenuArrangeActivity.class));
         });
-    Button configMoreMenu = getView().findViewById(R.id.configMoreMenus);
-    configMoreMenu.setOnClickListener(
+    binding.configMoreMenus.setOnClickListener(
         v -> {
           InjectMenuContainer.setSelectedMenu(moreMenu);
           configMoreMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
         });
-    useDefaultMeetingOptions.setChecked(false);
-    useDefaultMeetingOptions.setOnCheckedChangeListener(
+    binding.useDefaultOptions.setChecked(false);
+    binding.showCloudRecordMenuItem.setChecked(true);
+    binding.showCloudRecordingUI.setChecked(true);
+    binding.useDefaultOptions.setOnCheckedChangeListener(
         (checkbox, checked) -> {
-          checkBoxes[0].setEnabled(!checked);
-          checkBoxes[0].setChecked(false);
-          checkBoxes[1].setEnabled(!checked);
-          checkBoxes[1].setChecked(false);
-          checkBoxes[5].setEnabled(!checked);
-          checkBoxes[5].setChecked(false);
+          binding.videoOption.setEnabled(!checked);
+          binding.videoOption.setChecked(false);
+          binding.audioOption.setEnabled(!checked);
+          binding.audioOption.setChecked(false);
+          binding.showMeetingTime.setEnabled(!checked);
+          binding.showMeetingTime.setChecked(false);
         });
     if (NEMeetingKit.getInstance().getMeetingService() != null) {
       NEMeetingKit.getInstance().getMeetingService().addMeetingStatusListener(listener);
     }
-    groupCheckBoxesById(R.id.audioOffAllowSelfOn, R.id.audioOffNotAllowSelfOn);
-    groupCheckBoxesById(R.id.videoOffAllowSelfOn, R.id.videoOffNotAllowSelfOn);
+    groupCheckBoxesById(binding.audioOffAllowSelfOn, binding.audioOffNotAllowSelfOn);
+    groupCheckBoxesById(binding.videoOffAllowSelfOn, binding.videoOffNotAllowSelfOn);
   }
 
-  void groupCheckBoxesById(int... checkBoxIds) {
-    Set<CheckBox> checkBoxes = new HashSet<>();
-    for (int index = 0; index < checkBoxIds.length; index++) {
-      checkBoxes.add(getView().findViewById(checkBoxIds[index]));
-    }
+  void groupCheckBoxesById(CheckBox... checkBoxes) {
     for (CheckBox checkBox : checkBoxes) {
       checkBox.setOnCheckedChangeListener(
           (buttonView, isChecked) -> {
@@ -179,9 +155,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
 
   public NEMeetingOptions getMeetingOptions(NEMeetingOptions options) {
     if (isNotUseDefaultMeetingOptions()) {
-      options.noVideo = !isChecked(0);
-      options.noAudio = !isChecked(1);
-      options.showMeetingTime = isChecked(5);
+      options.noVideo = !binding.videoOption.isChecked();
+      options.noAudio = !binding.audioOption.isChecked();
+      options.showMeetingTime = binding.showMeetingTime.isChecked();
     } else {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
@@ -190,9 +166,9 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
     options.joinTimeout = MeetingConfigRepository.INSTANCE.getJoinTimeout();
 
-    options.noChat = isChecked(2);
-    boolean disableImageMessage = isCheckedById(R.id.disableImageMessage);
-    boolean disableFileMessage = isCheckedById(R.id.disableFileMessage);
+    options.noChat = binding.noChatOptions.isChecked();
+    boolean disableImageMessage = binding.disableImageMessage.isChecked();
+    boolean disableFileMessage = binding.disableFileMessage.isChecked();
     if (disableImageMessage || disableFileMessage) {
       NEMeetingChatroomConfig chatroomConfig = new NEMeetingChatroomConfig();
       chatroomConfig.enableImageMessage = !disableImageMessage;
@@ -200,20 +176,21 @@ public abstract class MeetingCommonFragment extends CommonFragment {
       options.chatroomConfig = chatroomConfig;
     }
 
-    options.noInvite = isChecked(3);
-    options.noMinimize = isChecked(4);
+    options.noInvite = binding.noInviteOptions.isChecked();
+    options.noMinimize = binding.noMinimize.isChecked();
     options.meetingIdDisplayOption = getMeetingIdDisplayOption();
-    options.noGallery = isChecked(8);
-    options.noSwitchCamera = isChecked(9);
-    options.enableFrontCameraMirror = isCheckedById(R.id.enableFrontCameraMirror);
-    options.noSwitchAudioMode = isChecked(10);
-    options.noWhiteBoard = isChecked(11);
-    options.noSip = isCheckedById(R.id.noSip);
-    options.defaultWindowMode = isChecked(12) ? NEWindowMode.whiteBoard : NEWindowMode.normal;
-    options.noRename = isCheckedById(R.id.noRename);
-    options.noLive = isCheckedById(R.id.noLive);
-    options.showMemberTag = isCheckedById(R.id.showMemberTag);
-    options.showMeetingRemainingTip = isCheckedById(R.id.showMeetingRemainingTip);
+    options.noGallery = binding.noGalleryOptions.isChecked();
+    options.noSwitchCamera = binding.noSwitchCamera.isChecked();
+    options.enableFrontCameraMirror = binding.enableFrontCameraMirror.isChecked();
+    options.noSwitchAudioMode = binding.noSwitchAudioMode.isChecked();
+    options.noWhiteBoard = binding.noWhiteBoard.isChecked();
+    options.noSip = binding.noSip.isChecked();
+    options.defaultWindowMode =
+        binding.defaultWhiteBoard.isChecked() ? NEWindowMode.whiteBoard : NEWindowMode.normal;
+    options.noRename = binding.noRename.isChecked();
+    options.noLive = binding.noLive.isChecked();
+    options.showMemberTag = binding.showMemberTag.isChecked();
+    options.showMeetingRemainingTip = binding.showMeetingRemainingTip.isChecked();
     if (MeetingConfigRepository.INSTANCE.getEnableAudioOptions()) {
       options.audioProfile =
           new NEAudioProfile(
@@ -227,19 +204,21 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
     // 如果是创建会议判断是否需要录制
     if (options instanceof NEStartMeetingOptions) {
-      ((NEStartMeetingOptions) options).noCloudRecord = !isCheckedById(R.id.noCloudRecord);
+      ((NEStartMeetingOptions) options).noCloudRecord = !binding.cloudRecord.isChecked();
     }
     options.fullToolbarMenuItems = toolbarMenu;
     options.fullMoreMenuItems = moreMenu;
-    options.noMuteAllAudio = isChecked(21);
-    options.noMuteAllVideo = isChecked(20);
-    options.detectMutedMic = isCheckedById(R.id.detectMutedMic);
-    options.unpubAudioOnMute = isCheckedById(R.id.unpubAudioOnMute);
-    options.showScreenShareUserVideo = isCheckedById(R.id.showScreenShareUserVideo);
-    options.showWhiteboardShareUserVideo = isCheckedById(R.id.showWhiteboardShareUserVideo);
-    options.showFloatingMicrophone = isCheckedById(R.id.showFloatingMicrophone);
-    options.enableTransparentWhiteboard = isCheckedById(R.id.enableTransparentWhiteboard);
-    options.enableAudioShare = isCheckedById(R.id.enableAudioShare);
+    options.noMuteAllAudio = binding.noMuteAllAudio.isChecked();
+    options.noMuteAllVideo = binding.noMuteAllVideo.isChecked();
+    options.detectMutedMic = binding.detectMutedMic.isChecked();
+    options.unpubAudioOnMute = binding.unpubAudioOnMute.isChecked();
+    options.showScreenShareUserVideo = binding.showScreenShareUserVideo.isChecked();
+    options.showWhiteboardShareUserVideo = binding.showWhiteboardShareUserVideo.isChecked();
+    options.showFloatingMicrophone = binding.showFloatingMicrophone.isChecked();
+    options.enableTransparentWhiteboard = binding.enableTransparentWhiteboard.isChecked();
+    options.enableAudioShare = binding.enableAudioShare.isChecked();
+    options.showCloudRecordingUI = binding.showCloudRecordingUI.isChecked();
+    options.showCloudRecordMenuItem = binding.showCloudRecordMenuItem.isChecked();
     //    options.enablePictureInPicture = isCheckedById(R.id.enablePictureInPicture);
     return options;
   }
@@ -253,24 +232,18 @@ public abstract class MeetingCommonFragment extends CommonFragment {
   }
 
   private NEMeetingIdDisplayOption getMeetingIdDisplayOption() {
-    if (isChecked(6)) return NEMeetingIdDisplayOption.DISPLAY_LONG_ID_ONLY;
-    if (isChecked(7)) return NEMeetingIdDisplayOption.DISPLAY_SHORT_ID_ONLY;
+    if (binding.showLongMeetingIdOnly.isChecked())
+      return NEMeetingIdDisplayOption.DISPLAY_LONG_ID_ONLY;
+    if (binding.showShortMeetingIdOnly.isChecked())
+      return NEMeetingIdDisplayOption.DISPLAY_SHORT_ID_ONLY;
     return NEMeetingIdDisplayOption.DISPLAY_ALL;
   }
 
   protected final boolean isNotUseDefaultMeetingOptions() {
-    return !useDefaultMeetingOptions.isChecked();
+    return !binding.useDefaultOptions.isChecked();
   }
 
   public void clear() {}
-
-  protected final boolean isChecked(int index) {
-    return checkBoxes[index].isChecked();
-  }
-
-  protected final boolean isCheckedById(@IdRes int id) {
-    return ((CheckBox) getView().findViewById(id)).isChecked();
-  }
 
   protected class MeetingCallback extends ToastCallback<Void> {
 
@@ -323,8 +296,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
                               if (resultData != null && resultData.size() > 0) {
                                 NEHistoryMeetingItem history = resultData.get(0);
                                 Log.d("MeetingCommonFragment", "getHistoryMeetingItem: " + history);
-                                if (history.getMeetingNum().equals(getFirstEditTextContent())) {
-                                  getEditor(1).setText(history.getNickname());
+                                if (history
+                                    .getMeetingNum()
+                                    .equals(binding.etMeetingNum.getText().toString())) {
+                                  binding.etNickname.setText(history.getNickname());
                                 }
                               }
                             });

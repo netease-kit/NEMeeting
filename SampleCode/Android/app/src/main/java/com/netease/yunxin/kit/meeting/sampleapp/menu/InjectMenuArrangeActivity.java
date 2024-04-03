@@ -48,7 +48,7 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
   protected ActivityMenuArrangementBinding binding;
   List<NEMeetingMenuItem> selectedItems = new ArrayList<>();
 
-  protected static int itemId = NEMenuIDs.FIRST_INJECTED_MENU_ID;
+  protected static int itemId = NEMenuIDs.FIRST_INJECTED_MENU_ID + 6;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,16 +86,15 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
     List<NEMeetingMenuItem> items = new ArrayList<>();
     items.addAll(NEMenuItems.getBuiltinToolbarMenuItemList());
     items.addAll(NEMenuItems.getBuiltinMoreMenuItemList());
-    items.add(
-        new NESingleStateMenuItem(
-            100, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo("单选菜单", 0)));
-    items.add(
-        new NESingleStateMenuItem(
-            101, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo("多选菜单", 0)));
-    items.add(
-        new NESingleStateMenuItem(
-            102, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo("音频管理", 0)));
+    items.add(createMenuItem(100, "打开设置"));
+    items.add(createMenuItem(101, "最小化"));
+    items.add(createMenuItem(102, "音频管理"));
+    items.add(createMenuItem(103, "测试修改单选菜单"));
+    items.add(createMenuItem(104, "测试修改多选菜单"));
     items.add(NEMenuItems.switchShowTypeMenu());
+    items.add(createMenuItem(105, "获取账号信息"));
+    items.add(createMenuItem(106, "通用单选菜单"));
+    items.add(createMenuItem(107, "通用多选菜单"));
     FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
     layoutManager.setFlexDirection(FlexDirection.ROW);
     layoutManager.setJustifyContent(JustifyContent.FLEX_START);
@@ -104,13 +103,31 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
     binding.choices.setAdapter(new Adapter(this, Adapter.TYPE_CANDIDATE, items));
   }
 
+  NEMeetingMenuItem createMenuItem(int id, String text) {
+    return new NESingleStateMenuItem(
+        id, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo(text, 0));
+  }
+
   private void selectItem(NEMeetingMenuItem item) {
     edited = true;
-    int itemId = item.getItemId();
-    if (itemId == 100) {
-      item = createSingleStateMenuItem();
-    } else if (itemId == 101) {
-      item = createCheckableMenuItem();
+    int selectId = item.getItemId();
+    switch (selectId) {
+      case 100:
+      case 101:
+      case 102:
+      case 103:
+      case 105:
+        item = createSingleStateMenuItem(selectId);
+        break;
+      case 104:
+        item = createCheckableMenuItem(selectId);
+        break;
+      case 106:
+        item = createSingleStateMenuItem(itemId++);
+        break;
+      case 107:
+        item = createCheckableMenuItem(itemId++);
+        break;
     }
     selectedItems.add(item);
     binding.selected.getAdapter().notifyItemInserted(selectedItems.size());
@@ -196,16 +213,14 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
     }
   }
 
-  protected NESingleStateMenuItem createSingleStateMenuItem() {
-    final int id = itemId++;
+  protected NESingleStateMenuItem createSingleStateMenuItem(int id) {
     return new NESingleStateMenuItem(
         id,
         NEMenuVisibility.VISIBLE_ALWAYS,
         new NEMenuItemInfo(String.valueOf(id), R.drawable.mood));
   }
 
-  protected NECheckableMenuItem createCheckableMenuItem() {
-    final int id = itemId++;
+  protected NECheckableMenuItem createCheckableMenuItem(int id) {
     return new NECheckableMenuItem(
         id,
         NEMenuVisibility.VISIBLE_ALWAYS,
@@ -360,8 +375,16 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
         return new String[] {"邀请"};
       case NEMenuIDs.CHAT_MENU_ID:
         return new String[] {"聊天"};
+      case NEMenuIDs.NOTIFY_CENTER_MENU_ID:
+        return new String[] {"通知"};
       case NEMenuIDs.WHITEBOARD_ID:
         return new String[] {"共享白板", "退出白板"};
+      case NEMenuIDs.CLOUD_RECORD_ID:
+        return new String[] {"云录制", "结束录制"};
+      case NEMenuIDs.SECURITY_ID:
+        return new String[] {"安全"};
+      case NEMenuIDs.DISCONNECT_AUDIO_ID:
+        return new String[] {"断开音频", "连接音频"};
     }
 
     if (item instanceof NESingleStateMenuItem) {

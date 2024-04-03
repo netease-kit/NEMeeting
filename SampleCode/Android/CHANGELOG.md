@@ -1,4 +1,114 @@
 # NEMeetingKit ChangeLog
+## v4.4.0(April 2, 2024)
+### New Feature
+- 入会时支持指定参会者头像：`NEMeetingParams.avatar`
+- 入会时支持是否允许音频设备切换`NEMeetingOptions.enableAudioDeviceSwitch`
+- 支持会中锁定特定用户视频画面
+- 支持会议创建者收回主持人权限
+- 预约会议支持配置是否允许参会者在主持人进会前加入会议: `NEMeetingItem.setEnableJoinBeforeHost`, `NEMeetingItem.isEnableJoinBeforeHost` 
+- Android 升级适配 TargetSdk 至 API 34 （Android 14）
+  - 声明了 POST_NOTIFICATION 权限（暂不执行动态申请）
+  - 调整了 Android 14 上启动前台 Service 的时机至用户授权屏幕共享权限后
+- 支持会中全部准入、全部移除等候室成员
+- 支持本次会议自动准入等候室成员
+- 支持聊天室私聊功能和聊天权限控制
+### Fixed
+- 修复等候室默认图片展示未撑满屏幕的问题
+- 适配 Android 机型导航栏沉浸式模式
+- 参会者列表添加“焦点视频”成员图标
+- 修复 Android 5.x 系统白板共享黑屏问题（Flutter渲染PlatformView 失败）
+- 兼容处理 会中聊天室/等候室聊天室 可能不存在的情况
+### Api Changes
+- 废弃 `NELoggerConfig` ，不再支持配置日志级别和日志文件路径
+### Compatibility
+- 兼容 NERoomKit 1.27.0
+- 兼容 NIMSDK_LITE 9.15.0
+- 兼容 NERtcSDK  5.5.33
+
+## v4.3.1(March 7, 2024)
+### Bug Fixes
+- 修改会议邀请文本
+### Compatibility
+- 兼容 NERoomKit 1.26.0
+- 兼容 NIMSDK_LITE 9.14.2
+- 兼容 NERtcSDK  5.5.22
+
+## v4.3.0(March 7, 2024)
+### New Feature
+- 新增断开音频功能，支持连接/断开本地音频
+- 新增获取音频列表、切换音频设备功能
+- 支持管理员修改参会者昵称
+- 支持用户头像显示
+### Compatibility
+- 兼容 NERoomKit 1.26.0
+- 兼容 NIMSDK_LITE 9.14.2
+- 兼容 NERtcSDK  5.5.22
+
+## v4.2.2(Jan 31, 2024)
+### New Feature
+- 升级 NERtc 版本至 5.5.21
+### Compatibility
+- 兼容 NERoomKit 1.25.2
+- 兼容 NIMSDK_LITE 9.14.1
+- 兼容 NERtcSDK  5.5.21
+
+## v4.2.1(Jan 24, 2024)
+### Bug Fixes
+- 修复appKey未配置等候室，加入聊天室失败问题
+### Compatibility
+- 兼容 NERoomKit 1.25.1
+- 兼容 NIMSDK_LITE 9.14.1
+- 兼容 NERtcSDK  5.5.207
+
+## v4.1.1(Jan 15, 2024)
+### New Feature
+- 升级 NERtc 版本至 5.5.207
+
+### Compatibility
+- 兼容 NERoomKit 1.25.1
+- 兼容 NIMSDK_LITE 9.14.1
+- 兼容 NERtcSDK 5.5.207
+
+## v4.1.0(Jan 10, 2024)
+### New Feature
+- 新增等候室功能
+  - 等候室开启后，新参会者会先进入等候室，管理员可以准入或者移除等候室中的参会者
+  - 会中管理员可以在聊天室给等候室所有成员发消息，等候室成员可以查看等候室的聊天消息
+  - 创建会议时，通过 `NEStartMeetingOptions.enableWaitingRoom` 设置会议是否开启等候室，管理员后续可以手动开关
+  - 预约会议时，通过 `NEMeetingItem.setWaitingRoomEnabled` 设置会议是否开启等候室
+- 新增会议水印功能，可以在会议中开启水印，后台可以配置水印内容、水印样式、是否强制打开(强制打开则端上不展示设置入口)
+- 修改会控更多工具栏展示，新增安全模块，支持等候室开关、水印开关和锁定会议开关
+- 新增接口 `NEMeetingService.updateInjectedMenuItem`，更新当前存在的自定义菜单项的信息和状态
+- `NEAccountService.getAccountInfo` 账号信息查询新增字段： `NEAccountInfo.accountId`，`NEAccountInfo.isAnonymous`
+
+### Compatibility
+- 兼容 NERoomKit 1.25.0
+- 兼容 NIMSDK_LITE 9.14.1
+- 兼容 NERtcSDK  5.5.203
+
+## v4.0.1(Dec 29, 2023)
+### New Feature
+- 新增updateInjectedMenuItem接口，支持动态修改已存在的菜单按钮状态
+- AccountService.getAccountInfo返回增加accountId、isAnonymous，支持获取匿名入会的账号信息
+
+### Compatibility
+- 兼容 NERoomKit 1.23.1
+- 兼容 NIMSDK_LITE 9.12.0
+- 兼容 NERtcSDK  5.5.203
+
+## v4.0.0(Nov 30, 2023)
+### New Feature
+- 新增云端录制会议能力。
+- 支持在会议中查询历史消息和撤回消息。
+- 在会议配置项 NEMeetingOptions 中新增以下属性：
+  - showCloudRecordMenuItem：是否展示云端录制菜单按钮，默认为 true。
+  - showCloudRecordingUI：是否展示云端录制过程中的UI提示，默认为 true。
+
+### Compatibility
+- 兼容 NERoomKit 1.23.0
+- 兼容 NIMSDK_LITE 9.12.0
+- 兼容 NERtcSDK  5.5.203
+
 ## v3.17.0 (Oct 31, 2023)
 
 ### New Features

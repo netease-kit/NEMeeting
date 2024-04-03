@@ -130,6 +130,8 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
           case ENABLE_VIRTUAL_BACKGROUND:
             if (value) {
               setVirtualBackgroundPic(settingsService);
+            } else {
+              settingsService.setBuiltinVirtualBackgrounds(null);
             }
             settingsService.enableVirtualBackground(value);
             break;

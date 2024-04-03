@@ -7,8 +7,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/joinMeetingFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.netease.meeting.demo.com.netease.meeting.sampleapp.view.JoinMeetingFragment">
+        android:layout_height="match_parent">
 
     <ScrollView
             android:fillViewport="true"
@@ -83,7 +82,7 @@
                     android:text="打开麦克风" />
 
             <CheckBox
-                    android:id="@+id/usePersonalMeetingId"
+                    android:id="@+id/usePersonalMeetingNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -168,10 +167,22 @@
                     android:text="关闭会中改名" />
 
             <CheckBox
-                    android:id="@+id/noCloudRecord"
+                    android:id="@+id/cloudRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="开启云录制" />
+
+            <CheckBox
+                android:id="@+id/showCloudRecordingUI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示云录制过程UI" />
+
+            <CheckBox
+                android:id="@+id/showCloudRecordMenuItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示云录制菜单按钮" />
 
             <CheckBox
                     android:id="@+id/noSip"
@@ -318,6 +329,20 @@
                 android:text="开启加密"
                 android:checked="false" />
 
+            <CheckBox
+                    android:id="@+id/enableWaitingRoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开启等候室"
+                    android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/enableAudioDeviceSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="允许音频设备切换"
+                android:checked="true" />
+
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_1"
                     android:layout_width="0dp"
@@ -327,7 +352,7 @@
                     android:orientation="vertical"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/checkbox_flow_2"
-                    app:layout_constraintTop_toBottomOf="@+id/roleBind"
+                    app:layout_constraintTop_toBottomOf="@+id/et_role_bind"
                     app:layout_constraintBottom_toTopOf="@+id/configToolbarMenus"
                     app:flow_wrapMode="none"
                     app:flow_verticalGap="8dp"
@@ -337,7 +362,7 @@
                     app:flow_verticalStyle="packed"
                     app:flow_verticalAlign="top"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingId,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption" />
+                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom" />
 
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_2"
@@ -354,12 +379,12 @@
                     app:flow_maxElementsWrap="1"
                     app:flow_verticalStyle="packed"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="noCloudRecord,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare" />
+                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare,enableAudioDeviceSwitch" />
 
 
 
             <EditText
-                    android:id="@+id/firstEditor"
+                    android:id="@+id/et_meeting_num"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_margin="10dp"
@@ -370,28 +395,28 @@
                     tools:hint="会议号" />
 
             <EditText
-                    android:id="@+id/secondEditor"
+                    android:id="@+id/et_nickname"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_margin="10dp"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/firstEditor"
+                    app:layout_constraintTop_toBottomOf="@id/et_meeting_num"
                     tools:text="1234567" />
 
             <EditText
-                    android:id="@+id/thirdEditor"
+                    android:id="@+id/et_password"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_margin="10dp"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/secondEditor" />
+                    app:layout_constraintTop_toBottomOf="@id/et_nickname" />
 
             <EditText
-                    android:id="@+id/fourthEditor"
+                    android:id="@+id/et_personal_tag"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_margin="10dp"
@@ -399,10 +424,10 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     tools:hint="个人TAG"
-                    app:layout_constraintTop_toBottomOf="@id/thirdEditor" />
+                    app:layout_constraintTop_toBottomOf="@id/et_password" />
 
             <EditText
-                    android:id="@+id/fifthEditor"
+                    android:id="@+id/et_extra"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_margin="10dp"
@@ -410,7 +435,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     tools:hint="扩展字段"
-                    app:layout_constraintTop_toBottomOf="@id/fourthEditor" />
+                    app:layout_constraintTop_toBottomOf="@id/et_personal_tag" />
 
             <TextView
                     android:id="@+id/roleBindTips"
@@ -422,10 +447,10 @@
                     android:textStyle="bold"
                     android:text="会议成员角色绑定0:主持人，1:联席主持人，2：成员"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fifthEditor" />
+                    app:layout_constraintTop_toBottomOf="@id/et_extra" />
 
             <EditText
-                    android:id="@+id/roleBind"
+                    android:id="@+id/et_role_bind"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_margin="10dp"

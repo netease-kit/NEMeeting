@@ -151,6 +151,14 @@
     weakSelf.item.waitingRoomEnabled = [newValue boolValue];
   };
   [group.rows addObject:enableWaitingRoomRow];
+
+  NEFromRow *enableGuestJoin = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kGuestJoin"];
+  enableGuestJoin.title = @"允许访客入会";
+  enableGuestJoin.value = @(self.item.enableGuestJoin);
+  enableGuestJoin.onValueChanged = ^(id _Nonnull newValue, NEFromRow *_Nonnull row) {
+    weakSelf.item.enableGuestJoin = [newValue boolValue];
+  };
+  [group.rows addObject:enableGuestJoin];
   return group;
 }
 - (NEFromGroup *)cloudRecordGroup {

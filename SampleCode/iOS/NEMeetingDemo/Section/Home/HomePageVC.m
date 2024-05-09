@@ -20,7 +20,8 @@
 
 @interface HomePageVC () <UICollectionViewDataSource,
                           UICollectionViewDelegate,
-                          NEMeetingAuthListener>
+                          NEMeetingAuthListener,
+                          NEMeetingInviteStatusListener>
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UIView *subscribeListContainer;
 @property(nonatomic, strong) UIButton *settingBtn;
@@ -34,6 +35,7 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[NEMeetingKit getInstance] removeAuthListener:self];
+  [[NEMeetingKit getInstance].getInviteService removeListener:self];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kNEMeetingEditSubscribeDone
                                                 object:nil];
@@ -43,6 +45,7 @@
   [self setupUI];
   // Do any additional setup after loading the view.
   [[NEMeetingKit getInstance] addAuthListener:self];
+  [[NEMeetingKit getInstance].getInviteService addListener:self];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(editDone)
                                                name:kNEMeetingEditSubscribeDone
@@ -155,6 +158,45 @@
   MeetingActionVC *vc = [[MeetingActionVC alloc] init];
   [self.navigationController pushViewController:vc animated:YES];
 }
+#pragma mark NEMeetingInviteStatusListener
+
+- (void)onMeetingInviteStatusChanged:(NEMeetingInviteEvent *)event {
+  // Demo上就不做取消的时候dismiss alert了，主要为验证接口与回调
+  if (event.status == NEMeetingInviteStatusCalling) {
+    UIAlertController *alert = [UIAlertController
+        alertControllerWithTitle:@"收到会议邀请"
+                         message:[NSString stringWithFormat:@"%@", event.inviteInfo.inviterName]
+                  preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction
+        actionWithTitle:@"拒绝"
+                  style:UIAlertActionStyleCancel
+                handler:^(UIAlertAction *_Nonnull action) {
+                  [[NEMeetingKit getInstance].getInviteService rejectInvite:event.meetingId
+                                                                   callback:nil];
+                }];
+    UIAlertAction *acceptAction =
+        [UIAlertAction actionWithTitle:@"接听"
+                                 style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *_Nonnull action) {
+                                 NEJoinMeetingParams *param = [[NEJoinMeetingParams alloc] init];
+                                 param.meetingNum = event.inviteInfo.meetingNum;
+                                 param.displayName = @"123";
+                                 [[NEMeetingKit getInstance].getInviteService
+                                     acceptInvite:param
+                                             opts:[[NEJoinMeetingOptions alloc] init]
+                                         callback:nil];
+                               }];
+    [alert addAction:cancelAction];
+    [alert addAction:acceptAction];
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIViewController *preVC = keyWindow.rootViewController.presentedViewController;
+    if (!preVC) {
+      preVC = keyWindow.rootViewController;
+    }
+    [preVC presentViewController:alert animated:YES completion:nil];
+  }
+}
+
 #pragma mark------------------------ MeetingServiceListener ------------------------
 - (void)onKickOut {
   [self doBeKickedWithInfo:@"您已在其他设备登录"];

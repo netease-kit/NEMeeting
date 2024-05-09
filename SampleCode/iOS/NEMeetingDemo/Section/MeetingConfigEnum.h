@@ -83,7 +83,8 @@ typedef NS_ENUM(NSInteger, CreateMeetingSettingType) {
   CreateMeetingSettingTypeShowCloudRecordMenuItem,
   CreateMeetingSettingTypeShowCloudRecordingUI,
   CreateMeetingSettingTypeEnableWaitingRoom,
-  CreateMeetingSettingTypeEnableAudioDeviceSwitch
+  CreateMeetingSettingTypeEnableAudioDeviceSwitch,
+  CreateMeetingSettingTypeEnableGuestJoin
 };
 
 #endif /* MeetingConfigEnum_h */

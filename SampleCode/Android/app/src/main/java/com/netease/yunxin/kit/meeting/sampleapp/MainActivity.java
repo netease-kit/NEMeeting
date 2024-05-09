@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.OvershootInterpolator;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -27,8 +30,13 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingOnInjectedMenuItemClickListener;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingService;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
+import com.netease.yunxin.kit.meeting.sdk.menu.NECheckableMenuItem;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEMeetingMenuItem;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuClickInfo;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuItemInfo;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuStateController;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuVisibility;
+import com.netease.yunxin.kit.meeting.sdk.menu.NESingleStateMenuItem;
 import java.lang.reflect.Method;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
@@ -124,21 +132,104 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         MeetingSettingsActivity.start(context);
       } else if (clickInfo.getItemId() == 101) {
         minimizeCurrentMeeting();
+      } else if (clickInfo.getItemId() == 103) {
+        showMenuEditDialog(context, 103, false);
+      } else if (clickInfo.getItemId() == 104) {
+        showMenuEditDialog(context, 104, true);
+      } else if (clickInfo.getItemId() == 105) {
+        NEMeetingKit.getInstance()
+            .getAccountService()
+            .getAccountInfo(
+                (resultCode, resultMsg, resultData) -> {
+                  if (resultCode == 0) {
+                    showCommonDialog(context, "获取账号信息", resultData.toString(), stateController);
+                  }
+                });
       } else {
-        AlertDialogUtil.setAlertDialog(
-            new AlertDialog.Builder(context)
-                .setTitle("菜单项被点击了")
-                .setMessage(clickInfo + "\n" + meetingInfo)
-                .setPositiveButton(
-                    "确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
-                .setNegativeButton(
-                    "取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
-                .setNeutralButton("忽略", (dialog, which) -> {})
-                .setCancelable(false)
-                .create());
-        if (AlertDialogUtil.getAlertDialog() != null) {
-          AlertDialogUtil.getAlertDialog().show();
-        }
+        showCommonDialog(context, "菜单项被点击了", clickInfo + "\n" + meetingInfo, stateController);
+      }
+    }
+
+    private void showCommonDialog(
+        Context context, String title, String message, NEMenuStateController stateController) {
+      AlertDialogUtil.setAlertDialog(
+          new AlertDialog.Builder(context)
+              .setTitle(title)
+              .setMessage(message)
+              .setPositiveButton(
+                  "确定", (dialog, which) -> didMenuItemStateTransition(stateController, true))
+              .setNegativeButton(
+                  "取消", (dialog, which) -> didMenuItemStateTransition(stateController, false))
+              .setNeutralButton("忽略", (dialog, which) -> {})
+              .setCancelable(false)
+              .create());
+      if (AlertDialogUtil.getAlertDialog() != null) {
+        AlertDialogUtil.getAlertDialog().show();
+      }
+    }
+
+    private void showMenuEditDialog(Context context, int itemId, boolean isCheckable) {
+      // 创建自定义布局
+      LinearLayout layout = new LinearLayout(context);
+      layout.setOrientation(LinearLayout.VERTICAL);
+
+      // 创建输入框
+      final EditText input = new EditText(context);
+      input.setHint("请输入要更新的菜单文本");
+      layout.addView(input);
+
+      // 创建选择框
+      final CheckBox checkBox = new CheckBox(context);
+      checkBox.setText("请输入更新后的选择状态");
+      if (isCheckable) {
+        layout.addView(checkBox);
+      }
+
+      // 构建AlertDialog
+      AlertDialogUtil.setAlertDialog(
+          new AlertDialog.Builder(context)
+              .setTitle("外部修改菜单项状态")
+              .setView(layout)
+              .setPositiveButton(
+                  "确定",
+                  (dialog, which) -> {
+                    String userInput = input.getText().toString();
+                    boolean checked = checkBox.isChecked();
+                    NEMeetingKit.getInstance()
+                        .getMeetingService()
+                        .updateInjectedMenuItem(
+                            generateMenuItem(userInput, itemId, checked, isCheckable),
+                            (resultCode, resultMsg, resultData) ->
+                                Log.d(
+                                    TAG,
+                                    "updateInjectedMenuItem result: "
+                                        + resultCode
+                                        + "#"
+                                        + resultMsg));
+                  })
+              .setNegativeButton("取消", (dialog, which) -> {})
+              .setNeutralButton("忽略", (dialog, which) -> {})
+              .setCancelable(false)
+              .create());
+      if (AlertDialogUtil.getAlertDialog() != null) {
+        AlertDialogUtil.getAlertDialog().show();
+      }
+    }
+
+    private NEMeetingMenuItem generateMenuItem(
+        String userInput, int itemId, boolean checked, boolean isCheckable) {
+      if (isCheckable) {
+        return new NECheckableMenuItem(
+            itemId,
+            NEMenuVisibility.VISIBLE_ALWAYS,
+            new NEMenuItemInfo(userInput + "-未选中", R.drawable.check_box_uncheck),
+            new NEMenuItemInfo(userInput + "-选中", R.drawable.check_box_checked),
+            checked);
+      } else {
+        return new NESingleStateMenuItem(
+            itemId,
+            NEMenuVisibility.VISIBLE_ALWAYS,
+            new NEMenuItemInfo(userInput, R.drawable.mood));
       }
     }
 

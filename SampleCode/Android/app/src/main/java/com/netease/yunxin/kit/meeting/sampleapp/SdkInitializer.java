@@ -11,11 +11,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import com.netease.yunxin.kit.meeting.R;
 import com.netease.yunxin.kit.meeting.sampleapp.data.ServerConfig;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.SPUtils;
-import com.netease.yunxin.kit.meeting.sdk.NELogLevel;
-import com.netease.yunxin.kit.meeting.sdk.NELoggerConfig;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingError;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKitConfig;
@@ -128,14 +125,6 @@ public class SdkInitializer {
     config.appName = context.getString(R.string.app_name);
     config.serverUrl = serverConfig.getServerUrl();
     config.useAssetServerConfig = serverConfig.getUseAssetServerConfig();
-    //配置会议时显示前台服务
-    // NEForegroundServiceConfig foregroundServiceConfig = new NEForegroundServiceConfig();
-    // foregroundServiceConfig.contentTitle = context.getString(R.string.app_name);
-    // config.foregroundServiceConfig = foregroundServiceConfig;
-    NELoggerConfig loggerConfig = new NELoggerConfig();
-    loggerConfig.level = NELogLevel.of(getLoggerLevelConfig());
-    loggerConfig.path = getLoggerPathConfig();
-    config.loggerConfig = loggerConfig;
     NEMeetingKit.getInstance()
         .initialize(
             context,

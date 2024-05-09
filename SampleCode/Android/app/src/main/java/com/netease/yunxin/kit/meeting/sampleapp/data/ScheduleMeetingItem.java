@@ -48,6 +48,8 @@ public class ScheduleMeetingItem {
 
   public static final int ENABLE_MEETING_NO_SIP_ACTION = 13;
 
+  public static final int ENABLE_MEETING_WAITING_ROOM = 14;
+
   public ScheduleMeetingItem(
       String tittle,
       String subTittle,

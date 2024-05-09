@@ -7,6 +7,7 @@ package com.netease.yunxin.kit.meeting.sampleapp.data;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemLive;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemSetting;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemStatus;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingRecurringRule;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingRoleType;
 import java.io.Serializable;
 import java.util.Map;
@@ -50,9 +51,21 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
 
   private NEMeetingItemLive live;
 
+  private NEMeetingRecurringRule recurringRule;
+
   private boolean isGroupFirst;
 
   private boolean noSip = true;
+
+  private boolean enableWaitingRoom = false;
+
+  public void setWaitingRoomEnabled(boolean enabled) {
+    enableWaitingRoom = enabled;
+  }
+
+  public boolean isWaitingRoomEnabled() {
+    return enableWaitingRoom;
+  }
 
   private String extraData;
 
@@ -184,6 +197,14 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
 
   public void setLive(NEMeetingItemLive live) {
     this.live = live;
+  }
+
+  public NEMeetingRecurringRule getRecurringRule() {
+    return recurringRule;
+  }
+
+  public void setRecurringRule(NEMeetingRecurringRule recurringRule) {
+    this.recurringRule = recurringRule;
   }
 
   public void setSetting(NEMeetingItemSetting setting) {

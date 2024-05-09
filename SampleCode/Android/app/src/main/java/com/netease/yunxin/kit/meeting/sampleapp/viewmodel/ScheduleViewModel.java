@@ -35,6 +35,7 @@ public class ScheduleViewModel extends ViewModel {
     meetingItem.setEndTime(item.getEndTime());
     meetingItem.setExtraData(item.getExtraData());
     meetingItem.setLive(item.getLive());
+    meetingItem.setRecurringRule(item.getRecurringRule());
     meetingItem.setPassword(item.getPassword());
     meetingItem.setSetting(item.getSetting());
     meetingItem.setSubject(item.getSubject());

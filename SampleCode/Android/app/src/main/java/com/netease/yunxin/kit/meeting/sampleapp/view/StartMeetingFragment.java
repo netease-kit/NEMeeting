@@ -7,10 +7,14 @@ package com.netease.yunxin.kit.meeting.sampleapp.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
-import com.netease.yunxin.kit.meeting.sampleapp.R;
+import com.netease.yunxin.kit.meeting.sampleapp.SdkAuthenticator;
 import com.netease.yunxin.kit.meeting.sampleapp.viewmodel.StartMeetingViewModel;
 import com.netease.yunxin.kit.meeting.sdk.NEAccountService;
 import com.netease.yunxin.kit.meeting.sdk.NEEncryptionConfig;
@@ -24,6 +28,7 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingRoleType;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingVideoControl;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingParams;
+import com.netease.yunxin.kit.meeting.sdk.NEWatermarkConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,7 +38,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class StartMeetingFragment extends MeetingCommonFragment {
-  private static final String TAG = StartMeetingFragment.class.getSimpleName();
   private String meetingNum;
   private String currentMeetingNum;
   private String content;
@@ -41,16 +45,24 @@ public class StartMeetingFragment extends MeetingCommonFragment {
   private JSONObject jsonScene;
   private StartMeetingViewModel mViewModel;
 
+  @Nullable
   @Override
-  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    mViewModel = ViewModelProviders.of(this).get(StartMeetingViewModel.class);
-    usePersonalMeetingNum.setEnabled(true);
-    usePersonalMeetingNum.setOnCheckedChangeListener(
+  public View onCreateView(
+      @NonNull LayoutInflater inflater,
+      @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
+    binding.etMeetingNum.setHint("会议号(留空或使用个人会议号)");
+    binding.etExtra.setHint("扩展字段");
+    binding.etRoleBind.setHint("json结构uid-role:{\"dew323esd23ew23e3r\":1}");
+    binding.usePersonalMeetingNum.setEnabled(true);
+    binding.usePersonalMeetingNum.setOnCheckedChangeListener(
         (buttonView, isChecked) -> {
           determineMeetingNum();
         });
+    mViewModel = ViewModelProviders.of(this).get(StartMeetingViewModel.class);
     initData();
+    return binding.getRoot();
   }
 
   /** 初始化数据，为了方便测试，可通过ADB传递参数进行验证 当前支持传入tag和scene tag:String类型 scene:Json类型 */
@@ -68,45 +80,33 @@ public class StartMeetingFragment extends MeetingCommonFragment {
   }
 
   @Override
-  protected String[] getEditorLabel() {
-    return new String[] {
-      "会议号(留空或使用个人会议号)",
-      "昵称",
-      "请输入密码",
-      "个人TAG",
-      "媒体流加密密钥",
-      "扩展字段",
-      "json结构uid-role:{\"dew323esd23ew23e3r\":1}"
-    };
-  }
-
-  @Override
   protected String getActionLabel() {
     return "创建会议";
   }
 
   @Override
-  protected void performAction(String first, String second, String third, String fourth) {
+  protected void performAction(
+      String meetingNum, String displayName, String password, String personalTag) {
     NEStartMeetingParams params = new NEStartMeetingParams();
     params.meetingNum =
-        usePersonalMeetingNum.isChecked() && !TextUtils.isEmpty(currentMeetingNum)
+        binding.usePersonalMeetingNum.isChecked() && !TextUtils.isEmpty(currentMeetingNum)
             ? currentMeetingNum
-            : first;
-    params.displayName = second;
-    if (!TextUtils.isEmpty(third)) {
-      params.password = third;
+            : meetingNum;
+    params.displayName = displayName;
+    if (!TextUtils.isEmpty(password)) {
+      params.password = password;
     }
     if (!TextUtils.isEmpty(tag)) {
       params.tag = tag;
     }
-    if (!TextUtils.isEmpty(fourth)) {
-      params.tag = fourth;
+    if (!TextUtils.isEmpty(personalTag)) {
+      params.tag = personalTag;
     }
-    String extraData = getEditorText(5);
+    String extraData = binding.etExtra.getText().toString();
     if (!TextUtils.isEmpty(extraData)) {
       params.extraData = extraData;
     }
-    String roleBindsStr = getEditorText(6);
+    String roleBindsStr = binding.etRoleBind.getText().toString();
     if (!TextUtils.isEmpty(roleBindsStr)) {
       try {
         JSONObject roleBindJson = new JSONObject(roleBindsStr);
@@ -125,36 +125,39 @@ public class StartMeetingFragment extends MeetingCommonFragment {
     }
 
     List<NEMeetingControl> controls = new ArrayList<>();
-    if (isCheckedById(R.id.audioOffAllowSelfOn)) {
+    if (binding.audioOffAllowSelfOn.isChecked()) {
       controls.add(new NEMeetingAudioControl(NEMeetingAttendeeOffType.OffAllowSelfOn));
-    } else if (isCheckedById(R.id.audioOffNotAllowSelfOn)) {
+    } else if (binding.audioOffNotAllowSelfOn.isChecked()) {
       controls.add(new NEMeetingAudioControl(NEMeetingAttendeeOffType.OffNotAllowSelfOn));
     }
-    if (isCheckedById(R.id.videoOffAllowSelfOn)) {
+    if (binding.videoOffAllowSelfOn.isChecked()) {
       controls.add(new NEMeetingVideoControl(NEMeetingAttendeeOffType.OffAllowSelfOn));
-    } else if (isCheckedById(R.id.videoOffNotAllowSelfOn)) {
+    } else if (binding.videoOffNotAllowSelfOn.isChecked()) {
       controls.add(new NEMeetingVideoControl(NEMeetingAttendeeOffType.OffNotAllowSelfOn));
     }
     if (controls.size() > 0) {
       params.controls = controls;
     }
-    if (isCheckedById(R.id.cb_encryption)) {
+    if (binding.cbEncryption.isChecked()) {
       params.encryptionConfig =
-          new NEEncryptionConfig(NEEncryptionMode.GMCryptoSM4ECB, getEditorText(4));
+          new NEEncryptionConfig(
+              NEEncryptionMode.GMCryptoSM4ECB, binding.etEncryption.getText().toString());
     }
-
+    params.watermarkConfig =
+        new NEWatermarkConfig(SdkAuthenticator.getAccount(displayName), null, null, null);
     NEStartMeetingOptions options =
         (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
-
+    options.enableWaitingRoom = binding.enableWaitingRoom.isChecked();
+    options.enableAudioDeviceSwitch = binding.enableAudioDeviceSwitch.isChecked();
     showDialogProgress("正在创建会议...");
     mViewModel.startMeeting(params, options, new MeetingCallback());
   }
 
   private void determineMeetingNum() {
-    if (usePersonalMeetingNum.isChecked()) {
+    if (binding.usePersonalMeetingNum.isChecked()) {
       currentMeetingNum = meetingNum;
       if (!TextUtils.isEmpty(content)) {
-        getEditor(0).setText(content);
+        binding.etMeetingNum.setText(content);
         return;
       }
       NEAccountService accountService = NEMeetingKit.getInstance().getAccountService();
@@ -172,7 +175,7 @@ public class StartMeetingFragment extends MeetingCommonFragment {
                         + (!TextUtils.isEmpty(resultData.shortMeetingNum)
                             ? "(短号：" + resultData.shortMeetingNum + ")"
                             : "");
-                getEditor(0).setText(content);
+                binding.etMeetingNum.setText(content);
               } else {
                 onGetPersonalMeetingNumError();
               }
@@ -180,14 +183,14 @@ public class StartMeetingFragment extends MeetingCommonFragment {
       }
     } else {
       currentMeetingNum = null;
-      getEditor(0).setText("");
+      binding.etMeetingNum.setText("");
     }
   }
 
   private void onGetPersonalMeetingNumError() {
     content = null;
     currentMeetingNum = null;
-    usePersonalMeetingNum.setChecked(false);
+    binding.usePersonalMeetingNum.setChecked(false);
     Toast.makeText(getActivity(), "获取个人会议号失败", Toast.LENGTH_SHORT).show();
   }
 

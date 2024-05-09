@@ -1,15 +1,26 @@
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
+import java.util.function.IntBinaryOperator
+import java.util.function.ToIntFunction
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
         kotlin_version = '1.6.21'
     }
     repositories {
-        google()
         mavenCentral()
+        google()
+        mavenLocal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0'
+
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

@@ -127,11 +127,11 @@ public class MeetingDataRepository {
   }
 
   public void editMeeting(NEMeetingItem item, NECallback<NEMeetingItem> callback) {
-    NEMeetingKit.getInstance().getPreMeetingService().editMeeting(item, callback);
+    NEMeetingKit.getInstance().getPreMeetingService().editMeeting(item, false, callback);
   }
 
   public void cancelMeeting(long meetingId, NECallback<Void> callback) {
-    NEMeetingKit.getInstance().getPreMeetingService().cancelMeeting(meetingId, callback);
+    NEMeetingKit.getInstance().getPreMeetingService().cancelMeeting(meetingId, false, callback);
   }
 
   public void deleteMeeting(int meetingId, NECallback<Void> callback) {}

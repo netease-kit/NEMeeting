@@ -1,4 +1,17 @@
 # NEMeetingKit ChangeLog
+## v4.5.0(May 7, 2024)
+### New Feature
+* 支持配置入会是否请求电话权限
+* 支持配置入会是否拉取和展示小应用
+* 支持配置入会是否展示通知中心菜单
+* 预约会议支持设置是否允许访客入会
+* 预约会议支持预选参会者列表并指定身份
+* 支持通讯录邀请入会
+### Compatibility
+- 兼容 NERoomKit 1.28.0
+- 兼容 NIMSDK_LITE 9.16.0
+- 兼容 NERtcSDK  5.5.40
+
 ## v4.4.0(April 2, 2024)
 ### New Feature
 - 入会时支持指定参会者头像：`NEMeetingParams.avatar`

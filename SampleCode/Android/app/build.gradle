@@ -12,8 +12,8 @@ android {
         applicationId "com.netease.yunxin.kit.meeting.sampleapp"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 40400
-        versionName "4.4.0"
+        versionCode 40500
+        versionName "4.5.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,8 +42,6 @@ repositories {
     flatDir dirs: 'libs'
 }
 dependencies {
-    // meeting
-    implementation 'com.netease.yunxin.kit.meeting:meeting:4.4.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
@@ -52,7 +50,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar","*.aar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation 'com.permissionx.guolindev:permissionx:1.2.2'
     implementation 'androidx.preference:preference:1.1.1'
     implementation "androidx.activity:activity:1.2.0-beta02"
@@ -68,6 +65,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
     implementation 'com.manu:MDatePicker:1.0.1'
 
-    compileOnly 'com.netease.yunxin:nertc-full:5.5.33'
-    compileOnly 'com.netease.nimlib:basesdk:9.15.0'
+    implementation("com.netease.yunxin.kit.meeting:meeting:4.5.0")
+
+    compileOnly 'com.netease.yunxin:nertc-full:5.5.40'
+    compileOnly 'com.netease.nimlib:basesdk:9.16.0'
 }

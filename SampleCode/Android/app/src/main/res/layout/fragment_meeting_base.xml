@@ -337,6 +337,13 @@
                     android:checked="false" />
 
             <CheckBox
+                android:id="@+id/enableGuestJoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="允许访客入会"
+                android:checked="false" />
+
+            <CheckBox
                 android:id="@+id/enableAudioDeviceSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -362,7 +369,7 @@
                     app:flow_verticalStyle="packed"
                     app:flow_verticalAlign="top"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom" />
+                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom,enableGuestJoin" />
 
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_2"

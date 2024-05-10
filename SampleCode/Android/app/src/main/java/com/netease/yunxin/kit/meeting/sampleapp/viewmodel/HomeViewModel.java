@@ -76,6 +76,7 @@ public class HomeViewModel extends ViewModel {
         item.setRoleBinds(neMeetingItem.getRoleBinds());
         item.setNoSip(neMeetingItem.noSip());
         item.setWaitingRoomEnabled(neMeetingItem.isWaitingRoomEnabled());
+        item.enableGuestJoin(neMeetingItem.isGuestJoinEnabled());
         items.add(item);
       }
       Collections.sort(items);

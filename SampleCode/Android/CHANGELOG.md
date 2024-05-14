@@ -1,4 +1,7 @@
 # NEMeetingKit ChangeLog
+## v4.5.1(May 14, 2024)
+### Fixed
+  * 【Android】修复断网重连触发会议异常退出问题
 ## v4.5.0(May 7, 2024)
 ### New Feature
 * 支持配置入会是否请求电话权限

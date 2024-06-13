@@ -173,7 +173,7 @@
     [self showEditMenuItemDialog:101 isCheckable:true];
   } else if (clickInfo.itemId == 102) {
     [NEMeetingKit.getInstance.getAccountService
-        getAccontInfo:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
+        getAccountInfo:^(NSInteger resultCode, NSString *resultMsg, id resultData) {
           NEAccountInfo *accountInfo = (NEAccountInfo *)resultData;
 
           NSString *infoString = [NSString

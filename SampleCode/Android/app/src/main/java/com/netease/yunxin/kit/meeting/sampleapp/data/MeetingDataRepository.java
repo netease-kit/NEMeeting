@@ -8,23 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.netease.yunxin.kit.meeting.sdk.NECallback;
-import com.netease.yunxin.kit.meeting.sdk.NEJoinMeetingOptions;
-import com.netease.yunxin.kit.meeting.sdk.NEJoinMeetingParams;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingInfo;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingItem;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingItemStatus;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingOnInjectedMenuItemClickListener;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingService;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatusListener;
-import com.netease.yunxin.kit.meeting.sdk.NEScheduleMeetingStatusListener;
-import com.netease.yunxin.kit.meeting.sdk.NEScreenSharingOptions;
-import com.netease.yunxin.kit.meeting.sdk.NEScreenSharingParams;
-import com.netease.yunxin.kit.meeting.sdk.NEScreenSharingStatusListener;
-import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingOptions;
-import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingParams;
+import com.netease.yunxin.kit.meeting.sdk.*;
+
 import java.util.List;
 
 public class MeetingDataRepository {
@@ -96,6 +81,15 @@ public class MeetingDataRepository {
 
   public NEMeetingService getMeetingService() {
     return NEMeetingKit.getInstance().getMeetingService();
+  }
+
+  /**
+   * 获取会议邀请服务
+   *
+   * @return 会议邀请服务
+   */
+  public NEMeetingInviteService getMeetingInviteService() {
+    return NEMeetingKit.getInstance().getMeetingInviteService();
   }
 
   public void setOnInjectedMenuItemClickListener(

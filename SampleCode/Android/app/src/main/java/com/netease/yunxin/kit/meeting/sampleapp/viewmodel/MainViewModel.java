@@ -5,31 +5,27 @@
 package com.netease.yunxin.kit.meeting.sampleapp.viewmodel;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.*;
 import com.netease.yunxin.kit.meeting.sampleapp.SdkAuthenticator;
 import com.netease.yunxin.kit.meeting.sampleapp.SdkInitializer;
 import com.netease.yunxin.kit.meeting.sampleapp.data.MeetingDataRepository;
 import com.netease.yunxin.kit.meeting.sampleapp.log.LogUtil;
-import com.netease.yunxin.kit.meeting.sdk.NECallback;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingInfo;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingOnInjectedMenuItemClickListener;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingService;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatusListener;
+import com.netease.yunxin.kit.meeting.sdk.*;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingInviteStatus;
 import java.util.List;
 
-public class MainViewModel extends ViewModel
+public class MainViewModel extends AndroidViewModel
     implements NEMeetingStatusListener,
         SdkInitializer.InitializeListener,
-        SdkAuthenticator.AuthStateChangeListener {
+        SdkAuthenticator.AuthStateChangeListener,
+        NEMeetingInviteStatusListener {
 
   private static final String TAG = "MainViewModel";
 
@@ -57,6 +53,8 @@ public class MainViewModel extends ViewModel
   private MutableLiveData<NEMeetingInfo> meetingInfoLiveData = new MutableLiveData<>();
   private long durationInitialTimestamp;
 
+  private Context context;
+
   @SuppressLint("HandlerLeak")
   private Handler handler =
       new Handler() {
@@ -70,9 +68,11 @@ public class MainViewModel extends ViewModel
         }
       };
 
-  public MainViewModel() {
+  public MainViewModel(Application application) {
+    super(application);
     SdkInitializer.getInstance().addListener(this);
     SdkAuthenticator.getInstance().setAuthStateChangeListener(this::onAuthStateChanged);
+    this.context = application.getApplicationContext();
   }
 
   public MutableLiveData<Boolean> getMeetingMinimizedLiveData() {
@@ -96,6 +96,10 @@ public class MainViewModel extends ViewModel
     return mRepository.getMeetingService();
   }
 
+  public NEMeetingInviteService getMeetingInviteService() {
+    return mRepository.getMeetingInviteService();
+  }
+
   @Override
   protected void onCleared() {
     super.onCleared();
@@ -113,6 +117,7 @@ public class MainViewModel extends ViewModel
   @Override
   public void onInitialized(int initializeIndex) {
     getMeetingService().addMeetingStatusListener(this);
+    getMeetingInviteService().addEventListener(this);
     NEMeetingStatus status = getMeetingService().getMeetingStatus();
     if (status != null) {
       reactToMeetingStatus(status);
@@ -122,6 +127,41 @@ public class MainViewModel extends ViewModel
   @Override
   public void onMeetingStatusChanged(Event event) {
     reactToMeetingStatus(event.status);
+  }
+
+  @Override
+  public void onMeetingInviteStatusChanged(
+      NEMeetingInviteStatus status, String meetingId, NEMeetingInviteInfo inviteInfo) {
+    LogUtil.log(
+        TAG, "onMeetingInviteStatusChanged: " + status + " " + meetingId + " " + inviteInfo);
+
+    //    if (NEMeetingInviteStatus.MEETING_STATUS_CALLING == status) {
+    //      NEJoinMeetingParams params = new NEJoinMeetingParams();
+    //      params.meetingNum = inviteInfo.meetingNum;
+    //      params.displayName = "customDisplayName";
+    //      NEJoinMeetingOptions options =  new NEJoinMeetingOptions();
+    //      options.noVideo = false;
+    //      getMeetingInviteService()
+    //          .acceptInvite(
+    //              context,
+    //              params,
+    //              options,
+    //              new NECallback<Void>() {
+    //                @Override
+    //                public void onResult(int resultCode, String resultMsg, Void resultData) {
+    //                  LogUtil.log(TAG, "acceptInvite: " + resultCode + " " + resultMsg);
+    //                }
+    //              });
+    //      getMeetingInviteService()
+    //          .rejectInvite(
+    //              event.meetingId,
+    //              new NECallback<Void>() {
+    //                @Override
+    //                public void onResult(int resultCode, String resultMsg, Void resultData) {
+    //                  LogUtil.log(TAG, "rejectInvite: " + resultCode + " " + resultMsg);
+    //                }
+    //              });
+    //    }
   }
 
   private void reactToMeetingStatus(NEMeetingStatus status) {

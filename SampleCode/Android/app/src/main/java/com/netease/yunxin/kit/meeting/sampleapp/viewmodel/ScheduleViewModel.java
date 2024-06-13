@@ -44,6 +44,7 @@ public class ScheduleViewModel extends ViewModel {
     meetingItem.setMeetingNum(item.getMeetingNum());
     meetingItem.setNoSip(item.isNoSip());
     meetingItem.setMeetingId(item.getMeetingId());
+    meetingItem.setEnableGuestJoin(item.isGuestJoinEnabled());
     itemMutableLiveData.setValue(meetingItem);
   }
 

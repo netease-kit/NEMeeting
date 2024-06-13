@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"显示白板共享者画面", @"设置白板透明",       @"前置摄像头镜像",
     @"显示麦克风浮窗",     @"入会时隐藏直播菜单", @"开启音频共享",
     @"开启加密",           @"显示云录制菜单按钮", @"显示云录制过程UI",
-    @"开启等候室",         @"允许音频设备切换"
+    @"开启等候室",         @"允许音频设备切换",   @"允许访客入会"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableFile];
@@ -101,6 +101,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowCloudRecordMenuItem];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowCloudRecordingUI];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeEnableAudioDeviceSwitch];
+  [self.settingCheckBox setItemSelected:NO index:CreateMeetingSettingTypeEnableGuestJoin];
 }
 #pragma mark-----------------------------  自定义toolbar/更多 菜单  -----------------------------
 
@@ -262,6 +263,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
       [self selectedSetting:CreateMeetingSettingTypeShowCloudRecordMenuItem];
 
   options.enableWaitingRoom = [self selectedSetting:CreateMeetingSettingTypeEnableWaitingRoom];
+  options.enableGuestJoin = [self selectedSetting:CreateMeetingSettingTypeEnableGuestJoin];
   options.enableAudioDeviceSwitch =
       [self selectedSetting:CreateMeetingSettingTypeEnableAudioDeviceSwitch];
   WEAK_SELF(weakSelf);
@@ -295,7 +297,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [SVProgressHUD show];
 
   [[NEMeetingKit getInstance].getAccountService
-      getAccontInfo:^(NSInteger resultCode, NSString *resultMsg, id result) {
+      getAccountInfo:^(NSInteger resultCode, NSString *resultMsg, id result) {
         [SVProgressHUD dismiss];
         if (resultCode != ERROR_CODE_SUCCESS) {
           [weakSelf showErrorCode:resultCode msg:resultMsg];

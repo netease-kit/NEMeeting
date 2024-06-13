@@ -57,7 +57,13 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
   private long startTime, endTime;
   private Boolean isAttendeeAudioOff, isAllowAttendeeAudioSelfOn;
   private Boolean isAttendeeVideoOff, isAllowAttendeeVideoSelfOn;
-  private boolean isUsePwd, isLiveOn, isLiveLevelOpen, isOpenRecord, isEnableSip, enableWaitingRoom;
+  private boolean isUsePwd,
+      isLiveOn,
+      isLiveLevelOpen,
+      isOpenRecord,
+      isEnableSip,
+      enableWaitingRoom,
+      enableGuestJoin;
   private NESettingsService settingsService;
   private boolean isEditMeeting = false;
   private MeetingItem item = null;
@@ -180,6 +186,9 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
               case ScheduleMeetingItem.ENABLE_MEETING_WAITING_ROOM:
                 enableWaitingRoom = enable;
                 break;
+              case ScheduleMeetingItem.ENABLE_MEETING_GUEST_JOIN:
+                enableGuestJoin = enable;
+                break;
             }
           }
         });
@@ -251,6 +260,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
               neMeetingItem.setLive(live);
               neMeetingItem.setNoSip(!isEnableSip);
               neMeetingItem.setWaitingRoomEnabled(enableWaitingRoom);
+              neMeetingItem.setEnableGuestJoin(enableGuestJoin);
               if (isEditMeeting) {
                 mViewModel.editMeeting(
                     neMeetingItem,
@@ -351,6 +361,12 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
             "开启等候室",
             (item != null && item.isWaitingRoomEnabled()),
             ScheduleMeetingItem.ENABLE_MEETING_WAITING_ROOM,
+            ""));
+    dataList.add(
+        new ScheduleMeetingItem(
+            "允许访客入会",
+            (item != null && item.isGuestJoinEnabled()),
+            ScheduleMeetingItem.ENABLE_MEETING_GUEST_JOIN,
             ""));
     dataList.add(
         new ScheduleMeetingItem(

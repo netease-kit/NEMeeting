@@ -37,6 +37,7 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
     // 加入会议隐藏录制开关功能
     binding.cloudRecord.setEnabled(false);
     binding.enableWaitingRoom.setEnabled(false);
+    binding.enableGuestJoin.setEnabled(false);
     // 加入会议隐藏拓展字段和绑定角色
     binding.etExtra.setVisibility(View.GONE);
     binding.roleBindTips.setVisibility(View.GONE);

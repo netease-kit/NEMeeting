@@ -50,6 +50,8 @@ public class ScheduleMeetingItem {
 
   public static final int ENABLE_MEETING_WAITING_ROOM = 14;
 
+  public static final int ENABLE_MEETING_GUEST_JOIN = 15;
+
   public ScheduleMeetingItem(
       String tittle,
       String subTittle,

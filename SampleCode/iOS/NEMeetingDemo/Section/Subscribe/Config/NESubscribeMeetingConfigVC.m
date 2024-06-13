@@ -131,6 +131,12 @@
   };
   [group.rows addObject:enableWaitingRoomRow];
 
+  NEFromRow *enableGuestJoin = [NEFromRow rowWithType:NEFromRowTypeTitleSwitch tag:@"kGuestJoin"];
+  enableGuestJoin.title = @"允许访客入会";
+  enableGuestJoin.onValueChanged = ^(id _Nonnull newValue, NEFromRow *_Nonnull row) {
+    weakSelf.item.enableGuestJoin = [newValue boolValue];
+  };
+  [group.rows addObject:enableGuestJoin];
   return group;
 }
 /// 云端录制

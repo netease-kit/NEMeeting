@@ -13,7 +13,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 40500
-        versionName "4.5.0"
+        versionName "4.5.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
     implementation 'com.manu:MDatePicker:1.0.1'
 
-    implementation("com.netease.yunxin.kit.meeting:meeting:4.5.0")
+    implementation("com.netease.yunxin.kit.meeting:meeting:4.5.1")
 
     compileOnly 'com.netease.yunxin:nertc-full:5.5.40'
     compileOnly 'com.netease.nimlib:basesdk:9.16.0'

@@ -188,8 +188,6 @@ static NSUInteger maxLength = 6;
 }
 - (NSString *)stringWithScreenShareStatus:(NEScreenSharingStatus)status {
   switch (status) {
-    case NEScreenSharingStatusFailed:
-      return @"共享 -> 失败";
     case NEScreenSharingStatusIdle:
       return @"共享 -> 未在会议中";
     case NEScreenSharingStatusWaiting:

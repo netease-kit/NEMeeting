@@ -116,11 +116,7 @@
 - (void)groupItems {
   // 排序
   [_items sortUsingComparator:^NSComparisonResult(NEMeetingItem *obj1, NEMeetingItem *obj2) {
-    if (obj1.startTime == obj2.startTime) {
-      return obj1.createTime > obj2.createTime;
-    } else {
-      return obj1.startTime > obj2.startTime;
-    }
+    return obj1.startTime > obj2.startTime;
   }];
 
   // 分组

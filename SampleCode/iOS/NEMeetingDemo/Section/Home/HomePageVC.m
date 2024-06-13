@@ -35,7 +35,7 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[NEMeetingKit getInstance] removeAuthListener:self];
-  [[NEMeetingKit getInstance].getInviteService removeListener:self];
+  [[NEMeetingKit getInstance].getMeetingService removeListener:self];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kNEMeetingEditSubscribeDone
                                                 object:nil];
@@ -45,7 +45,7 @@
   [self setupUI];
   // Do any additional setup after loading the view.
   [[NEMeetingKit getInstance] addAuthListener:self];
-  [[NEMeetingKit getInstance].getInviteService addListener:self];
+  [[NEMeetingKit getInstance].getMeetingService addListener:self];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(editDone)
                                                name:kNEMeetingEditSubscribeDone
@@ -160,18 +160,17 @@
 }
 #pragma mark NEMeetingInviteStatusListener
 
-- (void)onMeetingInviteStatusChanged:(NEMeetingInviteEvent *)event {
-  // Demo上就不做取消的时候dismiss alert了，主要为验证接口与回调
-  if (event.status == NEMeetingInviteStatusCalling) {
+- (void)onMeetingInviteStatusChanged:(NEMeetingInviteStatus)status meetingId:(NSInteger)meetingId inviteInfo:(NEMeetingInviteInfo *)inviteInfo {
+  if (status == NEMeetingInviteStatusCalling) {
     UIAlertController *alert = [UIAlertController
         alertControllerWithTitle:@"收到会议邀请"
-                         message:[NSString stringWithFormat:@"%@", event.inviteInfo.inviterName]
+                         message:[NSString stringWithFormat:@"%@", inviteInfo.inviterName]
                   preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction
         actionWithTitle:@"拒绝"
                   style:UIAlertActionStyleCancel
                 handler:^(UIAlertAction *_Nonnull action) {
-                  [[NEMeetingKit getInstance].getInviteService rejectInvite:event.meetingId
+                  [[NEMeetingKit getInstance].getMeetingInviteService rejectInvite:meetingId
                                                                    callback:nil];
                 }];
     UIAlertAction *acceptAction =
@@ -179,9 +178,9 @@
                                  style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *_Nonnull action) {
                                  NEJoinMeetingParams *param = [[NEJoinMeetingParams alloc] init];
-                                 param.meetingNum = event.inviteInfo.meetingNum;
+                                 param.meetingNum = inviteInfo.meetingNum;
                                  param.displayName = @"123";
-                                 [[NEMeetingKit getInstance].getInviteService
+                                 [[NEMeetingKit getInstance].getMeetingInviteService
                                      acceptInvite:param
                                              opts:[[NEJoinMeetingOptions alloc] init]
                                          callback:nil];

@@ -67,6 +67,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
               public void onAuthInfoExpired() {
                 SdkAuthenticator.this.onAuthInfoExpired();
               }
+
+              @Override
+              public void onReconnected() {
+                SdkAuthenticator.this.onReconnected();
+              }
             });
   }
 
@@ -226,6 +231,11 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
     Log.i(TAG, "onAuthInfoExpired");
     Toast.makeText(context, "登录状态已过期，请重新登录", Toast.LENGTH_SHORT).show();
     SdkAuthenticator.getInstance().logout(false);
+  }
+
+  private void onReconnected() {
+    Log.i(TAG, "onReconnected");
+    Toast.makeText(context, "IM重连成功", Toast.LENGTH_SHORT).show();
   }
 
   public static String getAccount() {

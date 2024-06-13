@@ -184,6 +184,7 @@ public class ScheduleMeetingAdapter
       case ScheduleMeetingItem.ENABLE_MEETING_NO_SIP_ACTION:
       case ScheduleMeetingItem.ENABLE_MEETING_RECORD_ACTION:
       case ScheduleMeetingItem.ENABLE_MEETING_WAITING_ROOM:
+      case ScheduleMeetingItem.ENABLE_MEETING_GUEST_JOIN:
         sbMeetingSwitch.setVisibility(View.VISIBLE);
         sbMeetingSwitch.setChecked(data.isSwitchOn());
         break;

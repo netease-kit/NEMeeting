@@ -67,6 +67,16 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     return enableWaitingRoom;
   }
 
+  private boolean enableGuestJoin = false;
+
+  public void enableGuestJoin(boolean enabled) {
+    enableGuestJoin = enabled;
+  }
+
+  public boolean isGuestJoinEnabled() {
+    return enableGuestJoin;
+  }
+
   private String extraData;
 
   private Map<String, NEMeetingRoleType> roleBinds;

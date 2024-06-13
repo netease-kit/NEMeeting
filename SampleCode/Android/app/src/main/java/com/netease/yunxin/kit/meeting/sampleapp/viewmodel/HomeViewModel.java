@@ -62,8 +62,6 @@ public class HomeViewModel extends ViewModel {
         item.setEndTime(neMeetingItem.getEndTime());
         item.setSubject(neMeetingItem.getSubject());
         item.setStatus(neMeetingItem.getStatus());
-        item.setUpdateTime(neMeetingItem.getUpdateTime());
-        item.setCreateTime(neMeetingItem.getCreateTime());
         item.setMeetingId(neMeetingItem.getMeetingId());
         String startTime = DateUtil.stampToDate(neMeetingItem.getStartTime());
         item.setHourAndMin(startTime.substring(11, 16));

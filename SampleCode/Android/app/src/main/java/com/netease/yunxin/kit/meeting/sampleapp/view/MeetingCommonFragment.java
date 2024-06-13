@@ -26,7 +26,7 @@ import com.netease.yunxin.kit.meeting.sampleapp.databinding.FragmentMeetingBaseB
 import com.netease.yunxin.kit.meeting.sampleapp.menu.InjectMenuArrangeActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.menu.InjectMenuContainer;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
-import com.netease.yunxin.kit.meeting.sdk.NEHistoryMeetingItem;
+import com.netease.yunxin.kit.meeting.sdk.NELocalHistoryMeeting;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingChatroomConfig;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingCode;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingError;
@@ -294,7 +294,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
                         .getHistoryMeetingItem(
                             (resultCode, resultMsg, resultData) -> {
                               if (resultData != null && resultData.size() > 0) {
-                                NEHistoryMeetingItem history = resultData.get(0);
+                                NELocalHistoryMeeting history = resultData.get(0);
                                 Log.d("MeetingCommonFragment", "getHistoryMeetingItem: " + history);
                                 if (history
                                     .getMeetingNum()

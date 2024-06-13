@@ -117,7 +117,7 @@ public class MainViewModel extends AndroidViewModel
   @Override
   public void onInitialized(int initializeIndex) {
     getMeetingService().addMeetingStatusListener(this);
-    getMeetingInviteService().addEventListener(this);
+    getMeetingInviteService().addMeetingInviteStatusListener(this);
     NEMeetingStatus status = getMeetingService().getMeetingStatus();
     if (status != null) {
       reactToMeetingStatus(status);

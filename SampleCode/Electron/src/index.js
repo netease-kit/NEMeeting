@@ -26,6 +26,7 @@ const createWindow = () => {
     const appKey = value.appKey
     const serverUrl = 'https://roomkit.netease.im'
 
+    console.log('appKey', appKey, serverUrl)
     return neMeetingKit.initialize({
       appKey,
       serverUrl,

@@ -9,7 +9,6 @@
     <div>
       <label>appKey：</label>
       <input id="appKey" type="text" value="" />
-      <label>serverUrl：</label>
       <button id="initialize">初始化</button>
       <div id="initializeRes">未初始化</div>
     </div>
@@ -34,15 +33,13 @@
       .getElementById('initialize')
       .addEventListener('click', function () {
         const appKey = document.getElementById('appKey').value
-        const serverUrl = document.getElementById('serverUrl').value
-        if (!appKey || !serverUrl) {
+        if (!appKey) {
           alert('appKey 和 serverUrl 不能为空')
           return
         }
         window.ipcRenderer
           .invoke('initialize', {
             appKey,
-            serverUrl,
           })
           .then((result) => {
             if (result.code === 0) {

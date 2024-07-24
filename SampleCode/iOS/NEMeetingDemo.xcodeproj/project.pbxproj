@@ -80,6 +80,7 @@
 		53ACDF04285B838C00A0FB8F /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 53ACDF02285B838C00A0FB8F /* 1.png */; };
 		53E6ADBC28451F1E00493BD6 /* ServerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E6ADBB28451F1E00493BD6 /* ServerConfig.m */; };
 		5E33FDC32B624C6F00EB1389 /* CustomEncryptObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E33FDC22B624C6F00EB1389 /* CustomEncryptObserver.m */; };
+		5EBC42D92C51054B00073B9B /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC42D72C51054B00073B9B /* HistoryViewController.m */; };
 		9E451CF125B041BF00E69CDE /* MeetingMenuSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E451CF025B041BF00E69CDE /* MeetingMenuSelectVC.m */; };
 		9E451CF625B04C3100E69CDE /* MeetingMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E451CF525B04C3100E69CDE /* MeetingMenuItemCell.m */; };
 		F97D528B8E70D69CC58B6CC9 /* Pods_NEMeetingDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B417BBB81DD9FF5688ED5537 /* Pods_NEMeetingDemo.framework */; };
@@ -243,6 +244,9 @@
 		5C4580E7018187FF8C6D602F /* Pods-NEMeetingDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemoTests.release.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemoTests/Pods-NEMeetingDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E33FDC12B624C6F00EB1389 /* CustomEncryptObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomEncryptObserver.h; sourceTree = "<group>"; };
 		5E33FDC22B624C6F00EB1389 /* CustomEncryptObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomEncryptObserver.m; sourceTree = "<group>"; };
+		5EBC42D62C51054B00073B9B /* MeetingConfigEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingConfigEnum.h; sourceTree = "<group>"; };
+		5EBC42D72C51054B00073B9B /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		5EBC42D82C51054B00073B9B /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		6FE990E438EEAD1EDC38832A /* Pods-NEMeetingDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemoTests/Pods-NEMeetingDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		75267C31A0106640B3FA9D17 /* Pods_Broadcaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Broadcaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F47C73E59370BEEAE7064C7 /* Pods-NEMeetingDemo-Broadcaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; path = "Target Support Files/Pods-NEMeetingDemo-Broadcaster/Pods-NEMeetingDemo-Broadcaster.debug.xcconfig"; sourceTree = "<group>"; };
@@ -302,6 +306,9 @@
 		410B434224AC665600017FA6 /* Section */ = {
 			isa = PBXGroup;
 			children = (
+				5EBC42D82C51054B00073B9B /* HistoryViewController.h */,
+				5EBC42D72C51054B00073B9B /* HistoryViewController.m */,
+				5EBC42D62C51054B00073B9B /* MeetingConfigEnum.h */,
 				537E3B162AC3FDDC00DCE772 /* Home */,
 				41E9117825010E6900E63D80 /* CustomViewController.h */,
 				41E9117925010E6900E63D80 /* CustomViewController.m */,
@@ -825,6 +832,7 @@
 				41B3B51D24EA99F6001FCFFA /* IMLoginVC.m in Sources */,
 				410B435C24AC914900017FA6 /* StartMeetingVC.m in Sources */,
 				5E33FDC32B624C6F00EB1389 /* CustomEncryptObserver.m in Sources */,
+				5EBC42D92C51054B00073B9B /* HistoryViewController.m in Sources */,
 				410B5E7D24ACB06D00017FA6 /* EnterMeetingVC.m in Sources */,
 				2D5A150026C2139200A530BA /* AppSettingsVC.m in Sources */,
 				9E451CF625B04C3100E69CDE /* MeetingMenuItemCell.m in Sources */,
@@ -993,15 +1001,19 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_ENTITLEMENTS = NEMeetingDemo/NEMeetingDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 40300;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7C9A6NRV5L;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7C9A6NRV5L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../NEMeetingKit/NEMeetingLibs\"",
 					"$(PROJECT_DIR)/Vendor",
+					"$(PROJECT_DIR)/Pods/NEMeetingKit",
+					"$(PROJECT_DIR)/NEMeetingDemo",
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/NEMeetingDemo/NEMeetingDemo.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -1012,7 +1024,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.0;
+				MARKETING_VERSION = 4.7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1022,9 +1034,10 @@
 					"-l\"stdc++\"",
 					"-l\"z\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.hawk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Meeting_Dev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Meeting_Dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
 			};
@@ -1038,13 +1051,17 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_ENTITLEMENTS = NEMeetingDemo/NEMeetingDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 40300;
 				DEVELOPMENT_TEAM = 7C9A6NRV5L;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7C9A6NRV5L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor",
+					"$(PROJECT_DIR)/Pods/NEMeetingKit",
+					"$(PROJECT_DIR)/NEMeetingDemo",
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/NEMeetingDemo/NEMeetingDemo.pch";
 				INFOPLIST_FILE = NEMeetingDemo/Info.plist;
@@ -1054,7 +1071,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.0;
+				MARKETING_VERSION = 4.7.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1063,9 +1080,10 @@
 					"-l\"stdc++\"",
 					"-l\"z\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.hawk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Meeting_Dev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Meeting_Dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
 			};
@@ -1137,13 +1155,17 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_ENTITLEMENTS = NEMeetingDemo/NEMeetingDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 40300;
 				DEVELOPMENT_TEAM = 7C9A6NRV5L;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7C9A6NRV5L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor",
+					"$(PROJECT_DIR)/Pods/NEMeetingKit",
+					"$(PROJECT_DIR)/NEMeetingDemo",
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/NEMeetingDemo/NEMeetingDemo.pch";
 				INFOPLIST_FILE = NEMeetingDemo/Info.plist;
@@ -1153,7 +1175,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.0;
+				MARKETING_VERSION = 4.7.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1162,9 +1184,10 @@
 					"-l\"stdc++\"",
 					"-l\"z\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.hawk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.yunxin.meeting.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Meeting_Dev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Meeting_Dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
 			};

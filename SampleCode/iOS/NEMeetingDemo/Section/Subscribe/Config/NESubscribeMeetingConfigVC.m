@@ -305,7 +305,7 @@
         [self openSipGroup], [self cohostGroup]
       ]
           .mutableCopy;
-  if (NEMeetingKit.getInstance.getSettingsService.isMeetingLiveEnabled) {
+  if (NEMeetingKit.getInstance.getSettingsService.isMeetingLiveSupported) {
     [self.groups addObject:[self liveGroup]];
   }
   [self.groups

@@ -177,10 +177,9 @@
           NEAccountInfo *accountInfo = (NEAccountInfo *)resultData;
 
           NSString *infoString = [NSString
-              stringWithFormat:@"会议号: %@\n短会议号: %@\n账号名称: %@\n账号ID: %@\n是否匿名: %@",
-                               accountInfo.meetingNum, accountInfo.shortMeetingNum,
-                               accountInfo.accountName, accountInfo.accountId,
-                               (accountInfo.isAnonymous ? @"是" : @"否")];
+              stringWithFormat:@"会议号: %@\n短会议号: %@\n账号名称: %@\n账号ID: %@\n",
+                               accountInfo.privateMeetingNum, accountInfo.privateShortMeetingNum,
+                               accountInfo.nickname, accountInfo.userUuid];
           self->_alert = [UIAlertController alertControllerWithTitle:@""
                                                              message:infoString
                                                       preferredStyle:UIAlertControllerStyleAlert];

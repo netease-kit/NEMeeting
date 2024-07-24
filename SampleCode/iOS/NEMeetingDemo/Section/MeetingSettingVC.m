@@ -15,6 +15,10 @@ NSString *const kSettingsJoinMeetingTimeout = @"kSettingsJoinMeetingTimeout";
 
 NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
 
+NSString *const kSettingsFrontCameraMirror = @"kSettingsFrontCameraMirror";
+NSString *const kSettingsSpeakerSpotlight = @"kSettingsSpeakerSpotlight";
+NSString *const kSettingsTransparentWhiteboard = @"kSettingsTransparentWhiteboard";
+
 @interface MeetingSettingVC ()
 
 @property(nonatomic, assign) BOOL showMeetingTime;
@@ -22,6 +26,7 @@ NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
 @property(nonatomic, assign) BOOL openAudioWhenJoin;
 @property(nonatomic, assign) BOOL openCustomServerUrl;
 @property(nonatomic, assign) BOOL audioAINSEnabled;
+@property(nonatomic, assign) BOOL speakerSpotlight;
 
 @end
 
@@ -147,22 +152,67 @@ NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
     };
     [section addFormRow:row];
   }
-  XLFormRowDescriptor *row =
-      [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingOpenAudio
-                                            rowType:XLFormRowDescriptorTypeBooleanSwitch
-                                              title:@"使用虚拟背景"];
-  row.height = 60.0;
-  row.value = @([NEMeetingKit.getInstance.getSettingsService isVirtualBackgroundEnabled]);
-  row.onChangeBlock = ^(id _Nullable oldValue, id _Nullable newValue,
-                        XLFormRowDescriptor *_Nonnull rowDescriptor) {
-    [NEMeetingKit.getInstance.getSettingsService enableVirtualBackground:[newValue boolValue]];
-    if ([newValue boolValue]) {
-      [NEMeetingKit.getInstance.getSettingsService setBuiltinVirtualBackgrounds:[self fetchArray]];
-    } else {
-      [NEMeetingKit.getInstance.getSettingsService setBuiltinVirtualBackgrounds:[NSArray new]];
-    }
-  };
-  [section addFormRow:row];
+  {
+    XLFormRowDescriptor *row =
+        [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsJoinMeetingOpenAudio
+                                              rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                title:@"使用虚拟背景"];
+    row.height = 60.0;
+    row.value = @([NEMeetingKit.getInstance.getSettingsService isVirtualBackgroundEnabled]);
+    row.onChangeBlock = ^(id _Nullable oldValue, id _Nullable newValue,
+                          XLFormRowDescriptor *_Nonnull rowDescriptor) {
+      [NEMeetingKit.getInstance.getSettingsService enableVirtualBackground:[newValue boolValue]];
+      if ([newValue boolValue]) {
+        [NEMeetingKit.getInstance.getSettingsService
+            setBuiltinVirtualBackgroundList:[self fetchArray]];
+      } else {
+        [NEMeetingKit.getInstance.getSettingsService setBuiltinVirtualBackgroundList:[NSArray new]];
+      }
+    };
+    [section addFormRow:row];
+  }
+  {
+    XLFormRowDescriptor *row =
+        [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsSpeakerSpotlight
+                                              rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                title:@"语音激励"];
+    row.height = 60.0;
+    row.value = @([NEMeetingKit.getInstance.getSettingsService isSpeakerSpotlightEnabled]);
+    row.onChangeBlock = ^(id _Nullable oldValue, id _Nullable newValue,
+                          XLFormRowDescriptor *_Nonnull rowDescriptor) {
+      [NEMeetingKit.getInstance.getSettingsService enableSpeakerSpotlight:[newValue boolValue]];
+    };
+    [section addFormRow:row];
+  }
+
+  {
+    XLFormRowDescriptor *row =
+        [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsTransparentWhiteboard
+                                              rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                title:@"透明白板批注"];
+    row.height = 60.0;
+    row.value = @([NEMeetingKit.getInstance.getSettingsService isTransparentWhiteboardEnabled]);
+    row.onChangeBlock = ^(id _Nullable oldValue, id _Nullable newValue,
+                          XLFormRowDescriptor *_Nonnull rowDescriptor) {
+      [NEMeetingKit.getInstance.getSettingsService
+          enableTransparentWhiteboard:[newValue boolValue]];
+    };
+    [section addFormRow:row];
+  }
+
+  {
+    XLFormRowDescriptor *row =
+        [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsFrontCameraMirror
+                                              rowType:XLFormRowDescriptorTypeBooleanSwitch
+                                                title:@"前置摄像头镜像"];
+    row.height = 60.0;
+    row.value = @([NEMeetingKit.getInstance.getSettingsService isFrontCameraMirrorEnabled]);
+    row.onChangeBlock = ^(id _Nullable oldValue, id _Nullable newValue,
+                          XLFormRowDescriptor *_Nonnull rowDescriptor) {
+      [NEMeetingKit.getInstance.getSettingsService enableFrontCameraMirror:[newValue boolValue]];
+    };
+    [section addFormRow:row];
+  }
 
 #pragma mark-----------------------------  自定义加密  -----------------------------
   XLFormSectionDescriptor *encryptSection = [XLFormSectionDescriptor formSection];
@@ -267,22 +317,11 @@ NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
   }
   return form;
 }
-- (NSArray<NEMeetingVirtualBackground *> *)fetchArray {
-  NEMeetingVirtualBackground *source = [NEMeetingVirtualBackground new];
-  source.path = [self pathWithName:@"1"];
-
-  NEMeetingVirtualBackground *source1 = [NEMeetingVirtualBackground new];
-  source1.path = [self pathWithName:@"2"];
-  NEMeetingVirtualBackground *source2 = [NEMeetingVirtualBackground new];
-  source2.path = [self pathWithName:@"3"];
-
-  NEMeetingVirtualBackground *source3 = [NEMeetingVirtualBackground new];
-  source3.path = [self pathWithName:@"4"];
-  NEMeetingVirtualBackground *source4 = [NEMeetingVirtualBackground new];
-  source4.path = [self pathWithName:@"5"];
-  NEMeetingVirtualBackground *source5 = [NEMeetingVirtualBackground new];
-  source5.path = [self pathWithName:@"6"];
-  return @[ source, source1, source2, source3, source4, source5 ];
+- (NSArray<NSString *> *)fetchArray {
+  return @[
+    [self pathWithName:@"1"], [self pathWithName:@"2"], [self pathWithName:@"3"],
+    [self pathWithName:@"4"], [self pathWithName:@"5"], [self pathWithName:@"6"]
+  ];
 }
 - (NSString *)pathWithName:(NSString *)name {
   NSString *sourcePath = [[NSBundle mainBundle] pathForResource:name ofType:@"png"];
@@ -315,7 +354,8 @@ NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
 }
 
 - (void)setOpenVideoWhenJoin:(BOOL)openVideoWhenJoin {
-  [[NEMeetingKit getInstance].getSettingsService setTurnOnMyVideoWhenJoinMeeting:openVideoWhenJoin];
+  [[NEMeetingKit getInstance].getSettingsService
+      enableTurnOnMyVideoWhenJoinMeeting:openVideoWhenJoin];
 }
 
 - (BOOL)openAudioWhenJoin {
@@ -323,7 +363,8 @@ NSString *const kSettingsOpenAudioSettings = @"kSettingsOpenAudioSettings";
 }
 
 - (void)setOpenAudioWhenJoin:(BOOL)openAudioWhenJoin {
-  [[NEMeetingKit getInstance].getSettingsService setTurnOnMyAudioWhenJoinMeeting:openAudioWhenJoin];
+  [[NEMeetingKit getInstance].getSettingsService
+      enableTurnOnMyAudioWhenJoinMeeting:openAudioWhenJoin];
 }
 
 - (BOOL)openCustomServerUrl {

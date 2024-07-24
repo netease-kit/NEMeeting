@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeJoinOffLive];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowCloudRecordingUI];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowCloudRecordMenuItem];
-  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeEnableAudioDeviceSwitch];
+  [self.settingCheckBox setItemSelected:NO index:MeetingSettingTypeEnableAudioDeviceSwitch];
 }
 
 - (IBAction)onLeaveCurrentMeeting:(id)sender {
@@ -194,9 +194,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
       [self selectedSetting:MeetingSettingTypeShowCloudRecordMenuItem];
   // 配置是否展示云录制过程中的UI提示
   options.showCloudRecordingUI = [self selectedSetting:MeetingSettingTypeShowCloudRecordingUI];
-  // 配置是否允许音频设备切换
-  options.enableAudioDeviceSwitch =
-      [self selectedSetting:MeetingSettingTypeEnableAudioDeviceSwitch];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   // 匿名入会
@@ -276,11 +273,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (void)updateNickname {
   WEAK_SELF(weakSelf);
-  [[NEMeetingKit getInstance].getSettingsService
-      getHistoryMeetingItem:^(NSInteger resultCode, NSString *resultMsg,
-                              NSArray<NEHistoryMeetingItem *> *items) {
+  [[NEMeetingKit getInstance].getPreMeetingService
+      getLocalHistoryMeetingList:^(NSInteger code, NSString *_Nonnull message,
+                                   NSArray<NELocalHistoryMeeting *> *_Nonnull items) {
         if (items && items.count > 0) {
-          NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
+          NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(code), message, items[0]);
           if ([items[0].meetingNum isEqualToString:weakSelf.meetingIdInput.text]) {
             weakSelf.nickInput.text = items[0].nickname;
           }

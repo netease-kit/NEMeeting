@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>会议组件使用示例</title>
+  </head>
+  <body>
+    <h1>💖 会议组件使用示例</h1>
+    <div>
+      <label>appKey：</label>
+      <input id="appKey" type="text" value="" />
+      <label>serverUrl：</label>
+      <button id="initialize">初始化</button>
+      <div id="initializeRes">未初始化</div>
+    </div>
+    <div>
+      <label>账号：</label>
+      <input id="userUuid" type="text" value="" />
+      <label>密码：</label>
+      <input id="password" type="text" value="" />
+      <button id="login">登录</button>
+      <div id="loginRes">未登录</div>
+    </div>
+    <div>
+      <label>昵称：</label>
+      <input id="displayName" type="text" value="最棒的人" />
+      <button id="startMeeting">创建会议</button>
+    </div>
+  </body>
+  <script>
+    let isInitialize = false
+    let isLogin = false
+    document
+      .getElementById('initialize')
+      .addEventListener('click', function () {
+        const appKey = document.getElementById('appKey').value
+        const serverUrl = document.getElementById('serverUrl').value
+        if (!appKey || !serverUrl) {
+          alert('appKey 和 serverUrl 不能为空')
+          return
+        }
+        window.ipcRenderer
+          .invoke('initialize', {
+            appKey,
+            serverUrl,
+          })
+          .then((result) => {
+            if (result.code === 0) {
+              isInitialize = true
+              document.getElementById('initializeRes').innerText = '初始化成功'
+            }
+          })
+      })
+
+    document.getElementById('login').addEventListener('click', function () {
+      if (!isInitialize) {
+        alert('请先初始化')
+        return
+      }
+      const userUuid = document.getElementById('userUuid').value
+      const password = document.getElementById('password').value
+      if (!userUuid || !password) {
+        alert('userUuid 和 password 不能为空')
+        return
+      }
+      window.ipcRenderer
+        .invoke('loginByPassword', {
+          userUuid,
+          password,
+        })
+        .then((result) => {
+          if (result.code === 0) {
+            isLogin = true
+            document.getElementById('loginRes').innerText = JSON.stringify(
+              result.data
+            )
+          } else {
+            document.getElementById('loginRes').innerText = result.message
+          }
+        })
+    })
+
+    document
+      .getElementById('startMeeting')
+      .addEventListener('click', function () {
+        if (!isInitialize) {
+          alert('请先初始化')
+          return
+        }
+        if (!isLogin) {
+          alert('登录后才能创建会议')
+          return
+        }
+        const displayName = document.getElementById('displayName').value
+        if (!displayName) {
+          alert('昵称不能为空')
+          return
+        }
+        window.ipcRenderer.invoke('startMeeting', {
+          displayName,
+        })
+      })
+  </script>
+</html>

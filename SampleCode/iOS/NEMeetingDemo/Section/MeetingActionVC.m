@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import "MeetingActionVC.h"
+#import "HistoryViewController.h"
 #import "LoginInfoManager.h"
 #import "LoginViewController.h"
 #import "MainViewController.h"
@@ -69,6 +70,23 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   self.currentType = MeetingMenuTypeMore;
   [self enterMenuVC:_fullMoreMenuItems];
 }
+
+- (IBAction)openHistory:(UIButton *)sender {
+  [self.navigationController pushViewController:[[HistoryViewController alloc] init] animated:YES];
+}
+- (IBAction)openFeedback:(UIButton *)sender {
+  __weak typeof(self) weakSelf = self;
+  [[[NEMeetingKit getInstance] getFeedbackService]
+      loadFeedbackView:^(NSInteger code, NSString *message, UIViewController *viewController) {
+        if (code != 0) {
+          return;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [weakSelf.navigationController pushViewController:viewController animated:YES];
+        });
+      }];
+}
+
 - (void)enterMenuVC:(NSArray *)items {
   MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
   menuSeletedVC.seletedItems = _fullMoreMenuItems;

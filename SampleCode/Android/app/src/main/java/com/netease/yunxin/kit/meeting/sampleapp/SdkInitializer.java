@@ -103,13 +103,6 @@ public class SdkInitializer {
     NEMeetingKitConfig config = new NEMeetingKitConfig();
     config.appKey = serverConfig.getAppKey();
     config.language = getSelectLanguage();
-    /// to remove start
-    config.extras =
-        new HashMap<String, Object>() {
-          {
-            put("debugMode", serverConfig.isDebugMode() ? 1 : 0);
-          }
-        };
     config.appName = context.getString(R.string.app_name);
     config.serverUrl = serverConfig.getServerUrl();
     config.useAssetServerConfig = serverConfig.getUseAssetServerConfig();

@@ -79,7 +79,6 @@ public class JoinMeetingFragment extends MeetingCommonFragment {
         new NEWatermarkConfig(SdkAuthenticator.getAccount(displayName), null, null, null);
     NEJoinMeetingOptions options =
         (NEJoinMeetingOptions) getMeetingOptions(new NEJoinMeetingOptions());
-    options.enableAudioDeviceSwitch = binding.enableAudioDeviceSwitch.isChecked();
     showDialogProgress("正在加入会议...");
     if (isAnonymous()) {
       mViewModel.anonymousJoinMeeting(params, options, new MeetingCallback());

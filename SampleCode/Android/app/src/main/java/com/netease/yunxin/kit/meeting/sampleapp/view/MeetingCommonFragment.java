@@ -26,6 +26,7 @@ import com.netease.yunxin.kit.meeting.sampleapp.databinding.FragmentMeetingBaseB
 import com.netease.yunxin.kit.meeting.sampleapp.menu.InjectMenuArrangeActivity;
 import com.netease.yunxin.kit.meeting.sampleapp.menu.InjectMenuContainer;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.AlertDialogUtil;
+import com.netease.yunxin.kit.meeting.sdk.NECloudRecordConfig;
 import com.netease.yunxin.kit.meeting.sdk.NELocalHistoryMeeting;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingChatroomConfig;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingCode;
@@ -158,11 +159,16 @@ public abstract class MeetingCommonFragment extends CommonFragment {
       options.noVideo = !binding.videoOption.isChecked();
       options.noAudio = !binding.audioOption.isChecked();
       options.showMeetingTime = binding.showMeetingTime.isChecked();
+      options.enableFrontCameraMirror = binding.enableFrontCameraMirror.isChecked();
+      options.enableTransparentWhiteboard = binding.enableTransparentWhiteboard.isChecked();
     } else {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
       options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
       options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
+      options.enableSpeakerSpotlight = settingsService.isSpeakerSpotlightEnabled();
+      options.enableFrontCameraMirror = settingsService.isFrontCameraMirrorEnabled();
+      options.enableTransparentWhiteboard = settingsService.isTransparentWhiteboardEnabled();
     }
     options.joinTimeout = MeetingConfigRepository.INSTANCE.getJoinTimeout();
 
@@ -181,7 +187,6 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.meetingIdDisplayOption = getMeetingIdDisplayOption();
     options.noGallery = binding.noGalleryOptions.isChecked();
     options.noSwitchCamera = binding.noSwitchCamera.isChecked();
-    options.enableFrontCameraMirror = binding.enableFrontCameraMirror.isChecked();
     options.noSwitchAudioMode = binding.noSwitchAudioMode.isChecked();
     options.noWhiteBoard = binding.noWhiteBoard.isChecked();
     options.noSip = binding.noSip.isChecked();
@@ -204,7 +209,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
     // 如果是创建会议判断是否需要录制
     if (options instanceof NEStartMeetingOptions) {
-      ((NEStartMeetingOptions) options).noCloudRecord = !binding.cloudRecord.isChecked();
+      // ((NEStartMeetingOptions) options).noCloudRecord = !binding.cloudRecord.isChecked();
+      ((NEStartMeetingOptions) options).cloudRecordConfig = new NECloudRecordConfig();
+      ((NEStartMeetingOptions) options)
+          .cloudRecordConfig.setEnable(binding.cloudRecord.isChecked());
     }
     options.fullToolbarMenuItems = toolbarMenu;
     options.fullMoreMenuItems = moreMenu;
@@ -215,7 +223,6 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.showScreenShareUserVideo = binding.showScreenShareUserVideo.isChecked();
     options.showWhiteboardShareUserVideo = binding.showWhiteboardShareUserVideo.isChecked();
     options.showFloatingMicrophone = binding.showFloatingMicrophone.isChecked();
-    options.enableTransparentWhiteboard = binding.enableTransparentWhiteboard.isChecked();
     options.enableAudioShare = binding.enableAudioShare.isChecked();
     options.showCloudRecordingUI = binding.showCloudRecordingUI.isChecked();
     options.showCloudRecordMenuItem = binding.showCloudRecordMenuItem.isChecked();
@@ -252,19 +259,19 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
 
     @Override
-    public void onResult(int resultCode, String resultMsg, Void resultData) {
+    public void onResult(int resultCode, String resultMessage, Void resultData) {
       if (isAdded()) dissMissDialogProgress();
       if (resultCode == NEMeetingError.ERROR_CODE_NO_AUTH) {
         Toast.makeText(context, "当前账号已在其他设备上登录", Toast.LENGTH_SHORT).show();
         SdkAuthenticator.getInstance().logout(false);
       } else if (resultCode == NEMeetingError.ERROR_CODE_FAILED) {
-        Toast.makeText(context, resultMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, resultMessage, Toast.LENGTH_SHORT).show();
         dissMissDialogProgress();
       } else if (resultCode == NEMeetingError.ERROR_CODE_MEETING_ALREADY_EXIST) {
         Toast.makeText(context, "会议创建失败，该会议还在进行中", Toast.LENGTH_SHORT).show();
         dissMissDialogProgress();
       } else if (resultCode != NEMeetingError.ERROR_CODE_SUCCESS) {
-        super.onResult(resultCode, resultMsg, resultData);
+        super.onResult(resultCode, resultMessage, resultData);
       }
     }
   }
@@ -290,10 +297,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
               .postDelayed(
                   () -> {
                     NEMeetingKit.getInstance()
-                        .getSettingsService()
-                        .getHistoryMeetingItem(
+                        .getPreMeetingService()
+                        .getLocalHistoryMeetingList(
                             (resultCode, resultMsg, resultData) -> {
-                              if (resultData != null && resultData.size() > 0) {
+                              if (resultData != null && !resultData.isEmpty()) {
                                 NELocalHistoryMeeting history = resultData.get(0);
                                 Log.d("MeetingCommonFragment", "getHistoryMeetingItem: " + history);
                                 if (history

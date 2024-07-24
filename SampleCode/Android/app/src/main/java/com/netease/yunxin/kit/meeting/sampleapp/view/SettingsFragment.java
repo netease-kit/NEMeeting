@@ -56,6 +56,12 @@ public class SettingsFragment extends BaseFragment<FragmentSettingBinding> {
                 (resultCode, resultMsg, resultData) ->
                     Toast.makeText(getActivity(), "进入美颜预览#" + resultMsg, Toast.LENGTH_SHORT)
                         .show()));
+    binding.btnMeetingFeedback.setOnClickListener(
+        v ->
+            mViewModel.loadFeedbackView(
+                (resultCode, resultMsg, resultData) ->
+                    Toast.makeText(getActivity(), "打开意见反馈页面" + resultMsg, Toast.LENGTH_SHORT)
+                        .show()));
     binding.btnMeetingSettings.setOnClickListener(
         v -> MeetingSettingsActivity.start(getActivity()));
   }

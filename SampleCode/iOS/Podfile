@@ -12,7 +12,7 @@ target 'NEMeetingDemo' do
   pod 'Masonry', '~> 1.1.0'
   pod 'Reachability'
   
-  pod 'NEMeetingKit', '~> 4.6.0'
+  pod 'NEMeetingKit', '~> 4.7.0'
 end
 
 post_install do |installer|

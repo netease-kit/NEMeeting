@@ -264,8 +264,6 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
   options.enableWaitingRoom = [self selectedSetting:CreateMeetingSettingTypeEnableWaitingRoom];
   options.enableGuestJoin = [self selectedSetting:CreateMeetingSettingTypeEnableGuestJoin];
-  options.enableAudioDeviceSwitch =
-      [self selectedSetting:CreateMeetingSettingTypeEnableAudioDeviceSwitch];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   [[NEMeetingKit getInstance].getMeetingService
@@ -304,11 +302,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
         } else {
           if (![result isKindOfClass:[NEAccountInfo class]] || result == nil) return;
           NEAccountInfo *accountInfo = result;
-          self.meetingNum = accountInfo.meetingNum;
-          NSString *meetingNum = accountInfo.meetingNum;
-          if (accountInfo.shortMeetingNum) {
-            meetingNum =
-                [NSString stringWithFormat:@"%@(短号:%@)", meetingNum, accountInfo.shortMeetingNum];
+          self.meetingNum = accountInfo.privateMeetingNum;
+          NSString *meetingNum = accountInfo.privateMeetingNum;
+          if (accountInfo.privateShortMeetingNum) {
+            meetingNum = [NSString
+                stringWithFormat:@"%@(短号:%@)", meetingNum, accountInfo.privateShortMeetingNum];
           }
           weakSelf.meetingIdInput.text = meetingNum;
         };
@@ -317,11 +315,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
 - (void)updateNickname {
   WEAK_SELF(weakSelf);
-  [[NEMeetingKit getInstance].getSettingsService
-      getHistoryMeetingItem:^(NSInteger resultCode, NSString *resultMsg,
-                              NSArray<NEHistoryMeetingItem *> *items) {
+  [[NEMeetingKit getInstance].getPreMeetingService
+      getLocalHistoryMeetingList:^(NSInteger code, NSString *_Nonnull message,
+                                   NSArray<NELocalHistoryMeeting *> *_Nonnull items) {
         if (items && items.count > 0) {
-          NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(resultCode), resultMsg, items[0]);
+          NSLog(@"NEHistoryMeetingItem: %@ %@ %@", @(code), message, items[0]);
           if ([items[0].meetingNum isEqualToString:weakSelf.meetingIdInput.text]) {
             weakSelf.nickInput.text = items[0].nickname;
           }

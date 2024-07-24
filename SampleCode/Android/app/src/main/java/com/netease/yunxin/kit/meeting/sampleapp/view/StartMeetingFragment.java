@@ -148,7 +148,6 @@ public class StartMeetingFragment extends MeetingCommonFragment {
     NEStartMeetingOptions options =
         (NEStartMeetingOptions) getMeetingOptions(new NEStartMeetingOptions());
     options.enableWaitingRoom = binding.enableWaitingRoom.isChecked();
-    options.enableAudioDeviceSwitch = binding.enableAudioDeviceSwitch.isChecked();
     options.enableGuestJoin = binding.enableGuestJoin.isChecked();
     showDialogProgress("正在创建会议...");
     mViewModel.startMeeting(params, options, new MeetingCallback());

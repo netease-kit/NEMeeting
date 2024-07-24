@@ -343,13 +343,6 @@
                 android:text="允许访客入会"
                 android:checked="false" />
 
-            <CheckBox
-                android:id="@+id/enableAudioDeviceSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="允许音频设备切换"
-                android:checked="true" />
-
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_1"
                     android:layout_width="0dp"
@@ -386,7 +379,7 @@
                     app:flow_maxElementsWrap="1"
                     app:flow_verticalStyle="packed"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare,enableAudioDeviceSwitch" />
+                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare" />
 
 
 

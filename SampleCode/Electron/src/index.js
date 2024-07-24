@@ -24,12 +24,10 @@ const createWindow = () => {
   ipcMain.handle('initialize', (_, value) => {
     const neMeetingKit = NEMeetingKit.getInstance()
     const appKey = value.appKey
-    const serverUrl = 'https://roomkit.netease.im'
 
-    console.log('appKey', appKey, serverUrl)
     return neMeetingKit.initialize({
       appKey,
-      serverUrl,
+      serverUrl: 'https://meeting.yunxinroom.com/'
     })
   })
 

@@ -39,7 +39,7 @@
                                       action:@selector(commitAction)];
 }
 - (void)setupSubviews {
-  self.groups = [[NEMeetingKit getInstance].getSettingsService isMeetingLiveEnabled] ?
+  self.groups = [[NEMeetingKit getInstance].getSettingsService isMeetingLiveSupported] ?
                 @[
                     [self titleGroup],
                     [self timeGroup],

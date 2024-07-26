@@ -25,6 +25,10 @@ public class SettingsViewModel extends AndroidViewModel {
     mRepository.openBeautyUI(context, callback);
   }
 
+  public void loadFeedbackView(NECallback<Void> callback) {
+    mRepository.loadFeedbackView(context, callback);
+  }
+
   public boolean isBeautyFaceEnabled() {
     return mRepository.isBeautyFaceEnabled();
   }

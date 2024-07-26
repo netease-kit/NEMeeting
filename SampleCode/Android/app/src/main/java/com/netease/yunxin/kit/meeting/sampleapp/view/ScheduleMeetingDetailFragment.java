@@ -103,8 +103,8 @@ public class ScheduleMeetingDetailFragment extends BaseFragment<FragmentSchedule
               new ToastCallback<Void>(getActivity(), "scheduleMeeting") {
 
                 @Override
-                public void onResult(int resultCode, String resultMsg, Void resultData) {
-                  super.onResult(resultCode, resultMsg, resultData);
+                public void onResult(int resultCode, String resultMessage, Void resultData) {
+                  super.onResult(resultCode, resultMessage, resultData);
                   if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
                     Navigation.findNavController(getView()).popBackStack();
                   }

@@ -28,12 +28,6 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
   /** 会议结束时间戳 */
   private long endTime;
 
-  /** 会议信息变更时间戳 */
-  private long updateTime;
-
-  /** 会议信息创建时间 */
-  private long createTime;
-
   /** 会议密码 */
   private String password;
   /** 当前HH：mm */
@@ -137,14 +131,6 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
     this.endTime = endTime;
   }
 
-  public long getUpdateTime() {
-    return updateTime;
-  }
-
-  public void setUpdateTime(long updateTime) {
-    this.updateTime = updateTime;
-  }
-
   public String getPassword() {
     return password;
   }
@@ -191,14 +177,6 @@ public class MeetingItem implements Comparable<MeetingItem>, Serializable {
 
   public void setGroupFirst(boolean groupFirst) {
     isGroupFirst = groupFirst;
-  }
-
-  public long getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(long createTime) {
-    this.createTime = createTime;
   }
 
   public NEMeetingItemLive getLive() {

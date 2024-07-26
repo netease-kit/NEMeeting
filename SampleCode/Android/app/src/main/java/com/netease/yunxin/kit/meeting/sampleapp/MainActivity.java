@@ -37,7 +37,6 @@ import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuItemInfo;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuStateController;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuVisibility;
 import com.netease.yunxin.kit.meeting.sdk.menu.NESingleStateMenuItem;
-import java.lang.reflect.Method;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
@@ -256,17 +255,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         break;
       case R.id.im_login:
         NIMLoginActivity.start(this);
-        break;
-      case R.id.open_flutter_page:
-        try {
-          Class<?> clz =
-              Class.forName("com.example.flutter_module_library.FlutterContainerActivity");
-          Method startCached = clz.getDeclaredMethod("startCached", Context.class);
-          startCached.setAccessible(true);
-          startCached.invoke(null, this);
-        } catch (Throwable e) {
-          e.printStackTrace();
-        }
         break;
       case R.id.minimize_meeting:
         minimizeCurrentMeeting();

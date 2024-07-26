@@ -1,0 +1,19 @@
+{
+  "name": "example-meeting-kit-electron",
+  "private": true,
+  "productName": "example-meeting-kit-electron",
+  "version": "1.0.0",
+  "description": "Electron 会议组件应用示例",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "nemeeting-electron-sdk": "^4.7.0"
+  },
+  "devDependencies": {
+    "electron": "24.8.3"
+  }
+}

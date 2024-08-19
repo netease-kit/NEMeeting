@@ -90,6 +90,7 @@ set_target_properties(meeting_sdk_example_qt PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE_INFO_PLIST ./MacOSXBundleInfo.plist.in
 )
 
 include(GNUInstallDirs)

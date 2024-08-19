@@ -119,8 +119,8 @@ void MainWindow::InitUI() {
     ui->m_cb_log_level->addItem("Error", 4);
     ui->m_cb_log_level->addItem("Fatal", 5);
     ui->m_cb_log_level->setCurrentIndex(1);
-    ui->m_appkey_edit->setText("4649991c6ab7cc5a4309ccf25d8793e5");
-    ui->m_server_url_edit->setText("https://roomkit-dev.netease.im");
+    ui->m_appkey_edit->setText("");
+    ui->m_server_url_edit->setText("");
 #ifdef _WIN32
     ui->m_run_path_edit->setText("d:/tmp");
 #else
@@ -130,8 +130,8 @@ void MainWindow::InitUI() {
 #endif
     ui->tabWidget->setCurrentIndex(0);
     // account
-    ui->m_edit_account->setText("zhaochong01");
-    ui->m_edit_pwd->setText("12345678");
+    ui->m_edit_account->setText("");
+    ui->m_edit_pwd->setText("");
     // message
     ui->msg_cb_order->addItem("降序", 0);
     ui->msg_cb_order->addItem("升序", 1);

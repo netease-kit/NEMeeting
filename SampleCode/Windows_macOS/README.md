@@ -3,7 +3,7 @@
 https://doc.yunxin.163.com/meetingkit/guide?platform=pc
 
 # examples
-![image_init.png](images/image_init.png)
+![image_init.png](image/image_init.png)
 ## Qt 环境安装
 ### Windows && macOS
 1. 下载 Qt 安装包

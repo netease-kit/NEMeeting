@@ -14,12 +14,6 @@ buildscript {
         mavenCentral()
         google()
         mavenLocal()
-        maven {
-            url "https://repo.spring.io/release"
-        }
-        maven {
-            url "https://repository.jboss.org/maven2"
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
@@ -39,7 +33,7 @@ allprojects {
         }
         google()
         mavenCentral()
-        jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 

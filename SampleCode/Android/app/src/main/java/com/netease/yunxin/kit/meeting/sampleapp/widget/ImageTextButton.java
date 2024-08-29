@@ -214,7 +214,7 @@ public class ImageTextButton extends RelativeLayout {
           typedArray.getDimensionPixelOffset(
               R.styleable.ImageTextButton_itb_icon_text_marggin,
               getResources().getDimensionPixelOffset(R.dimen.default_text_margin));
-      MarginLayoutParams params = (MarginLayoutParams) textView.getLayoutParams();
+      ViewGroup.MarginLayoutParams params = (MarginLayoutParams) textView.getLayoutParams();
       switch (mIconPositon) {
         case ICON_POSITION_LEFT:
           params.setMargins(marggin, 0, 0, 0);

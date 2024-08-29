@@ -371,24 +371,36 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
         return new String[] {"管理参会者"};
       case NEMenuIDs.SWITCH_SHOW_TYPE_MENU_ID:
         return new String[] {"视图布局"};
-      case NEMenuIDs.INVITE_MENU_ID:
-        return new String[] {"邀请"};
-      case NEMenuIDs.CHAT_MENU_ID:
-        return new String[] {"聊天"};
       case NEMenuIDs.NOTIFY_CENTER_MENU_ID:
         return new String[] {"通知"};
-      case NEMenuIDs.SIP_CALL_MENU_ID:
-        return new String[] {"呼叫"};
-      case NEMenuIDs.SETTINGS_MENU_ID:
-        return new String[] {"设置"};
+      case NEMenuIDs.INVITE_MENU_ID:
+        return new String[] {"邀请"};
+      case NEMenuIDs.SECURITY_MENU_ID:
+        return new String[] {"安全"};
+      case NEMenuIDs.CHAT_MENU_ID:
+        return new String[] {"聊天"};
       case NEMenuIDs.WHITEBOARD_MENU_ID:
         return new String[] {"共享白板", "退出白板"};
       case NEMenuIDs.CLOUD_RECORD_MENU_ID:
         return new String[] {"云录制", "结束录制"};
-      case NEMenuIDs.SECURITY_MENU_ID:
-        return new String[] {"安全"};
       case NEMenuIDs.DISCONNECT_AUDIO_MENU_ID:
         return new String[] {"断开音频", "连接音频"};
+      case NEMenuIDs.SETTINGS_MENU_ID:
+        return new String[] {"设置"};
+      case NEMenuIDs.SIP_CALL_MENU_ID:
+        return new String[] {"呼叫"};
+      case NEMenuIDs.CAPTIONS_MENU_ID:
+        return new String[] {"字幕"};
+      case NEMenuIDs.TRANSCRIPTION_MENU_ID:
+        return new String[] {"实时转写"};
+      case NEMenuIDs.INTERPRETATION_MENU_ID:
+        return new String[] {"同声传译"};
+      case NEMenuIDs.BEAUTY_MENU_ID:
+        return new String[] {"美颜"};
+      case NEMenuIDs.VIRTUAL_BACKGROUND_MENU_ID:
+        return new String[] {"虚拟背景"};
+      case NEMenuIDs.LIVE_MENU_ID:
+        return new String[] {"直播"};
       case NEMenuIDs.FEEDBACK_MENU_ID:
         return new String[] {"问题反馈"};
     }

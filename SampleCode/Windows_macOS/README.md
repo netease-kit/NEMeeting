@@ -1,18 +1,26 @@
-## 部署指南
+# 前提条件
+> 开通 NERoom 房间组件，并选择了 线上会议 场景模板。
+https://doc.yunxin.163.com/meetingkit/guide?platform=pc
 
-此项目使用 Qt5 C++ 项目构建，可同时运行在 Windows/macOS 系统中，示例代码包含了接口的调用方式及时机、参数指定、回调处理等。
+# examples
+![image_init.png](image/image_init.png)
+## Qt 环境安装
+### Windows && macOS
+1. 下载 Qt 安装包
+> 下载地址
+```angular2html
+https://developer.aliyun.com/mirror/qt/
+```
+> 下载命令(安装器qt-online-installer-macOS-x64-4.8.0打开)
+```shell
+/Volumes/qt-online-installer-macOS-x64-4.8.0/qt-online-installer-macOS-x64-4.8.0.app/Contents/MacOS/qt-online-installer-macOS-x64-4.8.0 --mirror https://mirrors.aliyun.com/qt
+```
+2. Qt 版本选择
+> 选择 Qt 6.5.3 版本
 
-示例项目包含的功能如下：
-
- - 通过账号、密码进行会议 SDK 的登录鉴权；注销登录
- - 创建会议、加入会议、设备设置
- - 会议内提供的其他功能(如会议控制、屏幕共享等)
-
-## 准备资源
-
- - AppKey：应用接入会议 SDK 的凭证，开发者首先需要在网易会议开发者平台完成申请，在登录账户时指定。
- - 账号及密码：使用网易会议 PaaS 服务提供的创建会议账号接口完成创建，并通过对应的账号 ID 和 Token 来完成登录鉴权。
-
-此示例中，以上所需参数均通过 UI 方式提供开发者指定来体验完整会议功能。
-
-<img src="./docs/2020-08-08.12.43.46.png"/>
+rm -rf meeting_sdk_example_qt && 
+cmake   -Bmeeting_sdk_example_qt \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_OSX_ARCHITECTURES=x86_64 \
+        -DCMAKE_PREFIX_PATH=~/meeting_sdk_example_qt/6.5.3/macos \
+cmake   --build meeting_sdk_example_qt --config Release

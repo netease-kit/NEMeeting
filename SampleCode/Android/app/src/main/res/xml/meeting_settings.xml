@@ -34,6 +34,21 @@
             app:defaultValue="45000"
             style="@style/MyEditTextPreference" />
 
+    <SwitchPreferenceCompat
+        app:key="enable_speaker_spotlight"
+        app:title="开启语音激励"
+        style="@style/MySwitchPreference" />
+
+    <SwitchPreferenceCompat
+        app:key="enable_front_camera_mirror"
+        app:title="前置摄像头镜像"
+        style="@style/MySwitchPreference" />
+
+    <SwitchPreferenceCompat
+        app:key="enable_transparent_whiteboard"
+        app:title="开启透明白板"
+        style="@style/MySwitchPreference" />
+
     <PreferenceCategory
             app:title="音频配置"
             app:allowDividerAbove="true"

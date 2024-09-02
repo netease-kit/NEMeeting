@@ -115,8 +115,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
             accountToken,
             new ToastCallback<Void>(context, "登录") {
               @Override
-              public void onResult(int resultCode, String resultMsg, Void resultData) {
-                super.onResult(resultCode, resultMsg, resultData);
+              public void onResult(int resultCode, String resultMessage, Void resultData) {
+                super.onResult(resultCode, resultMessage, resultData);
                 onLoginResult(resultCode, null, null);
               }
             });
@@ -128,9 +128,9 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
           .logout(
               new ToastCallback<Void>(context, "注销") {
                 @Override
-                public void onResult(int resultCode, String resultMsg, Void resultData) {
+                public void onResult(int resultCode, String resultMessage, Void resultData) {
                   //手动退出登录才进行toast提示
-                  if (manual) super.onResult(resultCode, resultMsg, resultData);
+                  if (manual) super.onResult(resultCode, resultMessage, resultData);
                   if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
                     if (state.compareAndSet(AUTHORIZED, UN_AUTHORIZE)) {
                       SPUtils.getInstance().remove(KEY_ACCOUNT);
@@ -152,8 +152,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
               result.data.token,
               new ToastCallback<Void>(context, "登录") {
                 @Override
-                public void onResult(int resultCode, String resultMsg, Void resultData) {
-                  super.onResult(resultCode, resultMsg, resultData);
+                public void onResult(int resultCode, String resultMessage, Void resultData) {
+                  super.onResult(resultCode, resultMessage, resultData);
                   onLoginResult(
                       resultCode,
                       () -> SPUtils.getInstance().put(KEY_ACCOUNT, account).put(KEY_PWD, pwd),
@@ -178,8 +178,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
             pwd,
             new ToastCallback<Void>(context, "登录") {
               @Override
-              public void onResult(int resultCode, String resultMsg, Void resultData) {
-                super.onResult(resultCode, resultMsg, resultData);
+              public void onResult(int resultCode, String resultMessage, Void resultData) {
+                super.onResult(resultCode, resultMessage, resultData);
                 onLoginResult(
                     resultCode,
                     () -> SPUtils.getInstance().put(KEY_ACCOUNT, account).put(KEY_PWD, pwd),
@@ -194,8 +194,8 @@ public class SdkAuthenticator implements SdkInitializer.InitializeListener {
           .tryAutoLogin(
               new ToastCallback<Void>(context, "自动登录") {
                 @Override
-                public void onResult(int resultCode, String resultMsg, Void resultData) {
-                  super.onResult(resultCode, resultMsg, resultData);
+                public void onResult(int resultCode, String resultMessage, Void resultData) {
+                  super.onResult(resultCode, resultMessage, resultData);
                   onLoginResult(resultCode, null, null);
                 }
               });

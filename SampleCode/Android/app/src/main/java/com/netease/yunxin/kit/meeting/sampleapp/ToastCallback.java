@@ -23,14 +23,14 @@ public class ToastCallback<T> implements NECallback<T> {
   }
 
   @Override
-  public void onResult(int resultCode, String resultMsg, T resultData) {
-    LogUtil.log(TAG, prefix + " onResult: " + resultCode + '|' + resultMsg + '|' + resultData);
+  public void onResult(int resultCode, String resultMessage, T resultData) {
+    LogUtil.log(TAG, prefix + " onResult: " + resultCode + '|' + resultMessage + '|' + resultData);
     Toast.makeText(
             context,
             prefix
                 + (resultCode == NEMeetingError.ERROR_CODE_SUCCESS
                     ? "成功"
-                    : "失败" + (resultMsg != null ? ": " + resultMsg : "")),
+                    : "失败" + (resultMessage != null ? ": " + resultMessage : "")),
             Toast.LENGTH_SHORT)
         .show();
   }

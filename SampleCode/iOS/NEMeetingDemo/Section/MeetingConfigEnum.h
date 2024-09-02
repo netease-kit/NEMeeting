@@ -42,7 +42,9 @@ typedef NS_ENUM(NSInteger, MeetingSettingType) {
   MeetingSettingTypeEnableEncryption,
   MeetingSettingTypeShowCloudRecordMenuItem,
   MeetingSettingTypeShowCloudRecordingUI,
-  MeetingSettingTypeEnableAudioDeviceSwitch
+  MeetingSettingTypeEnablePIP,
+  MeetingSettingTypeShowNotYetJoinedMembers,
+  MeetingSettingTypeEnableDirectMemberMediaControlByHost,
 };
 
 /// 创建会议设置选项类型
@@ -83,8 +85,10 @@ typedef NS_ENUM(NSInteger, CreateMeetingSettingType) {
   CreateMeetingSettingTypeShowCloudRecordMenuItem,
   CreateMeetingSettingTypeShowCloudRecordingUI,
   CreateMeetingSettingTypeEnableWaitingRoom,
-  CreateMeetingSettingTypeEnableAudioDeviceSwitch,
-  CreateMeetingSettingTypeEnableGuestJoin
+  CreateMeetingSettingTypeEnableGuestJoin,
+  CreateMeetingSettingTypeEnablePIP,
+  CreateMeetingSettingTypeShowNotYetJoinedMembers,
+  CreateMeetingSettingTypeEnableDirectMemberMediaControlByHost,
 };
 
 #endif /* MeetingConfigEnum_h */

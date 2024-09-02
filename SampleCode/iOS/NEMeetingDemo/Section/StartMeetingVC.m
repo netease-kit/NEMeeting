@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property(weak, nonatomic) IBOutlet UITextField *subjectInput;
 /// 加密密钥输入框
 @property(weak, nonatomic) IBOutlet UITextField *encryptionKeyInput;
+/// 小应用通知弹窗时间配置
+@property(weak, nonatomic) IBOutlet UITextField *notifyDurationInput;
 
 @property(nonatomic, copy) NSString *meetingNum;
 @property(nonatomic, assign) BOOL audioOffAllowSelfOn;
@@ -74,20 +76,46 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [_configCheckBox
       setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风", @"显示会议持续时间" ]];
   [_settingCheckBox setItemTitleWithArray:@[
-    @"入会时关闭聊天菜单", @"入会时关闭邀请菜单", @"入会时隐藏最小化",
-    @"使用个人会议号",     @"使用默认会议设置",   @"入会时关闭画廊模式",
-    @"仅显示会议ID长号",   @"仅显示会议ID短号",   @"关闭摄像头切换",
+    @"入会时关闭聊天菜单",
+    @"入会时关闭邀请菜单",
+    @"入会时隐藏最小化",
+    @"使用个人会议号",
+    @"使用默认会议设置",
+    @"入会时关闭画廊模式",
+    @"仅显示会议ID长号",
+    @"仅显示会议ID短号",
+    @"关闭摄像头切换",
     @"关闭音频模式切换",
     @"展示白板",  // 10
-    @"隐藏白板菜单按钮",   @"关闭会中改名",       @"开启云录制",
-    @"隐藏Sip菜单",        @"显示用户角色标签",   @"自动静音(可解除)",
-    @"自动静音(不可解除)", @"自动关视频(可解除)", @"自动关视频(不可解除)",
-    @"显示会议结束提醒",   @"聊天室文件消息",     @"聊天室图片消息",
-    @"开启静音检测",       @"关闭静音包",         @"显示屏幕共享者画面",
-    @"显示白板共享者画面", @"设置白板透明",       @"前置摄像头镜像",
-    @"显示麦克风浮窗",     @"入会时隐藏直播菜单", @"开启音频共享",
-    @"开启加密",           @"显示云录制菜单按钮", @"显示云录制过程UI",
-    @"开启等候室",         @"允许音频设备切换",   @"允许访客入会"
+    @"隐藏白板菜单按钮",
+    @"关闭会中改名",
+    @"开启云录制",
+    @"隐藏Sip菜单",
+    @"显示用户角色标签",
+    @"自动静音(可解除)",
+    @"自动静音(不可解除)",
+    @"自动关视频(可解除)",
+    @"自动关视频(不可解除)",
+    @"显示会议结束提醒",
+    @"聊天室文件消息",
+    @"聊天室图片消息",
+    @"开启静音检测",
+    @"关闭静音包",
+    @"显示屏幕共享者画面",
+    @"显示白板共享者画面",
+    @"设置白板透明",
+    @"前置摄像头镜像",
+    @"显示麦克风浮窗",
+    @"入会时隐藏直播菜单",
+    @"开启音频共享",
+    @"开启加密",
+    @"显示云录制菜单按钮",
+    @"显示云录制过程UI",
+    @"开启等候室",
+    @"允许访客入会",
+    @"自动画中画",
+    @"展示未入会成员",
+    @"主持人直接开关成员音视频"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableFile];
@@ -100,8 +128,12 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeJoinOffLive];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowCloudRecordMenuItem];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowCloudRecordingUI];
-  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeEnableAudioDeviceSwitch];
   [self.settingCheckBox setItemSelected:NO index:CreateMeetingSettingTypeEnableGuestJoin];
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeEnablePIP];
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowNotYetJoinedMembers];
+  [self.settingCheckBox
+      setItemSelected:NO
+                index:CreateMeetingSettingTypeEnableDirectMemberMediaControlByHost];
 }
 #pragma mark-----------------------------  自定义toolbar/更多 菜单  -----------------------------
 
@@ -264,6 +296,16 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
   options.enableWaitingRoom = [self selectedSetting:CreateMeetingSettingTypeEnableWaitingRoom];
   options.enableGuestJoin = [self selectedSetting:CreateMeetingSettingTypeEnableGuestJoin];
+  if (self.notifyDurationInput.text.length) {
+    options.pluginNotifyDuration = [self.notifyDurationInput.text intValue];
+  }
+  options.enablePictureInPicture = [self selectedSetting:CreateMeetingSettingTypeEnablePIP];
+  // 视图展示未入会成员
+  options.showNotYetJoinedMembers =
+      ![self selectedSetting:CreateMeetingSettingTypeShowNotYetJoinedMembers];
+
+  options.enableDirectMemberMediaControlByHost =
+      [self selectedSetting:CreateMeetingSettingTypeEnableDirectMemberMediaControlByHost];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   [[NEMeetingKit getInstance].getMeetingService

@@ -15,8 +15,9 @@
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
-  <script src="./NEMeetingKit_v4.6.0.js"></script>
+  <script src="./NEMeetingKit_v4.8.0.js"></script>
   <script>
+  NEMeetingKit = NEMeetingKit.default.oldNEMeetingKit
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
    * 然后执行登陆，获取登陆人员信息
@@ -54,10 +55,24 @@
   }
 
   function loginWithNEMeeting() { // 账号密码登陆
-    const username = '',password = '';
-    NEMeetingKit.actions.loginWithPassword({username, password}, function(e) {
-      console.log(e)
-    })
+    const username = 'wiewei01',password = 'Ww1234';
+    // NEMeetingKit.actions.loginWithPassword({username, password}, function(e) {
+    //   console.log(e)
+    // })
+    //
+    NEMeetingKit.actions.anonymousJoinMeeting(
+      {
+        meetingNum: '790402924',
+        nickName: '123',
+        video: 0,
+        audio: 0,
+        showSubject: true,
+        showMeetingRemainingTip: true,
+      },
+      function (e) {
+        console.log(e);
+      }
+    );
   }
 
 

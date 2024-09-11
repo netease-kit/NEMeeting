@@ -56,23 +56,9 @@
 
   function loginWithNEMeeting() { // 账号密码登陆
     const username = 'wiewei01',password = 'Ww1234';
-    // NEMeetingKit.actions.loginWithPassword({username, password}, function(e) {
-    //   console.log(e)
-    // })
-    //
-    NEMeetingKit.actions.anonymousJoinMeeting(
-      {
-        meetingNum: '790402924',
-        nickName: '123',
-        video: 0,
-        audio: 0,
-        showSubject: true,
-        showMeetingRemainingTip: true,
-      },
-      function (e) {
-        console.log(e);
-      }
-    );
+    NEMeetingKit.actions.loginWithPassword({username, password}, function(e) {
+      console.log(e)
+    })
   }
 
 

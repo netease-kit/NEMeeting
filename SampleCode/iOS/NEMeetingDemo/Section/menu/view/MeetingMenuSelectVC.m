@@ -6,51 +6,11 @@
 #import "MeetingMenuItemCell.h"
 #import "SelectedMenuItemEditVC.h"
 
-typedef NS_ENUM(NSInteger, NEMeetingMenuItemType) {
-  /// 静音
-  NEMeetingMenuItemTypeMute = 0,
-  /// 停止视频
-  NEMeetingMenuItemTypeCamera,
-  /// 屏幕共享
-  NEMeetingMenuItemTypeScreenShare,
-  /// 视图布局
-  NEMeetingMenuItemTypeLayout,
-  /// 参会者
-  NEMeetingMenuItemTypeParticipant,
-  /// 管理参会者
-  NEMeetingMenuItemTypeManagerParticipant,
-  /// 邀请
-  NEMeetingMenuItemTypeInvitation,
-  /// 聊天
-  NEMeetingMenuItemTypeChat,
-  /// 音频管理
-  NEMeetingMenuItemTypeAudioManager,
-  /// 单选
-  NEMeetingMenuItemTypeSingleMenu,
-  /// 多选
-  NEMeetingMenuItemTypeCheckMenu,
-  /// 共享白板
-  NEMeetingMenuItemTypeWhiteboard,
-  /// 云录制白板
-  NEMeetingMenuItemTypeCloudRecord,
-  /// 安全
-  NEMeetingMenuItemTypeSecurity,
-  /// 断开音频
-  NEMeetingMenuItemTypeDisconnectAudio,
-  /// 测试修改单选菜单
-  NEMeetingMenuItemTypeEditSingleMenu,
-  /// 测试修改多选菜单
-  NEMeetingMenuItemTypeEditCheckMenu,
-  /// 获取账号信息
-  NEMeetingMenuItemTypeGetAccountInfo
-};
-
 @interface MeetingMenuSelectVC () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) UICollectionView *selectedCollectionView;
 @property(nonatomic, strong) UICollectionView *allItemCollectionView;
 @property(nonatomic, strong) NSMutableArray<NEMeetingMenuItem *> *allSeletedItems;
-@property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *allItems;
-@property(nonatomic, assign) int itemID;
+@property(nonatomic, strong) NSMutableArray<NEMeetingMenuItem *> *allItems;
 
 @end
 static NSString *cellIdentifier = @"selectedMenuItemCell";
@@ -81,106 +41,26 @@ static NSString *allCellIdentifier = @"allSelectedMenuItemCell";
 
 #pragma mark - data
 - (void)initData {
-  self.itemID = FIRST_INJECTED_MENU_ID + 3;
   if (self.seletedItems) {
     [self.allSeletedItems addObjectsFromArray:self.seletedItems];
   }
-  self.allItems = @[
-    [NEMenuItems mic],
-    [NEMenuItems camera],
-    [NEMenuItems screenShare],
-    [NEMenuItems switchShowType],
-    [NEMenuItems participants],
-    [NEMenuItems managerParticipants],
-    [NEMenuItems invite],
-    [NEMenuItems chat],
-    [self addAudioManagerMenuItem],
-    [self addSingleStateMenuItem],
-    [self addCheckableMenuItem],
-    [NEMenuItems whiteboard],
-    [NEMenuItems cloudRecord],
-    [NEMenuItems security],
-    [NEMenuItems disconnectAudio],
-    [self addEditSingleMenuItem],
-    [self addEditCheckableMenuItem],
-    [self addGetAccountInfoMenuItem],
-  ];
+  self.allItems = [NSMutableArray array];
+  [self.allItems addObjectsFromArray:[NEMenuItems defaultMoreMenuItems]];
+  [self.allItems addObjectsFromArray:[NEMenuItems defaultToolbarMenuItems]];
+  [self.allItems addObject:[self addSingleStateMenuItem]];
+  [self.allItems addObject:[self addEditCheckableMenuItem]];
+
   [self.selectedCollectionView reloadData];
   [self.allItemCollectionView reloadData];
 }
 
-- (NEMeetingMenuItem *)createItemWithType:(NEMeetingMenuItemType)itemType {
-  switch (itemType) {
-    case NEMeetingMenuItemTypeMute:
-      return [NEMenuItems mic];
-    case NEMeetingMenuItemTypeCamera:
-      return [NEMenuItems camera];
-    case NEMeetingMenuItemTypeScreenShare:
-      return [NEMenuItems screenShare];
-    case NEMeetingMenuItemTypeLayout:
-      return [NEMenuItems switchShowType];
-    case NEMeetingMenuItemTypeParticipant:
-      return [NEMenuItems participants];
-    case NEMeetingMenuItemTypeManagerParticipant:
-      return [NEMenuItems managerParticipants];
-    case NEMeetingMenuItemTypeInvitation:
-      return [NEMenuItems invite];
-    case NEMeetingMenuItemTypeChat:
-      return [NEMenuItems chat];
-    case NEMeetingMenuItemTypeCloudRecord:
-      return [NEMenuItems cloudRecord];
-    case NEMeetingMenuItemTypeSecurity:
-      return [NEMenuItems security];
-    case NEMeetingMenuItemTypeDisconnectAudio:
-      return [NEMenuItems disconnectAudio];
-    case NEMeetingMenuItemTypeAudioManager:
-      return [self addAudioManagerMenuItem];
-    case NEMeetingMenuItemTypeSingleMenu:
-      return [self addSingleStateMenuItem];
-    case NEMeetingMenuItemTypeCheckMenu:
-      return [self addCheckableMenuItem];
-    case NEMeetingMenuItemTypeEditSingleMenu:
-      return [self addEditSingleMenuItem];
-    case NEMeetingMenuItemTypeEditCheckMenu:
-      return [self addEditCheckableMenuItem];
-    case NEMeetingMenuItemTypeGetAccountInfo:
-      return [self addGetAccountInfoMenuItem];
-    default:
-      return [NEMenuItems whiteboard];
-  }
-}
-
 - (NEMeetingMenuItem *)addSingleStateMenuItem {
   NESingleStateMenuItem *item = [[NESingleStateMenuItem alloc] init];
-  item.itemId = self.itemID++;
-  item.visibility = VISIBLE_ALWAYS;
-
-  NEMenuItemInfo *info = [[NEMenuItemInfo alloc] init];
-  info.text = @"单选";
-  info.icon = @"calendar";
-  item.singleStateItem = info;
-  return item;
-}
-
-- (NEMeetingMenuItem *)addAudioManagerMenuItem {
-  NESingleStateMenuItem *item = [[NESingleStateMenuItem alloc] init];
   item.itemId = FIRST_INJECTED_MENU_ID;
   item.visibility = VISIBLE_ALWAYS;
 
   NEMenuItemInfo *info = [[NEMenuItemInfo alloc] init];
-  info.text = @"音频管理";
-  info.icon = @"calendar";
-  item.singleStateItem = info;
-  return item;
-}
-
-- (NEMeetingMenuItem *)addEditSingleMenuItem {
-  NESingleStateMenuItem *item = [[NESingleStateMenuItem alloc] init];
-  item.itemId = FIRST_INJECTED_MENU_ID;
-  item.visibility = VISIBLE_ALWAYS;
-
-  NEMenuItemInfo *info = [[NEMenuItemInfo alloc] init];
-  info.text = @"修改单选";
+  info.text = @"自定义单选";
   info.icon = @"calendar";
   item.singleStateItem = info;
   return item;
@@ -203,34 +83,6 @@ static NSString *allCellIdentifier = @"allSelectedMenuItemCell";
   return item;
 }
 
-- (NEMeetingMenuItem *)addGetAccountInfoMenuItem {
-  NESingleStateMenuItem *item = [[NESingleStateMenuItem alloc] init];
-  item.itemId = FIRST_INJECTED_MENU_ID + 2;
-  item.visibility = VISIBLE_ALWAYS;
-
-  NEMenuItemInfo *info = [[NEMenuItemInfo alloc] init];
-  info.text = @"账号信息";
-  info.icon = @"calendar";
-  item.singleStateItem = info;
-  return item;
-}
-
-- (NEMeetingMenuItem *)addCheckableMenuItem {
-  NECheckableMenuItem *item = [[NECheckableMenuItem alloc] init];
-  item.itemId = self.itemID++;
-  item.visibility = VISIBLE_ALWAYS;
-
-  NEMenuItemInfo *info = [[NEMenuItemInfo alloc] init];
-  info.text = [NSString stringWithFormat:@"未选中-%@", @(item.itemId)];
-  info.icon = @"checkbox_n";
-  item.uncheckStateItem = info;
-
-  info = [[NEMenuItemInfo alloc] init];
-  info.text = [NSString stringWithFormat:@"选中-%@", @(item.itemId)];
-  info.icon = @"checkbox_s";
-  item.checkedStateItem = info;
-  return item;
-}
 - (void)done {
   if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedItems:)]) {
     [self.delegate didSelectedItems:[self.allSeletedItems copy]];
@@ -281,17 +133,10 @@ static NSString *allCellIdentifier = @"allSelectedMenuItemCell";
     vc.menuItem = self.allSeletedItems[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
     return;
+  } else {
+    [self.allSeletedItems addObject:self.allItems[indexPath.row]];
+    [self.selectedCollectionView reloadData];
   }
-  NEMeetingMenuItem *item = [self createItemWithType:(NEMeetingMenuItemType)indexPath.row];
-  [self.allSeletedItems addObject:item];
-  [self.selectedCollectionView reloadData];
-  //    NEMeetingMenuItem *item = self.allItems[indexPath.row];
-  //    if (![self.allSeletedItems containsObject:item]) {
-  //        [self.allSeletedItems addObject:item];
-  //        [self.selectedCollectionView reloadData];
-  //    }else {
-  //        [self.view makeToast:@"已存在该选项"];
-  //    }
 }
 
 #pragma mark - get

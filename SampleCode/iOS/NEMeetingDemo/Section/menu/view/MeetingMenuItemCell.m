@@ -74,6 +74,24 @@
       return @"安全";
     case DISCONNECT_AUDIO_MENU_ID:
       return @"断开音频";
+    case SETTINGS_MENU_ID:
+      return @"设置";
+    case FEEDBACK_MENU_ID:
+      return @"反馈";
+    case SIP_CALL_MENU_ID:
+      return @"SIP";
+    case CAPTIONS_MENU_ID:
+      return @"字幕";
+    case TRANSCRIPTION_MENU_ID:
+      return @"实时转写";
+    case INTERPRETATION_MENU_ID:
+      return @"同声传译";
+    case BEAUTY_MENU_ID:
+      return @"美颜";
+    case VIRTUAL_BACKGROUND_MENU_ID:
+      return @"虚拟背景";
+    case LIVE_MENU_ID:
+      return @"直播";
     default:
       break;
   }

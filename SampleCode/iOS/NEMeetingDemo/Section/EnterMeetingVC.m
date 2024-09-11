@@ -56,14 +56,22 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [_configCheckBox
       setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风", @"显示会议持续时间" ]];
   [_settingCheckBox setItemTitleWithArray:@[
-    @"入会时关闭聊天菜单", @"入会时关闭邀请菜单", @"入会时隐藏最小化", @"使用默认会议设置",
-    @"入会时关闭画廊模式", @"仅显示会议ID长号",   @"仅显示会议ID短号", @"关闭摄像头切换",
-    @"关闭音频模式切换",   @"显示白板窗口",       @"隐藏白板菜单按钮", @"关闭会中改名",
-    @"隐藏Sip菜单",        @"显示用户角色标签",   @"显示会议结束提醒", @"聊天室文件消息",
-    @"聊天室图片消息",     @"开启静音检测",       @"关闭静音包",       @"显示屏幕共享者画面",
-    @"显示白板共享者画面", @"设置白板透明",       @"前置摄像头镜像",   @"显示麦克风浮窗",
-    @"入会时隐藏直播菜单", @"开启音频共享",       @"开启加密",         @"显示云录制菜单按钮",
-    @"显示云录制过程UI",   @"允许音频设备切换"
+    @"入会时关闭聊天菜单", @"入会时关闭邀请菜单",
+    @"入会时隐藏最小化",   @"使用默认会议设置",
+    @"入会时关闭画廊模式", @"仅显示会议ID长号",
+    @"仅显示会议ID短号",   @"关闭摄像头切换",
+    @"关闭音频模式切换",   @"显示白板窗口",
+    @"隐藏白板菜单按钮",   @"关闭会中改名",
+    @"隐藏Sip菜单",        @"显示用户角色标签",
+    @"显示会议结束提醒",   @"聊天室文件消息",
+    @"聊天室图片消息",     @"开启静音检测",
+    @"关闭静音包",         @"显示屏幕共享者画面",
+    @"显示白板共享者画面", @"设置白板透明",
+    @"前置摄像头镜像",     @"显示麦克风浮窗",
+    @"入会时隐藏直播菜单", @"开启音频共享",
+    @"开启加密",           @"显示云录制菜单按钮",
+    @"显示云录制过程UI",   @"自动画中画",
+    @"展示未入会成员",     @"主持人直接开关成员音视频"
   ]];
   _settingCheckBox.delegate = self;
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeChatroomEnableFile];
@@ -76,7 +84,10 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeJoinOffLive];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowCloudRecordingUI];
   [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowCloudRecordMenuItem];
-  [self.settingCheckBox setItemSelected:NO index:MeetingSettingTypeEnableAudioDeviceSwitch];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeEnablePIP];
+  [self.settingCheckBox setItemSelected:YES index:MeetingSettingTypeShowNotYetJoinedMembers];
+  [self.settingCheckBox setItemSelected:NO
+                                  index:MeetingSettingTypeEnableDirectMemberMediaControlByHost];
 }
 
 - (IBAction)onLeaveCurrentMeeting:(id)sender {
@@ -194,6 +205,11 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
       [self selectedSetting:MeetingSettingTypeShowCloudRecordMenuItem];
   // 配置是否展示云录制过程中的UI提示
   options.showCloudRecordingUI = [self selectedSetting:MeetingSettingTypeShowCloudRecordingUI];
+  options.enablePictureInPicture = [self selectedSetting:MeetingSettingTypeEnablePIP];
+  options.showNotYetJoinedMembers =
+      [self selectedSetting:MeetingSettingTypeShowNotYetJoinedMembers];
+  options.enableDirectMemberMediaControlByHost =
+      [self selectedSetting:MeetingSettingTypeEnableDirectMemberMediaControlByHost];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   // 匿名入会

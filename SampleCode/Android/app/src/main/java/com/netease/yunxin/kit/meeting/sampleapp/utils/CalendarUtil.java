@@ -62,8 +62,6 @@ public class CalendarUtil {
 									  (view1, hourOfDay, minute1) -> {
 										calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
 										calendar.set(Calendar.MINUTE, minute1);
-
-										// 处理选定的日期时间
 										listener.onDateResult(calendar.getTime().getTime());
 									  },
 									  hour,

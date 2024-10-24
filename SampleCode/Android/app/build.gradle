@@ -63,7 +63,6 @@ dependencies {
     implementation 'com.kyleduo.switchbutton:library:2.1.0'
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
-    implementation 'com.manu:MDatePicker:1.0.1'
 
     implementation("com.netease.yunxin.kit.meeting:meeting:4.8.0")
 

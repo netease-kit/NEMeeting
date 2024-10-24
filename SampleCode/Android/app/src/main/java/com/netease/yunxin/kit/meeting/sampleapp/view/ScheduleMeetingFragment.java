@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.manu.mdatepicker.MDatePickerDialog;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.ToastCallback;
 import com.netease.yunxin.kit.meeting.sampleapp.adapter.ScheduleMeetingAdapter;
@@ -93,48 +92,42 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         .getRecycledViewPool()
         .setMaxRecycledViews(ScheduleMeetingAdapter.VIEW_TYPE, 0);
     mAdapter.setOnItemClickListener(
-        (view, position) -> {
-          ScheduleMeetingItem item = dataList.get(position);
-          switch (item.getClickAction()) {
-            case ScheduleMeetingItem.SET_START_TIME_ACTION:
-              CalendarUtil.showDatePickerDialog(
-                  getActivity(),
-                  new MDatePickerDialog.OnDateResultListener() {
-
-                    @Override
-                    public void onDateResult(long date) {
-                      startTime = date;
-                      mAdapter
-                          .getData()
-                          .get(ScheduleMeetingItem.SET_START_TIME_ACTION)
-                          .setTimeTip(formatTime(date));
-                      mAdapter.updateData(
-                          ScheduleMeetingItem.SET_START_TIME_ACTION,
-                          mAdapter.getData().get(ScheduleMeetingItem.SET_START_TIME_ACTION));
-                    }
-                  });
-              break;
-            case ScheduleMeetingItem.SET_END_TIME_ACTION:
-              CalendarUtil.showDatePickerDialog(
-                  getActivity(),
-                  new MDatePickerDialog.OnDateResultListener() {
-
-                    @Override
-                    public void onDateResult(long date) {
-                      //TODO 必须大于当前开始时间
-                      endTime = date;
-                      mAdapter
-                          .getData()
-                          .get(ScheduleMeetingItem.SET_END_TIME_ACTION)
-                          .setTimeTip(formatTime(date));
-                      mAdapter.updateData(
-                          ScheduleMeetingItem.SET_END_TIME_ACTION,
-                          mAdapter.getData().get(ScheduleMeetingItem.SET_END_TIME_ACTION));
-                    }
-                  });
-              break;
-          }
-        });
+            (view, position) -> {
+              ScheduleMeetingItem item = dataList.get(position);
+              switch (item.getClickAction()) {
+                case ScheduleMeetingItem.SET_START_TIME_ACTION:
+                  CalendarUtil.showDateTimePickerDialog(
+                          getActivity(),
+                          startTime,
+                          date -> {
+                            startTime = date;
+                            mAdapter
+                                    .getData()
+                                    .get(ScheduleMeetingItem.SET_START_TIME_ACTION)
+                                    .setTimeTip(formatTime(date));
+                            mAdapter.updateData(
+                                    ScheduleMeetingItem.SET_START_TIME_ACTION,
+                                    mAdapter.getData().get(ScheduleMeetingItem.SET_START_TIME_ACTION));
+                          });
+                  break;
+                case ScheduleMeetingItem.SET_END_TIME_ACTION:
+                  CalendarUtil.showDateTimePickerDialog(
+                          getActivity(),
+                          endTime,
+                          date -> {
+                            //TODO 必须大于当前开始时间
+                            endTime = date;
+                            mAdapter
+                                    .getData()
+                                    .get(ScheduleMeetingItem.SET_END_TIME_ACTION)
+                                    .setTimeTip(formatTime(date));
+                            mAdapter.updateData(
+                                    ScheduleMeetingItem.SET_END_TIME_ACTION,
+                                    mAdapter.getData().get(ScheduleMeetingItem.SET_END_TIME_ACTION));
+                          });
+                  break;
+              }
+            });
     mAdapter.setOnCheckedChangeListener(
         (compoundButton, enable, clickAction) -> {
           if (compoundButton != null && compoundButton.getId() == R.id.sb_meeting_switch) {

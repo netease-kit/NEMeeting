@@ -5,13 +5,15 @@
 package com.netease.yunxin.kit.meeting.sampleapp.utils;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
-import android.view.Gravity;
 import android.widget.DatePicker;
-import com.manu.mdatepicker.MDatePickerDialog;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class CalendarUtil {
-  private static MDatePickerDialog dialog;
+  private static DatePickerDialog dialog;
 
   public static DatePickerDialog showDatePickerDialog(
       Context context, int mYear, int mMonth, int mDay, OnDateSetListener onDateSetListener) {
@@ -30,19 +32,48 @@ public class CalendarUtil {
     return datePickerDialog;
   }
 
-  public static void showDatePickerDialog(
-      Context context, MDatePickerDialog.OnDateResultListener onDateResultListener) {
-    dialog =
-        new MDatePickerDialog.Builder(context)
-            //附加设置(非必须,有默认值)
-            .setCanceledTouchOutside(true)
-            .setGravity(Gravity.BOTTOM)
-            .setSupportTime(true)
-            .setTwelveHour(false)
-            //结果回调(必须)
-            .setOnDateResultListener(onDateResultListener)
-            .build();
-    dialog.show();
+  public interface OnDateResultCallback {
+	void onDateResult(long date);
+  }
+
+  public static void showDateTimePickerDialog(Context context, long time, OnDateResultCallback listener) {
+	Calendar calendar = Calendar.getInstance();
+	if (time != 0) {
+	  calendar.setTime(new Date(time));
+	}
+	int year = calendar.get(Calendar.YEAR);
+	int month = calendar.get(Calendar.MONTH);
+	int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+	dialog =
+			new DatePickerDialog(
+					context,
+					(view, selectedYear, monthOfYear, dayOfMonth) -> {
+					  calendar.set(Calendar.YEAR, selectedYear);
+					  calendar.set(Calendar.MONTH, monthOfYear);
+					  calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+					  int hour = calendar.get(Calendar.HOUR_OF_DAY);
+					  int minute = calendar.get(Calendar.MINUTE);
+
+					  TimePickerDialog timePickerDialog =
+							  new TimePickerDialog(
+									  context,
+									  (view1, hourOfDay, minute1) -> {
+										calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+										calendar.set(Calendar.MINUTE, minute1);
+										listener.onDateResult(calendar.getTime().getTime());
+									  },
+									  hour,
+									  minute,
+									  true);
+
+					  timePickerDialog.show();
+					},
+					year,
+					month,
+					day);
+	dialog.show();
   }
 
   public static void closeOptionsMenu() {

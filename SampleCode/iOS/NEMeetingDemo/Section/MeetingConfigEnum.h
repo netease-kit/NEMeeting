@@ -8,12 +8,12 @@
 /// 配置选项类型
 typedef NS_ENUM(NSInteger, MeetingConfigType) {
   MeetingConfigTypeJoinOnVideo = 0,
-  MeetingConfigTypeJoinOnAudio,
-  MeetingConfigTypeShowTime
+  MeetingConfigTypeJoinOnAudio
 };
 /// 加入/匿名 入会设置选项类型
 typedef NS_ENUM(NSInteger, MeetingSettingType) {
-  MeetingSettingTypeJoinOffChatroom = 0,
+  MeetingElapsedTimeDisplayType = 0,
+  MeetingSettingTypeJoinOffChatroom,
   MeetingSettingTypeJoinOffInvitation,
   MeetingSettingTypeHideMini,
   MeetingSettingTypeDefaultSetting,
@@ -49,7 +49,8 @@ typedef NS_ENUM(NSInteger, MeetingSettingType) {
 
 /// 创建会议设置选项类型
 typedef NS_ENUM(NSInteger, CreateMeetingSettingType) {
-  CreateMeetingSettingTypeJoinOffChatroom = 0,
+  CreateMeetingElapsedTimeDisplayType = 0,
+  CreateMeetingSettingTypeJoinOffChatroom,
   CreateMeetingSettingTypeJoinOffInvitation,
   CreateMeetingSettingTypeHideMini,
   CreateMeetingSettingTypeUsePid,

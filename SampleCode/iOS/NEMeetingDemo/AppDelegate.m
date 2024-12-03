@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import "AppDelegate.h"
+#import <NEMeetingKit/NEMeetingKit.h>
 #import <NIMSDK/NIMSDK.h>
 #import "AppDelegate+MeetingExtension.h"
 #import "BaseViewController.h"
@@ -13,7 +14,6 @@
 #import "ServerConfig.h"
 #import "SystemAuthHelper.h"
 static NSString *const prefixName = @"meetingdemo://";
-
 @interface AppDelegate ()
 @property(nonatomic, strong) Reachability *reachability;
 /// 是否已经初始化
@@ -21,7 +21,6 @@ static NSString *const prefixName = @"meetingdemo://";
 @end
 
 @implementation AppDelegate
-
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self meeting_addNotification];
@@ -29,13 +28,26 @@ static NSString *const prefixName = @"meetingdemo://";
   [self meeting_BeatyResource];
   [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
   [self monitorNetwork];
+  [[NERTCMainThreadHangChecker sharedInstance] start];
+  /// 申请推送权限
+  [UNUserNotificationCenter.currentNotificationCenter
+      requestAuthorizationWithOptions:UNAuthorizationOptionAlert
+                    completionHandler:^(BOOL granted, NSError *_Nullable error){
+
+                    }];
   return YES;
+}
+
+- (void)application:(UIApplication *)app
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  [[NEMeetingKit getInstance] updateApnsToken:deviceToken key:nil callback:nil];
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application
     supportedInterfaceOrientationsForWindow:(UIWindow *)window {
   return UIInterfaceOrientationMaskAllButUpsideDown;
 }
+
 - (void)monitorNetwork {
   // 添加监听器
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -68,6 +80,7 @@ static NSString *const prefixName = @"meetingdemo://";
         callback:^(NSInteger resultCode, NSString *resultMsg, id result) {
           NSLog(@"[demo init] code:%@ msg:%@ result:%@", @(resultCode), resultMsg, result);
           if (resultCode == 0) self.isInitialized = YES;
+
           [SVProgressHUD dismiss];
           [[NSNotificationCenter defaultCenter]
               postNotificationName:kNEMeetingInitCompletionNotication
@@ -101,7 +114,6 @@ static NSString *const prefixName = @"meetingdemo://";
 - (void)applicationWillTerminate:(UIApplication *)application {
   [[[NEMeetingKit getInstance] getMeetingService] stopBroadcastExtension];
 }
-
 - (NEMeetingLanguage)defaultLanguage:(NSString *)type {
   NEMeetingLanguage language = AUTOMATIC;
   if (!type) {
@@ -131,7 +143,6 @@ static NSString *const prefixName = @"meetingdemo://";
   }
   return language;
 }
-
 - (Reachability *)reachability {
   if (!_reachability) {
     _reachability = [Reachability reachabilityForInternetConnection];

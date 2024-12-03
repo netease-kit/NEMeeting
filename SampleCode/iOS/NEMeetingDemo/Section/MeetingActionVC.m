@@ -13,6 +13,7 @@
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
   MeetingMenuTypeToolbar = 1,
   MeetingMenuTypeMore = 2,
+  MeetingMenuTypeAction = 3,
 };
 
 @interface MeetingActionVC () <MeetingMenuSelectVCDelegate>
@@ -91,6 +92,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
   menuSeletedVC.seletedItems = _fullMoreMenuItems;
   menuSeletedVC.delegate = self;
+  menuSeletedVC.currentType = _currentType;
   [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 - (void)showSeletedItemResult:(NSArray *)menuItems {

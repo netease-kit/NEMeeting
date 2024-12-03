@@ -43,4 +43,5 @@
   [SVProgressHUD showWithStatus:@"登录中"];
   [self doLogin:accountId accountToken:accountToken];
 }
+
 @end

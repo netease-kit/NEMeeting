@@ -7,7 +7,7 @@
 #import "MeetingConfigRepository.h"
 #import "ServerConfig.h"
 
-NSString *const kSettingsShowMeetingTime = @"kSettingsShowMeetingTime";
+NSString *const kMeetingElapsedTimeDisplayType = @"kMeetingElapsedTimeDisplayType";
 NSString *const kSettingsJoinMeetingOpenVideo = @"kSettingsJoinMeetingOpenVideo";
 NSString *const kSettingsJoinMeetingOpenAudio = @"kSettingsJoinMeetingOpenAudio";
 NSString *const kSettingsAudioAINS = @"kSettingsAudioAINS";
@@ -21,7 +21,6 @@ NSString *const kSettingsTransparentWhiteboard = @"kSettingsTransparentWhiteboar
 
 @interface MeetingSettingVC ()
 
-@property(nonatomic, assign) BOOL showMeetingTime;
 @property(nonatomic, assign) BOOL openVideoWhenJoin;
 @property(nonatomic, assign) BOOL openAudioWhenJoin;
 @property(nonatomic, assign) BOOL openCustomServerUrl;
@@ -32,7 +31,6 @@ NSString *const kSettingsTransparentWhiteboard = @"kSettingsTransparentWhiteboar
 
 @implementation MeetingSettingVC
 
-@synthesize showMeetingTime = _showMeetingTime;
 @synthesize openVideoWhenJoin = _openVideoWhenJoin;
 @synthesize openAudioWhenJoin = _openAudioWhenJoin;
 
@@ -51,14 +49,19 @@ NSString *const kSettingsTransparentWhiteboard = @"kSettingsTransparentWhiteboar
   [form addFormSection:section];
 
   XLFormRowDescriptor *row0 =
-      [XLFormRowDescriptor formRowDescriptorWithTag:kSettingsShowMeetingTime
+      [XLFormRowDescriptor formRowDescriptorWithTag:kMeetingElapsedTimeDisplayType
                                             rowType:XLFormRowDescriptorTypeBooleanSwitch
-                                              title:@"显示会议持续时间"];
+                                              title:@"会议持续/参会时间"];
   row0.height = 60.0;
-  row0.value = @(self.showMeetingTime);
+  row0.value = @([NEMeetingKit.getInstance.getSettingsService getMeetingElapsedTimeDisplayType] ==
+                 PARTICIPATION_ELAPSED_TIME);
   row0.onChangeBlock =
       ^(id _Nullable oldValue, id _Nullable newValue, XLFormRowDescriptor *_Nonnull rowDescriptor) {
-        weakSelf.showMeetingTime = [newValue boolValue];
+        if ([newValue boolValue]) {
+          weakSelf.meetingElapsedTimeDisplayType = PARTICIPATION_ELAPSED_TIME;
+        } else {
+          weakSelf.meetingElapsedTimeDisplayType = MEETING_ELAPSED_TIME;
+        }
       };
   [section addFormRow:row0];
 
@@ -341,12 +344,12 @@ NSString *const kSettingsTransparentWhiteboard = @"kSettingsTransparentWhiteboar
 }
 
 #pragma mark - Getter
-- (BOOL)showMeetingTime {
-  return [[NEMeetingKit getInstance].getSettingsService isShowMyMeetingElapseTimeEnabled];
+- (NEMeetingElapsedTimeDisplayType)getMeetingElapsedTimeDisplayType {
+  return [[NEMeetingKit getInstance].getSettingsService getMeetingElapsedTimeDisplayType];
 }
 
-- (void)setShowMeetingTime:(BOOL)showMeetingTime {
-  [[NEMeetingKit getInstance].getSettingsService enableShowMyMeetingElapseTime:showMeetingTime];
+- (void)setMeetingElapsedTimeDisplayType:(NEMeetingElapsedTimeDisplayType)type {
+  [[NEMeetingKit getInstance].getSettingsService setMeetingElapsedTimeDisplayType:type];
 }
 
 - (BOOL)openVideoWhenJoin {

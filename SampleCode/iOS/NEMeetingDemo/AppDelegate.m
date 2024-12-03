@@ -5,6 +5,7 @@
 #import "AppDelegate.h"
 #import <NEMeetingKit/NEMeetingKit.h>
 #import <NIMSDK/NIMSDK.h>
+#import <UserNotifications/UNUserNotificationCenter.h>
 #import "AppDelegate+MeetingExtension.h"
 #import "BaseViewController.h"
 #import "IMLoginVC.h"
@@ -28,7 +29,6 @@ static NSString *const prefixName = @"meetingdemo://";
   [self meeting_BeatyResource];
   [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
   [self monitorNetwork];
-  [[NERTCMainThreadHangChecker sharedInstance] start];
   /// 申请推送权限
   [UNUserNotificationCenter.currentNotificationCenter
       requestAuthorizationWithOptions:UNAuthorizationOptionAlert

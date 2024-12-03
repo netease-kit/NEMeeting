@@ -14,6 +14,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.netease.yunxin.kit.meeting.sampleapp.MeetingApplication;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.data.MeetingConfigRepository;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingElapsedTimeDisplayType;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
 import com.netease.yunxin.kit.meeting.sdk.NESettingsService;
 import java.io.File;
@@ -34,7 +35,7 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
 
   private static class DataStore extends PreferenceDataStore {
 
-    private static final String ENABLE_SHOW_MEETING_TIME = "enable_show_meeting_time";
+    private static final String MEETING_ELAPSED_TIME = "meeting_elapsed_time";
     private static final String ENABLE_VIDEO = "enable_video";
     private static final String ENABLE_AUDIO = "enable_audio";
     private static final String ENABLE_AUDIO_AINS = "enable_audio_ains";
@@ -88,8 +89,10 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       if (settingsService != null) {
         switch (key) {
-          case ENABLE_SHOW_MEETING_TIME:
-            value = settingsService.isShowMyMeetingElapseTimeEnabled();
+          case MEETING_ELAPSED_TIME:
+            value =
+                settingsService.getMeetingElapsedTimeDisplayType()
+                    == NEMeetingElapsedTimeDisplayType.PARTICIPATION_ELAPSED_TIME;
             break;
           case ENABLE_VIDEO:
             value = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
@@ -126,8 +129,11 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       if (settingsService != null) {
         switch (key) {
-          case ENABLE_SHOW_MEETING_TIME:
-            settingsService.enableShowMyMeetingElapseTime(value);
+          case MEETING_ELAPSED_TIME:
+            settingsService.setMeetingElapsedTimeDisplayType(
+                value
+                    ? NEMeetingElapsedTimeDisplayType.PARTICIPATION_ELAPSED_TIME
+                    : NEMeetingElapsedTimeDisplayType.MEETING_ELAPSED_TIME);
             break;
           case ENABLE_VIDEO:
             settingsService.enableTurnOnMyVideoWhenJoinMeeting(value);

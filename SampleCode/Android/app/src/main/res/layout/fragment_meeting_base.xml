@@ -30,7 +30,7 @@
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/configToolbarMenus"
+                    app:layout_constraintTop_toBottomOf="@+id/configActionMenus"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="加入会议" />
 
@@ -43,7 +43,7 @@
                     android:paddingRight="6dp"
                     android:text="自定义工具栏菜单"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/actionBtn"
+                    app:layout_constraintBottom_toTopOf="@+id/configActionMenus"
                     app:layout_constraintLeft_toLeftOf="@+id/checkbox_flow_1"
                     app:layout_constraintTop_toBottomOf="@+id/et_encryption" />
 
@@ -67,7 +67,21 @@
                     android:text="会议设置"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toRightOf="@id/configMoreMenus"
-                    app:layout_constraintTop_toTopOf="@id/configToolbarMenus" />
+                    app:layout_constraintTop_toTopOf="@id/configToolbarMenus"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/configActionMenus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="成员菜单操作项设置"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/actionBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/configToolbarMenus"
+                />
 
             <CheckBox
                     android:id="@+id/videoOption"
@@ -125,10 +139,10 @@
                     android:text="关闭邀请菜单" />
 
             <CheckBox
-                    android:id="@+id/show_meeting_time"
+                    android:id="@+id/meeting_elapsed_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="显示会议持续时间" />
+                    android:text="会议时间/参会时间" />
 
             <CheckBox
                     android:id="@+id/showLongMeetingIdOnly"
@@ -362,7 +376,7 @@
                     app:flow_verticalStyle="packed"
                     app:flow_verticalAlign="top"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom,enableGuestJoin" />
+                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,meeting_elapsed_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom,enableGuestJoin" />
 
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_2"

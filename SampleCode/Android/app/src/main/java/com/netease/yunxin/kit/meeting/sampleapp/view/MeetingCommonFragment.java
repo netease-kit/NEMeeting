@@ -30,6 +30,7 @@ import com.netease.yunxin.kit.meeting.sdk.NECloudRecordConfig;
 import com.netease.yunxin.kit.meeting.sdk.NELocalHistoryMeeting;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingChatroomConfig;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingCode;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingElapsedTimeDisplayType;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingError;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingIdDisplayOption;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
@@ -42,7 +43,13 @@ import com.netease.yunxin.kit.meeting.sdk.NEWindowMode;
 import com.netease.yunxin.kit.meeting.sdk.media.NEAudioProfile;
 import com.netease.yunxin.kit.meeting.sdk.media.NEAudioProfileType;
 import com.netease.yunxin.kit.meeting.sdk.media.NEAudioScenarioType;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEActionMenuItems;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMeetingMenuItem;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuItemInfo;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuItems;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuVisibility;
+import com.netease.yunxin.kit.meeting.sdk.menu.NESingleStateMenuItem;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MeetingCommonFragment extends CommonFragment {
@@ -85,6 +92,17 @@ public abstract class MeetingCommonFragment extends CommonFragment {
             }
           });
 
+  private List<NEMeetingMenuItem> actionMenu;
+
+  ActivityResultLauncher<Intent> actionMenuResult =
+      registerForActivityResult(
+          new ActivityResultContracts.StartActivityForResult(),
+          result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+              actionMenu = InjectMenuContainer.getSelectedMenu();
+            }
+          });
+
   void initView() {
     binding.etNickname.setHint("昵称");
     binding.etPassword.setHint("请输入密码");
@@ -112,13 +130,30 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     binding.configToolbarMenus.setOnClickListener(
         v -> {
           InjectMenuContainer.setSelectedMenu(toolbarMenu);
+          List<NEMeetingMenuItem> items = new ArrayList<>();
+          items.addAll(NEMenuItems.getBuiltinToolbarMenuItemList());
+          items.addAll(getInjectMenuItems());
+          InjectMenuContainer.setInitCandidates(items);
           configToolbarMenuResult.launch(
               new Intent(getActivity(), InjectMenuArrangeActivity.class));
         });
     binding.configMoreMenus.setOnClickListener(
         v -> {
           InjectMenuContainer.setSelectedMenu(moreMenu);
+          List<NEMeetingMenuItem> items = new ArrayList<>();
+          items.addAll(NEMenuItems.getBuiltinMoreMenuItemList());
+          items.addAll(getInjectMenuItems());
+          InjectMenuContainer.setInitCandidates(items);
           configMoreMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
+        });
+    binding.configActionMenus.setOnClickListener(
+        view -> {
+          InjectMenuContainer.setSelectedMenu(actionMenu);
+          List<NEMeetingMenuItem> items = new ArrayList<>();
+          items.addAll(NEActionMenuItems.getBuiltinActionMenuItemList());
+          items.addAll(getInjectActionMenuItems());
+          InjectMenuContainer.setInitCandidates(items);
+          actionMenuResult.launch(new Intent(getActivity(), InjectMenuArrangeActivity.class));
         });
     binding.useDefaultOptions.setChecked(false);
     binding.showCloudRecordMenuItem.setChecked(true);
@@ -129,14 +164,40 @@ public abstract class MeetingCommonFragment extends CommonFragment {
           binding.videoOption.setChecked(false);
           binding.audioOption.setEnabled(!checked);
           binding.audioOption.setChecked(false);
-          binding.showMeetingTime.setEnabled(!checked);
-          binding.showMeetingTime.setChecked(false);
+          binding.meetingElapsedTime.setEnabled(!checked);
+          binding.meetingElapsedTime.setChecked(false);
         });
     if (NEMeetingKit.getInstance().getMeetingService() != null) {
       NEMeetingKit.getInstance().getMeetingService().addMeetingStatusListener(listener);
     }
     groupCheckBoxesById(binding.audioOffAllowSelfOn, binding.audioOffNotAllowSelfOn);
     groupCheckBoxesById(binding.videoOffAllowSelfOn, binding.videoOffNotAllowSelfOn);
+  }
+
+  List<NEMeetingMenuItem> getInjectMenuItems() {
+    List<NEMeetingMenuItem> items = new ArrayList<>();
+    items.add(createMenuItem(100, "打开设置"));
+    items.add(createMenuItem(101, "最小化"));
+    items.add(createMenuItem(102, "音频管理"));
+    items.add(createMenuItem(103, "测试修改单选菜单"));
+    items.add(createMenuItem(104, "测试修改多选菜单"));
+    items.add(NEMenuItems.switchShowTypeMenu());
+    items.add(createMenuItem(105, "获取账号信息"));
+    items.add(createMenuItem(106, "通用单选菜单"));
+    items.add(createMenuItem(107, "通用多选菜单"));
+    return items;
+  }
+
+  List<NEMeetingMenuItem> getInjectActionMenuItems() {
+    List<NEMeetingMenuItem> items = new ArrayList<>();
+    items.add(createMenuItem(103, "测试修改单选操作菜单"));
+    items.add(createMenuItem(104, "测试修改多选操作菜单"));
+    return items;
+  }
+
+  NEMeetingMenuItem createMenuItem(int id, String text) {
+    return new NESingleStateMenuItem(
+        id, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo(text, 0));
   }
 
   void groupCheckBoxesById(CheckBox... checkBoxes) {
@@ -158,14 +219,17 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     if (isNotUseDefaultMeetingOptions()) {
       options.noVideo = !binding.videoOption.isChecked();
       options.noAudio = !binding.audioOption.isChecked();
-      options.showMeetingTime = binding.showMeetingTime.isChecked();
+      options.meetingElapsedTimeDisplayType =
+          binding.meetingElapsedTime.isChecked()
+              ? NEMeetingElapsedTimeDisplayType.PARTICIPATION_ELAPSED_TIME
+              : NEMeetingElapsedTimeDisplayType.MEETING_ELAPSED_TIME;
       options.enableFrontCameraMirror = binding.enableFrontCameraMirror.isChecked();
       options.enableTransparentWhiteboard = binding.enableTransparentWhiteboard.isChecked();
     } else {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
       options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
-      options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
+      options.meetingElapsedTimeDisplayType = settingsService.getMeetingElapsedTimeDisplayType();
       options.enableSpeakerSpotlight = settingsService.isSpeakerSpotlightEnabled();
       options.enableFrontCameraMirror = settingsService.isFrontCameraMirrorEnabled();
       options.enableTransparentWhiteboard = settingsService.isTransparentWhiteboardEnabled();
@@ -216,6 +280,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     }
     options.fullToolbarMenuItems = toolbarMenu;
     options.fullMoreMenuItems = moreMenu;
+    options.memberActionMenuItems = actionMenu;
     options.noMuteAllAudio = binding.noMuteAllAudio.isChecked();
     options.noMuteAllVideo = binding.noMuteAllVideo.isChecked();
     options.detectMutedMic = binding.detectMutedMic.isChecked();

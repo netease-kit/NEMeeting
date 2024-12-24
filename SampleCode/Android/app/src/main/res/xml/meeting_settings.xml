@@ -7,8 +7,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreferenceCompat
-            app:key="enable_show_meeting_time"
-            app:title="显示会议持续时间"
+            app:key="meeting_elapsed_time"
+            app:title="会议持续时间/参会时间"
             style="@style/MySwitchPreference" />
 
     <SwitchPreferenceCompat

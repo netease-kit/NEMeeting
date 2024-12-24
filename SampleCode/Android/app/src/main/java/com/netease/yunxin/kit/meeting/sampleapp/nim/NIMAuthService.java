@@ -8,18 +8,21 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.SDKOptions;
-import com.netease.nimlib.sdk.StatusCode;
-import com.netease.nimlib.sdk.auth.AuthService;
-import com.netease.nimlib.sdk.auth.AuthServiceObserver;
-import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.v2.V2NIMError;
+import com.netease.nimlib.sdk.v2.auth.V2NIMLoginListener;
+import com.netease.nimlib.sdk.v2.auth.V2NIMLoginService;
+import com.netease.nimlib.sdk.v2.auth.enums.V2NIMLoginClientChange;
+import com.netease.nimlib.sdk.v2.auth.enums.V2NIMLoginStatus;
+import com.netease.nimlib.sdk.v2.auth.model.V2NIMKickedOfflineDetail;
+import com.netease.nimlib.sdk.v2.auth.model.V2NIMLoginClient;
 import com.netease.yunxin.kit.meeting.sampleapp.MeetingApplication;
 import com.netease.yunxin.kit.meeting.sampleapp.utils.ProcessUtils;
 import com.netease.yunxin.kit.meeting.sdk.NECallback;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingError;
 import com.netease.yunxin.kit.meeting.utils.LogUtils;
 import java.io.File;
+import java.util.List;
 
 public class NIMAuthService {
 
@@ -36,23 +39,27 @@ public class NIMAuthService {
 
   private NIMAuthService() {}
 
-  private MutableLiveData<StatusCode> _statusLiveData;
+  private MutableLiveData<V2NIMLoginStatus> _statusLiveData;
 
-  public LiveData<StatusCode> getStatusLiveData() {
+  public LiveData<V2NIMLoginStatus> getStatusLiveData() {
     ensureNimInitialized();
     if (_statusLiveData == null) {
-      _statusLiveData = new MutableLiveData<>(NIMClient.getStatus());
-      NIMClient.getService(AuthServiceObserver.class)
-          .observeOnlineStatus(_statusLiveData::setValue, true);
+      _statusLiveData =
+          new MutableLiveData<>(NIMClient.getService(V2NIMLoginService.class).getLoginStatus());
+      NIMClient.getService(V2NIMLoginService.class).addLoginListener(v2NIMLoginListener);
     }
     return _statusLiveData;
+  }
+
+  public String getLoginUser() {
+    return NIMClient.getService(V2NIMLoginService.class).getLoginUser();
   }
 
   //如果开启了NIM复用，则需要单独进行NIM的初始化
   //正常情况下不需要单独手动进行初始化
   private void ensureNimInitialized() {
     try {
-      if (NIMClient.getService(AuthService.class) != null) {
+      if (NIMClient.getService(V2NIMLoginService.class) != null) {
         LogUtils.i(TAG, "nim sdk has been initialized");
         return;
       }
@@ -66,42 +73,56 @@ public class NIMAuthService {
     File externalFilesDir = context.getExternalFilesDir(null);
     sdkOptions.sdkStorageRootPath =
         externalFilesDir != null ? externalFilesDir.getAbsolutePath() : null;
-    NIMClient.config(context, null, sdkOptions);
     if (ProcessUtils.isMainProcess(context)) {
-      NIMClient.initSDK();
+      NIMClient.initV2(context, sdkOptions);
     }
   }
 
-  public void login(String appKey, String imAccid, String imToken, NECallback<LoginInfo> callback) {
+  public void login(String appKey, String imAccid, String imToken, NECallback<Void> callback) {
     ensureNimInitialized();
-    NIMClient.getService(AuthService.class)
-        .login(new LoginInfo(imAccid, imToken, appKey))
-        .setCallback(
-            new RequestCallback<LoginInfo>() {
-              @Override
-              public void onSuccess(LoginInfo result) {
+    NIMClient.getService(V2NIMLoginService.class)
+        .login(
+            imAccid,
+            imToken,
+            null,
+            unused ->
                 callback.onResult(
-                    NEMeetingError.ERROR_CODE_SUCCESS, NEMeetingError.ERROR_MSG_SUCCESS, result);
-              }
-
-              @Override
-              public void onFailed(int code) {
-                LogUtils.i(TAG, "login fail: " + code);
-                callback.onResult(code, null, null);
-              }
-
-              @Override
-              public void onException(Throwable exception) {
-                callback.onResult(NEMeetingError.ERROR_CODE_FAILED, exception.getMessage(), null);
-              }
+                    NEMeetingError.ERROR_CODE_SUCCESS, NEMeetingError.ERROR_MSG_SUCCESS, null),
+            error -> {
+              LogUtils.i(TAG, "login fail: " + error.getCode());
+              callback.onResult(error.getCode(), error.getDesc(), null);
             });
   }
 
   public void logout() {
     try {
-      NIMClient.getService(AuthService.class).logout();
+      NIMClient.getService(V2NIMLoginService.class)
+          .logout(
+              unused -> {
+                LogUtils.i(TAG, "logout success");
+              },
+              error -> LogUtils.i(TAG, "logout fail: " + error.getCode()));
     } catch (Throwable throwable) {
       throwable.printStackTrace();
     }
   }
+
+  private V2NIMLoginListener v2NIMLoginListener =
+      new V2NIMLoginListener() {
+
+        @Override
+        public void onLoginStatus(V2NIMLoginStatus status) {
+          _statusLiveData.setValue(status);
+        }
+
+        @Override
+        public void onLoginFailed(V2NIMError error) {}
+
+        @Override
+        public void onKickedOffline(V2NIMKickedOfflineDetail detail) {}
+
+        @Override
+        public void onLoginClientChanged(
+            V2NIMLoginClientChange change, List<V2NIMLoginClient> clients) {}
+      };
 }

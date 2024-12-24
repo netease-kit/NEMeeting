@@ -11,6 +11,8 @@ public class InjectMenuContainer {
 
   private static List<NEMeetingMenuItem> selectedMenu;
 
+  private static List<NEMeetingMenuItem> initCandidates;
+
   public static List<NEMeetingMenuItem> getSelectedMenu() {
     final List<NEMeetingMenuItem> tmp = selectedMenu;
     selectedMenu = null;
@@ -19,5 +21,15 @@ public class InjectMenuContainer {
 
   public static void setSelectedMenu(List<NEMeetingMenuItem> selectedMenu) {
     InjectMenuContainer.selectedMenu = selectedMenu;
+  }
+
+  public static List<NEMeetingMenuItem> getInitCandidates() {
+    final List<NEMeetingMenuItem> tmp = initCandidates;
+    initCandidates = null;
+    return tmp;
+  }
+
+  public static void setInitCandidates(List<NEMeetingMenuItem> initCandidates) {
+    InjectMenuContainer.initCandidates = initCandidates;
   }
 }

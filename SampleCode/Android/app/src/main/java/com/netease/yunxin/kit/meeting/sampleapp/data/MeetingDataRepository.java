@@ -134,7 +134,7 @@ public class MeetingDataRepository {
 
   public void getMeetingList(
       List<NEMeetingItemStatus> status, NECallback<List<NEMeetingItem>> callback) {
-    NEMeetingKit.getInstance().getPreMeetingService().getMeetingList(status, callback);
+    NEMeetingKit.getInstance().getPreMeetingService().getScheduledMeetingList(status, callback);
   }
 
   public void registerScheduleMeetingStatusListener(NEScheduleMeetingStatusListener listener) {

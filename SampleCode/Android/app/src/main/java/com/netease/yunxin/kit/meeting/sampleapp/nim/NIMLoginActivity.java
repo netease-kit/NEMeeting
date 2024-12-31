@@ -13,9 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import com.netease.nimlib.sdk.StatusCode;
-import com.netease.nimlib.sdk.msg.MessageBuilder;
-import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.v2.auth.enums.V2NIMLoginStatus;
 import com.netease.yunxin.kit.meeting.sampleapp.MeetingApplication;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.ToastCallback;
@@ -55,10 +53,9 @@ public class NIMLoginActivity extends AppCompatActivity {
     }
   }
 
-  private void refreshOnlineStatus(StatusCode statusCode) {
-    String fromAccount =
-        MessageBuilder.createTextMessage("", SessionTypeEnum.None, "").getFromAccount();
-    loginState.setText("当前IM状态: " + fromAccount + '#' + statusCode);
+  private void refreshOnlineStatus(V2NIMLoginStatus status) {
+    String fromAccount = NIMAuthService.getInstance().getLoginUser();
+    loginState.setText("当前IM状态: " + fromAccount + '#' + status);
   }
 
   private static String getAppKey() {

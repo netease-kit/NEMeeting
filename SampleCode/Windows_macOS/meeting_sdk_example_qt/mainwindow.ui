@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1026</width>
+    <height>721</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QWidget" name="widget" native="true">
+      <widget class="QPushButton" name="m_init_btn">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>初始化</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="m_uninit_btn">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>释放</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="m_appkey_edit">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>0</y>
+         <width>311</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="m_log_edit">
+       <property name="geometry">
+        <rect>
+         <x>600</x>
+         <y>0</y>
+         <width>401</width>
+         <height>661</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="m_server_url_edit">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>0</y>
+         <width>231</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="m_run_path_edit">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>30</y>
+         <width>541</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="m_ipc_log_edit">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>410</y>
+         <width>591</width>
+         <height>221</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>70</y>
+         <width>591</width>
+         <height>331</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>8</number>
+       </property>
+       <widget class="QWidget" name="tab_kit">
+        <attribute name="title">
+         <string>Kit</string>
+        </attribute>
+        <widget class="QPushButton" name="m_btn_is_init">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>是否初始化</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_get_log_path">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>组件日志目录</string>
+         </property>
+        </widget>
+<!--        <widget class="QPushButton" name="m_btn_add_event_listener">-->
+<!--         <property name="geometry">-->
+<!--          <rect>-->
+<!--           <x>120</x>-->
+<!--           <y>10</y>-->
+<!--           <width>101</width>-->
+<!--           <height>31</height>-->
+<!--          </rect>-->
+<!--         </property>-->
+<!--         <property name="text">-->
+<!--          <string>注册全局监听</string>-->
+<!--         </property>-->
+<!--        </widget>-->
+        <widget class="QPushButton" name="m_btn_set_language">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>设置语言</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_16">
+         <property name="geometry">
+          <rect>
+           <x>240</x>
+           <y>50</y>
+           <width>31</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>语言：</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_language">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>50</y>
+           <width>51</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_get_app_notice">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>获取公告提示</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_account">
+        <attribute name="title">
+         <string>账号</string>
+        </attribute>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>95</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>密码</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_account">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>10</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_pwd">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>90</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>15</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>账号</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_logout">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>10</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>登出</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_login_pwd">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>90</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>账号登入</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_auto_login">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>10</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>自动登入</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_login_token">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>50</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>token登入</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_token">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>50</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_9">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>50</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>token</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_get_sms">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>130</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>获取验证码</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_10">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>130</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>手机</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_phone">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>130</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_guest_sms">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>130</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>访客验证</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_login_by_sms">
+         <property name="geometry">
+          <rect>
+           <x>520</x>
+           <y>130</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>登入</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>130</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>验证码</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_sms_code">
+         <property name="geometry">
+          <rect>
+           <x>380</x>
+           <y>130</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_login_by_phone">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>90</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>手机登入</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_login_by_email">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>90</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>邮箱登入</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_account_info">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>10</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>账号信息</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_account_add_listener">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>10</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>账号监听</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_account_remove_listener">
+         <property name="geometry">
+          <rect>
+           <x>490</x>
+           <y>10</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>移除监听</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_pwd_old">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>210</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_12">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>215</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>旧密码</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_pwd_reset">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>210</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>修改密码</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_13">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>170</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>信息</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_edit_change_info">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>170</y>
+           <width>281</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_avatar_reset">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>170</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>修改头像</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_nick_reset">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>170</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>修改昵称</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_get_login_url">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>50</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>获取URL</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_btn_login_by_uri">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>50</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>uri登入</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_premeeting">
+        <attribute name="title">
+         <string>会前</string>
+        </attribute>
+        <widget class="QListView" name="m_premeetingMethods">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>201</width>
+           <height>251</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="m_premeetingRun">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>264</y>
+           <width>201</width>
+           <height>32</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Run</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_premeetingParameters">
+         <property name="geometry">
+          <rect>
+           <x>220</x>
+           <y>10</y>
+           <width>361</width>
+           <height>281</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_meeting">
+        <attribute name="title">
+         <string>会议</string>
+        </attribute>
+        <widget class="QPushButton" name="m_meetingRun">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>265</y>
+           <width>201</width>
+           <height>32</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Run</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="m_meetingParameters">
+         <property name="geometry">
+          <rect>
+           <x>220</x>
+           <y>10</y>
+           <width>351</width>
+           <height>281</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QListView" name="m_meetingMethods">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>201</width>
+           <height>251</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_meetinginvite">
+        <attribute name="title">
+         <string>邀请</string>
+        </attribute>
+        <widget class="QLabel" name="label_14">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>9</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>会议号</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="invite_edit_meeting_id">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>10</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="invite_btn_add_listener">
+         <property name="geometry">
+          <rect>
+           <x>450</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>邀请监听</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="invite_btn_remove_listener">
+         <property name="geometry">
+          <rect>
+           <x>520</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>取消监听</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="invite_btn_accept">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>接受</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="invite_btn_reject">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>拒绝</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="invite_edit_param">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>571</width>
+           <height>251</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_meetingmsg">
+        <attribute name="title">
+         <string>消息</string>
+        </attribute>
+        <widget class="QPushButton" name="msg_btn_add_listener">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>注册消息监听</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="msg_btn_remove_listener">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>10</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>移除消息监听</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="msg_btn_query_unread_msgs">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>请求未读列表</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="msg_edit_sessionid">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>50</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_17">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>session id</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="msg_btn_delete_session_msgs">
+         <property name="geometry">
+          <rect>
+           <x>450</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>删除会话消息</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_18">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>起始时间</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="msg_edit_start_ts">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>90</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="msg_edit_end_ts">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>130</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>130</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>结束时间</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="msg_edit_limit">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>90</y>
+           <width>51</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_20">
+         <property name="geometry">
+          <rect>
+           <x>240</x>
+           <y>90</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>限制条数</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="msg_edit_msg_ts">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>130</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_21">
+         <property name="geometry">
+          <rect>
+           <x>240</x>
+           <y>130</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>消息时间</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="msg_cb_order">
+         <property name="geometry">
+          <rect>
+           <x>378</x>
+           <y>91</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="msg_edit_content">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>170</y>
+           <width>501</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_22">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>170</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>消息内容</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="msg_btn_query_history">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>210</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>查询历史消息</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="msg_btn_clear_unread">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>50</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>清空未读</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_setting">
+        <attribute name="title">
+         <string>设置</string>
+        </attribute>
+        <widget class="QPushButton" name="setting_btn_run">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>10</y>
+           <width>91</width>
+           <height>32</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Run</string>
+         </property>
+        </widget>
+        <widget class="QListView" name="setting_list_methods">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>291</width>
+           <height>291</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="setting_edit_param">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>120</y>
+           <width>271</width>
+           <height>181</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_28">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>90</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>参数</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="setting_edit_note">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>50</y>
+           <width>271</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_27">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>10</y>
+           <width>51</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>参数说明</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_contacts">
+        <attribute name="title">
+         <string>通讯</string>
+        </attribute>
+        <widget class="QLabel" name="label_23">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>关键字</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="cont_edit_keyname">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>10</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_24">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>10</y>
+           <width>31</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>页数</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="cont_edit_page_num">
+         <property name="geometry">
+          <rect>
+           <x>220</x>
+           <y>10</y>
+           <width>91</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="cont_btn_search_by_phone">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>电话号码查询</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="cont_btn_search_by_name">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>按名字查询</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_25">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>10</y>
+           <width>51</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>分页大小</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="cont_edit_page_size">
+         <property name="geometry">
+          <rect>
+           <x>370</x>
+           <y>10</y>
+           <width>91</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="cont_edit_ids">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>120</y>
+           <width>571</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_26">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>411</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>通讯录用户信息查询，ID用“,”分割</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="cont_btn_search_infos">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>160</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>查询</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_feedback">
+        <attribute name="title">
+         <string>反馈</string>
+        </attribute>
+        <widget class="QLabel" name="label_23">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>问题分类</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="feedback_type">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>10</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_24">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>10</y>
+           <width>31</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>描述</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="feed_back_description">
+         <property name="geometry">
+          <rect>
+           <x>220</x>
+           <y>10</y>
+           <width>91</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="feed_btn_submit">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>反馈上报</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="feed_btn_openWindow">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>50</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>打开反馈页面</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="m_btn_clear_ipc_log">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>630</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>清理协议日志</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="m_btn_clear_log">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>630</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>清理UI日志</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="m_cb_log_level">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>630</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>630</y>
+         <width>61</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>log_level:</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1026</width>
+     <height>37</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

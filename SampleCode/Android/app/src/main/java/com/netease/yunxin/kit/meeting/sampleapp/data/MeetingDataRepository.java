@@ -9,7 +9,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.netease.yunxin.kit.meeting.sdk.*;
-
+import com.netease.yunxin.kit.meeting.ui.NEFeedbackActivity;
 import java.util.List;
 
 public class MeetingDataRepository {
@@ -134,7 +134,7 @@ public class MeetingDataRepository {
 
   public void getMeetingList(
       List<NEMeetingItemStatus> status, NECallback<List<NEMeetingItem>> callback) {
-    NEMeetingKit.getInstance().getPreMeetingService().getMeetingList(status, callback);
+    NEMeetingKit.getInstance().getPreMeetingService().getScheduledMeetingList(status, callback);
   }
 
   public void registerScheduleMeetingStatusListener(NEScheduleMeetingStatusListener listener) {
@@ -172,6 +172,12 @@ public class MeetingDataRepository {
 
   public void setBeautyFaceValue(int beautyFaceValue) {
     //         NEMeetingKit.getInstance().getSettingsService().setBeautyFaceValue(beautyFaceValue);
+  }
+
+  public void loadFeedbackView(Context context, NECallback<Void> callback) {
+    NEMeetingKit.getInstance()
+        .getFeedbackService()
+        .loadFeedbackView(context, NEFeedbackActivity.class, callback);
   }
 
   public void startScreenSharing(

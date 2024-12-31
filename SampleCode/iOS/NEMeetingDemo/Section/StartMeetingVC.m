@@ -16,6 +16,7 @@
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
   MeetingMenuTypeToolbar = 1,
   MeetingMenuTypeMore = 2,
+  MeetingMenuTypeAction = 3,
 };
 
 @interface StartMeetingVC () <CheckBoxDelegate, MeetingMenuSelectVCDelegate, MeetingServiceListener>
@@ -38,6 +39,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property(weak, nonatomic) IBOutlet UITextField *subjectInput;
 /// 加密密钥输入框
 @property(weak, nonatomic) IBOutlet UITextField *encryptionKeyInput;
+/// 小应用通知弹窗时间配置
+@property(weak, nonatomic) IBOutlet UITextField *notifyDurationInput;
 
 @property(nonatomic, copy) NSString *meetingNum;
 @property(nonatomic, assign) BOOL audioOffAllowSelfOn;
@@ -48,6 +51,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *fullToolbarMenuItems;
 
 @property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *fullMoreMenuItems;
+
+@property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *memberActionMenuItems;
 // 自定义菜单类型：toolbar/更多
 @property(nonatomic, assign) MeetingMenuType currentType;
 @end
@@ -71,25 +76,52 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 }
 
 - (void)setupUI {
-  [_configCheckBox
-      setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风", @"显示会议持续时间" ]];
+  [_configCheckBox setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风" ]];
   [_settingCheckBox setItemTitleWithArray:@[
-    @"入会时关闭聊天菜单", @"入会时关闭邀请菜单", @"入会时隐藏最小化",
-    @"使用个人会议号",     @"使用默认会议设置",   @"入会时关闭画廊模式",
-    @"仅显示会议ID长号",   @"仅显示会议ID短号",   @"关闭摄像头切换",
+    @"会议/☑️参会时间",
+    @"入会时关闭聊天菜单",
+    @"入会时关闭邀请菜单",
+    @"入会时隐藏最小化",
+    @"使用个人会议号",
+    @"使用默认会议设置",
+    @"入会时关闭画廊模式",
+    @"仅显示会议ID长号",
+    @"仅显示会议ID短号",
+    @"关闭摄像头切换",
     @"关闭音频模式切换",
     @"展示白板",  // 10
-    @"隐藏白板菜单按钮",   @"关闭会中改名",       @"开启云录制",
-    @"隐藏Sip菜单",        @"显示用户角色标签",   @"自动静音(可解除)",
-    @"自动静音(不可解除)", @"自动关视频(可解除)", @"自动关视频(不可解除)",
-    @"显示会议结束提醒",   @"聊天室文件消息",     @"聊天室图片消息",
-    @"开启静音检测",       @"关闭静音包",         @"显示屏幕共享者画面",
-    @"显示白板共享者画面", @"设置白板透明",       @"前置摄像头镜像",
-    @"显示麦克风浮窗",     @"入会时隐藏直播菜单", @"开启音频共享",
-    @"开启加密",           @"显示云录制菜单按钮", @"显示云录制过程UI",
-    @"开启等候室",         @"允许音频设备切换",   @"允许访客入会"
+    @"隐藏白板菜单按钮",
+    @"关闭会中改名",
+    @"开启云录制",
+    @"隐藏Sip菜单",
+    @"显示用户角色标签",
+    @"自动静音(可解除)",
+    @"自动静音(不可解除)",
+    @"自动关视频(可解除)",
+    @"自动关视频(不可解除)",
+    @"显示会议结束提醒",
+    @"聊天室文件消息",
+    @"聊天室图片消息",
+    @"开启静音检测",
+    @"关闭静音包",
+    @"显示屏幕共享者画面",
+    @"显示白板共享者画面",
+    @"设置白板透明",
+    @"前置摄像头镜像",
+    @"显示麦克风浮窗",
+    @"入会时隐藏直播菜单",
+    @"开启音频共享",
+    @"开启加密",
+    @"显示云录制菜单按钮",
+    @"显示云录制过程UI",
+    @"开启等候室",
+    @"允许访客入会",
+    @"自动画中画",
+    @"展示未入会成员",
+    @"主持人直接开关成员音视频"
   ]];
   _settingCheckBox.delegate = self;
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingElapsedTimeDisplayType];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableFile];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableImage];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeDetectMutedMic];
@@ -100,16 +132,22 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeJoinOffLive];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowCloudRecordMenuItem];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowCloudRecordingUI];
-  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeEnableAudioDeviceSwitch];
   [self.settingCheckBox setItemSelected:NO index:CreateMeetingSettingTypeEnableGuestJoin];
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeEnablePIP];
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeShowNotYetJoinedMembers];
+  [self.settingCheckBox
+      setItemSelected:NO
+                index:CreateMeetingSettingTypeEnableDirectMemberMediaControlByHost];
 }
 #pragma mark-----------------------------  自定义toolbar/更多 菜单  -----------------------------
 
 - (void)didSelectedItems:(NSArray<NEMeetingMenuItem *> *)menuItems {
   if (self.currentType == MeetingMenuTypeToolbar) {
     self.fullToolbarMenuItems = menuItems;
-  } else {
+  } else if (self.currentType == MeetingMenuTypeMore) {
     self.fullMoreMenuItems = menuItems;
+  } else if (self.currentType == MeetingMenuTypeAction) {
+    self.memberActionMenuItems = menuItems;
   }
   [self showSeletedItemResult:menuItems];
 }
@@ -179,12 +217,18 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   if (![self selectedSetting:CreateMeetingSettingTypeDefaultSetting]) {
     options.noVideo = ![self selectedConfig:MeetingConfigTypeJoinOnVideo];
     options.noAudio = ![self selectedConfig:MeetingConfigTypeJoinOnAudio];
-    options.showMeetingTime = [self selectedConfig:MeetingConfigTypeShowTime];
   } else {
     NESettingsService *settingService = NEMeetingKit.getInstance.getSettingsService;
     options.noAudio = !settingService.isTurnOnMyAudioWhenJoinMeetingEnabled;
     options.noVideo = !settingService.isTurnOnMyVideoWhenJoinMeetingEnabled;
-    options.showMeetingTime = settingService.isShowMyMeetingElapseTimeEnabled;
+  }
+  // 显示参会时间
+  if ([self selectedSetting:CreateMeetingElapsedTimeDisplayType]) {
+    options.meetingElapsedTimeDisplayType = PARTICIPATION_ELAPSED_TIME;
+  }
+  // 显示会议持续时间
+  else {
+    options.meetingElapsedTimeDisplayType = MEETING_ELAPSED_TIME;
   }
   options.meetingIdDisplayOption = [self meetingIdDisplayOption];
   options.noInvite = [self selectedSetting:CreateMeetingSettingTypeJoinOffInvitation];
@@ -234,6 +278,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   options.noMuteAllVideo = [MeetingConfigRepository getInstance].noMuteAllVideo;
   options.fullToolbarMenuItems = _fullToolbarMenuItems;
   options.fullMoreMenuItems = _fullMoreMenuItems;
+  options.memberActionMenuItems = _memberActionMenuItems;
 
   // 开启静音检测
   options.detectMutedMic = [self selectedSetting:CreateMeetingSettingTypeDetectMutedMic];
@@ -264,6 +309,16 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 
   options.enableWaitingRoom = [self selectedSetting:CreateMeetingSettingTypeEnableWaitingRoom];
   options.enableGuestJoin = [self selectedSetting:CreateMeetingSettingTypeEnableGuestJoin];
+  if (self.notifyDurationInput.text.length) {
+    options.pluginNotifyDuration = [self.notifyDurationInput.text intValue];
+  }
+  options.enablePictureInPicture = [self selectedSetting:CreateMeetingSettingTypeEnablePIP];
+  // 视图展示未入会成员
+  options.showNotYetJoinedMembers =
+      ![self selectedSetting:CreateMeetingSettingTypeShowNotYetJoinedMembers];
+
+  options.enableDirectMemberMediaControlByHost =
+      [self selectedSetting:CreateMeetingSettingTypeEnableDirectMemberMediaControlByHost];
   WEAK_SELF(weakSelf);
   [SVProgressHUD show];
   [[NEMeetingKit getInstance].getMeetingService
@@ -349,10 +404,16 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   self.currentType = MeetingMenuTypeMore;
   [self enterMenuVC:_fullMoreMenuItems];
 }
+/// 成员菜单操作项
+- (IBAction)configActionMenuItems:(UIButton *)sender {
+  self.currentType = MeetingMenuTypeAction;
+  [self enterMenuVC:_memberActionMenuItems];
+}
 - (void)enterMenuVC:(NSArray *)items {
   MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
   menuSeletedVC.seletedItems = items;
   menuSeletedVC.delegate = self;
+  menuSeletedVC.currentType = _currentType;
   [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 - (void)showSeletedItemResult:(NSArray *)menuItems {

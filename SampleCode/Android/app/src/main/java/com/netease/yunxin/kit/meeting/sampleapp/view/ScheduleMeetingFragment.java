@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.manu.mdatepicker.MDatePickerDialog;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.ToastCallback;
 import com.netease.yunxin.kit.meeting.sampleapp.adapter.ScheduleMeetingAdapter;
@@ -93,48 +92,41 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
         .getRecycledViewPool()
         .setMaxRecycledViews(ScheduleMeetingAdapter.VIEW_TYPE, 0);
     mAdapter.setOnItemClickListener(
-        (view, position) -> {
-          ScheduleMeetingItem item = dataList.get(position);
-          switch (item.getClickAction()) {
-            case ScheduleMeetingItem.SET_START_TIME_ACTION:
-              CalendarUtil.showDatePickerDialog(
-                  getActivity(),
-                  new MDatePickerDialog.OnDateResultListener() {
-
-                    @Override
-                    public void onDateResult(long date) {
-                      startTime = date;
-                      mAdapter
-                          .getData()
-                          .get(ScheduleMeetingItem.SET_START_TIME_ACTION)
-                          .setTimeTip(formatTime(date));
-                      mAdapter.updateData(
-                          ScheduleMeetingItem.SET_START_TIME_ACTION,
-                          mAdapter.getData().get(ScheduleMeetingItem.SET_START_TIME_ACTION));
-                    }
-                  });
-              break;
-            case ScheduleMeetingItem.SET_END_TIME_ACTION:
-              CalendarUtil.showDatePickerDialog(
-                  getActivity(),
-                  new MDatePickerDialog.OnDateResultListener() {
-
-                    @Override
-                    public void onDateResult(long date) {
-                      //TODO 必须大于当前开始时间
-                      endTime = date;
-                      mAdapter
-                          .getData()
-                          .get(ScheduleMeetingItem.SET_END_TIME_ACTION)
-                          .setTimeTip(formatTime(date));
-                      mAdapter.updateData(
-                          ScheduleMeetingItem.SET_END_TIME_ACTION,
-                          mAdapter.getData().get(ScheduleMeetingItem.SET_END_TIME_ACTION));
-                    }
-                  });
-              break;
-          }
-        });
+            (view, position) -> {
+              ScheduleMeetingItem item = dataList.get(position);
+              switch (item.getClickAction()) {
+                case ScheduleMeetingItem.SET_START_TIME_ACTION:
+                  CalendarUtil.showDateTimePickerDialog(
+                          getActivity(),
+                          startTime,
+                          date -> {
+                            startTime = date;
+                            mAdapter
+                                    .getData()
+                                    .get(ScheduleMeetingItem.SET_START_TIME_ACTION)
+                                    .setTimeTip(formatTime(date));
+                            mAdapter.updateData(
+                                    ScheduleMeetingItem.SET_START_TIME_ACTION,
+                                    mAdapter.getData().get(ScheduleMeetingItem.SET_START_TIME_ACTION));
+                          });
+                  break;
+                case ScheduleMeetingItem.SET_END_TIME_ACTION:
+                  CalendarUtil.showDateTimePickerDialog(
+                          getActivity(),
+                          endTime,
+                          date -> {
+                            endTime = date;
+                            mAdapter
+                                    .getData()
+                                    .get(ScheduleMeetingItem.SET_END_TIME_ACTION)
+                                    .setTimeTip(formatTime(date));
+                            mAdapter.updateData(
+                                    ScheduleMeetingItem.SET_END_TIME_ACTION,
+                                    mAdapter.getData().get(ScheduleMeetingItem.SET_END_TIME_ACTION));
+                          });
+                  break;
+              }
+            });
     mAdapter.setOnCheckedChangeListener(
         (compoundButton, enable, clickAction) -> {
           if (compoundButton != null && compoundButton.getId() == R.id.sb_meeting_switch) {
@@ -156,7 +148,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                 break;
               case ScheduleMeetingItem.ENABLE_MEETING_LIVE_ACTION:
                 isLiveOn = enable;
-                if (settingsService.isMeetingLiveEnabled() && isLiveOn) {
+                if (settingsService.isMeetingLiveSupported() && isLiveOn) {
                   if (binding.rvScheduleMeeting.getScrollState() == RecyclerView.SCROLL_STATE_IDLE
                       && (!binding.rvScheduleMeeting.isComputingLayout())) {
                     mAdapter.addNewData(
@@ -267,8 +259,8 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
                     new ToastCallback<NEMeetingItem>(getActivity(), "editMeeting") {
                       @Override
                       public void onResult(
-                          int resultCode, String resultMsg, NEMeetingItem resultData) {
-                        super.onResult(resultCode, resultMsg, resultData);
+                          int resultCode, String resultMessage, NEMeetingItem resultData) {
+                        super.onResult(resultCode, resultMessage, resultData);
                         if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
                           Navigation.findNavController(getView())
                               .popBackStack(R.id.homeFragment, false);
@@ -282,8 +274,8 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
 
                       @Override
                       public void onResult(
-                          int resultCode, String resultMsg, NEMeetingItem resultData) {
-                        super.onResult(resultCode, resultMsg, resultData);
+                          int resultCode, String resultMessage, NEMeetingItem resultData) {
+                        super.onResult(resultCode, resultMessage, resultData);
                         if (resultCode == NEMeetingError.ERROR_CODE_SUCCESS) {
                           Navigation.findNavController(getView()).popBackStack();
                         }
@@ -395,7 +387,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
   /// 处理直播设置
   private void handleLiveSetting() {
     settingsService = NEMeetingKit.getInstance().getSettingsService();
-    if (settingsService.isMeetingLiveEnabled()) {
+    if (settingsService.isMeetingLiveSupported()) {
       dataList.add(
           new ScheduleMeetingItem(
               "开启直播",
@@ -439,7 +431,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
   private void handleVideoSetting() {
     boolean isVideoSwitchOn = false;
     boolean videoOffAllowSelfOn = true;
-    if (item != null) {
+    if (item != null && item.getSetting().getCurrentVideoControl() != null) {
       isVideoSwitchOn =
           item.getSetting().getCurrentVideoControl().getAttendeeOff()
               != NEMeetingAttendeeOffType.None;
@@ -465,7 +457,7 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
   private void handleAudioSetting() {
     boolean isAudioSwitchOn = false;
     boolean audioOffAllowSelfOn = true;
-    if (item != null) {
+    if (item != null && item.getSetting().getCurrentAudioControl() != null) {
       isAudioSwitchOn =
           item.getSetting().getCurrentAudioControl().getAttendeeOff()
               != NEMeetingAttendeeOffType.None;
@@ -498,18 +490,23 @@ public class ScheduleMeetingFragment extends BaseFragment<FragmentScheduleBindin
       mViewModel.passWord.setValue(item.getPassword());
       mViewModel.tittle.setValue(item.getSubject());
       mViewModel.extraData.setValue(item.getExtraData());
-      isAttendeeAudioOff =
-          item.getSetting().getCurrentAudioControl().getAttendeeOff()
-              != NEMeetingAttendeeOffType.None;
-      isAllowAttendeeAudioSelfOn =
-          item.getSetting().getCurrentAudioControl().getAttendeeOff()
-              == NEMeetingAttendeeOffType.OffAllowSelfOn;
-      isAttendeeVideoOff =
-          item.getSetting().getCurrentVideoControl().getAttendeeOff()
-              != NEMeetingAttendeeOffType.None;
-      isAllowAttendeeVideoSelfOn =
-          item.getSetting().getCurrentVideoControl().getAttendeeOff()
-              == NEMeetingAttendeeOffType.OffAllowSelfOn;
+      if (item.getSetting().getCurrentAudioControl() != null) {
+        isAttendeeAudioOff =
+            item.getSetting().getCurrentAudioControl().getAttendeeOff()
+                != NEMeetingAttendeeOffType.None;
+        isAllowAttendeeAudioSelfOn =
+            item.getSetting().getCurrentAudioControl().getAttendeeOff()
+                == NEMeetingAttendeeOffType.OffAllowSelfOn;
+      }
+      if (item.getSetting().getCurrentVideoControl() != null) {
+        isAttendeeVideoOff =
+            item.getSetting().getCurrentVideoControl().getAttendeeOff()
+                != NEMeetingAttendeeOffType.None;
+        isAllowAttendeeVideoSelfOn =
+            item.getSetting().getCurrentVideoControl().getAttendeeOff()
+                == NEMeetingAttendeeOffType.OffAllowSelfOn;
+      }
+
       isEditMeeting = true;
     }
   }

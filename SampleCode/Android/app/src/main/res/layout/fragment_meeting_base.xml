@@ -30,7 +30,7 @@
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/configToolbarMenus"
+                    app:layout_constraintTop_toBottomOf="@+id/configActionMenus"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="加入会议" />
 
@@ -43,7 +43,7 @@
                     android:paddingRight="6dp"
                     android:text="自定义工具栏菜单"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/actionBtn"
+                    app:layout_constraintBottom_toTopOf="@+id/configActionMenus"
                     app:layout_constraintLeft_toLeftOf="@+id/checkbox_flow_1"
                     app:layout_constraintTop_toBottomOf="@+id/et_encryption" />
 
@@ -67,7 +67,21 @@
                     android:text="会议设置"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toRightOf="@id/configMoreMenus"
-                    app:layout_constraintTop_toTopOf="@id/configToolbarMenus" />
+                    app:layout_constraintTop_toTopOf="@id/configToolbarMenus"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/configActionMenus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="成员菜单操作项设置"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/actionBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/configToolbarMenus"
+                />
 
             <CheckBox
                     android:id="@+id/videoOption"
@@ -125,10 +139,10 @@
                     android:text="关闭邀请菜单" />
 
             <CheckBox
-                    android:id="@+id/show_meeting_time"
+                    android:id="@+id/meeting_elapsed_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="显示会议持续时间" />
+                    android:text="会议时间/参会时间" />
 
             <CheckBox
                     android:id="@+id/showLongMeetingIdOnly"
@@ -308,12 +322,27 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:text="音频共享" />
-<!--            <CheckBox-->
-<!--                android:id="@+id/enablePictureInPicture"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:checked="false"-->
-<!--                android:text="后台开启画中画" />-->
+
+            <CheckBox
+                android:id="@+id/enablePictureInPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="退后台自动小窗" />
+
+            <CheckBox
+                android:id="@+id/showNotYetJoinedMembers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="展示未入会成员" />
+
+            <CheckBox
+                android:id="@+id/enableDirectMemberMediaControlByHost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="主持人直接开关成员音视频" />
 
              <CheckBox
                     android:id="@+id/noLive"
@@ -343,13 +372,6 @@
                 android:text="允许访客入会"
                 android:checked="false" />
 
-            <CheckBox
-                android:id="@+id/enableAudioDeviceSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="允许音频设备切换"
-                android:checked="true" />
-
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_1"
                     android:layout_width="0dp"
@@ -369,7 +391,7 @@
                     app:flow_verticalStyle="packed"
                     app:flow_verticalAlign="top"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,show_meeting_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom,enableGuestJoin" />
+                    app:constraint_referenced_ids="videoOption,audioOption,usePersonalMeetingNum,useDefaultOptions,noChatOptions,disableImageMessage,disableFileMessage,no_minimize,noInviteOptions,meeting_elapsed_time,showLongMeetingIdOnly,showShortMeetingIdOnly,noGalleryOptions,noSwitchCamera,noSwitchAudioMode,noRename,enableTransparentWhiteboard,enableFrontCameraMirror,noLive,cb_encryption,enableWaitingRoom,enableGuestJoin" />
 
             <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/checkbox_flow_2"
@@ -386,7 +408,7 @@
                     app:flow_maxElementsWrap="1"
                     app:flow_verticalStyle="packed"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare,enableAudioDeviceSwitch" />
+                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare,enablePictureInPicture,showNotYetJoinedMembers,enableDirectMemberMediaControlByHost" />
 
 
 
@@ -478,6 +500,18 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/checkbox_flow_1"
+                app:layout_constraintBottom_toTopOf="@id/et_plugin_notify_duration"
+                />
+
+            <EditText
+                android:id="@+id/et_plugin_notify_duration"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_encryption"
                 app:layout_constraintBottom_toTopOf="@id/configToolbarMenus"
                 />
 

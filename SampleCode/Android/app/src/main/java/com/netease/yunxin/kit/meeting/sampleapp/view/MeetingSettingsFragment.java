@@ -14,8 +14,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.netease.yunxin.kit.meeting.sampleapp.MeetingApplication;
 import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.data.MeetingConfigRepository;
+import com.netease.yunxin.kit.meeting.sdk.NEMeetingElapsedTimeDisplayType;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
-import com.netease.yunxin.kit.meeting.sdk.NEMeetingVirtualBackground;
 import com.netease.yunxin.kit.meeting.sdk.NESettingsService;
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
 
   private static class DataStore extends PreferenceDataStore {
 
-    private static final String ENABLE_SHOW_MEETING_TIME = "enable_show_meeting_time";
+    private static final String MEETING_ELAPSED_TIME = "meeting_elapsed_time";
     private static final String ENABLE_VIDEO = "enable_video";
     private static final String ENABLE_AUDIO = "enable_audio";
     private static final String ENABLE_AUDIO_AINS = "enable_audio_ains";
@@ -44,6 +44,9 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
     private static final String AUDIO_PROFILE = "audioProfile";
     private static final String AUDIO_SCENARIO = "audioScenario";
     private static final String ENABLE_VIRTUAL_BACKGROUND = "enable_virtual_background";
+    private static final String ENABLE_SPEAKER_SPOTLIGHT = "enable_speaker_spotlight";
+    private static final String ENABLE_FRONT_CAMERA_MIRROR = "enable_front_camera_mirror";
+    private static final String ENABLE_TRANSPARENT_WHITEBOARD = "enable_transparent_whiteboard";
 
     @Nullable
     @Override
@@ -86,8 +89,10 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       if (settingsService != null) {
         switch (key) {
-          case ENABLE_SHOW_MEETING_TIME:
-            value = settingsService.isShowMyMeetingElapseTimeEnabled();
+          case MEETING_ELAPSED_TIME:
+            value =
+                settingsService.getMeetingElapsedTimeDisplayType()
+                    == NEMeetingElapsedTimeDisplayType.PARTICIPATION_ELAPSED_TIME;
             break;
           case ENABLE_VIDEO:
             value = settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
@@ -100,6 +105,15 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
             break;
           case ENABLE_VIRTUAL_BACKGROUND:
             value = settingsService.isVirtualBackgroundEnabled();
+            break;
+          case ENABLE_SPEAKER_SPOTLIGHT:
+            value = settingsService.isSpeakerSpotlightEnabled();
+            break;
+          case ENABLE_TRANSPARENT_WHITEBOARD:
+            value = settingsService.isTransparentWhiteboardEnabled();
+            break;
+          case ENABLE_FRONT_CAMERA_MIRROR:
+            value = settingsService.isFrontCameraMirrorEnabled();
             break;
           case ENABLE_AUDIO_OPTIONS:
             return MeetingConfigRepository.INSTANCE.getEnableAudioOptions();
@@ -115,14 +129,17 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
       NESettingsService settingsService = NEMeetingKit.getInstance().getSettingsService();
       if (settingsService != null) {
         switch (key) {
-          case ENABLE_SHOW_MEETING_TIME:
-            settingsService.enableShowMyMeetingElapseTime(value);
+          case MEETING_ELAPSED_TIME:
+            settingsService.setMeetingElapsedTimeDisplayType(
+                value
+                    ? NEMeetingElapsedTimeDisplayType.PARTICIPATION_ELAPSED_TIME
+                    : NEMeetingElapsedTimeDisplayType.MEETING_ELAPSED_TIME);
             break;
           case ENABLE_VIDEO:
-            settingsService.setTurnOnMyVideoWhenJoinMeeting(value);
+            settingsService.enableTurnOnMyVideoWhenJoinMeeting(value);
             break;
           case ENABLE_AUDIO:
-            settingsService.setTurnOnMyAudioWhenJoinMeeting(value);
+            settingsService.enableTurnOnMyAudioWhenJoinMeeting(value);
             break;
           case ENABLE_AUDIO_AINS:
             settingsService.enableAudioAINS(value);
@@ -131,24 +148,29 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
             if (value) {
               setVirtualBackgroundPic(settingsService);
             } else {
-              settingsService.setBuiltinVirtualBackgrounds(null);
+              settingsService.setBuiltinVirtualBackgroundList(null);
             }
             settingsService.enableVirtualBackground(value);
             break;
           case ENABLE_AUDIO_OPTIONS:
             MeetingConfigRepository.INSTANCE.setEnableAudioOptions(value);
             break;
+          case ENABLE_SPEAKER_SPOTLIGHT:
+            settingsService.enableSpeakerSpotlight(value);
+            break;
+          case ENABLE_TRANSPARENT_WHITEBOARD:
+            settingsService.enableTransparentWhiteboard(value);
+            break;
+          case ENABLE_FRONT_CAMERA_MIRROR:
+            settingsService.enableFrontCameraMirror(value);
+            break;
         }
       }
     }
 
-    /**
-     * 设置虚拟背景 图片
-     *
-     * @param settingsService
-     */
+    /** 设置虚拟背景 图片 */
     private void setVirtualBackgroundPic(NESettingsService settingsService) {
-      List<NEMeetingVirtualBackground> virtualBackgrounds = new ArrayList<>();
+      List<String> virtualBackgrounds = new ArrayList<>();
       String virtualPath = MeetingApplication.getInstance().getFilesDir().getPath() + "/virtual";
       File virtualFile = new File(virtualPath);
       int size = 0;
@@ -160,11 +182,10 @@ public class MeetingSettingsFragment extends PreferenceFragmentCompat {
             MeetingApplication.getInstance().getFilesDir().getPath() + "/virtual/" + i + ".png";
         File file = new File(path);
         if (file.exists()) {
-          NEMeetingVirtualBackground virtualBackground = new NEMeetingVirtualBackground(path);
-          virtualBackgrounds.add(virtualBackground);
+          virtualBackgrounds.add(path);
         }
       }
-      settingsService.setBuiltinVirtualBackgrounds(virtualBackgrounds);
+      settingsService.setBuiltinVirtualBackgroundList(virtualBackgrounds);
     }
   }
 }

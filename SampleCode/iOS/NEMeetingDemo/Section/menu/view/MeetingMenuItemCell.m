@@ -74,6 +74,61 @@
       return @"安全";
     case DISCONNECT_AUDIO_MENU_ID:
       return @"断开音频";
+    case SETTINGS_MENU_ID:
+      return @"设置";
+    case FEEDBACK_MENU_ID:
+      return @"反馈";
+    case SIP_CALL_MENU_ID:
+      return @"SIP";
+    case CAPTIONS_MENU_ID:
+      return @"字幕";
+    case TRANSCRIPTION_MENU_ID:
+      return @"实时转写";
+    case INTERPRETATION_MENU_ID:
+      return @"同声传译";
+    case BEAUTY_MENU_ID:
+      return @"美颜";
+    case VIRTUAL_BACKGROUND_MENU_ID:
+      return @"虚拟背景";
+    case LIVE_MENU_ID:
+      return @"直播";
+    default:
+      break;
+  }
+
+  switch (item.itemId) {
+    case AUDIO_ACTION_MENU_ID:
+      return @"解除静音";
+    case VIDEO_ACTION_MENU_ID:
+      return @"开启视频";
+    case FOCUS_VIDEO_ACTION_MENU_ID:
+      return @"焦点视频";
+    case LOCK_VIDEO_ACTION_MENU_ID:
+      return @"锁定视频";
+    case CHANGE_HOST_ACTION_MENU_ID:
+      return @"移交主持人";
+    case RECLAIM_HOST_ACTION_MENU_ID:
+      return @"收回主持人";
+    case REMOVE_MEMBER_ACTION_MENU_ID:
+      return @"移除成员";
+    case REJECT_HANDS_UP_ACTION_MENU_ID:
+      return @"手放下";
+    case WHITEBOARD_INTERACTION_ACTION_MENU_ID:
+      return @"白板互动";
+    case SCREEN_SHARE_ACTION_MENU_ID:
+      return @"共享屏幕";
+    case WHITEBOARD_SHARE_ACTION_MENU_ID:
+      return @"共享白板";
+    case UPDATE_NICK_ACTION_MENU_ID:
+      return @"改名";
+    case AUDIO_AND_VIDEO_ACTION_MENU_ID:
+      return @"关闭音视频";
+    case CO_HOST_ACTION_MENU_ID:
+      return @"设为联席主持人";
+    case PUTIN_WAITING_ROOM_ACTION_MENU_ID:
+      return @"移至等候室";
+    case CHAT_PRIVATE_ACTION_MENU_ID:
+      return @"私聊";
     default:
       break;
   }

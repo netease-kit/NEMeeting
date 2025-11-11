@@ -90,6 +90,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     binding.etPassword.setHint("请输入密码");
     binding.etPersonalTag.setHint("个人TAG");
     binding.etEncryption.setHint("媒体流加密密钥");
+    binding.etPluginNotifyDuration.setHint("小应用通知弹窗时间，单位ms，为0不显示通知弹窗；value<0则弹窗不自动消失");
     binding.etNickname.setSingleLine();
     binding.etPassword.setSingleLine();
     binding.etPersonalTag.setSingleLine();
@@ -166,6 +167,7 @@ public abstract class MeetingCommonFragment extends CommonFragment {
       options.noVideo = !settingsService.isTurnOnMyVideoWhenJoinMeetingEnabled();
       options.noAudio = !settingsService.isTurnOnMyAudioWhenJoinMeetingEnabled();
       options.showMeetingTime = settingsService.isShowMyMeetingElapseTimeEnabled();
+      options.showNotYetJoinedMembers = settingsService.isShowNotYetJoinedMembersEnabled();
       options.enableSpeakerSpotlight = settingsService.isSpeakerSpotlightEnabled();
       options.enableFrontCameraMirror = settingsService.isFrontCameraMirrorEnabled();
       options.enableTransparentWhiteboard = settingsService.isTransparentWhiteboardEnabled();
@@ -196,6 +198,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.noLive = binding.noLive.isChecked();
     options.showMemberTag = binding.showMemberTag.isChecked();
     options.showMeetingRemainingTip = binding.showMeetingRemainingTip.isChecked();
+    String notifyDurationStr = binding.etPluginNotifyDuration.getText().toString();
+    if (!notifyDurationStr.isEmpty()) {
+      options.pluginNotifyDuration = Integer.parseInt(notifyDurationStr);
+    }
     if (MeetingConfigRepository.INSTANCE.getEnableAudioOptions()) {
       options.audioProfile =
           new NEAudioProfile(
@@ -226,7 +232,10 @@ public abstract class MeetingCommonFragment extends CommonFragment {
     options.enableAudioShare = binding.enableAudioShare.isChecked();
     options.showCloudRecordingUI = binding.showCloudRecordingUI.isChecked();
     options.showCloudRecordMenuItem = binding.showCloudRecordMenuItem.isChecked();
-    //    options.enablePictureInPicture = isCheckedById(R.id.enablePictureInPicture);
+    options.enablePictureInPicture = binding.enablePictureInPicture.isChecked();
+    options.showNotYetJoinedMembers = binding.showNotYetJoinedMembers.isChecked();
+    options.enableDirectMemberMediaControlByHost =
+        binding.enableDirectMemberMediaControlByHost.isChecked();
     return options;
   }
 

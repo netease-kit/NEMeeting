@@ -308,12 +308,27 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:text="音频共享" />
-<!--            <CheckBox-->
-<!--                android:id="@+id/enablePictureInPicture"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:checked="false"-->
-<!--                android:text="后台开启画中画" />-->
+
+            <CheckBox
+                android:id="@+id/enablePictureInPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="退后台自动小窗" />
+
+            <CheckBox
+                android:id="@+id/showNotYetJoinedMembers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="展示未入会成员" />
+
+            <CheckBox
+                android:id="@+id/enableDirectMemberMediaControlByHost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="主持人直接开关成员音视频" />
 
              <CheckBox
                     android:id="@+id/noLive"
@@ -379,7 +394,7 @@
                     app:flow_maxElementsWrap="1"
                     app:flow_verticalStyle="packed"
                     app:layout_constraintHorizontal_weight="1"
-                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare" />
+                    app:constraint_referenced_ids="cloudRecord,showCloudRecordingUI,showCloudRecordMenuItem,noSip,noWhiteBoard,defaultWhiteBoard,showMemberTag,showMeetingRemainingTip,audioOffNotAllowSelfOn,audioOffAllowSelfOn,videoOffAllowSelfOn,videoOffNotAllowSelfOn,noMuteAllVideo,noMuteAllAudio,detectMutedMic,unpubAudioOnMute,showScreenShareUserVideo,showWhiteboardShareUserVideo,showFloatingMicrophone,enableAudioShare,enablePictureInPicture,showNotYetJoinedMembers,enableDirectMemberMediaControlByHost" />
 
 
 
@@ -471,6 +486,18 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/checkbox_flow_1"
+                app:layout_constraintBottom_toTopOf="@id/et_plugin_notify_duration"
+                />
+
+            <EditText
+                android:id="@+id/et_plugin_notify_duration"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_encryption"
                 app:layout_constraintBottom_toTopOf="@id/configToolbarMenus"
                 />
 

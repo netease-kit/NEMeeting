@@ -37,6 +37,8 @@ import com.netease.yunxin.kit.meeting.sdk.NEMeetingKit;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatus;
 import com.netease.yunxin.kit.meeting.sdk.NEMeetingStatusListener;
+import com.netease.yunxin.kit.meeting.sdk.NERecordMode;
+import com.netease.yunxin.kit.meeting.sdk.NERecordStrategyType;
 import com.netease.yunxin.kit.meeting.sdk.NESettingsService;
 import com.netease.yunxin.kit.meeting.sdk.NEStartMeetingOptions;
 import com.netease.yunxin.kit.meeting.sdk.NEWindowMode;
@@ -274,14 +276,17 @@ public abstract class MeetingCommonFragment extends CommonFragment {
               parseIntCatching(
                   MeetingConfigRepository.INSTANCE.getAudioScenario(),
                   NEAudioScenarioType.UNSPECIFIED),
-              NEMeetingKit.getInstance().getSettingsService().isAudioAINSEnabled());
+                  NEMeetingKit.getInstance().getSettingsService().getAudioAINSMode());
     }
     // 如果是创建会议判断是否需要录制
     if (options instanceof NEStartMeetingOptions) {
-      // ((NEStartMeetingOptions) options).noCloudRecord = !binding.cloudRecord.isChecked();
-      ((NEStartMeetingOptions) options).cloudRecordConfig = new NECloudRecordConfig();
+      List<NERecordMode> modeList = new ArrayList<>();
+      modeList.add(new NERecordMode(2));
+      ((NEStartMeetingOptions) options).cloudRecordConfig =
+              new NECloudRecordConfig(
+                      false, NERecordStrategyType.HOST_JOIN, 100, modeList, false, false);
       ((NEStartMeetingOptions) options)
-          .cloudRecordConfig.setEnable(binding.cloudRecord.isChecked());
+              .cloudRecordConfig.setEnable(binding.cloudRecord.isChecked());
     }
     options.fullToolbarMenuItems = toolbarMenu;
     options.fullMoreMenuItems = moreMenu;

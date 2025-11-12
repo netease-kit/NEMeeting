@@ -15,77 +15,86 @@
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
   <div id="ne-web-meeting"></div>
-  <script src="./NEMeetingKit_v4.9.1.js"></script>
+  <script src="./NEMeetingKit_v4.14.1.js"></script>
   <script>
-  NEMeetingKit = NEMeetingKit.default.oldNEMeetingKit
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
    * 然后执行登陆，获取登陆人员信息
    * 此时，根据需要，可以进行会议的创建或加入
    */
   function init() {
-    const config = {
-      appKey: '', //云信服务appkey
-    }
-    /* 初始化
-      * @param width：宽度(px)，为0则表示100%
-      * @param height：高度(px)，为0则表示100%
-      * @param config：入会配置
-      * @param callback： 回调
-    */
-    NEMeetingKit.actions.init(0, 0, config, (e) => {
-      console.log('初始化完成')
-    });  // （width，height）单位px 建议比例4:3
-    NEMeetingKit.actions.on('roomEnded', (reason) => {
-      console.log('离开会议回调')
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const appKey = ''
+    neMeetingKit.initialize({
+      appKey,
+      serverUrl: 'https://meeting.yunxinroom.com',
+      width: 0,
+      height: 0,
+    }).then(() => {
+      const meetingService = neMeetingKit.getMeetingService()
+
+      meetingService.addMeetingStatusListener({
+        onMeetingStatusChanged: function ({status}){
+          // status: 会议状态
+        }
+      })
     })
+
   }
   function destory() {
-    NEMeetingKit.actions.destroy(); // 销毁
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    neMeetingKit.unInitialize()
   }
 
   function login() {
-    NEMeetingKit.actions.login({ // 登陆
-      accountId: 0,
-      accountToken: 0,
-      appKey: '',
-    }, function(e) {
-      console.log(e)
-    })
+    //使用 账号密码 登录
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const accountService = neMeetingKit.getAccountService()
+    // 用户账户
+    const userUuid = ''
+    // 用户 token
+    const token = ''
+    accountService.loginByToken(userUuid, token)
   }
 
   function loginWithNEMeeting() { // 账号密码登陆
-    const username = '',password = '';
-    NEMeetingKit.actions.loginWithPassword({username, password}, function(e) {
-      console.log(e)
-    })
+    //使用 账号密码 登录
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const accountService = neMeetingKit.getAccountService()
+    // 用户账户
+    const userUuid = ''
+    // 用户密码
+    const password = ''
+    accountService.loginByPassword(userUuid, password)
   }
 
 
 
   function create() { // 创建
-    NEMeetingKit.actions.create({
-      meetingNum: 'xxx', // 个人会议号可以在登录完成后通过NEMeetingKit.actions.accountInfo.meetingNum获取。为空表示创建随机会议
-      nickName: 'demo',
-      video: 1,
-      audio: 1,
-    }, function(e) {
-      console.log(e)
-    })
+    // 开始会议
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const meetingService = neMeetingKit.getMeetingService()
+
+    const param = {
+      displayName: '入会昵称',
+    }
+
+    meetingService.startMeeting(param)
   }
 
   function join() {
     var meetingNum = document.querySelector('.meeting-id').value;
-    NEMeetingKit.actions.join({
-      meetingNum,
-      nickName: 'demo1',
-      video: 1,
-      audio: 1,
-      password: '',
-      appKey: '',
-    }, function(e) {
-      console.log(e)
-    })
+    // 加入会议
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const meetingService = neMeetingKit.getMeetingService()
+
+    const param = {
+      displayName: '入会昵称',
+      // 会议号
+      meetingNum: meetingNum
+    }
+
+    meetingService.joinMeeting(param)
   }
 
   </script>

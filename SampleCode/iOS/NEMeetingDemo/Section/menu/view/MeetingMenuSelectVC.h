@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MeetingMenuSelectVC : BaseViewController
 @property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *seletedItems;
 @property(nonatomic, weak) id delegate;
+@property(nonatomic, assign) NSInteger currentType;
 
 @end
 

@@ -45,8 +45,13 @@ static NSString *allCellIdentifier = @"allSelectedMenuItemCell";
     [self.allSeletedItems addObjectsFromArray:self.seletedItems];
   }
   self.allItems = [NSMutableArray array];
-  [self.allItems addObjectsFromArray:[NEMenuItems defaultMoreMenuItems]];
-  [self.allItems addObjectsFromArray:[NEMenuItems defaultToolbarMenuItems]];
+  if (_currentType == 3) {
+    [self.allItems addObjectsFromArray:[NEActionMenuItems defaultActionMenuItems]];
+  } else {
+    [self.allItems addObjectsFromArray:[NEMenuItems defaultMoreMenuItems]];
+    [self.allItems addObjectsFromArray:[NEMenuItems defaultToolbarMenuItems]];
+  }
+
   [self.allItems addObject:[self addSingleStateMenuItem]];
   [self.allItems addObject:[self addEditCheckableMenuItem]];
 

@@ -16,6 +16,7 @@
 typedef NS_ENUM(NSInteger, MeetingMenuType) {
   MeetingMenuTypeToolbar = 1,
   MeetingMenuTypeMore = 2,
+  MeetingMenuTypeAction = 3,
 };
 
 @interface StartMeetingVC () <CheckBoxDelegate, MeetingMenuSelectVCDelegate, MeetingServiceListener>
@@ -50,6 +51,8 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 @property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *fullToolbarMenuItems;
 
 @property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *fullMoreMenuItems;
+
+@property(nonatomic, strong) NSArray<NEMeetingMenuItem *> *memberActionMenuItems;
 // 自定义菜单类型：toolbar/更多
 @property(nonatomic, assign) MeetingMenuType currentType;
 @end
@@ -73,9 +76,9 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 }
 
 - (void)setupUI {
-  [_configCheckBox
-      setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风", @"显示会议持续时间" ]];
+  [_configCheckBox setItemTitleWithArray:@[ @"入会时打开摄像头", @"入会时打开麦克风" ]];
   [_settingCheckBox setItemTitleWithArray:@[
+    @"会议/☑️参会时间",
     @"入会时关闭聊天菜单",
     @"入会时关闭邀请菜单",
     @"入会时隐藏最小化",
@@ -118,6 +121,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
     @"主持人直接开关成员音视频"
   ]];
   _settingCheckBox.delegate = self;
+  [self.settingCheckBox setItemSelected:YES index:CreateMeetingElapsedTimeDisplayType];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableFile];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeChatroomEnableImage];
   [self.settingCheckBox setItemSelected:YES index:CreateMeetingSettingTypeDetectMutedMic];
@@ -140,8 +144,10 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
 - (void)didSelectedItems:(NSArray<NEMeetingMenuItem *> *)menuItems {
   if (self.currentType == MeetingMenuTypeToolbar) {
     self.fullToolbarMenuItems = menuItems;
-  } else {
+  } else if (self.currentType == MeetingMenuTypeMore) {
     self.fullMoreMenuItems = menuItems;
+  } else if (self.currentType == MeetingMenuTypeAction) {
+    self.memberActionMenuItems = menuItems;
   }
   [self showSeletedItemResult:menuItems];
 }
@@ -211,12 +217,18 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   if (![self selectedSetting:CreateMeetingSettingTypeDefaultSetting]) {
     options.noVideo = ![self selectedConfig:MeetingConfigTypeJoinOnVideo];
     options.noAudio = ![self selectedConfig:MeetingConfigTypeJoinOnAudio];
-    options.showMeetingTime = [self selectedConfig:MeetingConfigTypeShowTime];
   } else {
     NESettingsService *settingService = NEMeetingKit.getInstance.getSettingsService;
     options.noAudio = !settingService.isTurnOnMyAudioWhenJoinMeetingEnabled;
     options.noVideo = !settingService.isTurnOnMyVideoWhenJoinMeetingEnabled;
-    options.showMeetingTime = settingService.isShowMyMeetingElapseTimeEnabled;
+  }
+  // 显示参会时间
+  if ([self selectedSetting:CreateMeetingElapsedTimeDisplayType]) {
+    options.meetingElapsedTimeDisplayType = PARTICIPATION_ELAPSED_TIME;
+  }
+  // 显示会议持续时间
+  else {
+    options.meetingElapsedTimeDisplayType = MEETING_ELAPSED_TIME;
   }
   options.meetingIdDisplayOption = [self meetingIdDisplayOption];
   options.noInvite = [self selectedSetting:CreateMeetingSettingTypeJoinOffInvitation];
@@ -266,6 +278,7 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   options.noMuteAllVideo = [MeetingConfigRepository getInstance].noMuteAllVideo;
   options.fullToolbarMenuItems = _fullToolbarMenuItems;
   options.fullMoreMenuItems = _fullMoreMenuItems;
+  options.memberActionMenuItems = _memberActionMenuItems;
 
   // 开启静音检测
   options.detectMutedMic = [self selectedSetting:CreateMeetingSettingTypeDetectMutedMic];
@@ -391,10 +404,16 @@ typedef NS_ENUM(NSInteger, MeetingMenuType) {
   self.currentType = MeetingMenuTypeMore;
   [self enterMenuVC:_fullMoreMenuItems];
 }
+/// 成员菜单操作项
+- (IBAction)configActionMenuItems:(UIButton *)sender {
+  self.currentType = MeetingMenuTypeAction;
+  [self enterMenuVC:_memberActionMenuItems];
+}
 - (void)enterMenuVC:(NSArray *)items {
   MeetingMenuSelectVC *menuSeletedVC = [[MeetingMenuSelectVC alloc] init];
   menuSeletedVC.seletedItems = items;
   menuSeletedVC.delegate = self;
+  menuSeletedVC.currentType = _currentType;
   [self.navigationController pushViewController:menuSeletedVC animated:YES];
 }
 - (void)showSeletedItemResult:(NSArray *)menuItems {

@@ -47,127 +47,77 @@
   <!-- 预留一个dom用于挂载会议组件 -->
   <div id="ne-web-meeting"></div>
   <!-- 引入会议组件sdk -->
-  <script src="./NEMeetingKit_h5_v4.9.3.js"></script>
+  <script src="./NEMeetingKit_h5_v4.14.1.js"></script>
   <script>
     /**
      * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
      * 然后执行登陆，获取登陆人员信息
      * 此时，根据需要，可以进行会议的创建或加入
     */
-    NEMeetingKit = NEMeetingKit.default.oldNEMeetingKit
+  function init() {
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const appKey = ''
+    neMeetingKit.initialize({
+      appKey,
+      serverUrl: 'https://meeting.yunxinroom.com',
+      width: 0,
+      height: 0,
+    }).then(() => {
+      const meetingService = neMeetingKit.getMeetingService()
 
-    /* 初始化
-      * @param width：宽度(px)，为0则表示100%
-      * @param height：高度(px)，为0则表示100%
-      * @param config：入会配置
-      * @param callback： 回调
-    */
-    function init() {
-      const config = {
-        appKey: "", //云信服务appkey
-      };
-      // 检测浏览器兼容性 返回true表示支持，否则可能存在兼容问题
-      const result = NEMeetingKit.actions.checkSystemRequirements()
-      // 初始化会议组件
-      NEMeetingKit.actions.init(0, 0, config, () => {
-        console.log('init回调')
-        // 事件监听
-        NEMeetingKit.actions.on("peerJoin", (members) => {
-          console.log("成员加入回调", members);
-        });
-        NEMeetingKit.actions.on("peerLeave", (uuids) => {
-          console.log("成员离开回调", uuids);
-        });
-        NEMeetingKit.actions.on("roomEnded", (reason) => {
-          console.log("房间被关闭", reason);
-        });
-        NEMeetingKit.actions.addMeetingStatusListener({
-          onMeetingStatusChanged: (status, arg, obj) => {
-            console.log('会议状态变更了: ', status, arg, obj)
-          },
-        })
+      meetingService.addMeetingStatusListener({
+        onMeetingStatusChanged: function ({status}){
+          // status: 会议状态
+        }
+      })
+    })
 
-      });
+  }
+  function destory() {
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    neMeetingKit.unInitialize()
+  }
 
-      // 获取会议相关信息
-      const NEMeetingInfo = NEMeetingKit.actions.NEMeetingInfo // 会议基本信息
-      const memberInfo = NEMeetingKit.actions.memberInfo // 当前成员信息
-      const joinMemberInfo = NEMeetingKit.actions.joinMemberInfo // 入会成员信息
+  function login() {
+    //使用 账号密码 登录
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const accountService = neMeetingKit.getAccountService()
+    // 用户账户
+    const userUuid = ''
+    // 用户 token
+    const token = ''
+    accountService.loginByToken(userUuid, token)
+  }
+
+
+  function join() {
+    const meetingNum = document.querySelector('.meeting-id').value;
+    // 加入会议
+    const neMeetingKit = NEMeetingKit.default.getInstance()
+    const meetingService = neMeetingKit.getMeetingService()
+
+    const param = {
+      displayName: '入会昵称',
+      // 会议号
+      meetingNum: meetingNum
     }
 
-    function login() {
-      var account = document.getElementById("meeting-account").value;
-      var token = document.getElementById("meeting-token").value;
-      NEMeetingKit.actions.login({
-        accountId: account,
-        accountToken: token,
-      },
-        function (e) {
-          console.log('login回调', e)
-        });
-    }
-
-    function logout() {
-      if (NEMeetingKit) {
-        NEMeetingKit.actions.logout(
-          function (e) {
-            console.log('logout回调', e)
-          }
-        )
-      }
-    }
-
-    function destroy() {
-      // 取消监听
-      NEMeetingKit.actions.off("peerJoin");
-      NEMeetingKit.actions.off("peerLeave");
-      NEMeetingKit.actions.off("roomEnded");
-      NEMeetingKit.actions.removeMeetingStatusListener();
-      // 销毁
-      NEMeetingKit.actions.destroy();
-    }
-
-    function join(params) {
-      var meetingNum = document.querySelector(".meeting-id").value;
-      var nickname = document.getElementById("meeting-nick").value;
-      var audio = document.getElementById("audio").checked;
-      var video = document.getElementById("video").checked;
-
-      console.log("加入参数：", {
-        meetingNum,
-        nickName: nickname,
-        video: video ? 1 : 0,
-        audio: audio ? 1 : 0,
-      });
-      NEMeetingKit.actions.join({
-        meetingNum, // 会议号
-        nickName: nickname, // 会中昵称
-        video, // 视频开关，1为打开2为关闭
-        audio, // 音频开关，1为打开2为关闭
-      },
-        function (e) {
-          console.log('加入会议回调', e);
-        });
-    }
+    meetingService.joinMeeting(param)
+  }
 
     function anonymousJoin() {
-      var meetingNum = document.querySelector(".meeting-id").value;
-      var nickname = document.getElementById("meeting-nick").value;
-      var audio = document.getElementById("audio").checked;
-      var video = document.getElementById("video").checked;
-      NEMeetingKit.actions.anonymousJoinMeeting(
-        {
-          meetingNum: meetingNum,
-          nickName: nickname,
-          video: video ? 1 : 0,
-          audio: audio ? 1 : 0,
-          showSubject: true,
-          showMeetingRemainingTip: true,
-        },
-        function (e) {
-          console.log(e);
-        }
-      );
+      const meetingNum = document.querySelector('.meeting-id').value;
+      // 加入会议
+      const neMeetingKit = NEMeetingKit.default.getInstance()
+      const meetingService = neMeetingKit.getMeetingService()
+
+      const param = {
+        displayName: '入会昵称',
+        // 会议号
+        meetingNum: meetingNum
+      }
+
+      meetingService.anonymousJoinMeeting(param)
     }
   </script>
 </body>

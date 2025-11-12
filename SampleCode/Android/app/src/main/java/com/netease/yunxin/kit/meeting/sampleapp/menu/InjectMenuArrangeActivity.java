@@ -26,11 +26,11 @@ import com.netease.yunxin.kit.meeting.sampleapp.R;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.ActivityMenuArrangementBinding;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.MenuItemCandidateBinding;
 import com.netease.yunxin.kit.meeting.sampleapp.databinding.MenuItemSelectedBinding;
+import com.netease.yunxin.kit.meeting.sdk.menu.NEActionMenuIDs;
 import com.netease.yunxin.kit.meeting.sdk.menu.NECheckableMenuItem;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMeetingMenuItem;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuIDs;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuItemInfo;
-import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuItems;
 import com.netease.yunxin.kit.meeting.sdk.menu.NEMenuVisibility;
 import com.netease.yunxin.kit.meeting.sdk.menu.NESingleStateMenuItem;
 import java.util.ArrayList;
@@ -83,29 +83,13 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
   }
 
   private void initCandidates() {
-    List<NEMeetingMenuItem> items = new ArrayList<>();
-    items.addAll(NEMenuItems.getBuiltinToolbarMenuItemList());
-    items.addAll(NEMenuItems.getBuiltinMoreMenuItemList());
-    items.add(createMenuItem(100, "打开设置"));
-    items.add(createMenuItem(101, "最小化"));
-    items.add(createMenuItem(102, "音频管理"));
-    items.add(createMenuItem(103, "测试修改单选菜单"));
-    items.add(createMenuItem(104, "测试修改多选菜单"));
-    items.add(NEMenuItems.switchShowTypeMenu());
-    items.add(createMenuItem(105, "获取账号信息"));
-    items.add(createMenuItem(106, "通用单选菜单"));
-    items.add(createMenuItem(107, "通用多选菜单"));
+    List<NEMeetingMenuItem> items = InjectMenuContainer.getInitCandidates();
     FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
     layoutManager.setFlexDirection(FlexDirection.ROW);
     layoutManager.setJustifyContent(JustifyContent.FLEX_START);
     binding.choices.setLayoutManager(layoutManager);
     binding.choices.addItemDecoration(new ItemDecoration());
     binding.choices.setAdapter(new Adapter(this, Adapter.TYPE_CANDIDATE, items));
-  }
-
-  NEMeetingMenuItem createMenuItem(int id, String text) {
-    return new NESingleStateMenuItem(
-        id, NEMenuVisibility.VISIBLE_ALWAYS, new NEMenuItemInfo(text, 0));
   }
 
   private void selectItem(NEMeetingMenuItem item) {
@@ -403,6 +387,41 @@ public class InjectMenuArrangeActivity extends AppCompatActivity {
         return new String[] {"直播"};
       case NEMenuIDs.FEEDBACK_MENU_ID:
         return new String[] {"问题反馈"};
+    }
+    // 成员菜单操作项
+    switch (item.getItemId()) {
+      case NEActionMenuIDs.AUDIO_ACTION_MENU_ID:
+        return new String[] {"静音", "解除静音"};
+      case NEActionMenuIDs.VIDEO_ACTION_MENU_ID:
+        return new String[] {"停止视频", "开启视频"};
+      case NEActionMenuIDs.FOCUS_VIDEO_ACTION_MENU_ID:
+        return new String[] {"焦点视频", "取消焦点视频"};
+      case NEActionMenuIDs.LOCK_VIDEO_ACTION_MENU_ID:
+        return new String[] {"锁定视频", "取消锁定视频"};
+      case NEActionMenuIDs.CHANGE_HOST_ACTION_MENU_ID:
+        return new String[] {"移交主持人"};
+      case NEActionMenuIDs.RECLAIM_HOST_ACTION_MENU_ID:
+        return new String[] {"收回主持人"};
+      case NEActionMenuIDs.REMOVE_MEMBER_ACTION_MENU_ID:
+        return new String[] {"移除成员"};
+      case NEActionMenuIDs.REJECT_HANDS_UP_ACTION_MENU_ID:
+        return new String[] {"手放下"};
+      case NEActionMenuIDs.WHITEBOARD_INTERACTION_ACTION_MENU_ID:
+        return new String[] {"白板互动", "撤回白板互动"};
+      case NEActionMenuIDs.SCREEN_SHARE_ACTION_MENU_ID:
+        return new String[] {"停止屏幕共享"};
+      case NEActionMenuIDs.WHITEBOARD_SHARE_ACTION_MENU_ID:
+        return new String[] {"停止白板共享"};
+      case NEActionMenuIDs.UPDATE_NICK_ACTION_MENU_ID:
+        return new String[] {"改名"};
+      case NEActionMenuIDs.AUDIO_AND_VIDEO_ACTION_MENU_ID:
+        return new String[] {"关闭音视频", "打开音视频"};
+      case NEActionMenuIDs.CO_HOST_ACTION_MENU_ID:
+        return new String[] {"设为联席主持人", "取消联席主持人"};
+      case NEActionMenuIDs.PUTIN_WAITING_ROOM_ACTION_MENU_ID:
+        return new String[] {"移至等候室"};
+      case NEActionMenuIDs.CHAT_PRIVATE_ACTION_MENU_ID:
+        return new String[] {"私聊"};
     }
 
     if (item instanceof NESingleStateMenuItem) {

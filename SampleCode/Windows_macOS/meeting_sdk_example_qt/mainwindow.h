@@ -9,8 +9,8 @@
 #include <QTextEdit>
 #include "kit_service_meeting_reflection.h"
 #include "kit_service_premeeting_reflection.h"
-#include "mainwindow.h"
 #include "nemeeting_sdk_manager.h"
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,7 +28,9 @@ class MainWindow : public QMainWindow,
                    public NEMeetingOnInjectedMenuItemClickListener,
                    public NEPreMeetingListener,
                    public NEMeetingMessageChannelListener,
-                   public NEMeetingInviteStatusListener {
+                   public NEMeetingInviteStatusListener,
+                   public NEMeetingRealtimeRecorderStatusListener,
+                   public NEMeetingWebAppClickListener {
     Q_OBJECT
 
 public:
@@ -46,7 +48,14 @@ public:
     void PrintLog(const std::string& msg);
 
     void InitSettingUI();
-
+                     
+    QString getRunPath();
+signals:
+    void hawkMessageSignal(const QString& msg, const std::function<void(QString)>& responseCallback);
+                                        
+private:
+    QString runPath;
+    
 private slots:
     void DoPrintLog(const QString& msg, int type);
     void onClearLogBtnClicked();
@@ -107,6 +116,17 @@ private slots:
     // feedback service ------------------------------------------------------------
     void onSubmitFeedbackBtnClicked();
     void onLoadFeedbackViewBtnClicked();
+                       
+    void onRealtimeRecorderStartBtnClicked();
+    void onRealtimeRecorderStopBtnClicked();
+                       
+    void onRealtimeRecorderAddListenerBtnClicked();
+    void onRealtimeRecorderRemoveListenerBtnClicked();
+                       
+    void onWebAppGetWebAppListBtnClicked();
+    void onWebAppEnableWebAppBtnClicked();
+    void onWebAppDisableWebAppBtnClicked();
+    void onWebAppSetWebAppClickListenerBtnClicked();
 
 private:
     void beforeRtcEngineInitializeWithRoomUuid(const std::string& roomUuid) override;
@@ -125,6 +145,9 @@ private:
     void onSessionMessageRecentChanged(const std::list<NEMeetingRecentSession>& messages) override;
     void onSessionMessageDeleted(const NEMeetingSessionMessage& message) override;
     void onSessionMessageAllDeleted(const std::string& sessionId, const NEMeetingSessionType& sessionType) override;
+                       
+    void onMeetingRealtimeRecorderStatusChanged(NEMeetingRealtimeRecorderEvent event) override;
+    bool onClickWebAppIcon(const NEWebAppClickInfo& clickInfo, const NEMeetingInfo& meetingInfo) override;
 
 private:
     void addInterface(const QString& module, const QString& interface, const QJsonObject& defaultParameters, const MethodRunner& runner);

@@ -103,7 +103,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>8</number>
+        <number>9</number> 
        </property>
        <widget class="QWidget" name="tab_kit">
         <attribute name="title">
@@ -1266,6 +1266,215 @@
          </property>
          <property name="text">
           <string>打开反馈页面</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_realtime_recorder">
+        <attribute name="title">
+         <string>秒录</string>
+        </attribute>
+        <widget class="QLabel" name="label_23">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>meetingNum</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="realtime_recorder_meetingNum">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>10</y>
+           <width>151</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_24">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>用户昵称</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="realtime_recorder_displayname">
+         <property name="geometry">
+          <rect>
+           <x>350</x>
+           <y>10</y>
+           <width>150</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_24">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>extraData</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="realtime_recorder_extraData">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>50</y>
+           <width>150</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="realtime_recorder_btn_start">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>100</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>开始实时记录</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="realtime_recorder_btn_stop">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>100</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>停止实时记录</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="realtime_recorder_btn_addlistener">
+         <property name="geometry">
+          <rect>
+           <x>270</x>
+           <y>100</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>addlistener</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="realtime_recorder_btn_removelistener">
+         <property name="geometry">
+          <rect>
+           <x>400</x>
+           <y>100</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>removelistener</string>
+         </property>
+        </widget>
+       </widget>
+       <!-- 新增WebApp标签页 -->
+       <widget class="QWidget" name="tab_webapp">
+        <attribute name="title">
+         <string>WebApp</string>
+        </attribute>
+        <!-- 第一行：pluginId标签和输入框 -->
+        <widget class="QLabel" name="webapp_label_pluginid">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>61</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>pluginId</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="webapp_edit_pluginid">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>10</y>
+           <width>200</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <!-- 第二行：四个按钮 -->
+        <widget class="QPushButton" name="webapp_btn_get_list">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>100</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>获取列表</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="webapp_btn_start_plugin">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>60</y>
+           <width>100</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>启动插件</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="webapp_btn_disable_plugin">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>60</y>
+           <width>100</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>禁用插件</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="webapp_btn_set_callback">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>60</y>
+           <width>100</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>设置回调</string>
          </property>
         </widget>
        </widget>

@@ -3,6 +3,7 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QTime>
+#include <QTimer>
 #include <QVector>
 
 #include "./ui_mainwindow.h"
@@ -22,10 +23,6 @@ MainWindow::MainWindow(QWidget* parent, QString appPath)
 }
 
 MainWindow::~MainWindow() {
-    //   if (m_NEMeetingSDKManager) {
-    //     delete m_NEMeetingSDKManager;
-    //     m_NEMeetingSDKManager = nullptr;
-    //   }
     delete ui;
 }
 
@@ -96,6 +93,20 @@ void MainWindow::InitSlots() {
     // feedback
     connect(ui->feed_btn_submit, &QPushButton::clicked, this, &MainWindow::onSubmitFeedbackBtnClicked);
     connect(ui->feed_btn_openWindow, &QPushButton::clicked, this, &MainWindow::onLoadFeedbackViewBtnClicked);
+    
+    // realtime_recorder
+    connect(ui->realtime_recorder_btn_start, &QPushButton::clicked, this, &MainWindow::onRealtimeRecorderStartBtnClicked);
+    connect(ui->realtime_recorder_btn_stop, &QPushButton::clicked, this, &MainWindow::onRealtimeRecorderStopBtnClicked);
+    
+    connect(ui->realtime_recorder_btn_addlistener, &QPushButton::clicked, this, &MainWindow::onRealtimeRecorderAddListenerBtnClicked);
+    connect(ui->realtime_recorder_btn_removelistener, &QPushButton::clicked, this, &MainWindow::onRealtimeRecorderRemoveListenerBtnClicked);
+        
+    // web app service
+    connect(ui->webapp_btn_get_list, &QPushButton::clicked, this, &MainWindow::onWebAppGetWebAppListBtnClicked);
+    connect(ui->webapp_btn_start_plugin, &QPushButton::clicked, this, &MainWindow::onWebAppEnableWebAppBtnClicked);
+    connect(ui->webapp_btn_disable_plugin, &QPushButton::clicked, this, &MainWindow::onWebAppDisableWebAppBtnClicked);
+    connect(ui->webapp_btn_set_callback, &QPushButton::clicked, this, &MainWindow::onWebAppSetWebAppClickListenerBtnClicked);
+    
     // message service
     connect(ui->msg_btn_add_listener, &QPushButton::clicked, this, &MainWindow::onAddMessageListenerBtnClicked);
     connect(ui->msg_btn_remove_listener, &QPushButton::clicked, this, &MainWindow::onRemoveMessageListenerBtnClicked);
@@ -119,15 +130,19 @@ void MainWindow::InitUI() {
     ui->m_cb_log_level->addItem("Error", 4);
     ui->m_cb_log_level->addItem("Fatal", 5);
     ui->m_cb_log_level->setCurrentIndex(1);
-    ui->m_appkey_edit->setText("");
-    ui->m_server_url_edit->setText("");
+    ui->m_appkey_edit->setText("Your AppKey");
 #ifdef _WIN32
-    ui->m_run_path_edit->setText("d:/tmp");
+    runPath = m_appPath + "\\..\\..\\..\\sdk\\bin\\nemeet_sdk";
+#elif defined(__linux__)
+    runPath = m_appPath + "/../../sdk/bin/nemeet_sdk";
 #else
-    // 构造Contents/Frameworks路径
-    QString frameworksAppPath = m_appPath + "/../Frameworks/nemeet_sdk.app/Contents/MacOS/nemeet_sdk";
-    ui->m_run_path_edit->setText(frameworksAppPath);
+#ifdef QT_DEBUG
+    runPath = m_appPath + "/../../../../../sdk/bin/nemeet_sdk.app/Contents/MacOS/nemeet_sdk";
+#else
+    runPath = m_appPath + "/../Frameworks/nemeet_sdk.app/Contents/MacOS/nemeet_sdk";
 #endif
+#endif
+    ui->m_run_path_edit->setText(runPath);
     ui->tabWidget->setCurrentIndex(0);
     // account
     ui->m_edit_account->setText("");
@@ -192,4 +207,8 @@ void MainWindow::updateParameterTextEdit(const std::string& module, const QListV
         return;
     }
     textEdit->setPlainText(objectToString(method->second.defaultParameters));
+}
+
+QString MainWindow::getRunPath() {
+   return ui->m_run_path_edit->toPlainText();
 }

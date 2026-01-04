@@ -10,4 +10,14 @@ ReflectionDefinition_O(NEMeetingSessionMessage, sessionId, sessionType, messageI
 
 ReflectionDefinition_O(NEMeetingRecentSession, sessionId, fromAccount, fromNick, sessionType, recentMessageId, unreadCount, content, time);
 
+ReflectionDefinition_O(NEMeetingGetMessageHistoryParams,
+    sessionId,
+    fromTime,
+    toTime,
+    limit,
+    searchOrder,
+    content,
+    time
+);
+
 #endif  // KIT_SERVICE_MESSAGE_REFLECTION_H

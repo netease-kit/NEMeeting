@@ -112,4 +112,10 @@ ReflectionDefinition_O(NELocalHistoryMeeting, meetingNum, meetingId, shortMeetin
 
 ReflectionDefinition_O(NEMeetingTranscriptionMessage, fromUserUuid, fromNickname, content, timestamp);
 
+ReflectionDefinition_O(NEMeetingRecordItem, recordSubject, meetingNum, roomArchiveId, recordCreateTime, recordFileSize, recordFileCount, type, subType, owner, editable, hidable, deletable);
+
+ReflectionDefinition_O(NEMeetingRecordQueryParams, startTime, endTime, pageNum, pageSize, owner, ownerUserName, subject, meetingNum);
+
+ReflectionDefinition_O(NEMeetingRecordEditData, subject, hide);
+
 #endif  // KIT_SERVICE_PREMEETING_REFLECTION_H

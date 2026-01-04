@@ -88,7 +88,6 @@ void MainWindow::initPremeetingServiceMethods() {
         NEMeetingItem item = m_premeetingService->createScheduleMeetingItem();
         PrintLog("PremeetingService createScheduleMeetingItem meetingId: " + xpack::json::encode(item));
     });
-    // void scheduleMeeting(const NEMeetingItem& item, const NEScheduleMeetingItemCallback& callback)
     QJsonObject scheduleMeetingParameters;
     NEMeetingItem neMeetingItem = NEMeetingItem();
     // 获取当前时间戳
@@ -116,7 +115,7 @@ void MainWindow::initPremeetingServiceMethods() {
     addInterface(kPreMeetingServiceModule, "cancelMeeting", cancelMeetingParameters, [this](const QJsonObject& parameters) {
         int64_t meetingId = parameters["meetingId"].toInt();
         bool cancelRecurringMeeting = parameters["cancelRecurringMeeting"].toBool();
-        m_premeetingService->cancelMeeting(meetingId, cancelRecurringMeeting, [this](MeetingErrorCode errorCode, const std::string& errorMessage) {
+        m_premeetingService->cancelMeeting(meetingId, cancelRecurringMeeting, [this](MeetingErrorCode errorCode, const std::string& errorMessage, const NEMeetingItem& it) {
             PrintLog("PremeetingService cancelMeeting errorCode: " + std::to_string(errorCode) + ", errorMessage: " + errorMessage);
         });
     });
@@ -129,7 +128,7 @@ void MainWindow::initPremeetingServiceMethods() {
         QByteArray byteArray = objectToString(parameters["item"].toObject()).toUtf8();
         xpack::json::decode(byteArray.data(), item);
         bool editRecurringMeeting = parameters["editRecurringMeeting"].toBool();
-        m_premeetingService->editMeeting(item, editRecurringMeeting, [this](MeetingErrorCode errorCode, const std::string& errorMessage) {
+        m_premeetingService->editMeeting(item, editRecurringMeeting, [this](MeetingErrorCode errorCode, const std::string& errorMessage, const NEMeetingItem& it) {
             PrintLog("PremeetingService editMeeting errorCode: " + std::to_string(errorCode) + ", errorMessage: " + errorMessage);
         });
     });
@@ -144,7 +143,6 @@ void MainWindow::initPremeetingServiceMethods() {
                          ", meetingItem: " + xpack::json::encode(meetingItem));
             });
     });
-    // void getMeetingItemById(const int64_t& meetingId, const NEScheduleMeetingItemCallback& callback)
     QJsonObject getMeetingItemByIdParameters;
     getMeetingItemByIdParameters["meetingId"] = 0;
     addInterface(kPreMeetingServiceModule, "getMeetingItemById", getMeetingItemByIdParameters, [this](const QJsonObject& parameters) {
@@ -155,7 +153,6 @@ void MainWindow::initPremeetingServiceMethods() {
                          ", meetingItem: " + xpack::json::encode(meetingItem));
             });
     });
-    // void getMeetingList(std::list<NEMeetingItemStatus> status, const NEGetMeetingListCallback& callback)
     QJsonObject getMeetingListParameters;
     getMeetingListParameters["status"] = QJsonArray();
     addInterface(kPreMeetingServiceModule, "getMeetingList", getMeetingListParameters, [this](const QJsonObject& parameters) {

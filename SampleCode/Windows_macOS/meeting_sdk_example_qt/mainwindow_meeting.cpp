@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "xpack_specialization.h"
+#include "sdk/include/kit_define_meeting.h"
 
 #include <memory>
 #include <vector>
@@ -25,6 +26,25 @@ void MainWindow::initMeetingServiceMethods() {
     startMeetingParameters["param"] = getJsonObject(xpack::json::encode(neStartMeetingParams));
 
     NEStartMeetingOptions startMeetingOptions = NEStartMeetingOptions();
+    std::vector<std::shared_ptr<NEMeetingMenuItem>> fullMoreMenuItems;
+    NEMenuItemInfo singleStateItem = {"xx", "自定义单状态"};
+    m_singleStateMenuItemPtr = std::make_shared<NESingleStateMenuItem>(102, NEMenuVisibility::VISIBLE_ALWAYS, singleStateItem);
+    fullMoreMenuItems.push_back(m_singleStateMenuItemPtr);
+    NEMenuItemInfo checkedStateItem = {"xx", "选中状态"};
+    NEMenuItemInfo uncheckStateItem = {"xx", "未选中状态"};
+    m_checkableMenuItemPtr = std::make_shared<NECheckableMenuItem>(103, NEMenuVisibility::VISIBLE_ALWAYS,checkedStateItem, uncheckStateItem);
+    fullMoreMenuItems.push_back(m_checkableMenuItemPtr);
+    startMeetingOptions.fullMoreMenuItems = fullMoreMenuItems;
+    std::vector<NEMeetingMenuItemPtr> fullToolbarMenuItems;
+    fullToolbarMenuItems.push_back(nem_sdk_interface::NEMeetingMenuItems::micMenu());
+    std::vector<NEMeetingMenuItemPtr> memberActionMenuItems;
+    memberActionMenuItems.push_back(nem_sdk_interface::NEActionMenuItems::audio());
+    startMeetingOptions.memberActionMenuItems = memberActionMenuItems;
+//    fullToolbarMenuItems.push_back(nem_sdk_interface::NEMenuItems::cameraMenu());
+//    fullToolbarMenuItems.push_back(nem_sdk_interface::NEMenuItems::screenShareMenu());
+//    fullToolbarMenuItems.push_back(nem_sdk_interface::NEMenuItems::participantsMenu());
+//    fullToolbarMenuItems.push_back(nem_sdk_interface::NEMenuItems::managerParticipantsMenu());
+    startMeetingOptions.fullToolbarMenuItems = fullToolbarMenuItems;
     startMeetingParameters["opts"] = getJsonObject(xpack::json::encode(startMeetingOptions));
     addInterface(kMeetingServiceModule, "startMeeting", startMeetingParameters, [this](const QJsonObject& parameters) {
         NEStartMeetingParams param;
@@ -33,15 +53,6 @@ void MainWindow::initMeetingServiceMethods() {
         NEStartMeetingOptions opts;
         byteArray = objectToString(parameters["opts"].toObject()).toUtf8();
         xpack::json::decode(byteArray.data(), opts);
-        std::vector<std::shared_ptr<NEMeetingMenuItem>> fullMoreMenuItems;
-        NEMenuItemInfo singleStateItem = {"xx", "自定义单状态"};
-        m_singleStateMenuItemPtr = std::make_shared<NESingleStateMenuItem>(102, NEMenuVisibility::VISIBLE_ALWAYS, singleStateItem);
-        //    auto test = xpack::json::encode(fullMoreMenuItems);
-        NEMenuItemInfo checkedStateItem_ = {"xx", "选中状态"};
-        NEMenuItemInfo uncheckStateItem_ = {"xx", "未选中状态"};
-        m_checkableMenuItemPtr = std::make_shared<NECheckableMenuItem>(103, NEMenuVisibility::VISIBLE_ALWAYS,checkedStateItem_, uncheckStateItem_);
-        fullMoreMenuItems.push_back(m_checkableMenuItemPtr);
-        opts.fullMoreMenuItems = fullMoreMenuItems;
         m_meetingService->startMeeting(param, opts, [this](MeetingErrorCode errorCode, const std::string& errorMessage) {
             PrintLog("MeetingSDK startMeeting errorCode: " + std::to_string(errorCode) + ", errorMessage: " + errorMessage);
         });
@@ -50,7 +61,10 @@ void MainWindow::initMeetingServiceMethods() {
     NEJoinMeetingParams neJoinMeetingParams = NEJoinMeetingParams();
     neJoinMeetingParams.displayName = "123456";
     joinMeetingParameters["param"] = getJsonObject(xpack::json::encode(neJoinMeetingParams));
-    joinMeetingParameters["opts"] = getJsonObject(xpack::json::encode(NEJoinMeetingOptions()));
+    auto joinMeetingOptions = NEJoinMeetingOptions();
+    joinMeetingOptions.fullMoreMenuItems = fullMoreMenuItems;
+    joinMeetingOptions.fullToolbarMenuItems = fullToolbarMenuItems;
+    joinMeetingParameters["opts"] = getJsonObject(xpack::json::encode(joinMeetingOptions));
     addInterface(kMeetingServiceModule, "joinMeeting", joinMeetingParameters, [this](const QJsonObject& parameters) {
         NEJoinMeetingParams param;
         QByteArray byteArray = objectToString(parameters["param"].toObject()).toUtf8();
@@ -66,7 +80,10 @@ void MainWindow::initMeetingServiceMethods() {
     NEStartMeetingParams neAnonymousJoinMeetingParams = NEStartMeetingParams();
     neAnonymousJoinMeetingParams.displayName = "123456";
     anonymousJoinMeetingParameters["param"] = getJsonObject(xpack::json::encode(neAnonymousJoinMeetingParams));
-    anonymousJoinMeetingParameters["opts"] = getJsonObject(xpack::json::encode(NEStartMeetingOptions()));
+    auto anonymousOptions = NEStartMeetingOptions();
+    anonymousOptions.fullMoreMenuItems = fullMoreMenuItems;
+    anonymousOptions.fullToolbarMenuItems = fullToolbarMenuItems;
+    anonymousJoinMeetingParameters["opts"] = getJsonObject(xpack::json::encode(anonymousOptions));
     addInterface(kMeetingServiceModule, "anonymousJoinMeeting", anonymousJoinMeetingParameters, [this](const QJsonObject& parameters) {
         NEJoinMeetingParams param;
         QByteArray byteArray = objectToString(parameters["param"].toObject()).toUtf8();

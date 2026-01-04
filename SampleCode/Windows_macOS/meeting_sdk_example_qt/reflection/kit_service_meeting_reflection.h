@@ -2,6 +2,7 @@
 #define KIT_SERVICE_MEETING_REFLECTION_H
 
 #include "kit_service_meeting.h"
+#include "kit_define_screen_sharing.h"
 #include "xpack_specialization.h"
 
 USING_NS_NNEM_SDK_INTERFACE
@@ -71,6 +72,7 @@ ReflectionDefinition_O(NEStartMeetingOptions,
     meetingIdDisplayOption,
     fullToolbarMenuItems,
     fullMoreMenuItems,
+    memberActionMenuItems,
     joinTimeout,
     chatroomConfig,
     audioProfile,
@@ -85,7 +87,14 @@ ReflectionDefinition_O(NEStartMeetingOptions,
     enableGuestJoin,
     noCaptions,
     autoEnableCaptionsOnJoin,
-    noTranscription);
+    noTranscription,
+    pluginNotifyDuration,
+    showNotYetJoinedMembers,
+    chatMessageNotificationType,
+    showNameInVideo,
+    enableDirectMemberMediaControlByHost,
+    showParticipationTime,
+    enableLeaveTheMeetingRequiresConfirmation);
 
 ReflectionDefinition_O(NEJoinMeetingOptions,
     noVideo,
@@ -119,6 +128,7 @@ ReflectionDefinition_O(NEJoinMeetingOptions,
     meetingIdDisplayOption,
     fullToolbarMenuItems,
     fullMoreMenuItems,
+    memberActionMenuItems,
     joinTimeout,
     chatroomConfig,
     audioProfile,
@@ -131,7 +141,9 @@ ReflectionDefinition_O(NEJoinMeetingOptions,
     enableMyAudioDeviceOnJoinRtc,
     noCaptions,
     autoEnableCaptionsOnJoin,
-    noTranscription);
+    noTranscription,
+    showParticipationTime,
+    enableLeaveTheMeetingRequiresConfirmation);
 
 ReflectionDefinition_O(NEInMeetingUserInfo, userId, userName, tag, role);
 
@@ -157,5 +169,11 @@ ReflectionDefinition_O(NEMeetingInfo,
 ReflectionDefinition_O(NEMeetingStatusListener::Event, status, code, obj);
 
 ReflectionDefinition_O(NEMeetingInviteInfo, meetingNum, inviterName, inviterAvatar, subject, preMeetingInvitation);
+
+ReflectionDefinition_O(NERoomSystemDevice, protocol, deviceAddress, name);
+
+ReflectionDefinition_O(NERoomSIPCallInfo, userUuid, userName, isRepeatedCall);
+
+ReflectionDefinition_O(NEScreenSharingParams, sharingCode, displayName);
 
 #endif  // KIT_SERVICE_MEETING_REFLECTION_H

@@ -22,14 +22,13 @@ USING_NS_NNEM_SDK_INTERFACE
                                     }                                                                                                               \
                                 }}));
 
-#define SettingMethodsInitParamReq(Param, func, note)                                                                                               \
+#define SettingMethodsInitParamReq(PARAM, func, note)                                                                                               \
     m_setting_methods.insert(std::make_pair(                                                                                                        \
         list_item++, MethodInfo{#func, note, [&](std::string param) {                                                                               \
                                     PrintLog(#func " run");                                                                                         \
                                     auto service = NEMeetingKit::getInstance()->getSettingsService();                                               \
                                     if (service) {                                                                                                  \
-                                        auto p = Param;                                                                                             \
-                                        service->func(Param, [this](MeetingErrorCode errorCode, const std::string& errorMessage) {                       \
+                                        service->func(PARAM, [this](MeetingErrorCode errorCode, const std::string& errorMessage) {                       \
                                             PrintLog(#func " callback, errorCode:" + std::to_string(errorCode) + ", errorMessage:" + errorMessage); \
                                         });                                                                                                         \
                                     } else {                                                                                                        \
@@ -133,7 +132,27 @@ void MainWindow::InitSettingUI() {
     SettingMethodsInitRes(bool, isNicknameUpdateSupported, "none");
     SettingMethodsInitRes(bool, isAvatarUpdateSupported, "none");
     SettingMethodsInitRes(bool, isCaptionsSupported, "none");
+    NEMeetingASRTranslationLanguage language = NEMeetingASRTranslationLanguage::kASRTranslationLanguageChinese;
+    SettingMethodsInitParamReq(static_cast<NEMeetingASRTranslationLanguage>(std::atoi(param.c_str())), setASRTranslationLanguage, "0, 1, 2, 3");
+    auto aSRTranslationLanguage_task = [](nem_sdk_interface::NEMeetingASRTranslationLanguage in) -> std::string {
+        return "NEMeetingASRTranslationLanguage: " + static_cast<int>(in);
+    };
+    SettingMethodsInitResOut(nem_sdk_interface::NEMeetingASRTranslationLanguage, getASRTranslationLanguage,"none", aSRTranslationLanguage_task(ret));
+    SettingMethodsInitParamReq(std::atoi(param.c_str()), enableCaptionBilingual, "bool, 填入 1:true, 0:false");
+    SettingMethodsInitRes(bool, isCaptionBilingualEnabled, "none");
+    SettingMethodsInitParamReq(std::atoi(param.c_str()), enableTranscriptionBilingual, "bool, 填入 1:true, 0:false");
+    SettingMethodsInitRes(bool, isTranscriptionBilingualEnabled, "none");
 
+    SettingMethodsInitRes(bool, isMeetingChatSupported, "none");
+    SettingMethodsInitParamReq(std::atoi(param.c_str()), enableShowNotYetJoinedMembers, "bool, 填入 1:true, 0:false");
+    SettingMethodsInitRes(bool, isShowNotYetJoinedMembersEnabled, "none");
+    SettingMethodsInitParamReq(static_cast<NEChatMessageNotificationType>(std::atoi(param.c_str())), setChatMessageNotificationType, "0, 1, 2");
+    auto chatMessageNotificationType_task = [](nem_sdk_interface::NEChatMessageNotificationType in) -> std::string {
+        return "NEChatMessageNotificationType: " + static_cast<int>(in);
+    };
+    SettingMethodsInitResOut(nem_sdk_interface::NEChatMessageNotificationType, getChatMessageNotificationType,"none", chatMessageNotificationType_task(ret));
+    SettingMethodsInitRes(bool, isShowNameInVideoEnabled, "none");
+    SettingMethodsInitParamReq(std::atoi(param.c_str()), enableShowNameInVideo, "bool, 填入 1:true, 0:false");
     QStringList methodList;
     for (const auto& method : m_setting_methods) {
         methodList.append(method.second.name);

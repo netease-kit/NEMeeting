@@ -12,10 +12,9 @@ USING_NS_NNEM_SDK_INTERFACE
         "corpName:" + accountInfo.corpName + "\n userUuid:" + accountInfo.userUuid + "\n userToken:" + accountInfo.userToken + "\n nickname:" +    \
         accountInfo.nickname + "\n avatar:" + accountInfo.avatar + "\n phoneNumber:" + accountInfo.phoneNumber + "\n email:" + accountInfo.email + \
         "\n privateMeetingNum:" + accountInfo.privateMeetingNum + "\n privateShortMeetingNum:" + accountInfo.privateShortMeetingNum +              \
-        "\n isInitialPassword:" + std::to_string(accountInfo.isInitialPassword) + "\n isAnonymous:" + std::to_string(accountInfo.isAnonymous) +    \
-        "\n serviceBundle: name:" + accountInfo.serviceBundle->name + "\n maxMinutes:" + std::to_string(accountInfo.serviceBundle->maxMinutes) +   \
-        "\n maxMembers:" + std::to_string(accountInfo.serviceBundle->maxMembers) +                                                                 \
-        "\n expireTimestamp:" + std::to_string(accountInfo.serviceBundle->expireTimestamp) + "\n expireTip:" + accountInfo.serviceBundle->expireTip)
+        "\n isInitialPassword:" + std::to_string(accountInfo.isInitialPassword) + "\n isAnonymous:" + std::to_string(accountInfo.isAnonymous) \
+    )
+
 void MainWindow::onLogoutBtnClicked() {
     PrintLog("onLogoutBtnClicked");
     auto service = NEMeetingKit::getInstance()->getAccountService();

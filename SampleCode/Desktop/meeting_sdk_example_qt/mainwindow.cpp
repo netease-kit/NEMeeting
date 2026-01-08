@@ -136,11 +136,7 @@ void MainWindow::InitUI() {
 #elif defined(__linux__)
     runPath = m_appPath + "/../../sdk/bin/nemeet_sdk";
 #else
-#ifdef QT_DEBUG
-    runPath = m_appPath + "/../../../../../sdk/bin/nemeet_sdk.app/Contents/MacOS/nemeet_sdk";
-#else
-    runPath = m_appPath + "/../Frameworks/nemeet_sdk.app/Contents/MacOS/nemeet_sdk";
-#endif
+    runPath = m_appPath + "/../../../../sdk/bin/nemeet_sdk.app/Contents/MacOS/nemeet_sdk";
 #endif
     ui->m_run_path_edit->setText(runPath);
     ui->tabWidget->setCurrentIndex(0);

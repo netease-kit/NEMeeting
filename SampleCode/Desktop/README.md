@@ -17,10 +17,3 @@ https://developer.aliyun.com/mirror/qt/
 ```
 2. Qt 版本选择
 > 选择 Qt 6.5.3 版本
-
-rm -rf meeting_sdk_example_qt && 
-cmake   -Bmeeting_sdk_example_qt \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_OSX_ARCHITECTURES=x86_64 \
-        -DCMAKE_PREFIX_PATH=~/meeting_sdk_example_qt/6.5.3/macos \
-cmake   --build meeting_sdk_example_qt --config Release

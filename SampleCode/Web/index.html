@@ -9,8 +9,8 @@
 <body>
   <button onclick="init()">初始化</button>
   <button onclick="destory()">销毁</button>
-  <button onclick="login()">登陆</button>
-  <button onclick="loginWithNEMeeting()">账号密码登陆</button>
+  <button onclick="login()">登录</button>
+  <button onclick="loginWithNEMeeting()">账号密码登录</button>
   <button onclick="create()">创建</button>
   <input class="meeting-id" type="text" placeholder="meetingId">
   <button onclick="join()">加入</button>
@@ -19,7 +19,7 @@
   <script>
   /**
    * 先执行项目初始化，将会议初始化操作执行结束后，会依据初始化提供的宽高，进行占位
-   * 然后执行登陆，获取登陆人员信息
+   * 然后执行登录，获取登录人员信息
    * 此时，根据需要，可以进行会议的创建或加入
    */
   function init() {
@@ -57,7 +57,7 @@
     accountService.loginByToken(userUuid, token)
   }
 
-  function loginWithNEMeeting() { // 账号密码登陆
+  function loginWithNEMeeting() { // 账号密码登录
     //使用 账号密码 登录
     const neMeetingKit = NEMeetingKit.default.getInstance()
     const accountService = neMeetingKit.getAccountService()
